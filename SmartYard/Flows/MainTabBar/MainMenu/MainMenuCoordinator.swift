@@ -9,7 +9,6 @@
 import XCoordinator
 import SafariServices
 import RxSwift
-import RxCocoa
 
 enum MainMenuRoute: Route {
     
@@ -26,9 +25,9 @@ enum MainMenuRoute: Route {
 }
 
 class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
-    
+
     private let disposeBag = DisposeBag()
-    
+
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let apiWrapper: APIWrapper
@@ -37,10 +36,13 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
     private let alertService: AlertService
     private let logoutHelper: LogoutHelper
     private let networkStateProvider: NetworkStateProviding
+    private let supportCallActionsPresenter: SupportCallActionsPresenting
+    private let requestSupportCallbackUseCase: RequestSupportCallbackUseCase
+    private let phoneDialer: PhoneDialing
 
     private var settingsRouter: StrongRouter<SettingsRoute>!
     private var cityCamsRouter: StrongRouter<CityCamsRoute>!
-    
+
     init(
         accessService: AccessService,
         pushNotificationService: PushNotificationService,
@@ -49,7 +51,10 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         permissionService: PermissionService,
         logoutHelper: LogoutHelper,
         alertService: AlertService,
-        networkStateProvider: NetworkStateProviding
+        networkStateProvider: NetworkStateProviding,
+        supportCallActionsPresenter: SupportCallActionsPresenting,
+        requestSupportCallbackUseCase: RequestSupportCallbackUseCase,
+        phoneDialer: PhoneDialing
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
@@ -59,9 +64,12 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
         self.alertService = alertService
         self.logoutHelper = logoutHelper
         self.networkStateProvider = networkStateProvider
+        self.supportCallActionsPresenter = supportCallActionsPresenter
+        self.requestSupportCallbackUseCase = requestSupportCallbackUseCase
+        self.phoneDialer = phoneDialer
 
         super.init(initialRoute: .main)
-        
+
         let settingsCoordinator = SettingsCoordinator(
             rootViewController: rootViewController,
             accessService: accessService,
@@ -73,7 +81,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             alertService: alertService,
             networkStateProvider: networkStateProvider
         )
-        
+
         let cityCamsCoordinator = CityCamsCoordinator(
             rootViewController: rootViewController,
             apiWrapper: apiWrapper,
@@ -84,13 +92,13 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             alertService: alertService,
             logoutHelper: logoutHelper
         )
-        
+
         self.settingsRouter = settingsCoordinator.strongRouter
         self.cityCamsRouter = cityCamsCoordinator.strongRouter
-        
+
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
-    
+
     // swiftlint:disable:next function_body_length
     override func prepareTransition(for route: MainMenuRoute) -> NavigationTransition {
         switch route {
@@ -103,10 +111,10 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
             )
             let vc = MainMenuViewController(viewModel: vm)
             return .set([vc])
-        
+
         case .cityCams:
             return .trigger(CityCamsRoute.main, on: cityCamsRouter)
-            
+
         case .settings:
             return .trigger(SettingsRoute.main, on: settingsRouter)
 
@@ -119,82 +127,20 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                 ),
                 on: settingsRouter
             )
-        
+
         case .profile:
             return .trigger(SettingsRoute.advancedSettings, on: settingsRouter)
-            
+
         case .callSupport:
-            
-            let callHandler = { (_: UIAlertAction) -> Void in
-                if let phoneCallURL = URL(string: "tel://" + self.accessService.supportPhone) {
-                    let application = UIApplication.shared
-                    if application.canOpenURL(phoneCallURL) {
-                        application.open(phoneCallURL, options: [:], completionHandler: nil)
-                    }
-                  }
-            }
-            
-            let activityTracker = ActivityTracker()
-            let errorTracker = ErrorTracker()
-            
-            errorTracker.asDriver()
-                .drive(
-                    onNext: { [weak self] error in
-                        self?.trigger(.alert(title: NSLocalizedString("Error", comment: ""), message: error.localizedDescription))
-                    }
-                )
-                .disposed(by: self.disposeBag)
-            
-            let callbackHandler = { [weak self] (_: UIAlertAction) -> Void in
-                guard let self = self else {
-                    return
-                }
-                    self.issueService
-                        .sendCallbackIssue()
-                        .trackError(errorTracker)
-                        .trackActivity(activityTracker)
-                        .asDriver(onErrorJustReturn: nil)
-                        .drive(
-                            onNext: { response in
-                                guard response != nil else {
-                                    return
-                                }
-                                self.trigger(
-                                    .alert(
-                                        title: NSLocalizedString("Request submitted", comment: ""),
-                                        message: NSLocalizedString("We will call you shortly", comment: "")
-                                    )
-                                )
-                            }
-                        )
-                        .disposed(by: self.disposeBag)
-            }
-            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction(
-                title: NSLocalizedString("Request a call back", comment: ""),
-                style: .default,
-                handler: callbackHandler
-            ))
-            alert.addAction(UIAlertAction(
-                title: NSLocalizedString("Make a phone call", comment: ""),
-                style: .default,
-                handler: callHandler
-            ))
-            
-            alert.addAction(UIAlertAction(
-                title: NSLocalizedString("Cancel", comment: ""),
-                style: .cancel,
-                handler: nil))
-            
-            self.viewController.present(alert, animated: true, completion: nil)
-            return.none()
-            
+            openSupportActions()
+            return .none()
+
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)
-            
+
         case .back:
             return .pop(animation: .default)
-            
+
         case let .webView(url, version):
             let coordinator = WebViewCoordinator(
                 rootVC: rootViewController,
@@ -205,10 +151,10 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                 push: true,
                 version: version
             )
-            
+
             addChild(coordinator)
             return .none()
-            
+
         case let .webViewFromContent(content, baseURL, version):
             let coordinator = WebViewCoordinator(
                 rootVC: rootViewController,
@@ -220,9 +166,50 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
                 push: true,
                 version: version
             )
-            
+
             addChild(coordinator)
             return .none()
         }
+    }
+}
+
+private extension MainMenuCoordinator {
+    func openSupportActions() {
+        supportCallActionsPresenter.present(
+            from: viewController
+        ) { [weak self] action in
+            guard let self else { return }
+
+            switch action {
+            case .requestCallback:
+                requestSupportCallback()
+            case .phoneCall:
+                phoneDialer.call(accessService.supportPhone)
+            }
+        }
+    }
+
+    func requestSupportCallback() {
+        requestSupportCallbackUseCase.execute()
+            .observe(on: MainScheduler.instance)
+            .subscribe(
+                onSuccess: { [weak self] in
+                    self?.trigger(
+                        .alert(
+                            title: NSLocalizedString("Request submitted", comment: ""),
+                            message: NSLocalizedString("We will call you shortly", comment: "")
+                        )
+                    )
+                },
+                onFailure: { [weak self] error in
+                    self?.trigger(
+                        .alert(
+                            title: NSLocalizedString("Error", comment: ""),
+                            message: error.localizedDescription
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
     }
 }

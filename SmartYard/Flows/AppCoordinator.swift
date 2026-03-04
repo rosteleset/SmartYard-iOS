@@ -62,6 +62,9 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
     private let networkStateProvider: NetworkStateProviding
     private let offlineAddressListDataSource: OfflineAddressListDataSource
     private let optionsService: OptionsServicing
+    private let supportCallActionsPresenter: SupportCallActionsPresenting
+    private let requestSupportCallbackUseCase: RequestSupportCallbackUseCase
+    private let phoneDialer: PhoneDialing
 
 #if DEBUG
     private lazy var debugOverlay = DebugNetworkOverlay(controller: debugNetwork)
@@ -103,6 +106,9 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
         self.networkStateProvider = dependencies.networkStateProvider
         self.offlineAddressListDataSource = dependencies.offlineAddressListDataSource
         self.optionsService = dependencies.optionsService
+        self.supportCallActionsPresenter = dependencies.supportCallActionsPresenter
+        self.requestSupportCallbackUseCase = dependencies.requestSupportCallbackUseCase
+        self.phoneDialer = dependencies.phoneDialer
         self.mainWindow = mainWindow
 
         super.init(initialRoute: accessService.routeForCurrentState)
@@ -138,7 +144,10 @@ final class AppCoordinator: NavigationCoordinator<AppRoute> {
                 logoutHelper: logoutHelper,
                 offlineAddressListDataSource: offlineAddressListDataSource,
                 networkStateProvider: networkStateProvider,
-                optionsService: optionsService
+                optionsService: optionsService,
+                supportCallActionsPresenter: supportCallActionsPresenter,
+                requestSupportCallbackUseCase: requestSupportCallbackUseCase,
+                phoneDialer: phoneDialer
             )
         
             mainTabBarCoordinator = coordinator

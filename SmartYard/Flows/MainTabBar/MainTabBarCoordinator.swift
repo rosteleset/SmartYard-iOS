@@ -65,7 +65,10 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         logoutHelper: LogoutHelper,
         offlineAddressListDataSource: OfflineAddressListDataSource,
         networkStateProvider: NetworkStateProviding,
-        optionsService: OptionsServicing
+        optionsService: OptionsServicing,
+        supportCallActionsPresenter: SupportCallActionsPresenting,
+        requestSupportCallbackUseCase: RequestSupportCallbackUseCase,
+        phoneDialer: PhoneDialing
     ) {
         self.accessService = accessService
         self.pushNotificationService = pushNotificationService
@@ -166,7 +169,10 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             permissionService: permissionService,
             logoutHelper: logoutHelper,
             alertService: alertService,
-            networkStateProvider: networkStateProvider
+            networkStateProvider: networkStateProvider,
+            supportCallActionsPresenter: supportCallActionsPresenter,
+            requestSupportCallbackUseCase: requestSupportCallbackUseCase,
+            phoneDialer: phoneDialer
         )
         
         let menuTabBarItem = UITabBarItem(

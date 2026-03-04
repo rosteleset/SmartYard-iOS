@@ -26,6 +26,9 @@ protocol AppDependencies {
     var networkStateProvider: NetworkStateProviding { get }
     var offlineAddressListDataSource: OfflineAddressListDataSource { get }
     var optionsService: OptionsServicing { get }
+    var supportCallActionsPresenter: SupportCallActionsPresenting { get }
+    var requestSupportCallbackUseCase: RequestSupportCallbackUseCase { get }
+    var phoneDialer: PhoneDialing { get }
 }
 
 final class DefaultAppDependencies: AppDependencies {
@@ -47,6 +50,9 @@ final class DefaultAppDependencies: AppDependencies {
     let networkStateProvider: NetworkStateProviding
     let offlineAddressListDataSource: OfflineAddressListDataSource
     let optionsService: OptionsServicing
+    let supportCallActionsPresenter: SupportCallActionsPresenting
+    let requestSupportCallbackUseCase: RequestSupportCallbackUseCase
+    let phoneDialer: PhoneDialing
 
     init(
         accessService: AccessService = .shared,
@@ -76,6 +82,9 @@ final class DefaultAppDependencies: AppDependencies {
             apiWrapper: apiWrapper,
             accessService: accessService
         )
+        self.requestSupportCallbackUseCase = DefaultRequestSupportCallbackUseCase(
+            issueService: issueService
+        )
         self.pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
         self.logoutHelper = LogoutHelper(
             pushNotificationService: pushNotificationService,
@@ -94,5 +103,7 @@ final class DefaultAppDependencies: AppDependencies {
             accessService: accessService,
             networkStateProvider: networkStateProvider
         )
+        self.supportCallActionsPresenter = SupportCallActionsPresenter()
+        self.phoneDialer = SystemPhoneDialer()
     }
 }
