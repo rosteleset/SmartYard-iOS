@@ -279,7 +279,7 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute> {
             onlineVC.loadViewIfNeeded()
 
             let archiveVC = ArchivePageViewController(apiWrapper: apiWrapper)
-            onlineVC.loadViewIfNeeded()
+            archiveVC.loadViewIfNeeded()
 
             let vc = SelectCameraContainerViewController(
                 onlinePage: onlineVC,
