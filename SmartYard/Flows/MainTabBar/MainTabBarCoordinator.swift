@@ -22,10 +22,8 @@ enum MainTabBarRoute: Route {
 }
 
 // swiftlint: disable type_body_length
-final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
-    
-    private let disposeBag = DisposeBag()
-    
+final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute>, HasDisposeBag {
+
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let apiWrapper: APIWrapper
@@ -36,24 +34,39 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
     private let offlineAddressListDataSource: OfflineAddressListDataSource
     private let networkStateProvider: NetworkStateProviding
     private let optionsService: OptionsServicing
-    private let quickActionResolverService: QuickActionResolverService
 
     private let homeRouter: StrongRouter<HomeRoute>
     private let notificationsRouter: StrongRouter<NotificationsRoute>
     private let chatRouter: StrongRouter<ChatRoute>
     private let paymentsRouter: StrongRouter<PaymentsRoute>
     private let menuRouter: StrongRouter<MainMenuRoute>
-    
+
     private let homeTabBarItem: UITabBarItem
     private let notificationsTabBarItem: UITabBarItem
     private let chatTabBarItem: UITabBarItem
     private let paymentsTabBarItem: UITabBarItem
     private let menuTabBarItem: UITabBarItem
-    
+
+    private lazy var eventsBinder: MainTabBarEventsBinding = MainTabBarEventsBinder(
+        optionsService: optionsService
+    )
+    private lazy var quickActionOpener: MainTabBarQuickActionOpening = MainTabBarQuickActionOpener(
+        resolver: QuickActionResolverService(
+            apiWrapper: apiWrapper,
+            accessService: accessService
+        ),
+        homeRouter: homeRouter,
+        menuRouter: menuRouter,
+        selectTab: { [weak self] route in
+            self?.trigger(route)
+        },
+        alertService: alertService
+    )
+
     var selectedPresentable: Presentable? {
         return children[safe: rootViewController.selectedIndex]
     }
-    
+
     // swiftlint:disable:next function_body_length
     init(
         accessService: AccessService,
@@ -80,10 +93,6 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         self.offlineAddressListDataSource = offlineAddressListDataSource
         self.networkStateProvider = networkStateProvider
         self.optionsService = optionsService
-        self.quickActionResolverService = QuickActionResolverService(
-            apiWrapper: apiWrapper,
-            accessService: accessService
-        )
 
         // MARK: Home Tab
         let homeCoordinator = HomeCoordinator(
@@ -97,18 +106,18 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             offlineAddressListDataSource: offlineAddressListDataSource,
             networkStateProvider: networkStateProvider
         )
-        
+
         let homeTabBarItem = UITabBarItem(
             title: NSLocalizedString("Addresses", comment: ""),
             image: UIImage(named: "HomeTabUnselected"),
             selectedImage: UIImage(named: "HomeTabSelected")
         )
-        
+
         homeCoordinator.rootViewController.tabBarItem = homeTabBarItem
         self.homeTabBarItem = homeTabBarItem
-        
+
         // MARK: Notifications Tab
-        
+
         let notificationsCoordinator = NotificationsCoordinator(
             apiWrapper: apiWrapper,
             pushNotificationService: pushNotificationService,
@@ -144,22 +153,22 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         
         chatCoordinator.rootViewController.tabBarItem = chatTabBarItem
         self.chatTabBarItem = chatTabBarItem
-        
+
         // MARK: Payments Tab
         let paymentsCoordinator = PaymentsCoordinator(
             apiWrapper: apiWrapper,
             networkStateProvider: networkStateProvider
         )
-        
+
         let paymentsTabBarItem = UITabBarItem(
             title: NSLocalizedString("Pay", comment: ""),
             image: UIImage(named: "PaymentsTabUnselected"),
             selectedImage: UIImage(named: "PaymentsTabSelected")
         )
-        
+
         paymentsCoordinator.rootViewController.tabBarItem = paymentsTabBarItem
         self.paymentsTabBarItem = paymentsTabBarItem
-        
+
         // MARK: Menu Tab
         let menuCoordinator = MainMenuCoordinator(
             accessService: accessService,
@@ -174,23 +183,23 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             requestSupportCallbackUseCase: requestSupportCallbackUseCase,
             phoneDialer: phoneDialer
         )
-        
+
         let menuTabBarItem = UITabBarItem(
             title: NSLocalizedString("Menu", comment: ""),
             image: UIImage(named: "MenuTabUnselected"),
             selectedImage: UIImage(named: "MenuTabSelected")
         )
-        
+
         menuCoordinator.rootViewController.tabBarItem = menuTabBarItem
         self.menuTabBarItem = menuTabBarItem
-        
+
         // MARK: Initialization
         self.homeRouter = homeCoordinator.strongRouter
         self.notificationsRouter = notificationsCoordinator.strongRouter
         self.chatRouter = chatCoordinator.strongRouter
         self.paymentsRouter = paymentsCoordinator.strongRouter
         self.menuRouter = menuCoordinator.strongRouter
-        
+
         // MARK: Инициализация кастомного/системного UITabBarController
         let isNewTabBarActive = true
         let rootTabBarController: UITabBarController
@@ -248,12 +257,9 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
 
         updateNotificationsTab(shouldShowBadge: UIApplication.shared.applicationIconBadgeNumber > 0)
 
-        subscribeToBadgeUpdates()
-        subscribeToAddAddressNotifications()
-        subscribeToChatNotifications()
-        subsribeToOptionsUpdates()
+        bind()
     }
-    
+
     override func prepareTransition(for route: MainTabBarRoute) -> TabBarTransition {
         switch route {
         case .home:
@@ -278,9 +284,57 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
             return .selectAndCallDelegate(menuRouter)
         }
     }
-    
 
-    private func selectTabIfNeeded() {
+    func openFirstAddressCameras() {
+        quickActionOpener.open(.firstAddressCameras)
+    }
+
+    func openFirstAddressEvents() {
+        quickActionOpener.open(.firstAddressEvents)
+    }
+
+    func openFirstAddressAccess() {
+        quickActionOpener.open(.firstAddressAccess)
+    }
+}
+
+private extension MainTabBarCoordinator {
+
+    func bind() {
+        eventsBinder.notificationsBadgeChanged
+            .drive(with: self) { owner, shouldShowBadge in
+                owner.updateNotificationsTab(shouldShowBadge: shouldShowBadge)
+            }
+            .disposed(by: disposeBag)
+
+        eventsBinder.chatBadgeChanged
+            .drive(with: self) { owner, shouldShowBadge in
+                owner.updateChatTab(shouldShowBadge: shouldShowBadge)
+            }
+            .disposed(by: disposeBag)
+
+        eventsBinder.addAddressRequested
+            .emit(with: self) { owner, _ in
+                owner.trigger(.home)
+                owner.homeRouter.trigger(.inputContract(isManualTrigger: true))
+            }
+            .disposed(by: disposeBag)
+
+        eventsBinder.chatRequested
+            .emit(with: self) { owner, _ in
+                owner.trigger(.chat)
+            }
+            .disposed(by: disposeBag)
+
+        eventsBinder.optionsUpdated
+            .drive(with: self) { owner, _ in
+                owner.reloadTabs()
+                owner.selectTabIfNeeded()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func selectTabIfNeeded() {
         let desiredRouter = desiredRouter()
 
         let viewControllers = rootViewController.viewControllers ?? []
@@ -294,7 +348,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         }
     }
 
-    private func makeTabs() -> [Presentable] {
+    func makeTabs() -> [Presentable] {
         var tabs: [Presentable] = [homeRouter, notificationsRouter]
 
         if accessService.showChat { tabs.append(chatRouter) }
@@ -305,7 +359,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         return tabs
     }
 
-    private func reloadTabs() {
+    func reloadTabs() {
         let tabs = makeTabs()
         rootViewController.setViewControllers(
             tabs.map { $0.viewController },
@@ -313,7 +367,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         )
     }
 
-    private func desiredRouter() -> Presentable {
+    func desiredRouter() -> Presentable {
         switch accessService.activeTab {
         case "addresses": return homeRouter
         case "notifications": return notificationsRouter
@@ -324,225 +378,32 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute> {
         }
     }
 
-    private func updateNotificationsTab(shouldShowBadge: Bool) {
+    func updateNotificationsTab(shouldShowBadge: Bool) {
         notificationsTabBarItem.image = UIImage(
             named: shouldShowBadge ? "NotificationsTabBadgeUnselected" : "NotificationsTabUnselected"
         )
-        
+
         notificationsTabBarItem.selectedImage = UIImage(
             named: shouldShowBadge ? "NotificationsTabBadgeSelected" : "NotificationsTabSelected"
         )
-        
+
         notificationsTabBarItem.imageInsets = shouldShowBadge ?
-            UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0) :
+        UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0) :
             .zero
     }
-    
-    private func updateChatTab(shouldShowBadge: Bool) {
+
+    func updateChatTab(shouldShowBadge: Bool) {
         chatTabBarItem.image = UIImage(
             named: shouldShowBadge ? "ChatTabBadgeUnselected" : "ChatTabUnselected"
         )
-        
+
         chatTabBarItem.selectedImage = UIImage(
             named: shouldShowBadge ? "ChatTabBadgeSelected" : "ChatTabSelected"
         )
-        
+
         chatTabBarItem.imageInsets = shouldShowBadge ?
-            UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0) :
+        UIEdgeInsets(top: -2, left: 0, bottom: 2, right: 0) :
             .zero
-    }
-    
-    private func subscribeToBadgeUpdates() {
-        NotificationCenter.default.rx
-            .notification(.unreadInboxMessagesAvailable)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    self?.updateNotificationsTab(shouldShowBadge: true)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        NotificationCenter.default.rx
-            .notification(.allInboxMessagesRead)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    self?.updateNotificationsTab(shouldShowBadge: false)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        NotificationCenter.default.rx
-            .notification(.unreadChatMessagesAvailable)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    self?.updateChatTab(shouldShowBadge: true)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        NotificationCenter.default.rx
-            .notification(.allChatMessagesRead)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    self?.updateChatTab(shouldShowBadge: false)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    private func subscribeToAddAddressNotifications() {
-        NotificationCenter.default.rx
-            .notification(Notification.Name.addAddressFromSettings)
-            .asDriverOnErrorJustComplete()
-            .mapToVoid()
-            .drive(
-                onNext: { [weak self] in
-                    self?.trigger(.home)
-                    self?.homeRouter.trigger(.inputContract(isManualTrigger: true))
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    private func subscribeToChatNotifications() {
-        NotificationCenter.default.rx
-            .notification(Notification.Name.chatRequested)
-            .asDriverOnErrorJustComplete()
-            .mapToVoid()
-            .drive(
-                onNext: { [weak self] in
-                    self?.trigger(.chat)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-
-    private func subsribeToOptionsUpdates() {
-        optionsService.optionsUpdated
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
-                self?.reloadTabs()
-                self?.selectTabIfNeeded()
-            })
-            .disposed(by: disposeBag)
-    }
-
-    func openFirstAddressCameras() {
-        resolveAndOpenQuickAction(.firstAddressCameras)
-    }
-
-    func openFirstAddressEvents() {
-        resolveAndOpenQuickAction(.firstAddressEvents)
-    }
-
-    func openFirstAddressAccess() {
-        resolveAndOpenQuickAction(.firstAddressAccess)
-    }
-
-    private func resolveAndOpenQuickAction(_ shortcutType: AppShortcutType) {
-        quickActionResolverService.resolve(shortcutType)
-            .observe(on: MainScheduler.instance)
-            .subscribe(
-                onSuccess: { [weak self] resolution in
-                    guard let self else { return }
-
-                    switch resolution {
-                    case let .target(target):
-                        openQuickActionTarget(target)
-                    case let .unavailable(message):
-                        showQuickActionUnavailableAlert(message: message)
-                    }
-                },
-                onFailure: { [weak self] error in
-                    self?.handleQuickActionFailure(error)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-
-    private func openQuickActionTarget(_ target: QuickActionResolvedTarget) {
-        switch target {
-        case let .homeCamerasMap(houseId, address, cameras):
-            performOnHomeTab { [weak self] in
-                self?.homeRouter.trigger(
-                    .yardCamerasMap(
-                        houseId: houseId,
-                        address: address,
-                        cameras: cameras
-                    )
-                )
-            }
-        case let .homeCamerasList(houseId, address, tree):
-            performOnHomeTab { [weak self] in
-                self?.homeRouter.trigger(
-                    .yardCamerasList(
-                        houseId: houseId,
-                        address: address,
-                        tree: tree,
-                        path: []
-                    )
-                )
-            }
-        case let .homeEvents(houseId, address):
-            performOnHomeTab { [weak self] in
-                self?.homeRouter.trigger(
-                    .history(
-                        houseId: houseId,
-                        address: address
-                    )
-                )
-            }
-        case let .menuAddressAccess(address, flatId, clientId):
-            performOnMenuTab { [weak self] in
-                self?.menuRouter.trigger(
-                    .addressAccess(
-                        address: address,
-                        flatId: flatId,
-                        clientId: clientId
-                    )
-                )
-            }
-        }
-    }
-
-    private func performOnHomeTab(_ action: @escaping () -> Void) {
-        trigger(.home)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            action()
-        }
-    }
-
-    private func performOnMenuTab(_ action: @escaping () -> Void) {
-        trigger(.menu)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            action()
-        }
-    }
-
-    private func showQuickActionUnavailableAlert(message: String) {
-        alertService.showAlert(
-            title: NSLocalizedString("Error", comment: ""),
-            message: message,
-            priority: 250
-        )
-    }
-
-    private func showQuickActionErrorAlert(error: Error) {
-        alertService.showAlert(
-            title: NSLocalizedString("Error", comment: ""),
-            message: error.localizedDescription,
-            priority: 250
-        )
-    }
-
-    private func handleQuickActionFailure(_ error: Error) {
-        // Fallback to Home so quick action never leaves user on a blank state.
-        trigger(.home)
-        showQuickActionErrorAlert(error: error)
     }
 }
 

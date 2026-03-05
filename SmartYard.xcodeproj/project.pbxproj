@@ -184,6 +184,8 @@
 		844AC3C323EB1CCF0066006D /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */; };
 		844AC3C523EB1F840066006D /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C423EB1F840066006D /* UIView+Extensions.swift */; };
 		844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */; };
+		9A0F5A3B2F76000000C0D001 /* MainTabBarEventsBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A3A2F76000000C0D001 /* MainTabBarEventsBinder.swift */; };
+		9A0F5A3D2F76000000C0D001 /* MainTabBarQuickActionOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A3C2F76000000C0D001 /* MainTabBarQuickActionOpener.swift */; };
 		844AC3CF23EBFD220066006D /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3CE23EBFD220066006D /* HomeCoordinator.swift */; };
 		844AC3D523EBFDAF0066006D /* AddressesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D423EBFDAF0066006D /* AddressesListViewModel.swift */; };
 		844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3D723EBFE060066006D /* ChatCoordinator.swift */; };
@@ -1231,6 +1233,8 @@
 		844AC3C223EB1CCF0066006D /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		844AC3C423EB1F840066006D /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCoordinator.swift; sourceTree = "<group>"; };
+		9A0F5A3A2F76000000C0D001 /* MainTabBarEventsBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarEventsBinder.swift; sourceTree = "<group>"; };
+		9A0F5A3C2F76000000C0D001 /* MainTabBarQuickActionOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarQuickActionOpener.swift; sourceTree = "<group>"; };
 		844AC3CE23EBFD220066006D /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		844AC3D423EBFDAF0066006D /* AddressesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListViewModel.swift; sourceTree = "<group>"; };
 		844AC3D723EBFE060066006D /* ChatCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCoordinator.swift; sourceTree = "<group>"; };
@@ -2483,6 +2487,8 @@
 			isa = PBXGroup;
 			children = (
 				844AC3C723EBFC4B0066006D /* MainTabBarCoordinator.swift */,
+				9A0F5A3A2F76000000C0D001 /* MainTabBarEventsBinder.swift */,
+				9A0F5A3C2F76000000C0D001 /* MainTabBarQuickActionOpener.swift */,
 				3AEFB480264D1A73000F37D0 /* CommonDialogs */,
 				844AC3C923EBFCC00066006D /* Home */,
 				843C38D6242A57C40035BF80 /* Notifications */,
@@ -6385,6 +6391,8 @@
 				845E9EE424895AE4000CBBC6 /* SimpleVideoStartIndicator.swift in Sources */,
 				8BA6EA602DFA222800CDA2DA /* GateAccessDataItemIdentity.swift in Sources */,
 				844AC3C823EBFC4B0066006D /* MainTabBarCoordinator.swift in Sources */,
+				9A0F5A3B2F76000000C0D001 /* MainTabBarEventsBinder.swift in Sources */,
+				9A0F5A3D2F76000000C0D001 /* MainTabBarQuickActionOpener.swift in Sources */,
 				E9E4271F23F41DDF00F5D593 /* SmartYardCheckBoxState.swift in Sources */,
 				8BA1DB302DA56220009EBA0E /* DeviceUUID.swift in Sources */,
 				8B40093E2E2AC92D00A96598 /* DetailGateAccessViewModel.swift in Sources */,
