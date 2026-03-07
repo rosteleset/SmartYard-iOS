@@ -25,7 +25,7 @@ final class SelectCameraContainerViewModel: BaseViewModel {
     private let selectedCameraId: BehaviorSubject<CameraID?>
     private let rangesForCamera = BehaviorSubject<[APIArchiveRange]?>(value: nil)
 
-    private var rangesDisposeBag = DisposeBag()
+    private let rangesDisposable = SerialDisposable()
     private let rangesLoadingTracker = ActivityTracker()
     private let errorTracker = ErrorTracker()
 
@@ -109,9 +109,7 @@ final class SelectCameraContainerViewModel: BaseViewModel {
     }
 
     private func updateAvailableDates(camera: CameraObject) {
-        rangesDisposeBag = DisposeBag()
-
-        apiWrapper
+        let disposable = apiWrapper
             .getArchiveRanges(camera)
             .trackActivity(rangesLoadingTracker)
             .trackError(errorTracker)
@@ -120,7 +118,8 @@ final class SelectCameraContainerViewModel: BaseViewModel {
             .drive { [weak self] ranges in
                 self?.rangesForCamera.onNext(ranges)
             }
-            .disposed(by: rangesDisposeBag)
+
+        rangesDisposable.disposable = disposable
     }
 }
 

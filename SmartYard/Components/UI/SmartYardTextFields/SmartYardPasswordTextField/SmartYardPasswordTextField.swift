@@ -11,9 +11,8 @@ import RxSwift
 import RxCocoa
 import TouchAreaInsets
 
-final class SmartYardPasswordTextField: SmartYardBorderedTextField {
+final class SmartYardPasswordTextField: SmartYardBorderedTextField, HasDisposeBag {
     
-    private let disposeBag = DisposeBag()
     
     private let visibilityButton: UIButton = {
         let button = UIButton(type: .custom)

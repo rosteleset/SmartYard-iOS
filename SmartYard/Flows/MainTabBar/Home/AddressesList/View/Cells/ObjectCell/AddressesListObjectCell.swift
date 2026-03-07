@@ -10,13 +10,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class AddressesListObjectCell: CustomBorderCollectionViewCell {
+final class AddressesListObjectCell: CustomBorderCollectionViewCell, HasDisposeBag {
     
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var openButton: SmartYardActionModeButton!
     
-    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,7 +24,7 @@ final class AddressesListObjectCell: CustomBorderCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     func configure(objectType: DomophoneObjectType, name: String?, isOpened: Bool) {

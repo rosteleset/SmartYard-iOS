@@ -33,9 +33,8 @@ enum PaymentsRoute: Route {
     
 }
 
-final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute> {
+final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute>, HasDisposeBag {
     
-    private let disposeBag = DisposeBag()
     
     let apiWrapper: APIWrapper
     private let networkStateProvider: NetworkStateProviding

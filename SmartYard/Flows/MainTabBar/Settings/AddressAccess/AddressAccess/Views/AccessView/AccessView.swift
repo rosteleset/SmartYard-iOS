@@ -12,11 +12,10 @@ import RxCocoa
 import PMNibLinkableView
 import RxDataSources
 
-final class AccessView: PMNibLinkableView {
+final class AccessView: PMNibLinkableView, HasDisposeBag {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private let disposeBag = DisposeBag()
         
     private var dataSource: RxTableViewSectionedAnimatedDataSource<AllowedPersonSectionModel>?
     

@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class AllowedPersonCell: UITableViewCell {
+final class AllowedPersonCell: UITableViewCell, HasDisposeBag {
 
     @IBOutlet private weak var userLogoImageView: RoundedImageView!
     @IBOutlet private weak var userNameLabel: UILabel!
@@ -18,12 +18,11 @@ final class AllowedPersonCell: UITableViewCell {
     
     @IBOutlet private var nameTrailingToSmsButtonConstraint: NSLayoutConstraint!
     
-    var disposeBag = DisposeBag()
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     func configure(with person: AllowedPerson) {

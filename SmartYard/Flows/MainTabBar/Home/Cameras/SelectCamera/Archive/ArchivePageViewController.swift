@@ -30,8 +30,6 @@ final class ArchivePageViewController: BaseViewController, LoaderPresentable {
     private let activityTracker = ActivityTracker()
     private let errorTracker = ErrorTracker()
     
-    private var archiveRangesDisposeBag = DisposeBag()
-    
     var loader: JGProgressHUD?
     
     weak var delegate: ArchivePageViewControllerDelegate?

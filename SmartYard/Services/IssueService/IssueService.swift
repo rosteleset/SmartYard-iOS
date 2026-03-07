@@ -10,12 +10,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class IssueService {
+final class IssueService: HasDisposeBag {
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
     
-    private let disposeBag = DisposeBag()
     
     init(apiWrapper: APIWrapper, accessService: AccessService) {
         self.apiWrapper = apiWrapper

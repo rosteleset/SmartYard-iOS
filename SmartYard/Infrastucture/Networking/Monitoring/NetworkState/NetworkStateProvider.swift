@@ -9,11 +9,10 @@
 import RxSwift
 import RxRelay
 
-final class NetworkStateProvider: NetworkStateProviding {
+final class NetworkStateProvider: NetworkStateProviding, HasDisposeBag {
     private let internet: InternetMonitoring
     private let backend: BackendMonitoring
     private let relay: BehaviorRelay<NetworkState>
-    private let disposeBag = DisposeBag()
 
     var currentState: NetworkState { relay.value }
     var state: Observable<NetworkState> {

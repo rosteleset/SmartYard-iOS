@@ -10,11 +10,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SettingsAddAddressCell: UICollectionViewCell {
+final class SettingsAddAddressCell: UICollectionViewCell, HasDisposeBag {
     
     @IBOutlet private weak var addAddressButton: UIButton!
 
-    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()

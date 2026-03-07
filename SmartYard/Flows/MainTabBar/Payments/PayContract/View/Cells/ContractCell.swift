@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class ContractCell: UICollectionViewCell {
+final class ContractCell: UICollectionViewCell, HasDisposeBag {
 
     @IBOutlet private weak var contractNumLabel: UILabel!
     @IBOutlet private weak var balanceLabel: UILabel!
@@ -25,7 +25,6 @@ final class ContractCell: UICollectionViewCell {
     @IBOutlet private weak var callButton: UIButton!
     @IBOutlet private weak var keyButton: UIButton!
     
-    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,7 +36,7 @@ final class ContractCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     func configure(with item: APIPaymentsListAccount) {

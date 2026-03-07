@@ -11,7 +11,7 @@ import PMNibLinkableView
 import RxCocoa
 import RxSwift
 
-final class IntercomTemporaryAccessView: PMNibLinkableView {
+final class IntercomTemporaryAccessView: PMNibLinkableView, HasDisposeBag {
     
     @IBOutlet fileprivate weak var refreshButton: UIButton!
     @IBOutlet fileprivate weak var openButton: SmartYardActionModeButton!
@@ -22,7 +22,6 @@ final class IntercomTemporaryAccessView: PMNibLinkableView {
     
     @IBOutlet private var guestAccessToSuperviewTopConstraint: NSLayoutConstraint!
     
-    private let disposeBag = DisposeBag()
     
     var isAccessGranted = false {
         didSet {

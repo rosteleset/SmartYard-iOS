@@ -19,7 +19,7 @@ public protocol RxKeyboardType {
 }
 
 /// RxKeyboard provides a reactive way of observing keyboard frame changes.
-public class RxKeyboard: NSObject, RxKeyboardType {
+public class RxKeyboard: NSObject, RxKeyboardType, HasDisposeBag {
     
     // MARK: Public
     
@@ -46,7 +46,6 @@ public class RxKeyboard: NSObject, RxKeyboardType {
     
     // MARK: Private
     
-    private let disposeBag = DisposeBag()
     private let panRecognizer = UIPanGestureRecognizer()
     
     // MARK: Initializing

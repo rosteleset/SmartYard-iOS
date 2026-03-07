@@ -11,9 +11,8 @@ import RxSwift
 import RxCocoa
 import PMNibLinkableView
 
-class SmartYardLicensePlateTextField: UITextField {
+class SmartYardLicensePlateTextField: UITextField, HasDisposeBag {
     
-    private let disposeBag = DisposeBag()
     
     private lazy var licencePlateKeyboard = LicencePlateKeyboardView.loadFromNib()
         

@@ -10,12 +10,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class UnapprovedObjectCell: CustomBorderCollectionViewCell {
+final class UnapprovedObjectCell: CustomBorderCollectionViewCell, HasDisposeBag {
 
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var qrCodeButton: UIButton!
     
-    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,7 +25,7 @@ final class UnapprovedObjectCell: CustomBorderCollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        disposeBag = DisposeBag()
+        di
     }
     
     func configure(address: String?) {

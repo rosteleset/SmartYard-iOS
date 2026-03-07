@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 import Intents
 
-class WidgetViewController: UIViewController, NCWidgetProviding {
+class WidgetViewController: UIViewController, NCWidgetProviding, HasDisposeBag {
     
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var noObjectsLabel: UILabel!
@@ -25,7 +25,6 @@ class WidgetViewController: UIViewController, NCWidgetProviding {
     private let areObjectsGrantAccessed = BehaviorSubject<[Int: Bool]>(value: [:])
     private let doorOpened = PublishSubject<Int?>()
     
-    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()

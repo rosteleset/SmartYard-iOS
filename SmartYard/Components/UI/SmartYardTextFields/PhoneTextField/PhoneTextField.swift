@@ -12,7 +12,7 @@ import PMNibLinkableView
 import RxSwift
 import RxCocoa
 
-final class PhoneTextField: PMNibLinkableView {
+final class PhoneTextField: PMNibLinkableView, HasDisposeBag {
     
     @IBOutlet private weak var containerView: UIView!
     
@@ -25,7 +25,6 @@ final class PhoneTextField: PMNibLinkableView {
         return phoneField.numberViewsCollection
     }
     
-    private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()

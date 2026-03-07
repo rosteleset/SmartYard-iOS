@@ -31,3 +31,8 @@ extension HasDisposeBag {
     }
 }
 
+extension HasDisposeBag {
+    func resetDisposeBag() {
+        disposeBag = DisposeBag()
+    }
+}

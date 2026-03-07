@@ -11,7 +11,7 @@ import SmartYardSharedDataFramework
 import RxSwift
 import RxCocoa
 
-class WdgObjectCell: UITableViewCell {
+class WdgObjectCell: UITableViewCell, HasDisposeBag {
 
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var objectNameLabel: UILabel!
@@ -21,11 +21,10 @@ class WdgObjectCell: UITableViewCell {
     static let reuseIdentifier = "WdgObjectCellId"
     static let defaultHeight: CGFloat = 72
     
-    var disposeBag = DisposeBag()
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     func configure(with object: SmartYardSharedObject, isOpened: Bool) {

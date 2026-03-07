@@ -10,10 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class AddFaceCell: UICollectionViewCell {
+final class AddFaceCell: UICollectionViewCell, HasDisposeBag {
 
     @IBOutlet private weak var button: UIButton!
-    private(set) var disposeBag = DisposeBag()
     
     private var buttonTrigger: Driver<Void> {
         return button.rx.tap.asDriver()
@@ -26,7 +25,7 @@ final class AddFaceCell: UICollectionViewCell {
   
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     func configure(onTapHandler: @escaping () -> Void) {

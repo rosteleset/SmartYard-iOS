@@ -12,9 +12,8 @@ import RxCocoa
 
 private let appearanceModeKey = "themeAppearanceKey"
 
-final class ThemeManager {
+final class ThemeManager: HasDisposeBag {
     static let shared = ThemeManager()
-    private let disposeBag = DisposeBag()
 
     private(set) var currentTheme: BehaviorRelay<UIUserInterfaceStyle> = {
         let savedThemeIndex = UserDefaults.standard.integer(forKey: appearanceModeKey)

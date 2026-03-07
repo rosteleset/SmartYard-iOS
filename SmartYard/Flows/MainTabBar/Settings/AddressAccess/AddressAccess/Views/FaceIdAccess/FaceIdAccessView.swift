@@ -11,7 +11,7 @@ import PMNibLinkableView
 import RxCocoa
 import RxSwift
 
-final class FaceIdAccessView: PMNibLinkableView {
+final class FaceIdAccessView: PMNibLinkableView, HasDisposeBag {
     
     @IBOutlet private weak var containerView: FullRoundedView!
     @IBOutlet private weak var manageFacesView: UIView!
@@ -19,7 +19,6 @@ final class FaceIdAccessView: PMNibLinkableView {
     
     @IBOutlet fileprivate weak var button: UIButton!
     
-    private let disposeBag = DisposeBag()
     
     var isAvailable = false {
         didSet {

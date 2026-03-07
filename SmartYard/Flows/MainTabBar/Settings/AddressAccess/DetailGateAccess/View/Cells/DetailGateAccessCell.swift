@@ -38,7 +38,7 @@ final class DetailGateAccessCell: UICollectionViewCell, HasDisposeBag {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
 
     // MARK: - Configuration

@@ -11,7 +11,7 @@ import AVKit
 import RxSwift
 import RxCocoa
 
-final class FullscreenPlayerViewController: UIViewController {
+final class FullscreenPlayerViewController: UIViewController, HasDisposeBag {
     
     enum PlayedVideoType {
         case online
@@ -36,7 +36,6 @@ final class FullscreenPlayerViewController: UIViewController {
     private let isSoundOn = BehaviorSubject<Bool>(value: false)
     private var hasSound: Bool
     
-    private var disposeBag = DisposeBag()
     
     init(playedVideoType: PlayedVideoType, preferredPlaybackRate: Float, hasSound: Bool, isSoundOn: Bool) {
         self.playedVideoType = playedVideoType

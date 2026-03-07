@@ -42,9 +42,8 @@ enum AppRoute: Route {
 }
 
 // swiftlint:disable:next type_body_length
-final class AppCoordinator: NavigationCoordinator<AppRoute> {
+final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
     
-    private let disposeBag = DisposeBag()
     
     private let linphoneService: LinphoneService
     private let providerProxy: CXProviderProxy

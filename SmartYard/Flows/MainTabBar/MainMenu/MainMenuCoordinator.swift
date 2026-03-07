@@ -24,9 +24,8 @@ enum MainMenuRoute: Route {
     case webViewFromContent(content: String, baseURL: String, version: Int)
 }
 
-class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute> {
+class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute>, HasDisposeBag {
 
-    private let disposeBag = DisposeBag()
 
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService

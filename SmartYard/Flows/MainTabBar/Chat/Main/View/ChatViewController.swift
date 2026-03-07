@@ -13,9 +13,8 @@ import OnlineChatSdk
 import JGProgressHUD
 import WebKit
 
-final class ChatViewController: ChatController, LoaderPresentable {
+final class ChatViewController: ChatController, LoaderPresentable, HasDisposeBag {
     
-    private let disposeBag = DisposeBag()
     private let viewModel: ChatViewModel
     
     var loader: JGProgressHUD?

@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SettingsControlPanelCell: CustomBorderCollectionViewCell {
+final class SettingsControlPanelCell: CustomBorderCollectionViewCell, HasDisposeBag {
     
     @IBOutlet private weak var wifiButton: UIButton!
     @IBOutlet private weak var monitorButton: UIButton!
@@ -18,7 +18,6 @@ final class SettingsControlPanelCell: CustomBorderCollectionViewCell {
     @IBOutlet private weak var keyButton: UIButton!
     @IBOutlet private weak var eyeButton: UIButton!
     
-    var disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +26,7 @@ final class SettingsControlPanelCell: CustomBorderCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     func bind(with outerSubject: PublishSubject<SettingsServiceType>) {

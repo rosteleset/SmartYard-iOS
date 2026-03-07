@@ -9,7 +9,7 @@
 import RxSwift
 import RxCocoa
 
-final class OptionsService: OptionsServicing {
+final class OptionsService: OptionsServicing, HasDisposeBag {
 
     // MARK: - Public
     var optionsUpdated: Observable<Void> { optionsUpdatedRelay.asObservable() }
@@ -20,7 +20,6 @@ final class OptionsService: OptionsServicing {
     private let accessService: AccessService
     private let networkStateProvider: NetworkStateProviding
 
-    private let disposeBag = DisposeBag()
     private let optionsUpdatedRelay = PublishRelay<Void>()
 
     private let isLoadingRelay = BehaviorRelay<Bool>(value: false)

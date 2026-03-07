@@ -584,6 +584,7 @@
 		8B73E1112EFD60A1009E724C /* CollectionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73E10A2EFD60A1009E724C /* CollectionTypes.swift */; };
 		8B73E1122EFD60A1009E724C /* AnySectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73E10C2EFD60A1009E724C /* AnySectionController.swift */; };
 		8B73E1252EFD6EF1009E724C /* HasDisposeBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73E1242EFD6EE9009E724C /* HasDisposeBag.swift */; };
+		B0A1C2D3E4F50617283940A6 /* HasDisposeBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73E1242EFD6EE9009E724C /* HasDisposeBag.swift */; };
 		8B8E41202EA57C24008734EE /* HomeOfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8E411F2EA57C12008734EE /* HomeOfflineViewModel.swift */; };
 		8B8E41232EA57C8D008734EE /* HomeOfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8E41212EA57C8D008734EE /* HomeOfflineViewController.swift */; };
 		8B8E41242EA57C8D008734EE /* HomeOfflineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B8E41222EA57C8D008734EE /* HomeOfflineViewController.xib */; };
@@ -6360,6 +6361,7 @@
 			files = (
 				3A0275662707000B00FD7854 /* Constants.swift in Sources */,
 				849653232472C96F000E1375 /* WidgetViewController.swift in Sources */,
+				B0A1C2D3E4F50617283940A6 /* HasDisposeBag.swift in Sources */,
 				8BBEC5A72E279854003A33B6 /* LicensePlateFormatter.swift in Sources */,
 				849653202472C96F000E1375 /* WdgObjectCell.swift in Sources */,
 				3A6D0F9D27072DB9007A9F66 /* Intents.intentdefinition in Sources */,

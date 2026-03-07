@@ -11,7 +11,7 @@ import PMNibLinkableView
 import RxSwift
 import RxCocoa
 
-final class PinTextField: PMNibLinkableView {
+final class PinTextField: PMNibLinkableView, HasDisposeBag {
     
     @IBOutlet private weak var containerView: UIView!
     
@@ -27,7 +27,6 @@ final class PinTextField: PMNibLinkableView {
         return [firstNumField, secondNumField, thirdNumField, fourthNumField]
     }
     
-    private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()

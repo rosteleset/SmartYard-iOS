@@ -22,9 +22,8 @@ enum HistoryRoute: Route {
     case showModal(withContent: ModalContent)
 }
 
-class HistoryCoordinator: NavigationCoordinator<HistoryRoute> {
+class HistoryCoordinator: NavigationCoordinator<HistoryRoute>, HasDisposeBag {
     
-    private let disposeBag = DisposeBag()
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService

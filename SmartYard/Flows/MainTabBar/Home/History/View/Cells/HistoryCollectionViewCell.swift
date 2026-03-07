@@ -11,7 +11,7 @@ import AVFoundation
 import RxSwift
 import RxCocoa
 
-final class HistoryCollectionViewCell: UICollectionViewCell {
+final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
     private var camera: CameraObject? // APICamMap?
     private var itIsMe: Bool?
     private var event: APIPlog?
@@ -47,7 +47,6 @@ final class HistoryCollectionViewCell: UICollectionViewCell {
         return self.getVideoUrl(from: eventDate)
     }*/
     
-    private(set) var disposeBag = DisposeBag()
     
     var itsMeTrigger: Driver<APIPlog> {
         return openAccessButton.rx.tap
@@ -78,7 +77,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     @objc func doubleTapOnVideo(_ sender: UITapGestureRecognizer) {

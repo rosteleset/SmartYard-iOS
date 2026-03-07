@@ -23,9 +23,8 @@ enum CityCamsRoute: Route {
     case youTubeSafari(url: URL)
 }
 
-final class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute> {
+final class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute>, HasDisposeBag {
     
-    private let disposeBag = DisposeBag()
     
     private let apiWrapper: APIWrapper
     private let accessService: AccessService

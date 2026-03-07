@@ -12,13 +12,12 @@ import RxSwift
 import RxCocoa
 import PMNibLinkableView
 
-final class NumberFieldView: PMNibLinkableView {
+final class NumberFieldView: PMNibLinkableView, HasDisposeBag {
 
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var underlineView: UIView!
     
-    private let disposeBag = DisposeBag()
     
     override func awakeFromNib() {
         super.awakeFromNib()

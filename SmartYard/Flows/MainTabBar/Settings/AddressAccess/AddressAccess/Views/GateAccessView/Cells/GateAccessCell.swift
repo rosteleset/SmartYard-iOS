@@ -11,7 +11,7 @@ import RxRelay
 import RxCocoa
 import RxSwift
 
-final class GateAccessCell: UICollectionViewCell {
+final class GateAccessCell: UICollectionViewCell, HasDisposeBag {
     
     private enum CellType {
         case car
@@ -33,13 +33,12 @@ final class GateAccessCell: UICollectionViewCell {
     let deleteButtonTappedRelay = PublishRelay<Void>()
     let smsButtonTappedRelay = PublishRelay<Void>()
     
-    var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     // MARK: - Configuration

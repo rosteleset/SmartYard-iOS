@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-final class GateAccessView: PMNibLinkableView, UICollectionViewDelegate {
+final class GateAccessView: PMNibLinkableView, UICollectionViewDelegate, HasDisposeBag {
     
     // MARK: - Outlets
     
@@ -23,7 +23,6 @@ final class GateAccessView: PMNibLinkableView, UICollectionViewDelegate {
     
     // MARK: - Properties
     
-    private let disposeBag = DisposeBag()
     
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<GateAccessSectionModel>?
     

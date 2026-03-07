@@ -11,7 +11,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
-final class DetailGateAccessAddCell: UICollectionViewCell {
+final class DetailGateAccessAddCell: UICollectionViewCell, HasDisposeBag {
     
     // MARK: - Reuse Identifier
     
@@ -23,7 +23,6 @@ final class DetailGateAccessAddCell: UICollectionViewCell {
     
     // MARK: - Properties
 
-    private var disposeBag = DisposeBag()
     
     // MARK: - Lifecycle
     
@@ -36,7 +35,7 @@ final class DetailGateAccessAddCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     
     // MARK: - Configuration

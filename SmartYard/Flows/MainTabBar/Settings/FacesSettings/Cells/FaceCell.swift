@@ -10,9 +10,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class FaceCell: UICollectionViewCell {
+final class FaceCell: UICollectionViewCell, HasDisposeBag {
 
-    private var disposeBag = DisposeBag()
     @IBOutlet private weak var deleteButton: CircleIconControl!
     @IBOutlet private weak var imageButton: SafeCachedButton!
     
@@ -30,7 +29,7 @@ final class FaceCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        disposeBag = DisposeBag()
+        resetDisposeBag()
     }
     func reset() {
         imageButton.setImage(nil, for: .normal)
