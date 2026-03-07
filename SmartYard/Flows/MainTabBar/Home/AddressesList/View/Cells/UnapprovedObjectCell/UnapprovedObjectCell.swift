@@ -25,7 +25,7 @@ final class UnapprovedObjectCell: CustomBorderCollectionViewCell, HasDisposeBag 
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        di
+        resetDisposeBag()
     }
     
     func configure(address: String?) {
