@@ -17,6 +17,7 @@ protocol OnlinePlaybackCoordinating: AnyObject {
     func setMode(_ mode: SYPlayerUIMode)
     func willDisplay(cameraId: CameraID, cell: PlayerAttachable)
     func didEndDisplay(cameraId: CameraID, cell: PlayerAttachable)
+    func stopHard()
 }
 
 import Foundation

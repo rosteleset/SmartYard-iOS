@@ -21,6 +21,8 @@ final class OnlinePageViewController: BaseViewController {
 
     // MARK: - State (UI only)
 
+    private var isTransitioningToFullscreen = false
+
     private let config = OnlinePageContext(
         cameras: BehaviorRelay<[CameraViewModel]>(value: []),
         preselectedCameraId: BehaviorRelay<CameraID?>(value: nil)
@@ -94,6 +96,7 @@ final class OnlinePageViewController: BaseViewController {
         super.viewDidAppear(animated)
         Logger.logDebug("viewDidAppear")
         events.viewDidAppear.accept(())
+        playbackBinder?.restorePlayback()
         playbackBinder?.restoreCloseHandler()
     }
 
@@ -105,6 +108,11 @@ final class OnlinePageViewController: BaseViewController {
         if isMovingFromParent || isBeingDismissed {
             playbackCoordinator?.setCloseHandler(nil)
         }
+
+        if !isMovingFromParent && !isBeingDismissed && !isTransitioningToFullscreen {
+            playbackCoordinator?.stopHard()
+        }
+
         events.viewWillDisappear.accept(())
     }
 
@@ -279,6 +287,8 @@ private extension OnlinePageViewController {
 
         Logger.logDebug("presentFullscreen start id=\(cameraId)")
 
+        isTransitioningToFullscreen = true
+
         let vc = OnlineFullscreenViewController(
             cameras: state.cameras,
             initialCameraId: cameraId,
@@ -300,6 +310,8 @@ private extension OnlinePageViewController {
 
         playbackCoordinator.setMode(.fullscreen)
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        present(vc, animated: true) { [weak self] in
+            self?.isTransitioningToFullscreen = false
+        }
     }
 }

@@ -93,6 +93,18 @@ final class OnlinePlaybackBinder {
             self.onRequestFullscreen?(id)
         }
     }
+
+    func restorePlayback() {
+        Logger.logDebug("restorePlayback")
+        lastForcedCameraId = nil
+        lastForcedCameraCell = nil
+
+        guard let state = latestState else { return }
+        guard let selected = state.cameras.first(where: { $0.id == state.selectedCameraId }) else { return }
+
+        playback.setSelectedCamera(id: selected.id, isMuted: selected.isMuted)
+        forceAttachSelectedCamera(selectedId: selected.id, cameras: state.cameras, retryCount: 3)
+    }
 }
 
 // MARK: - Private
