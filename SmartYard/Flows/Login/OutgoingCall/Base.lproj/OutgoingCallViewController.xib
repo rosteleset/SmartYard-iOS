@@ -29,6 +29,8 @@
                 <outlet property="sendCodeAgainGroupButtonConstraint" destination="zNY-39-FIO" id="zTP-ff-RxY"/>
                 <outlet property="sendCodeAgainGroupView" destination="8mg-56-oeR" id="O80-9X-MXi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="callPrefixLabel" destination="Usv-6A-CQh" id="PPw-h3-jr2"/>
+                <outlet property="callSuffixLabel" destination="ROh-6b-UUP" id="8x8-K6-2c2"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

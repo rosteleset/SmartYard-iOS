@@ -5,248 +5,610 @@
   Created by Александр Васильев on 11.01.2023.
   Copyright © 2023 LanTa. All rights reserved.
 */
-"minutes" = "دقائق";
-"Open" = "فتح";
-"Opened" = "تم الفتح";
-"Cancel" = "إلغاء";
-"Settings" = "الإعدادات";
-"Ignore" = "تجاهل";
-"Error" = "خطأ";
-"Back" = "رجوع";
-"Smart intercom" = "إنتركم ذكي";
-"Video surveillance" = "مراقبة بالفيديو";
-"Internet" = "الإنترنت";
-"Cable TV" = "تلفزيون الكابل";
-"Wired Phone" = "هاتف ثابت";
-"Mobile Phone" = "هاتف محمول";
-"Creating a task" = "إنشاء طلب";
-"No service selected" = "لم يتم اختيار أي خدمة";
-"Via Courier" = "عن طريق مندوب";
-"In Office" = "في المكتب";
-"City" = "المدينة";
-"Street" = "الشارع";
-"Building" = "المبنى";
-"Appartment" = "الشقة";
-"To use this feature, go to settings and grant access to the camera" = "لاستخدام هذه الميزة، انتقل إلى الإعدادات وامنح إذن الوصول إلى الكاميرا";
-"Can't access camera" = "لا يمكن الوصول إلى الكاميرا";
-"appartment" = "شقة";
-"Addresses" = "العناوين";
-"Notifications" = "الإشعارات";
-"Chat" = "الدردشة";
-"Pay" = "دفع";
-"Menu" = "القائمة";
-"First, log in to the application, and then try to add the address again" = "يرجى تسجيل الدخول إلى التطبيق أولاً، ثم حاول إضافة العنوان مرة أخرى";
-"Incoming call" = "مكالمة واردة";
-"Call a courier" = "استدعاء مندوب";
-"I'll come to the office myself" = "سأزور المكتب بنفسي";
-"To confirm the address, you need to bring a utility bill no older than three months to our nearest office." = "لتأكيد العنوان، يجب إحضار فاتورة خدمات لا يتجاوز عمرها ثلاثة أشهر إلى أقرب مكتب لدينا.";
-"Wait for the courier at {value} and take a photo of the QR code he brings." = "انتظر المندوب على العنوان {value} والتقط صورة لرمز QR الذي سيحضره.";
-"Pickup" = "استلام ذاتي";
-"Courier" = "مندوب";
-"The delivery method has changed. The client will come to the office." = "تم تغيير طريقة التسليم. سيأتي العميل إلى المكتب.";
-"The delivery method has changed. Prepare a package for the courier." = "تم تغيير طريقة التسليم. يرجى تجهيز الطرد للمندوب.";
-"First Name" = "الاسم";
-"Patronymic" = "اسم الأب";
-"Service not available yet" = "الخدمة %@ غير متاحة حالياً";
-"Creating a ticket" = "إنشاء طلب";
-"Guest information has been successfully sent!" = "تم إرسال معلومات الضيف بنجاح!";
-"Yes" = "نعم";
-"Are you sure?" = "هل أنت متأكد؟";
-"Do you want to remove access?" = "هل تريد إزالة الوصول؟";
-"Enable" = "تفعيل";
-"Disable" = "تعطيل";
-"guestAccessAlertText" = "لكل من يقوم بإدخال رقم شقتك على الإنتركم، سيتم فتح الباب تلقائياً لمدة 60 دقيقة. بعد ذلك سيعود الإنتركم تلقائياً إلى الوضع الافتراضي.";
-"Enable guest access for an hour?" = "تفعيل وصول الضيوف لمدة ساعة؟";
-"Wrong number format" = "تنسيق الرقم غير صحيح";
-"Delete" = "حذف";
-"Service not connected" = "الخدمة %@ غير مفعلة";
-"Everything's under control" = "كل شيء تحت السيطرة";
-"Smart yard" = "ساحة ذكية";
-"Be aware of everything that happens near the house" = "كن على اطلاع بكل ما يحدث بالقرب من المنزل";
-"Manage services and pay for them via the app" = "إدارة الخدمات والدفع لها عبر التطبيق";
-"Control your intercom, gate or barrier from your smartphone" = "تحكم في الإنتركم أو البوابة أو الحاجز من هاتفك";
-"I want to cancel my contract" = "أرغب في إنهاء العقد";
-"Customer didn't provide a reason" = "لم يذكر العميل سبباً";
-"Specify a reason" = "حدد السبب";
-"Exiting the application" = "تسجيل الخروج من التطبيق";
-"Are you sure you want to log out of your account?" = "هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟";
-"Account deleting" = "حذف الحساب";
-"Are you sure you want to delete your account? All previously added addresses will be deleted" = "هل أنت متأكد أنك تريد حذف حسابك؟ سيتم حذف جميع العناوين المضافة سابقاً";
-"Number of contract" = "رقم العقد";
-"Address settings" = "إعدادات العنوان";
-"Access setting" = "إعدادات الوصول";
-"Open web version of personal account" = "فتح النسخة الإلكترونية من الحساب الشخصي";
-"Attention" = "تنبيه";
-"You have been authorized on another device" = "تم تسجيل الدخول من جهاز آخر";
-"Call to intercom" = "اتصال بالإنتركم";
-"Peephole" = "العين السحرية";
-"Peephole on" = "العين السحرية مفعلة";
-"Connecting..." = "جارٍ الاتصال...";
-"Decline" = "رفض";
-"Video" = "فيديو";
-"Conversation" = "محادثة";
-"Call completed" = "انتهت المكالمة";
-"There will be no outgoing audio on this call." = "لن يكون هناك صوت صادر في هذه المكالمة.";
-"To make it appear in your next calls, please grant access to the microphone in the settings" = "لإتاحته في المكالمات القادمة، يرجى منح إذن الوصول إلى الميكروفون في الإعدادات";
-"No microphone access" = "لا يوجد إذن للميكروفون";
-"We need to make sure that the number is indeed yours." = "نحتاج إلى التأكد\nمن أن الرقم %@ هو رقمك فعلاً.";
-"Confirmation code has been sent to your " = "تم إرسال رمز التأكيد إلى ";
-"Send recovery code to " = "إرسال رمز الاستعادة إلى ";
-"email" = "البريد الإلكتروني";
-"phone" = "الهاتف";
-"Failed to load provider list, please try again later." = "فشل تحميل قائمة المزودين، يرجى المحاولة لاحقاً.";
-"Contract number" = "رقم العقد";
-"Password" = "كلمة المرور";
-"Create" = "إنشاء";
-"Create a request for restoration by contract number?" = "هل تريد إنشاء طلب استعادة باستخدام رقم العقد؟";
-"You are requesting a code too often. Please try again later" = "أنت تطلب الرمز بشكل متكرر. يرجى المحاولة لاحقاً";
-"Missing confirmation number" = "رقم التأكيد مفقود";
-"Enter code from SMS sent to number" = "أدخل الرمز من رسالة SMS\nالمُرسلة إلى الرقم ";
-"Invalid contract number entered" = "تم إدخال رقم عقد غير صالح";
-"The password for the specified entry has been sent to the specified" = "تم إرسال كلمة المرور للإدخال المحدد إلى الجهة المحددة";
-"Update" = "تحديث";
-"A new version of the application is available" = "يتوفر إصدار جديد من التطبيق";
-"App version out of date" = "إصدار التطبيق قديم";
-"To continue using the app, please update it" = "لمتابعة استخدام التطبيق، يرجى تحديثه";
-"sec" = "ث";
-"Archive" = "الأرشيف";
-"Online" = "متصل";
-"Select Appearance" = "اختر المظهر";
-"Please choose your preferred appearance theme." = "يرجى اختيار نمط المظهر المفضل.";
-"System" = "النظام";
-"Light" = "فاتح";
-"Dark" = "داكن";
-"Thank you" = "شكراً";
-"Video in progress" = "جارٍ تجهيز الفيديو";
-"As soon as the process is over..." = "بمجرد انتهاء العملية، ستتلقى رسالة في الدردشة.\nاعتماداً على طول الفيديو، قد تستغرق عملية التحميل من بضع دقائق إلى عدة ساعات.";
-"Link to video copied to clipboard" = "تم نسخ رابط الفيديو إلى الحافظة";
-"Video dated" = "فيديو بتاريخ";
-"Opening with a key" = "فتح بالمفتاح";
-"Opening from the app" = "فتح من التطبيق";
-"Opening with Face-ID" = "فتح عبر Face ID";
-"Opening with code" = "فتح بالرمز";
-"Gate opening on call" = "فتح البوابة عند الاتصال";
-"Gate opening by numberplate" = "فتح البوابة برقم اللوحة";
-"Unknown event" = "حدث غير معروف";
-"Answered call" = "مكالمة تم الرد عليها";
-"Missed call" = "مكالمة فائتة";
-"Image missing" = "لا توجد صورة";
-"If you select Deny..." = "إذا اخترت \"رفض\"، سنحذف وجهك المسجل الذي تسبب في استجابة خاطئة لخوارزمياتنا.\nيمكن العثور على جميع الوجوه المسجلة في النظام ضمن: إعدادات العنوان -> إدارة الوصول -> الدخول بالوجه بدون مفتاح.";
-"If you select Allow..." = "إذا اخترت \"سماح\"، سنضيف صورة من هذا الحدث لتحسين التعرف على الزائر بالوجه.\nيمكن العثور على جميع الوجوه المسجلة في النظام ضمن: إعدادات العنوان -> إدارة الوصول -> الدخول بالوجه بدون مفتاح.";
-"all" = "الكل";
-"All" = "الكل";
-"Addresses" = "العناوين";
-"All apts" = "كل الشقق";
-"Appartment" = "الشقة";
-"Appartment, all" = "الشقة، الكل";
-"Events" = "الأحداث";
-"Intercom" = "الإنتركم";
-"Key" = "مفتاح";
-"Face-ID" = "Face ID";
-"Opening on call" = "فتح عند الاتصال";
-"Opening by app" = "فتح عبر التطبيق";
-"Opening by code" = "فتح بالرمز";
-"Unable to open chat page." = "تعذر فتح صفحة الدردشة.";
-"Unable to open payment page." = "تعذر فتح صفحة الدفع.";
-"Deposit" = "إيداع";
-"Done" = "تم";
-"Your balance is topped up" = "تمت تعبئة رصيدك";
-"Payment has failed" = "فشلت عملية الدفع";
-"Recommended" = "موصى به";
-"Note" = "ملاحظة";
-"Request submitted" = "تم إرسال الطلب";
-"We will call you shortly" = "سنتصل بك قريباً";
-"Request a call back" = "طلب معاودة الاتصال";
-"Make a phone call" = "إجراء مكالمة";
-"Map" = "الخريطة";
-"We need to make sure" = "نحتاج إلى التأكد\nمن أن الرقم +%@ هو رقمك فعلاً.";
-"Enter the last 4 digits of the number\nfrom which the call will come to the number +%@" = "أدخل آخر 4 أرقام من الرقم\nالذي ستأتي منه المكالمة إلى الرقم +%@";
-"Enter the code from SMS\nsent to +%@" = "أدخل الرمز من رسالة SMS\nالمرسلة إلى +%@";
-"Full name: %@\Phone: %@\Address entered by user: %@" = "الاسم الكامل: %@\nالهاتف: %@\nالعنوان الذي أدخله المستخدم: %@";
-"Contract number unknown" = "رقم العقد غير معروف";
-"Hello, I would like to change the tariff for the service \"%(X)\" on the contract \"%(Y)\"" = "مرحباً، أود تغيير التعرفة لخدمة \"%(X)\" على العقد \"%(Y)\"";
-"Hello, I would like to connect the service \"%(X)\" to the contract \"%(Y)\"" = "مرحباً، أود تفعيل خدمة \"%(X)\" على العقد \"%(Y)\"";
-"Hello, the \"%(X)\" service is not available at my address, but I want to use it on the \"%(Y)\" contract" = "مرحباً، خدمة \"%(X)\" غير متاحة على عنواني، لكنني أريد استخدامها على العقد \"%(Y)\"";
-"Service \"%@\" is connected" = "الخدمة \"%@\" مفعلة";
-"Create a request" = "إنشاء طلب";
-"Request submitted" = "تم إرسال الطلب";
-"We will contact you within 24 hours" = "سنتواصل معك خلال 24 ساعة";
-"Public cams" = "كاميرات عامة";
-"Request a record" = "طلب تسجيل";
-"Incidents" = "حوادث";
-"Addresses settings" = "إعدادات العناوين";
-"Common settings" = "الإعدادات العامة";
 
-// Errors
-"noConnectionError"  = "لا يوجد اتصال";
-"An error occurred while executing the request" = "حدث خطأ أثناء تنفيذ الطلب %@";
-"Access token not found. Request cannot be completed" = "لم يتم العثور على رمز الوصول. لا يمكن إكمال الطلب";
-"Client id not found. Request cannot be completed" = "لم يتم العثور على معرف العميل. لا يمكن إكمال الطلب";
-"User is already logged in" = "المستخدم مسجل الدخول بالفعل";
-"House id not found. Request cannot be completed" = "لم يتم العثور على معرف المنزل. لا يمكن إكمال الطلب";
-"Current user's phone number not found" = "لم يتم العثور على رقم هاتف المستخدم الحالي";
-"The contract number was not found. It is impossible to complete the request" = "لم يتم العثور على رقم العقد. لا يمكن إكمال الطلب";
-"Unable to restore application state" = "تعذر استعادة حالة التطبيق";
-"Push notifications are disabled for the application at the system level" = "إشعارات الدفع معطلة للتطبيق على مستوى النظام";
-"Push notifications are disabled in the app settings" = "إشعارات الدفع معطلة في إعدادات التطبيق";
-"Missing FCM token" = "رمز FCM مفقود";
-"InstanceID not initialized" = "InstanceID غير مهيأ";
-"Internet connection required to change user" = "مطلوب اتصال بالإنترنت لتغيير المستخدم";
-"No access to contacts" = "لا يوجد إذن للوصول إلى جهات الاتصال";
-"No camera access" = "لا يوجد إذن للوصول إلى الكاميرا";
-"No microphone access" = "لا يوجد إذن للوصول إلى الميكروفون";
-"self destroyed" = "تم تدمير self";
-"Unknown error" = "خطأ غير معروف";
-"Failed to setup camera" = "فشل إعداد الكاميرا";
-"Failed to represent server response as base model" = "تعذر تمثيل استجابة الخادم كنموذج أساسي";
-"Error mapping the Data field, or it is missing with a code other than 204" = "خطأ في ربط حقل Data أو أنه مفقود مع رمز غير 204";
-"Date of record" = "تاريخ التسجيل";
-"Time" = "الوقت";
-"Duration" = "المدة";
-"h" = "س";
-"m" = "د";
-"Allow" = "سماح";
-"Deny" = "رفض";
-"Enable" = "تفعيل";
-"Disable" = "تعطيل";
-"Reset" = "إعادة تعيين";
-"Reset done" = "تمت إعادة التعيين";
-"Reset address order?" = "إعادة تعيين ترتيب العناوين؟";
-"This will restore the default sorting." = "سيؤدي ذلك إلى استعادة الترتيب الافتراضي.";
-"By car number" = "حسب رقم السيارة";
-"By phone number" = "حسب رقم الهاتف";
-"All cars" = "جميع السيارات";
-"All people" = "جميع الأشخاص";
-"Add car" = "إضافة سيارة";
-"Add person" = "إضافة شخص";
-"TimeLeftFormat" = "المتبقي %@";
-"еxpired" = "منتهي";
-"Add" = "إضافة";
-"unlimited" = "غير محدود";
-"Address confirmation" = "تأكيد العنوان";
-"How would it be more convenient for you to do this?" = "ما الطريقة الأنسب لك لتنفيذ ذلك؟";
-"Input your address" = "أدخل العنوان";
-"Available services" = "الخدمات المتاحة";
-"Do you have an agreement with the operator?" = "هل لديك عقد مع المشغل؟";
-"Enter the number and password of the contract associated with this address and manage services from this application." = "أدخل رقم العقد وكلمة المرور المرتبطين بهذا العنوان وقم بإدارة الخدمات من خلال هذا التطبيق.";
-"Select camera" = "اختر الكاميرا";
-"Events log" = "سجل الأحداث";
-"Common settings" = "الإعدادات العامة";
-"Addresses settings" = "إعدادات العناوين";
-"Request a record" = "طلب تسجيل";
-"Public cams" = "كاميرات عامة";
-"Search" = "بحث";
-"VPN detected. The application may work unstable." = "تم اكتشاف VPN. قد يعمل التطبيق بشكل غير مستقر.";
-"List Empty Online List" = "لإضافة عنوان، اضغط على \"+\" في أعلى الشاشة.\n\nإذا لم يظهر العنوان المضاف، يرجى الانتظار بضع دقائق. سيتم تحديث القائمة تلقائياً.";
-"List Empty Offline List" = "يبدو أنه لا توجد بيانات أو لم يتم حفظها بعد.";
-"offline.alert.switch_mode" = "اضغط على \"OK\" للعودة إلى وضع الاتصال.\nاضغط على \"إلغاء\" للبقاء في وضع عدم الاتصال.";
-"offline.alert.no_connection_title" = "لا يوجد اتصال!";
-"offline.message.connection_lost" = "يبدو أن الاتصال قد انقطع أو أن الخادم يواجه مشاكل.";
-"offline.message.server_unavailable" = "لا يمكن الخروج من وضع عدم الاتصال حالياً — الخادم غير متاح. يرجى المحاولة لاحقاً.";
-"offline.hint.swipe_to_exit" = "أنت في وضع عدم الاتصال. للخروج منه، اسحب من أعلى الشاشة إلى الأسفل.";
-"offline.message.connection_restored" = "رائع! تم استعادة الاتصال.";
-"My addresses" = "عناويني";
-"First address cameras" = "كاميرات العنوان الأول";
-"First address events" = "أحداث العنوان الأول";
-"First address access" = "الوصول إلى العنوان الأول";
-"Phone number copied to clipboard" = "تم نسخ رقم الهاتف إلى الحافظة";
+/* MARK: - ADDRESS */
+
+"address.confirmation.subtitle" = "ما الطريقة الأنسب لك لتنفيذ ذلك؟";
+"address.confirmation.title" = "تأكيد العنوان";
+
+"address.confirmation.courier.activationHint" = "ستحصل فوراً على إمكانية الوصول إلى جميع وظائف تطبيق «الإنتركم الذكي».";
+"address.confirmation.courier.envelopeHint" = "خلال أسبوع سيقوم المندوب بتسليم ظرف سري";
+"address.confirmation.courier.hintFormat" = "انتظر المندوب على العنوان {value} والتقط صورة لرمز QR الذي سيحضره.";
+"address.confirmation.courier.leaveARequest" = "قدّم طلباً";
+"address.confirmation.courier.qrCodeHint" = "سيكون داخل الظرف";
+"address.confirmation.courier.requestButton" = "رائع! قدّم طلباً";
+"address.confirmation.courier.scanTheQrCode" = "امسح رمز QR";
+"address.confirmation.courier.use" = "استخدمه!";
+
+"address.confirmation.delivery.courierChangeMessage" = "تم تغيير طريقة التسليم. يرجى تجهيز الطرد للمندوب.";
+"address.confirmation.delivery.courierOption" = "استدعاء مندوب";
+"address.confirmation.delivery.courierShort" = "عن طريق مندوب";
+"address.confirmation.delivery.courierTitle" = "مندوب";
+"address.confirmation.delivery.officeChangeMessage" = "تم تغيير طريقة التسليم. سيأتي العميل إلى المكتب.";
+"address.confirmation.delivery.officeOption" = "سأزور المكتب بنفسي";
+"address.confirmation.delivery.officeShort" = "في المكتب";
+"address.confirmation.delivery.pickupTitle" = "استلام ذاتي";
+
+"address.confirmation.office.hint" = "لتأكيد العنوان، يجب إحضار فاتورة خدمات لا يتجاوز عمرها ثلاثة أشهر إلى أقرب مكتب لدينا.";
+"address.confirmation.office.iLlDoSoButton" = "سأفعل ذلك";
+"address.confirmation.office.instructions" = "قم بزيارة أقرب مكتب لنا مع فاتورة الخدمات الخاصة بهذه الشقة، وسنقوم فوراً بتفعيل ميزة الإنتركم الذكي والمراقبة بالفيديو.";
+
+"address.entry.checkAvailableServicesButton" = "التحقق من الخدمات المتاحة";
+"address.entry.iHaveQrCodeButton" = "لدي رمز QR";
+"address.entry.title" = "أدخل العنوان";
+
+"address.form.apartment" = "الشقة";
+"address.form.apartmentValue" = "شقة";
+"address.form.building" = "المبنى";
+"address.form.city" = "المدينة";
+"address.form.street" = "الشارع";
+
+"address.qrCode.loginRequiredMessage" = "يرجى تسجيل الدخول إلى التطبيق أولاً، ثم حاول إضافة العنوان مرة أخرى";
+
+"address.qrScan.pointYourCameraAtTheQrCode" = "Наведите камеру на QR-код";
+
+/* MARK: - APP */
+
+"app.update.action" = "تحديث";
+"app.update.availableTitle" = "يتوفر إصدار جديد من التطبيق";
+"app.update.requiredMessage" = "لمتابعة استخدام التطبيق، يرجى تحديثه";
+"app.update.requiredTitle" = "إصدار التطبيق قديم";
+
+/* MARK: - AUTH */
+
+"auth.callVerification.callButton" = "اتصال";
+"auth.callVerification.callInstructionPrefix" = "قم بإجراء مكالمة مجانية إلى الرقم";
+"auth.callVerification.callInstructionSuffix" = "حتى نتمكن من التأكد\nأن هذا هو رقمك";
+"auth.callVerification.confirmPhoneTitle" = "نحتاج إلى التأكد\nأن الرقم +79025308094 هو رقمك فعلاً.";
+"auth.callVerification.confirmPhoneTitleFormat" = "نحتاج إلى التأكد\nأن الرقم +%@ هو رقمك فعلاً.";
+"auth.callVerification.editPhoneButton" = "تعديل رقم الهاتف";
+"auth.callVerification.phoneNumberPlaceholder" = "+7 (1234) 12-34-56";
+
+"auth.codeRateLimit.message" = "أنت تطلب الرمز بشكل متكرر. يرجى المحاولة لاحقاً";
+
+"auth.contractLogin.contractNumberPlaceholder" = "رقم العقد";
+"auth.contractLogin.createButton" = "إنشاء";
+"auth.contractLogin.forgotCredentialsButton" = "لا أتذكر شيئاً";
+"auth.contractLogin.forgotPasswordButton" = "نسيت كلمة المرور";
+"auth.contractLogin.hasOperatorAgreementTitle" = "هل لديك عقد مع المشغل؟";
+"auth.contractLogin.iDonTHaveAContractButton" = "ليس لدي عقد";
+"auth.contractLogin.loginButton" = "تسجيل الدخول";
+"auth.contractLogin.passwordPlaceholder" = "كلمة المرور";
+"auth.contractLogin.restoreByContractPrompt" = "هل تريد إنشاء طلب استعادة باستخدام رقم العقد؟";
+"auth.contractLogin.subtitle" = "أدخل رقم العقد وكلمة المرور المرتبطين بهذا العنوان وقم بإدارة الخدمات من خلال هذا التطبيق.";
+
+"auth.flashCall.enterLastDigitsTitleFormat" = "أدخل آخر 4 أرقام من الرقم\nالذي ستأتي منه المكالمة إلى الرقم +%@";
+
+"auth.passwordRecovery.chooseMethodButton" = "عرض الطرق المتاحة";
+"auth.passwordRecovery.codeSentMessage" = "تم إرسال كلمة المرور للإدخال المحدد إلى الجهة المحددة";
+"auth.passwordRecovery.contractPlaceholder" = "رقم العقد";
+"auth.passwordRecovery.restoreAccess" = "استعادة الوصول";
+"auth.passwordRecovery.sendCodeButton" = "الحصول على رمز التأكيد";
+"auth.passwordRecovery.subtitle" = "يرجى إدخال رقم العقد وتحديد البريد الإلكتروني أو رقم الهاتف المستخدم عند تسجيل العقد";
+
+"auth.passwordRecovery.code.resendButton" = "إعادة إرسال الرمز";
+"auth.passwordRecovery.code.resendHint" = "يمكن إعادة إرسال الرمز بعد";
+"auth.passwordRecovery.code.sentToPhoneTitle" = "تم إرسال رمز التأكيد إلى الهاتف +79025308094";
+"auth.passwordRecovery.code.timerValue" = "01:00";
+
+"auth.passwordRecovery.error.invalidContract" = "تم إدخال رقم عقد غير صالح";
+
+"auth.passwordRecovery.method.email" = "البريد الإلكتروني";
+"auth.passwordRecovery.method.maskedContactPlaceholder" = "إرسال رمز الاستعادة إلى البريد mi****@yandex.ru";
+"auth.passwordRecovery.method.phone" = "الهاتف";
+"auth.passwordRecovery.method.sendCodePrefix" = "إرسال رمز الاستعادة إلى ";
+"auth.passwordRecovery.method.titlePrefix" = "تم إرسال رمز التأكيد إلى ";
+
+"auth.phoneEntry.changeProviderButton" = "العودة لاختيار المزود";
+"auth.phoneEntry.providerName" = "اسم المزود";
+"auth.phoneEntry.title" = "أدخل رقم الهاتف\nللتسجيل";
+
+"auth.phoneEntry.error.confirmationNumberMissing" = "رقم التأكيد مفقود";
+
+"auth.providerSelection.chooseAProvider" = "اختر المزود";
+"auth.providerSelection.searchPlaceholder" = " أدخل اسم الشركة";
+"auth.providerSelection.subtitle" = "يرجى اختيار مزود الخدمة من القائمة أو استخدام البحث.";
+
+"auth.providerSelection.error.loadFailed" = "فشل تحميل قائمة المزودين، يرجى المحاولة لاحقاً.";
+
+"auth.providerSelection.method.maskedContactPlaceholder" = "إرسال رمز الاستعادة إلى البريد mi****@yandex.ru";
+
+"auth.smsCode.resendHint" = "يمكن إعادة إرسال الرمز بعد";
+"auth.smsCode.sentToPhoneTitle" = "أدخل الرمز من رسالة SMS\nالمرسلة إلى الرقم +79025308094";
+"auth.smsCode.sentToPhoneTitleFormat" = "أدخل الرمز من رسالة SMS\nالمرسلة إلى +%@";
+"auth.smsCode.timerValue" = "01:00";
+
+"auth.userName.howCanICallYou" = "كيف يمكننا مناداتك؟";
+
+/* MARK: - CAMERA */
+
+"camera.archive.title" = "الأرشيف";
+
+"camera.archive.export.linkCopiedMessage" = "تم نسخ رابط الفيديو إلى الحافظة";
+"camera.archive.export.processingMessage" = "بمجرد انتهاء العملية، ستتلقى رسالة في الدردشة.\nاعتماداً على طول الفيديو، قد تستغرق عملية التحميل من بضع دقائق إلى عدة ساعات.";
+"camera.archive.export.processingTitle" = "جارٍ تجهيز الفيديو";
+"camera.archive.export.successTitle" = "شكراً";
+
+"camera.archivePlayer.downloadAndGetLinkButton" = "تحميل والحصول على الرابط";
+"camera.archivePlayer.halfSpeedButton" = "0.5x";
+"camera.archivePlayer.oneAndHalfSpeedButton" = "1.5x";
+"camera.archivePlayer.selectFragmentButton" = "اختيار مقطع";
+"camera.archivePlayer.videoDated" = "فيديو بتاريخ";
+
+"camera.city.incidentsTitle" = "حوادث";
+"camera.city.mapTitle" = "الخريطة";
+"camera.city.publicCamerasTitle" = "كاميرات عامة";
+"camera.city.requestRecordButton" = "طلب تسجيل";
+
+"camera.city.detail.addressPlaceholder" = "تامبوف، شارع سوفيتسكايا، 16";
+"camera.city.detail.title" = "الكاميرا ";
+
+"camera.online.title" = "متصل";
+
+"camera.recordRequest.commentPlaceholder" = "تعليق";
+"camera.recordRequest.dateLabel" = "تاريخ التسجيل";
+"camera.recordRequest.datePlaceholder" = "تاريخ التسجيل: 5.09.2020";
+"camera.recordRequest.durationHint" = "يمكنك طلب مقطع مدته لا تتجاوز ساعة واحدة. تتيح خدمتنا حفظ تسجيلات الفيديو لمدة لا تزيد عن 10 أيام، وبعد ذلك يتم حذف الفيديو من الأرشيف نهائياً. ";
+"camera.recordRequest.durationLabel" = "المدة";
+"camera.recordRequest.durationPlaceholder" = "المدة: 10 دقائق";
+"camera.recordRequest.processingHint" = "قد تستغرق معالجة الطلب حتى يوم عمل واحد.";
+"camera.recordRequest.sendRequestButton" = "إرسال الطلب";
+"camera.recordRequest.submittedMessage" = "سنتواصل معك خلال 24 ساعة";
+"camera.recordRequest.timeHoursPlaceholder" = "الوقت: سس";
+"camera.recordRequest.timeLabel" = "الوقت";
+"camera.recordRequest.timeMinutesPlaceholder" = "الوقت: دد";
+
+"camera.selection.title" = "اختر الكاميرا";
+
+/* MARK: - CHAT */
+
+"chat.error.unableToOpenPage" = "تعذر فتح صفحة الدردشة.";
+
+/* MARK: - COMMON */
+
+"common.add" = "إضافة";
+"common.all" = "الكل";
+"common.allow" = "سماح";
+"common.back" = "رجوع";
+"common.cancel" = "إلغاء";
+"common.delete" = "حذف";
+"common.deny" = "رفض";
+"common.disable" = "تعطيل";
+"common.done" = "تم";
+"common.enable" = "تفعيل";
+"common.error" = "خطأ";
+"common.ignore" = "تجاهل";
+"common.next" = "التالي";
+"common.no" = "لا";
+"common.ok" = "OK";
+"common.open" = "فتح";
+"common.opened" = "تم الفتح";
+"common.reset" = "إعادة تعيين";
+"common.resetDone" = "تمت إعادة التعيين";
+"common.save" = "حفظ";
+"common.search" = "بحث";
+"common.settings" = "الإعدادات";
+"common.yes" = "نعم";
+
+"common.confirmation.title" = "هل أنت متأكد؟";
+
+"common.time.hoursShort" = "س";
+"common.time.minutes" = "دقائق";
+"common.time.minutesShort" = "د";
+"common.time.secondsShort" = "ث";
+
+"common.weekday.short.fri" = "الجمعة";
+"common.weekday.short.mon" = "الاثنين";
+"common.weekday.short.sat" = "السبت";
+"common.weekday.short.sun" = "الأحد";
+"common.weekday.short.thu" = "الخميس";
+"common.weekday.short.tue" = "الثلاثاء";
+"common.weekday.short.wed" = "الأربعاء";
+
+/* MARK: - ERROR */
+
+"error.address.houseIdMissing" = "لم يتم العثور على معرف المنزل. لا يمكن إكمال الطلب";
+
+"error.app.restoreStateFailed" = "تعذر استعادة حالة التطبيق";
+
+"error.auth.accessTokenMissing" = "لم يتم العثور على رمز الوصول. لا يمكن إكمال الطلب";
+"error.auth.clientIdMissing" = "لم يتم العثور على معرف العميل. لا يمكن إكمال الطلب";
+"error.auth.contractNumberNotFound" = "لم يتم العثور على رقم العقد. لا يمكن إكمال الطلب";
+"error.auth.currentUserPhoneMissing" = "لم يتم العثور على رقم هاتف المستخدم الحالي";
+"error.auth.userAlreadyLoggedIn" = "المستخدم مسجل الدخول بالفعل";
+
+"error.camera.setupFailed" = "فشل إعداد الكاميرا";
+
+"error.common.unknown" = "خطأ غير معروف";
+
+"error.internal.selfDestroyed" = "تم تدمير self";
+
+"error.network.baseModelParsingFailed" = "تعذر تمثيل استجابة الخادم كنموذج أساسي";
+"error.network.dataFieldMappingFailed" = "خطأ في ربط حقل Data أو أنه مفقود مع رمز غير 204";
+"error.network.internetRequiredToChangeUser" = "مطلوب اتصال بالإنترنت لتغيير المستخدم";
+"error.network.noConnection" = "لا يوجد اتصال";
+
+"error.notifications.appDisabled" = "إشعارات الدفع معطلة في إعدادات التطبيق";
+"error.notifications.fcmTokenMissing" = "رمز FCM مفقود";
+"error.notifications.instanceIdMissing" = "InstanceID غير مهيأ";
+"error.notifications.systemDisabled" = "إشعارات الدفع معطلة للتطبيق على مستوى النظام";
+
+"error.permissions.cameraDenied" = "لا يوجد إذن للوصول إلى الكاميرا";
+"error.permissions.contactsDenied" = "لا يوجد إذن للوصول إلى جهات الاتصال";
+
+"error.request.executionFailed" = "حدث خطأ أثناء تنفيذ الطلب %@";
+
+/* MARK: - FACE RECOGNITION */
+
+"faceRecognition.addFace.addThisFace" = "إضافة هذا الوجه؟";
+
+"faceRecognition.deleteFace.deleteThisFace" = "حذف هذا الوجه؟";
+
+/* MARK: - HISTORY */
+
+"history.title" = "سجل الأحداث";
+
+"history.detail.emptyStateMessage" = "يبدو أنه لا توجد أحداث مناسبة في السجل حالياً.\n\nتأكد من أن مالك الشقة قد فعّل تسجيل الأحداث.\nبعد ذلك، حاول فتح مدخل المبنى باستخدام مفتاحك وانتظر دقيقة واحدة حتى يظهر في النظام حدث واحد على الأقل يتضمن صورتك.\nثم حاول فتح هذا القسم مرة أخرى.\n\nملاحظة: نذكّرك بأننا دائماً مستعدون للمساعدة عبر الدردشة أو هاتف الدعم الفني من خلال قائمة هذا التطبيق.";
+"history.detail.title" = "الأحداث";
+
+"history.event.answeredCall" = "مكالمة تم الرد عليها";
+"history.event.gateOpeningByNumberplate" = "فتح البوابة برقم اللوحة";
+"history.event.gateOpeningOnCall" = "فتح البوابة عند الاتصال";
+"history.event.guestAllowedHint" = "إذا اخترت \"سماح\"، سنضيف صورة من هذا الحدث لتحسين التعرف على الزائر بالوجه.\nيمكن العثور على جميع الوجوه المسجلة في النظام ضمن: إعدادات العنوان -> إدارة الوصول -> الدخول بالوجه بدون مفتاح.";
+"history.event.guestDeniedHint" = "إذا اخترت \"رفض\"، سنحذف وجهك المسجل الذي تسبب في استجابة خاطئة لخوارزمياتنا.\nيمكن العثور على جميع الوجوه المسجلة في النظام ضمن: إعدادات العنوان -> إدارة الوصول -> الدخول بالوجه بدون مفتاح.";
+"history.event.imageMissing" = "لا توجد صورة";
+"history.event.missedCall" = "مكالمة فائتة";
+"history.event.openingFromApp" = "فتح من التطبيق";
+"history.event.openingWithCode" = "فتح بالرمز";
+"history.event.openingWithFaceID" = "فتح عبر Face ID";
+"history.event.openingWithKey" = "فتح بالمفتاح";
+"history.event.unknown" = "حدث غير معروف";
+
+"history.filter.allApartments" = "كل الشقق";
+"history.filter.allButton" = "الكل";
+"history.filter.allInApartment" = "الشقة، الكل";
+"history.filter.allOption" = "الكل";
+"history.filter.apptAllButton" = "الشقة، الكل";
+"history.filter.faceID" = "Face ID";
+"history.filter.intercom" = "الإنتركم";
+"history.filter.key" = "مفتاح";
+"history.filter.openingByApp" = "فتح عبر التطبيق";
+"history.filter.openingByCode" = "فتح بالرمز";
+"history.filter.openingOnCall" = "فتح عند الاتصال";
+
+"history.videoEventInfo.description" = "بالنسبة للأحداث الحديثة يتم عرض فيديو لفترة قصيرة. أما باقي الأحداث فيُعرض إطار محفوظ في لحظة الحدث.";
+"history.videoEventInfo.forwardGestureHint" = "نقرتان مزدوجتان على الجهة اليمنى من الفيديو — تقديم بمقدار 10 ثوانٍ";
+"history.videoEventInfo.gesturesTitle" = "يمكنك أيضًا استخدام الإيماءات:";
+"history.videoEventInfo.rewindGestureHint" = "نقرتان مزدوجتان على الجهة اليسرى من الفيديو — إرجاع بمقدار 10 ثوانٍ";
+"history.videoEventInfo.swipeGestureHint" = "السحب لليسار أو اليمين — التنقل بين سجل الأحداث؛";
+"history.videoEventInfo.title" = "تلميح";
+
+/* MARK: - HOME */
+
+"home.addressCard.cameras.cameras" = "كاميرات الفيديو";
+"home.addressCard.cameras.countValue" = "3";
+
+"home.addressCard.events.countValue" = "3";
+"home.addressCard.events.events" = "الأحداث";
+
+"home.addresses.title" = "عناويني";
+
+"home.addressesEmpty.listIsEmpty" = "القائمة فارغة حالياً :(";
+"home.addressesEmpty.offlineTitle" = "يبدو أنه لا توجد بيانات أو لم يتم حفظها بعد.";
+"home.addressesEmpty.onlineTitle" = "لإضافة عنوان، اضغط على \"+\" في أعلى الشاشة.\n\nإذا لم يظهر العنوان المضاف، يرجى الانتظار بضع دقائق. سيتم تحديث القائمة تلقائياً.";
+"home.addressesEmpty.toAddAnAddressTapAtTheTop" = "لإضافة عنوان، اضغط على \"+\" في أعلى الشاشة.\n\nإذا لم يظهر العنوان المضاف، يرجى الانتظار بضع دقائق. سيتم تحديث القائمة تلقائياً.";
+
+/* MARK: - INTERCOM */
+
+"intercom.incoming.addressPlaceholder" = "تامبوف، شارع سوفيتسكايا 20، شقة 52";
+"intercom.incoming.answerAction" = "الرد";
+"intercom.incoming.callCompletedStatus" = "انتهت المكالمة";
+"intercom.incoming.connectingStatus" = "جارٍ الاتصال...";
+"intercom.incoming.conversationStatus" = "محادثة";
+"intercom.incoming.declineAction" = "رفض";
+"intercom.incoming.ignoreAction" = "تجاهل";
+"intercom.incoming.microphoneMissingMessage" = "لإتاحته في المكالمات القادمة، يرجى منح إذن الوصول إلى الميكروفون في الإعدادات";
+"intercom.incoming.microphoneMissingTitle" = "لن يكون هناك صوت صادر في هذه المكالمة.";
+"intercom.incoming.notificationTitle" = "مكالمة واردة";
+"intercom.incoming.openedStatus" = "تم الفتح";
+"intercom.incoming.peepholeAction" = "العين السحرية";
+"intercom.incoming.peepholeOnStatus" = "العين السحرية مفعلة";
+"intercom.incoming.previewAction" = "العين السحرية";
+"intercom.incoming.speakerAction" = "مكبر الصوت";
+"intercom.incoming.title" = "اتصال بالإنتركم";
+"intercom.incoming.videoAction" = "فيديو";
+
+/* MARK: - MENU */
+
+"menu.main.menu" = "القائمة";
+
+"menu.support.callToTechSupport" = "الاتصال بالدعم الفني";
+
+/* MARK: - NETWORK */
+
+"network.vpn.detectedWarning" = "تم اكتشاف VPN. قد يعمل التطبيق بشكل غير مستقر.";
+
+/* MARK: - OFFLINE */
+
+"offline.alert.noConnectionTitle" = "لا يوجد اتصال!";
+"offline.alert.switchMode" = "اضغط على \"OK\" للعودة إلى وضع الاتصال.\nاضغط على \"إلغاء\" للبقاء في وضع عدم الاتصال.";
+
+"offline.hint.swipeToExit" = "أنت في وضع عدم الاتصال. للخروج منه، اسحب من أعلى الشاشة إلى الأسفل.";
+
+"offline.home.title" = "عناويني";
+
+"offline.message.connectionLost" = "يبدو أن الاتصال قد انقطع أو أن الخادم يواجه مشاكل.";
+"offline.message.connectionRestored" = "رائع! تم استعادة الاتصال.";
+"offline.message.serverUnavailable" = "لا يمكن الخروج من وضع عدم الاتصال حالياً — الخادم غير متاح. يرجى المحاولة لاحقاً.";
+
+/* MARK: - ONBOARDING */
+
+"onboarding.coolLetSGetStartedButton" = "رائع، لنبدأ!";
+"onboarding.skipButton" = "تخطي";
+
+"onboarding.awareness.title" = "كن على اطلاع بكل ما يحدث بالقرب من المنزل";
+
+"onboarding.control.title" = "كل شيء تحت السيطرة";
+
+"onboarding.intercom.subtitle" = "تحكم في الإنتركم أو البوابة أو الحاجز من هاتفك";
+
+"onboarding.services.subtitle" = "إدارة الخدمات والدفع لها عبر التطبيق";
+
+"onboarding.slide.videoSurveillance" = "مراقبة بالفيديو";
+
+"onboarding.slide.awareness.subtitle" = "كن على اطلاع بكل ما يحدث بالقرب من المنزل";
+
+"onboarding.smartYard.title" = "ساحة ذكية";
+
+/* MARK: - PAYMENTS */
+
+"payments.addressSelection.selectAddress" = "اختر العنوان";
+
+"payments.error.unableToOpenPage" = "تعذر فتح صفحة الدفع.";
+
+"payments.topUp.amount" = "المبلغ:";
+"payments.topUp.amountPlaceholder" = "المبلغ";
+"payments.topUp.contractNumberPlaceholder" = "№68992";
+"payments.topUp.depositTitle" = "إيداع";
+"payments.topUp.errorTitle" = "فشلت عملية الدفع";
+"payments.topUp.payButton" = "دفع";
+"payments.topUp.paymentByBankCardButton" = "الدفع بالبطاقة البنكية";
+"payments.topUp.recommendedAmountPlaceholder" = "الموصى بها — 480 روبل";
+"payments.topUp.recommendedLabel" = "موصى به";
+"payments.topUp.successMessage" = "تمت تعبئة رصيدك";
+"payments.topUp.successMessageShort" = "تمت تعبئة رصيدك";
+"payments.topUp.successTitle" = "تم!";
+"payments.topUp.topUpBalance" = "تعبئة الرصيد";
+
+/* MARK: - PERMISSIONS */
+
+"permissions.camera.message" = "لاستخدام هذه الميزة، انتقل إلى الإعدادات وامنح إذن الوصول إلى الكاميرا";
+"permissions.camera.title" = "لا يمكن الوصول إلى الكاميرا";
+
+"permissions.microphone.title" = "لا يوجد إذن للميكروفون";
+
+/* MARK: - PROFILE */
+
+"profile.firstName" = "الاسم";
+"profile.patronymic" = "اسم الأب";
+
+/* MARK: - QUICK ACTION */
+
+"quickAction.error.unsupported" = "Unsupported quick action";
+
+"quickAction.firstAddress.accessTitle" = "الوصول إلى العنوان الأول";
+"quickAction.firstAddress.camerasNotFound" = "No cameras were found";
+"quickAction.firstAddress.camerasTitle" = "كاميرات العنوان الأول";
+"quickAction.firstAddress.eventsTitle" = "أحداث العنوان الأول";
+"quickAction.firstAddress.noAccessSettings" = "The first address has no access settings";
+"quickAction.firstAddress.noAddresses" = "No addresses were found";
+"quickAction.firstAddress.noCameras" = "The first address has no cameras";
+"quickAction.firstAddress.noEvents" = "The first address has no events";
+
+/* MARK: - REQUEST */
+
+"request.common.submittedTitle" = "تم إرسال الطلب";
+
+/* MARK: - SERVICES */
+
+"services.activationRequest.oops" = "عذراً :(";
+"services.activationRequest.requestButton" = "قدّم طلباً";
+"services.activationRequest.subtitle" = "عنوانك يحتاج إلى توضيح. انتظر اتصال المختص.\n\nما الخدمة التي ترغب في تفعيلها؟";
+
+"services.available.loadingTitle" = "إنشاء طلب";
+"services.available.title" = "الخدمات المتاحة";
+
+"services.available.card.smartIntercom" = "Умный домофон";
+
+"services.available.error.noServiceSelected" = "لم يتم اختيار أي خدمة";
+
+"services.available.smartIntercom.subtitle" = "На шлагбаум, ворота и подъезд";
+
+"services.catalog.cableTV" = "تلفزيون الكابل";
+"services.catalog.internet" = "الإنترنت";
+"services.catalog.mobilePhone" = "هاتف محمول";
+"services.catalog.smartIntercom" = "إنتركم ذكي";
+"services.catalog.videoSurveillance" = "مراقبة بالفيديو";
+"services.catalog.wiredPhone" = "هاتف ثابت";
+
+"services.request.createButton" = "إنشاء طلب";
+"services.request.loadingTitle" = "إنشاء طلب";
+"services.request.mainUserInfoFormat" = "الاسم الكامل: %@\nالهاتف: %@\nالعنوان الذي أدخله المستخدم: %@";
+"services.request.unknownContractNumber" = "رقم العقد غير معروف";
+
+"services.status.activated.changePlanButton" = "تغيير التعرفة";
+"services.status.activated.changePlanHint" = "إذا كنت تريد تغيير التعرفة، قدّم طلباً";
+"services.status.activated.serviceActivated" = "الخدمة مفعلة";
+"services.status.activated.titleFormat" = "الخدمة \"%@\" مفعلة";
+
+"services.status.notActivated.requestButton" = "قدّم طلباً";
+"services.status.notActivated.subtitle" = "إذا كنت تريد تفعيل الخدمة،\nقدّم طلباً";
+"services.status.notActivated.title" = "الخدمة %@ غير مفعلة";
+
+"services.status.soonAvailable.addressInstructionPlaceholder" = "انتظر المندوب على العنوان تامبوف، سوفيتسكايا، 80، 16 والتقط صورة لرمز QR الذي سيحضره.";
+"services.status.soonAvailable.title" = "قريباً جداً\nسيعمل كل شيء!";
+
+"services.status.unavailable.message" = "الخدمة غير متاحة حالياً على عنوانك. لتفعيلها، نحتاج إلى جمع عدة طلبات من مبناك. كن أول من يقدّم طلباً!";
+"services.status.unavailable.requestButton" = "قدّم طلباً";
+"services.status.unavailable.title" = "الخدمة %@ غير متاحة حالياً";
+
+/* MARK: - SESSION */
+
+"session.conflict.message" = "تم تسجيل الدخول من جهاز آخر";
+"session.conflict.title" = "تنبيه";
+
+/* MARK: - SETTINGS */
+
+"settings.address.addressSettings" = "إعدادات العنوان";
+"settings.address.deleteAddressButton" = "حذف العنوان";
+"settings.address.hideEventLogTitle" = "إخفاء سجل الأحداث\nعن المستخدمين الآخرين في الشقة";
+"settings.address.intercom" = "الإنتركم";
+"settings.address.intercomEnabled" = "الإنتركم مفعّل";
+"settings.address.keepAnEventLog" = "تسجيل الأحداث";
+"settings.address.label" = "تسمية";
+"settings.address.noteLabel" = "ملاحظة";
+"settings.address.receiveCalls" = "استقبال المكالمات";
+"settings.address.receivePaperBills" = "استلام فواتير ورقية";
+"settings.address.recognizeFaces" = "التعرف على الوجوه";
+"settings.address.recognizePlates" = "التعرف على أرقام اللوحات";
+"settings.address.whiteRabbitMode" = "وضع \"الأرنب الأبيض\"";
+
+"settings.address.whiteRabbitInfo.description" = "ميزة مخصصة لفتح البوابة عند الاتصال بالشقة، وفتح لوحة مدخل المبنى باستخدام رقم الشقة دون الاتصال بالشقة.";
+"settings.address.whiteRabbitInfo.step1" = "يقترب الضيف من البوابة ويدخل رقم الشقة المطلوب؛";
+"settings.address.whiteRabbitInfo.step2" = "يرد صاحب الشقة على الضيف ويضغط زر «فتح» في التطبيق أو في السماعة التناظرية؛";
+"settings.address.whiteRabbitInfo.step3" = "يقترب الضيف من لوحة الإنتركم ويدخل رقم الشقة. سيتم فتح الإنتركم دون الاتصال بالشقة.";
+"settings.address.whiteRabbitInfo.stepsTitle" = "تعمل على النحو التالي:";
+"settings.address.whiteRabbitInfo.title" = "«الأرنب الأبيض»";
+"settings.address.whiteRabbitInfo.validityHint" = "مدة عمل هذه الميزة بعد فتح البوابة: 5 دقائق.";
+
+"settings.addressAccess.accessToAddress" = "الوصول إلى العنوان";
+"settings.addressAccess.accessToTheBarrierGate" = "وصول إلى الحاجز/البوابة";
+"settings.addressAccess.addressPlaceholder" = "تامبوف، شارع سوفيتسكايا، 16، مبنى 4";
+"settings.addressAccess.permanentAccessTitle" = "وصول دائم إلى العنوان";
+
+"settings.addressAccess.faceId.beta" = "beta";
+"settings.addressAccess.faceId.disabledMessage" = "تم تعطيل التعرف على الوجوه بواسطة مالك الشقة";
+"settings.addressAccess.faceId.registeredFaces" = "الوجوه المسجلة";
+"settings.addressAccess.faceId.setupButton" = "إعداد";
+"settings.addressAccess.faceId.title" = "الدخول بالوجه دون مفتاح";
+
+"settings.addressAccess.gateDetails.addressPlaceholder" = "تامبوف، شارع سوفيتسكايا، 16، مبنى 4";
+"settings.addressAccess.gateDetails.carFilter" = "حسب رقم السيارة";
+"settings.addressAccess.gateDetails.expired" = "منتهي الصلاحية";
+"settings.addressAccess.gateDetails.phoneFilter" = "حسب رقم الهاتف";
+"settings.addressAccess.gateDetails.timeRemainingFormat" = "المتبقي %@";
+"settings.addressAccess.gateDetails.title" = "وصول إلى الحاجز/البوابة";
+"settings.addressAccess.gateDetails.unlimited" = "غير محدود";
+
+"settings.addressAccess.guestAccess.alertMessage" = "لكل من يقوم بإدخال رقم شقتك على الإنتركم، سيتم فتح الباب تلقائياً لمدة 60 دقيقة. بعد ذلك سيعود الإنتركم تلقائياً إلى الوضع الافتراضي.";
+"settings.addressAccess.guestAccess.alertTitle" = "تفعيل وصول الضيوف لمدة ساعة؟";
+"settings.addressAccess.guestAccess.sentMessage" = "تم إرسال معلومات الضيف بنجاح!";
+
+"settings.addressAccess.newPerson.addContact" = "إضافة جهة اتصال";
+
+"settings.addressAccess.removeAccess.message" = "هل تريد إزالة الوصول؟";
+
+"settings.addressAccess.shortcuts.addCar" = "إضافة سيارة";
+"settings.addressAccess.shortcuts.addPerson" = "إضافة شخص";
+"settings.addressAccess.shortcuts.allCars" = "جميع السيارات";
+"settings.addressAccess.shortcuts.allPeople" = "جميع الأشخاص";
+
+"settings.addressAccess.temporaryAccess.codeTitle" = "رمز الفتح";
+"settings.addressAccess.temporaryAccess.guestAccessTitle" = "وصول الضيوف لمدة ساعة";
+"settings.addressAccess.temporaryAccess.title" = "وصول مؤقت إلى الإنتركم";
+
+"settings.addressAccess.waitingGuestInfo.message" = "تتيح هذه الميزة لضيوفك فتح الإنتركم دون مشاركتك: يكفي إدخال رقم شقتك على لوحة الاتصال، وستُفتح البوابة أو باب المدخل فورًا.";
+"settings.addressAccess.waitingGuestInfo.title" = "دخول للضيوف لمدة ساعة";
+"settings.addressAccess.waitingGuestInfo.validity" = "مدة الصلاحية — ساعة واحدة من لحظة التفعيل.";
+
+"settings.addressDeletion.other" = "أخرى";
+"settings.addressDeletion.pleaseStateTheReason" = "حدد السبب";
+"settings.addressDeletion.terminateContractOption" = "أرغب في إنهاء العقد";
+"settings.addressDeletion.warningMessage" = "عند حذف العنوان لن تتمكن من إدارة خدمات هذا العنوان";
+
+"settings.addressDeletion.reason.placeholder" = "حدد السبب";
+"settings.addressDeletion.reason.terminateContract" = "أرغب في إنهاء العقد";
+"settings.addressDeletion.reason.unspecified" = "لم يذكر العميل سبباً";
+
+"settings.common.calls" = "المكالمات";
+"settings.common.deleteAccountButton" = "حذف الحساب";
+"settings.common.logoutButton" = "تسجيل الخروج";
+"settings.common.lowBalanceNotificationTitle" = "إرسال إشعار عندما يقترب\nالرصيد من الصفر";
+"settings.common.notifications" = "الإشعارات";
+"settings.common.notifyAboutInsufficientFunds" = "تنبيه عند نقص الرصيد";
+"settings.common.profileNamePlaceholder" = "Александр Сергеевич";
+"settings.common.profilePhonePlaceholder" = "+7 (964) 134 00 00";
+"settings.common.showCamerasOnTheMap" = "عرض الكاميرات على الخريطة";
+"settings.common.showNotifications" = "عرض الإشعارات";
+"settings.common.speakerphoneByDefault" = "مكبر الصوت افتراضياً";
+"settings.common.theme" = "السمة";
+"settings.common.title" = "الإعدادات العامة";
+"settings.common.useCallkit" = "استخدام CallKit";
+
+"settings.common.addressOrder.description" = "بشكل افتراضي يتم عرض العناوين بترتيب أبجدي. العناوين التي تحتوي على مداخل متاحة تظهر دائمًا أولًا. يمكنك تعديل الترتيب يدويًا — اضغط مطولًا على عنوان العنوان، وانتظر 0.3–0.5 ثانية حتى يظهر تأثير \"البطاقة المرفوعة\"، ثم اسحبه للأعلى أو للأسفل. اتركه في المكان المطلوب وسيتم حفظ الترتيب تلقائيًا.";
+"settings.common.addressOrder.resetDialogMessage" = "سيؤدي ذلك إلى استعادة الترتيب الافتراضي.";
+"settings.common.addressOrder.resetDialogTitle" = "إعادة تعيين ترتيب العناوين؟";
+"settings.common.addressOrder.resetHint" = "لإعادة الترتيب الافتراضي، استخدم زر «إعادة التعيين» في الإعدادات.";
+"settings.common.addressOrder.title" = "ترتيب العناوين";
+
+"settings.common.appearance.dark" = "داكن";
+"settings.common.appearance.light" = "فاتح";
+"settings.common.appearance.sheetMessage" = "يرجى اختيار نمط المظهر المفضل.";
+"settings.common.appearance.sheetTitle" = "اختر المظهر";
+"settings.common.appearance.system" = "النظام";
+"settings.common.appearance.title" = "العرض";
+
+"settings.common.callKitInfo.description" = "عند تفعيل وضع CallKit، ستظهر المكالمات على iPhone كمكالمات عادية. ولكن في هذا الوضع لن تتمكن من النظر عبر \"العين السحرية\" ومعرفة من يقف عند الإنتركم دون الرد على المكالمة.";
+"settings.common.callKitInfo.title" = "ميزة CallKit";
+
+"settings.common.deleteAccount.message" = "هل أنت متأكد أنك تريد حذف حسابك؟ سيتم حذف جميع العناوين المضافة سابقاً";
+"settings.common.deleteAccount.title" = "حذف الحساب";
+
+"settings.common.logout.message" = "هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟";
+"settings.common.logout.title" = "تسجيل الخروج من التطبيق";
+
+"settings.faces.faceRegistration" = "تسجيل الوجه";
+"settings.faces.registeredFaces" = "الوجوه المسجلة";
+"settings.faces.registrationHint" = "تُحفظ صور ضيوفك في قسم سجل الأحداث.\n\nلاختيار وجه وتسجيله، انتقل إلى هذا القسم بالضغط على علامة плюс.\nفي سجل الأحداث، اضغط على أيقونة المعلومات بجانب الحدث المطلوب، ثم اختر الصورة اللازمة في الشاشة التي ستفتح.\n\n";
+
+"settings.main.addAddressButton" = "إضافة عنوان";
+"settings.main.contractNumberTitle" = "رقم العقد";
+"settings.main.openPersonalAccountWebButton" = "فتح النسخة الإلكترونية من الحساب الشخصي";
+
+"settings.main.access.title" = "إعدادات الوصول";
+
+"settings.main.address.title" = "إعدادات العنوان";
+
+"settings.main.addresses.title" = "إعدادات العناوين";
+
+"settings.main.serviceAction.activateServiceTemplate" = "مرحباً، أود تفعيل خدمة \"%(X)\" على العقد \"%(Y)\"";
+"settings.main.serviceAction.changeTariffTemplate" = "مرحباً، أود تغيير التعرفة لخدمة \"%(X)\" على العقد \"%(Y)\"";
+"settings.main.serviceAction.talkAboutActivationTemplate" = "مرحباً، خدمة \"%(X)\" غير متاحة على عنواني، لكنني أريد استخدامها على العقد \"%(Y)\"";
+
+"settings.shareCar.platePlaceholder" = "М 565 ХВ 68";
+"settings.shareCar.shareAccess" = "مشاركة الوصول";
+"settings.shareCar.subtitle" = "أدخل رقم السيارة التي تريد\nمنحها إمكانية الوصول.";
+
+"settings.sharePerson.name" = "الاسم";
+"settings.sharePerson.shareAccess" = "مشاركة الوصول";
+"settings.sharePerson.shareButton" = "مشاركة";
+"settings.sharePerson.subtitle" = "أدخل رقم هاتف الشخص الذي تريد\nمنحه إمكانية الوصول، أو اختره\nمن جهات الاتصال";
+
+/* MARK: - SUPPORT */
+
+"support.call.phoneAction" = "إجراء مكالمة";
+
+"support.callback.requestButton" = "طلب معاودة الاتصال";
+"support.callback.successMessage" = "سنتصل بك قريباً";
+
+/* MARK: - TAB */
+
+"tab.addresses" = "العناوين";
+"tab.chat" = "الدردشة";
+"tab.menu" = "القائمة";
+"tab.notifications" = "الإشعارات";
+"tab.payments" = "دفع";
+
+/* MARK: - VALIDATION */
+
+"validation.phone.invalidFormat" = "تنسيق الرقم غير صحيح";

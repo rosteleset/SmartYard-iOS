@@ -69,7 +69,7 @@ final class PassConfirmationPinViewModel: BaseViewModel {
                     default:
                         self?.router.trigger(
                             .alert(
-                                title: NSLocalizedString("Error", comment: ""),
+                                title: L10n.Common.error,
                                 message: error.localizedDescription
                             )
                         )
@@ -117,8 +117,8 @@ final class PassConfirmationPinViewModel: BaseViewModel {
                         self?.router.trigger(.main)
                     }
                     
-                    let passDestination = self.selectedRestoreMethod.contact.contains("@") ? "email" : NSLocalizedString("phone", comment: "")
-                    let dialogText = "\(NSLocalizedString("The password for the specified entry has been sent to the specified", comment: "")) \(passDestination)"
+                    let passDestination = self.selectedRestoreMethod.contact.contains("@") ? "email" : L10n.Auth.PasswordRecovery.Method.phone
+                    let dialogText = "\(L10n.Auth.PasswordRecovery.codeSentMessage) \(passDestination)"
                     
                     self.router.trigger(
                         .dialog(

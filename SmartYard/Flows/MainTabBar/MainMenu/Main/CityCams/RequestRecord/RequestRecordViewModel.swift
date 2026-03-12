@@ -33,7 +33,7 @@ final class RequestRecordViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )
@@ -70,8 +70,8 @@ final class RequestRecordViewModel: BaseViewModel {
                     
                     self.router.trigger(.back)
                     self.router.trigger(.alert(
-                        title: NSLocalizedString("Request submitted", comment: ""),
-                        message: NSLocalizedString("We will contact you within 24 hours", comment: "")
+                        title: L10n.Request.Common.submittedTitle,
+                        message: L10n.Camera.RecordRequest.submittedMessage
                     ))
                 }
             )

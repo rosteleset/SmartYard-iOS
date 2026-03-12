@@ -5,251 +5,610 @@
   Created by Александр Васильев on 11.01.2023.
   Copyright © 2023 LanTa. All rights reserved.
 */
-"minutes" = "daqiqalar";
-"Open" = "Ochish";
-"Opened" = "Ochilgan";
-"Cancel" = "Bekor qilish";
-"Settings" = "Sozlamalar";
-"Ignore" = "E'tiborsiz qoldirish";
-"Error" = "Xato";
-"Back" = "Orqaga";
-"Smart intercom" = "Aqlli domofon";
-"Video surveillance" = "Videokuzatuv";
-"Internet" = "Internet";
-"Cable TV" = "Kabelli televidenie";
-"Wired Phone" = "Simli telefon";
-"Mobile Phone" = "Mobil aloqa";
-"Creating a task" = "Vazifa yaratish";
-"No service selected" = "Hech qanday xizmat tanlanmagan";
-"Via Courier" = "Kuryer orqali";
-"In Office" = "Idoraga tashrif";
-"City" = "Shahar";
-"Street" = "Ko'cha";
-"Building" = "Bino";
-"Appartment" = "Xonadon";
-"To use this feature, go to settings and grant access to the camera" = "Ushbu funksiyadan foydalanish uchun sozlamalarga o'tib, kameraga ruxsat bering";
-"Can't access camera" = "Kameraga kirib bo'lmaydi";
-"appartment" = "xonadon";
-"Addresses" = "Manzillar";
-"Notifications" = "Bildirishnomalar";
-"Chat" = "Chat";
-"Pay" = "To'lash";
-"Menu" = "Menyu";
-"First, log in to the application, and then try to add the address again" = "Avval ilovaga kirib, keyin manzilni qo'shishga urinib ko'ring";
-"Incoming call" = "Kirayotgan qo'ng'iroq";
-"Call a courier" = "Kuryerni chaqirish";
-"I'll come to the office myself" = "O'zim idoraga boraman";
-"To confirm the address, you need to bring a utility bill no older than three months to our nearest office." = "Manzilni tasdiqlash uchun, sizga uch oydan ko'p bo'lmagan kommunal xizmatlar haqidagi hisob-fakturani eng yaqin idoramizga olib kelishingiz kerak.";
-"Wait for the courier at {value} and take a photo of the QR code he brings." = "{value} manzilida kuryerni kutib turing va u olib kelgan QR-kodni suratga oling.";
-"Pickup" = "O'zingiz olib ketish";
-"Courier" = "Kuryer";
-"The delivery method has changed. The client will come to the office." = "Yetkazib berish usuli o'zgardi. Mijoz idoraga keladi.";
-"The delivery method has changed. Prepare a package for the courier." = "Yetkazib berish usuli o'zgardi. Kuryer uchun paket tayyorlang.";
-"To use this feature, go to settings and grant access to the camera" = "Ushbu funksiyadan foydalanish uchun sozlamalarga o'tib, kameraga ruxsat bering";
-"First Name" = "Ism";
-"Patronymic" = "Otasining ismi";
-"Service not available yet" = "Xizmat hali mavjud emas";
-"Creating a ticket" = "Chipta yaratish";
-"Guest information has been successfully sent!" = "Mehmon ma'lumotlari muvaffaqiyatli jo'natildi!";
-"Yes" = "Ha";
-"Are you sure?" = "Ishonchingiz komilmi?";
-"Do you want to remove access?" = "Kirish huquqini olib tashlamoqchimisiz?";
-"Enable" = "Yo'lga qo'yish";
-"Disable" = "O'chirish";
-"guestAccessAlertText" = "Domofonga uyingiz raqamini tergan har bir kishiga eshik 60 daqiqa davomida avtomatik ravishda ochiladi. Ushbu vaqt o'tgach, domofon ishlash tartibi avtomatik ravishda standart rejimga qaytadi.";
-"Enable guest access for an hour?" = "Bir soatga mehmonlarga kirish huquqini berasizmi?";
-"Wrong number format" = "Noto'g'ri raqam formati";
-"Delete" = "O'chirish";
-"Service not connected" = "Xizmat ulanmagan";
-"Everything's under control" = "Hamma nazorat ostida";
-"Smart yard" = "Aqlli hovli";
-"Be aware of everything that happens near the house" = "Uy yaqinida bo'layotgan hamma narsadan xabardor bo'ling";
-"Manage services and pay for them via the app" = "Ilova orqali xizmatlarni boshqaring va ularni to'lang";
-"Control your intercom, gate or barrier from your smartphone" = "Domofon, darvoza yoki bar'erlarni smartfoningiz orqali boshqaring";
-"I want to cancel my contract" = "Shartnomani bekor qilmoqchiman";
-"Customer didn't provide a reason" = "Mijoz sabab ko'rsatmadi";
-"Specify a reason" = "Sababni ko'rsating";
-"Exiting the application" = "Ilovadan chiqish";
-"Are you sure you want to log out of your account?" = "Hisobingizdan chiqishni istaysizmi?";
-"Account deleting" = "Hisobni o'chirish";
-"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Hisobingizni oʻchirib tashlamoqchimisiz? Oldin qo'shilgan barcha manzillar o'chiriladi";
-"Number of contract" = "Shartnoma raqami";
-"Address settings" = "Manzil sozlamalari";
-"Access setting" = "Kirishni boshqarish";
-"Open web version of personal account" = "Shaxsiy hisobning veb-versiyasini oching";
-"Attention" = "Diqqat";
-"You have been authorized on another device" = "Boshqa qurilmada avtorizatsiya amalga oshirildi";
-"Call to intercom" = "Domofonga qo'ng'iroq";
-"Peephole" = "Ko'z teshigi";
-"Peephole on" = "Ko'z teshigi yoqilgan";
-"Connecting..." = "Ulanmoqda...";
-"Decline" = "Rad etish";
-"Video" = "Video";
-"Conversation" = "Suhbat";
-"Call completed" = "Qo'ng'iroq yakunlandi";
-"There will be no outgoing audio on this call." = "Ushbu qo'ng'iroqda chiquvchi ovoz bo'lmaydi.";
-"To make it appear in your next calls, please grant access to the microphone in the settings" = "Keyingi qo'ng'iroqlaringizda paydo bo'lishi uchun, iltimos, sozlamalarda mikrofonga kirish huquqini bering";
-"No microphone access" = "Mikrofonga kirish yo'q";
-"We need to make sure that the number is indeed yours." = "Raqamingiz haqiqatan sizniki ekanligiga ishonch hosil qilishimiz kerak.";
-"Confirmation code has been sent to your " = "Tasdiqlash kodi yuborildi ";
-"Send recovery code to " = "Tiklash kodini yuboring ";
-"email" = "elektron pochtangizga";
-"phone" = "telefoningizga";
-"Failed to load provider list, please try again later." = "Provayderlar ro'yxatini yuklab bo'lmadi, iltimos, keyinroq qayta urinib ko'ring.";
-"Contract number" = "Shartnoma raqami";
-"Password" = "Parol";
-"Create" = "Yaratish";
-"Create a request for restoration by contract number?" = "Shartnoma raqami bo'yicha tiklash so'rovini yaratish?";
-"You are requesting a code too often. Please try again later" = "Kodni juda tez-tez so'rayapsiz. Iltimos, keyinroq qayta urinib ko'ring";
-"Missing confirmation number" = "Tasdiqlash raqami yo'q";
-"Enter code from SMS sent to number" = "Raqamga yuborilgan SMSdan kodni kiriting ";
-"Invalid contract number entered" = "Noto'g'ri shartnoma raqami kiritildi";
-"The password for the specified entry has been sent to the specified" = "Ko'rsatilgan yozuv uchun parol ko'rsatilgan";
-"To use this feature, go to settings and grant access to the camera" = "Ushbu xususiyatdan foydalanish uchun, sozlamalarga o'ting va kameraga kirish huquqini bering";
-"Can't access camera" = "Kameraga kirib bo'lmaydi";
-"Update" = "Yangilash";
-"A new version of the application is available" = "Ilovaning yangi versiyasi mavjud";
-"App version out of date" = "Ilova versiyasi eskirgan";
-"To continue using the app, please update it" = "Ilovadan foydalanishni davom ettirish uchun, iltimos, uni yangilang";
-"sec" = "sek";
-"Archive" = "Arxiv";
-"Online" = "Onlayn";
-"Select Appearance" = "Ko‘rinishni tanlang";
-"Please choose your preferred appearance theme." = "O‘zingizga qulay mavzuni tanlang.";
-"System" = "Tizimiy";
-"Light" = "Yorug‘";
-"Dark" = "Qorong‘i";
-"Thank you" = "Rahmat";
-"Video in progress" = "Video tayyorlanmoqda";
-"As soon as the process is over..." = "Jarayon tugagach, sizga chatda xabar keladi.\nVideo uzunligiga qarab, yuklash jarayoni bir necha daqiqadan bir necha soatgacha davom etishi mumkin.";
-"Link to video copied to clipboard" = "Video havolasi buferga nusxalandi";
-"Video dated" = "Videodan";
-"Opening with a key" = "Kalit bilan ochish";
-"Opening from the app" = "Ilovadan ochish";
-"Opening with Face-ID" = "Yuz-ID bilan ochish";
-"Opening with code" = "Kod bilan ochish";
-"Gate opening on call" = "Qo'ng'iroq bo'yicha darvoza ochish";
-"Gate opening by numberplate" = "Nomer belgisi bo'yicha darvoza ochish";
-"Unknown event" = "Noma'lum voqea";
-"Answered call" = "Javob berilgan qo'ng'iroq";
-"Missed call" = "Javob berilmagan qo'ng'iroq";
-"Image missing" = "Rasm yo'q";
-"If you select Deny..." = "«Chet el fuqarosi» tanlansa, biz algoritmimiz noto'g'ri ishlagan sizning ro'yxatdan o'tgan yuzingizni o'chiramiz.\nTizimdagi barcha yuzlar Manzil sozlamalari -> Kirishni boshqarish -> Kalitsiz yuz orqali kirish bo'limida topilishi mumkin.";
-"If you select Allow..." = "«‎O'zim» tanlovi tanlansa, biz ushbu voqeadan olingan suratni qo'shamiz, foydalanuvchini yuzi orqali keyingi tanib olish uchun.\nTizimda ro'yxatdan o'tgan barcha yuzlarni Manzillar sozlamalari -> Kirishni boshqarish -> Kalitsiz yuz orqali kirish bo'limida topishingiz mumkin.";
-"all" = "hamma";
-"All" = "Hamma";
-"Addresses" = "Manzillar";
-"All apts" = "Barcha xonadonlar";
-"Appartment" = "Xonadon";
-"Appartment, all" = "Xonadon, hamma";
-"Events" = "Voqealar";
-"Intercom" = "Domofon";
-"Key" = "Kalit bilan";
-"Face-ID" = "Yuz orqali";
-"Opening on call" = "Telefon raqami orqali";
-"Opening by app" = "Ilova orqali";
-"Opening by code" = "Kod orqali";
-"Unable to open chat page." = "Chat sahifasini ochib bo'lmayapti.";
-"Unable to open payment page." = "To'lov sahifasini ochib bo'lmayapti.";
-"Deposit" = "To'ldirish";
-"Done" = "Tayyor";
-"Your balance is topped up" = "Sizning balansingiz to'ldirildi";
-"Payment has failed" = "To'lov muvaffaqiyatsiz bo'ldi";
-"Recommended" = "Tavsiya etilgan";
-"Note" = "Eslatma";
-"Request submitted" = "So'rov yuborildi";
-"We will call you shortly" = "Tez orada sizga qo'ng'iroq qilamiz";
-"Request a call back" = "Qayta qo'ng'iroq so'rash";
-"Make a phone call" = "Telefon qilish";
-"Map" = "Xarita";
-"We need to make sure\nthat the number +%@ is really yours." = "Biz +%@ raqami haqiqatan ham sizniki ekanligiga ishonch hosil qilishimiz kerak.";
-"Enter the last 4 digits of the number\nfrom which the call will come to the number +%@" = "Qo'ng'iroq keladigan raqamning oxirgi 4 raqamini kiriting\n+%@ raqamiga";
-"Enter the code from SMS\nsent to +%@" = "Sizga +%@ raqamiga yuborilgan SMSdagi kodni kiriting";
-"Full name: %@\Phone: %@\Address entered by user: %@" = "To'liq ismi: %@\nTelefon: %@\nFoydalanuvchi kirgan manzil: %@";
-"Contract number unknown" = "Shartnoma raqami noma'lum";
-"Hello, I would like to change the tariff for the service \"%(X)\" on the contract \"%(Y)\"" = "Salom, men \"%(Y)\" shartnomasi bo'yicha \"%(X)\" xizmati uchun tarifni o'zgartirmoqchiman";
-"Hello, I would like to connect the service \"%(X)\" to the contract \"%(Y)\"" = "Salom, men \"%(Y)\" shartnomasiga \"%(X)\" xizmatini ulamoqchiman";
-"Hello, the \"%(X)\" service is not available at my address, but I want to use it on the \"%(Y)\" contract" = "Salom, \"%(X)\" xizmati mening manzilimda mavjud emas, lekin men uni \"%(Y)\" shartnomasi bo'yicha foydalanmoqchiman";
-"Service \"%@\" is connected" = "\"%@\" xizmati ulangan";
-"Create a request" = "So'rov yaratish";
-"Request submitted" = "So'rov yuborildi";
-"We will contact you within 24 hours" = "24 soat ichida siz bilan bog'lanamiz";
-"Public cams" = "Shahar kameralari";
-"Request a record" = "Yozuvni so'rash";
-"Incidents" = "Hodisalar";
-"Addresses settings" = "Manzillar sozlamalari";
-"Common settings" = "Umumiy sozlamalar";
 
-// Errors
-"noConnectionError"  = "Aloqa yo'q";
-"An error occurred while executing the request" = "So'rovni bajarish jarayonida xato yuz berdi %@";
-"Access token not found. Request cannot be completed" = "Kirish belgisi topilmadi. So'rovni bajarib bo'lmaydi";
-"Client id not found. Request cannot be completed" = "Mijozning IDsi topilmadi. So'rovni bajarib bo'lmaydi";
-"User is already logged in" = "Foydalanuvchi allaqachon tizimga kirgan";
-"House id not found. Request cannot be completed" = "Uy IDsi topilmadi. So'rovni bajarib bo'lmaydi";
-"Current user's phone number not found" = "Joriy foydalanuvchining telefon raqami topilmadi";
-"The contract number was not found. It is impossible to complete the request" = "Shartnoma raqami topilmadi. So'rovni bajarib bo'lmaydi";
-"Unable to restore application state" = "Ilova holatini tiklab bo'lmaydi";
-"Push notifications are disabled for the application at the system level" = "Tizim darajasida ilova uchun Push-bildirishnomalar o'chirilgan";
-"Push notifications are disabled in the app settings" = "Ilova sozlamalarida Push-bildirishnomalar o'chirilgan";
-"Missing FCM token" = "FCM belgisi yo'q";
-"InstanceID not initialized" = "InstanceID ishga tushirilmagan";
-"Internet connection required to change user" = "Foydalanuvchini o'zgartirish uchun internet aloqasi kerak";
-"No access to contacts" = "Kontaktlarga kirish imkoni yo'q";
-"No camera access" = "Kameraga kirish imkoni yo'q";
-"No microphone access" = "Mikrofonga kirish imkoni yo'q";
-"self destroyed" = "o'z-o'zini yo'q qildi";
-"Unknown error" = "Noma'lum xato";
-"Failed to setup camera" = "Kamerani sozlash muvaffaqiyatsiz bo'ldi";
-"Failed to represent server response as base model" = "Server javobini asosiy model sifatida ifodalash muvaffaqiyatsiz bo'ldi";
-"Error mapping the Data field, or it is missing with a code other than 204" = "Ma'lumotlar maydonini xaritalashda xato, yoki u 204-dan boshqa kod bilan yo'q";
-"Date of record" = "Yozuv sanasi";
-"Time" = "Vaqt";
-"Duration" = "Davomiyligi";
-"h" = "soat";
-"m" = "daq";
-"Allow" = "Tanish";
-"Deny" = "Begona";
-"Enable" = "Yoqish";
-"Disable" = "O‘chirish";
-"Reset" = "Tiklash";
-"Reset done" = "Tiklandi";
-"Reset address order?" = "Manzillar tartibini tiklash?";
-"This will restore the default sorting." = "Bu manzillar standart tartibiga qaytariladi.";
-"By car number" = "Avtomobil raqami orqali";
-"By phone number" = "Telefon raqami orqali";
-"All cars" = "Barcha mashinalar";
-"All people" = "Barcha odamlar";
-"Add car" = "Avtomobil qo‘shish";
-"Add person" = "Kontakt qo‘shish";
-"TimeLeftFormat" = "%@ qoldi";
-"expired" = "muddati tugadi";
-"Add" = "Qo‘shish";
-"unlimited" = "cheksiz";
-"Address confirmation" = "Manzilni tasdiqlash";
-"How would it be more convenient for you to do this?" = "Buni qanday qilib qulayroq bajarishingiz mumkin?";
-"Input your address" = "Manzilni kiriting";
-"Available services" = "Mavjud xizmatlar";
-"Do you have an agreement with the operator?" = "Sizda operator bilan shartnoma bormi?";
-"Enter the number and password of the contract associated with this address and manage services from this application." = "Ushbu manzilga bog'langan shartnoma raqami va parolini kiriting va ushbu ilovadan xizmatlarni boshqaring.";
-"Select camera" = "Kamerani tanlang";
-"Events log" = "Hodisalar jurnali";
-"Common settings" = "Umumiy sozlamalar";
-"Addresses settings" = "Manzillar sozlamalari";
-"Request a record" = "Yozuvni so'rab olish";
-"Public cams" = "Shahar kameralari";
-"Search" = "Qidiruv";
-"VPN detected. The application may work unstable." = "VPN aniqlangan. Ilova beqaror ishlashi mumkin.";
-"List Empty Online List" = "Manzil qo'shish uchun ekranning yuqori qismidagi \"+\" tugmasini bosing.  Qo'shilgan manzil ko'rsatilmasa, iltimos, bir necha daqiqa kuting. Ro'yxat avtomatik yangilanadi.";
-"List Empty Offline List" = "Maʼlumotlar hali yoʻq yoki saqlanmagan.";
-"offline.alert.switch_mode" = "Onlayn rejimga qaytish uchun \"OK\" tugmasini bosing.\nOflayn rejimda qolish uchun \"Bekor qilish\" tugmasini bosing.";
-"offline.alert.no_connection_title" = "Ulanish yo‘q!";
-"offline.message.connection_lost" = "Aloqa uzilganga o‘xshaydi yoki serverda muammolar mavjud.";
-"offline.message.server_unavailable" = "Hozircha oflayn rejimdan chiqib bo‘lmaydi — server mavjud emas. Keyinroq qayta urinib ko‘ring.";
-"offline.hint.swipe_to_exit" = "Siz hozir oflayn rejimdasiz. Undan chiqish uchun ekranning yuqori qismidan pastga suring.";
-"offline.message.connection_restored" = "Ura! Aloqa qayta tiklandi!";
-"My addresses" = "Mening manzillarim";
-"First address cameras" = "Birinchi manzil kameralari";
-"First address events" = "Birinchi manzil hodisalari";
-"First address access" = "Birinchi manzilga kirish";
-"Phone number copied to clipboard" = "Telefon raqami almashish buferiga nusxalandi";
+/* MARK: - ADDRESS */
+
+"address.confirmation.subtitle" = "Buni qanday qilib qulayroq bajarishingiz mumkin?";
+"address.confirmation.title" = "Manzilni tasdiqlash";
+
+"address.confirmation.courier.activationHint" = "Siz darhol «Aqlli domofon» ilovasining barcha funksiyalariga kirish huquqini olasiz";
+"address.confirmation.courier.envelopeHint" = "Hafta davomida kuryer sirli konvert olib keladi";
+"address.confirmation.courier.hintFormat" = "{value} manzilida kuryerni kutib turing va u olib kelgan QR-kodni suratga oling.";
+"address.confirmation.courier.leaveARequest" = "Ariza qoldiring";
+"address.confirmation.courier.qrCodeHint" = "U konvert ichida bo'ladi";
+"address.confirmation.courier.requestButton" = "Ajoyib! Ariza qoldiring";
+"address.confirmation.courier.scanTheQrCode" = "QR-kodni skanerlang";
+"address.confirmation.courier.use" = "Foydalaning!";
+
+"address.confirmation.delivery.courierChangeMessage" = "Yetkazib berish usuli o'zgardi. Kuryer uchun paket tayyorlang.";
+"address.confirmation.delivery.courierOption" = "Kuryerni chaqirish";
+"address.confirmation.delivery.courierShort" = "Kuryer orqali";
+"address.confirmation.delivery.courierTitle" = "Kuryer";
+"address.confirmation.delivery.officeChangeMessage" = "Yetkazib berish usuli o'zgardi. Mijoz idoraga keladi.";
+"address.confirmation.delivery.officeOption" = "O'zim idoraga boraman";
+"address.confirmation.delivery.officeShort" = "Idoraga tashrif";
+"address.confirmation.delivery.pickupTitle" = "O'zingiz olib ketish";
+
+"address.confirmation.office.hint" = "Manzilni tasdiqlash uchun, sizga uch oydan ko'p bo'lmagan kommunal xizmatlar haqidagi hisob-fakturani eng yaqin idoramizga olib kelishingiz kerak.";
+"address.confirmation.office.iLlDoSoButton" = "Xuddi shunday qilaman";
+"address.confirmation.office.instructions" = "Посетите наш ближайший офис с квитанцией ЖКХ за эту квартиру и мы сразу же активируем функцию умного домофона и видеонаблюдения.";
+
+"address.entry.checkAvailableServicesButton" = "Mavjud xizmatlarni tekshirish";
+"address.entry.iHaveQrCodeButton" = "Menda QR-kod bor";
+"address.entry.title" = "Manzilni kiriting";
+
+"address.form.apartment" = "Xonadon";
+"address.form.apartmentValue" = "xonadon";
+"address.form.building" = "Bino";
+"address.form.city" = "Shahar";
+"address.form.street" = "Ko'cha";
+
+"address.qrCode.loginRequiredMessage" = "Avval ilovaga kirib, keyin manzilni qo'shishga urinib ko'ring";
+
+"address.qrScan.pointYourCameraAtTheQrCode" = "Kamerani QR-kodga qarating";
+
+/* MARK: - APP */
+
+"app.update.action" = "Yangilash";
+"app.update.availableTitle" = "Ilovaning yangi versiyasi mavjud";
+"app.update.requiredMessage" = "Ilovadan foydalanishni davom ettirish uchun, iltimos, uni yangilang";
+"app.update.requiredTitle" = "Ilova versiyasi eskirgan";
+
+/* MARK: - AUTH */
+
+"auth.callVerification.callButton" = "Qo'ng'iroq qilish";
+"auth.callVerification.callInstructionPrefix" = "Raqamga bepul qo'ng'iroq qiling";
+"auth.callVerification.callInstructionSuffix" = "biz sizning raqamingizni tasdiqlay olishimiz uchun";
+"auth.callVerification.confirmPhoneTitle" = "+79025308094 raqami haqiqatan ham sizniki ekanligiga ishonch hosil qilishimiz kerak.";
+"auth.callVerification.confirmPhoneTitleFormat" = "Biz +%@ raqami haqiqatan ham sizniki ekanligiga ishonch hosil qilishimiz kerak.";
+"auth.callVerification.editPhoneButton" = "Telefon raqamini tuzatish";
+"auth.callVerification.phoneNumberPlaceholder" = "+7 (1234) 12-34-56";
+
+"auth.codeRateLimit.message" = "Kodni juda tez-tez so'rayapsiz. Iltimos, keyinroq qayta urinib ko'ring";
+
+"auth.contractLogin.contractNumberPlaceholder" = "Shartnoma raqami";
+"auth.contractLogin.createButton" = "Yaratish";
+"auth.contractLogin.forgotCredentialsButton" = "Hech narsani eslay olmayapman";
+"auth.contractLogin.forgotPasswordButton" = "Parolni eslay olmayapman";
+"auth.contractLogin.hasOperatorAgreementTitle" = "Sizda operator bilan shartnoma bormi?";
+"auth.contractLogin.iDonTHaveAContractButton" = "Menda shartnoma yo'q";
+"auth.contractLogin.loginButton" = "Kirish";
+"auth.contractLogin.passwordPlaceholder" = "Parol";
+"auth.contractLogin.restoreByContractPrompt" = "Shartnoma raqami bo'yicha tiklash so'rovini yaratish?";
+"auth.contractLogin.subtitle" = "Ushbu manzilga bog'langan shartnoma raqami va parolini kiriting va ushbu ilovadan xizmatlarni boshqaring.";
+
+"auth.flashCall.enterLastDigitsTitleFormat" = "Qo'ng'iroq keladigan raqamning oxirgi 4 raqamini kiriting\n+%@ raqamiga";
+
+"auth.passwordRecovery.chooseMethodButton" = "Mavjud usullarni olish";
+"auth.passwordRecovery.codeSentMessage" = "Ko'rsatilgan yozuv uchun parol ko'rsatilgan";
+"auth.passwordRecovery.contractPlaceholder" = "Shartnoma raqami";
+"auth.passwordRecovery.restoreAccess" = "Kirishni tiklash";
+"auth.passwordRecovery.sendCodeButton" = "Tasdiqlash kodini olish";
+"auth.passwordRecovery.subtitle" = "Iltimos, shartnoma raqamingizni kiriting va ro'yxatdan o'tishda ishlatgan email yoki telefon raqamingizni ko'rsating";
+
+"auth.passwordRecovery.code.resendButton" = "Kodni qayta yuborish";
+"auth.passwordRecovery.code.resendHint" = "Kodni qayta yuborish mumkin bo'lgan vaqt";
+"auth.passwordRecovery.code.sentToPhoneTitle" = "Tasdiqlash kodi +79025308094 telefon raqamiga yuborildi";
+"auth.passwordRecovery.code.timerValue" = "01:00";
+
+"auth.passwordRecovery.error.invalidContract" = "Noto'g'ri shartnoma raqami kiritildi";
+
+"auth.passwordRecovery.method.email" = "elektron pochtangizga";
+"auth.passwordRecovery.method.maskedContactPlaceholder" = "Выслать код восстановления на почту mi****@yandex.ru";
+"auth.passwordRecovery.method.phone" = "telefoningizga";
+"auth.passwordRecovery.method.sendCodePrefix" = "Tiklash kodini yuboring ";
+"auth.passwordRecovery.method.titlePrefix" = "Tasdiqlash kodi yuborildi ";
+
+"auth.phoneEntry.changeProviderButton" = "Provayderni tanlashga qaytish";
+"auth.phoneEntry.providerName" = "Provayderning nomi";
+"auth.phoneEntry.title" = "Ro'yxatdan o'tish uchun telefon raqamini kiriting";
+
+"auth.phoneEntry.error.confirmationNumberMissing" = "Tasdiqlash raqami yo'q";
+
+"auth.providerSelection.chooseAProvider" = "Provayderni tanlang";
+"auth.providerSelection.searchPlaceholder" = " kompaniya nomini kiriting";
+"auth.providerSelection.subtitle" = "Iltimos, xizmat ko'rsatuvchingizni ro'yxatdan tanlang yoki qidiruvdan foydalaning. ";
+
+"auth.providerSelection.error.loadFailed" = "Provayderlar ro'yxatini yuklab bo'lmadi, iltimos, keyinroq qayta urinib ko'ring.";
+
+"auth.providerSelection.method.maskedContactPlaceholder" = "Выслать код восстановления на почту mi****@yandex.ru";
+
+"auth.smsCode.resendHint" = "Kodni qayta yuborish mumkin bo'lgan vaqt";
+"auth.smsCode.sentToPhoneTitle" = "+79025308094 raqamiga yuborilgan SMSdagi kodni kiriting";
+"auth.smsCode.sentToPhoneTitleFormat" = "Sizga +%@ raqamiga yuborilgan SMSdagi kodni kiriting";
+"auth.smsCode.timerValue" = "01:00";
+
+"auth.userName.howCanICallYou" = "Sizga qanday murojaat qilishim kerak?";
+
+/* MARK: - CAMERA */
+
+"camera.archive.title" = "Arxiv";
+
+"camera.archive.export.linkCopiedMessage" = "Video havolasi buferga nusxalandi";
+"camera.archive.export.processingMessage" = "Jarayon tugagach, sizga chatda xabar keladi.\nVideo uzunligiga qarab, yuklash jarayoni bir necha daqiqadan bir necha soatgacha davom etishi mumkin.";
+"camera.archive.export.processingTitle" = "Video tayyorlanmoqda";
+"camera.archive.export.successTitle" = "Rahmat";
+
+"camera.archivePlayer.downloadAndGetLinkButton" = "Yuklab olish va havola olish";
+"camera.archivePlayer.halfSpeedButton" = "0.5x";
+"camera.archivePlayer.oneAndHalfSpeedButton" = "1.5x";
+"camera.archivePlayer.selectFragmentButton" = "Fragmеntni tanlash";
+"camera.archivePlayer.videoDated" = "Videodan";
+
+"camera.city.incidentsTitle" = "Hodisalar";
+"camera.city.mapTitle" = "Xarita";
+"camera.city.publicCamerasTitle" = "Shahar kameralari";
+"camera.city.requestRecordButton" = "Yozuvni so'rash";
+
+"camera.city.detail.addressPlaceholder" = "Тамбов ш., Советская кўчаси, 16";
+"camera.city.detail.title" = "Kamera ";
+
+"camera.online.title" = "Onlayn";
+
+"camera.recordRequest.commentPlaceholder" = "Izoh";
+"camera.recordRequest.dateLabel" = "Yozuv sanasi";
+"camera.recordRequest.datePlaceholder" = "Yozuv sanasi: 5.09.2020";
+"camera.recordRequest.durationHint" = "Siz 1 soatdan oshmaydigan fragmentni so'rashingiz mumkin. Bizning xizmat video yozuvlarni 10 kundan ortiq saqlash imkonini bermaydi, shundan so'ng video arxivdan butunlay o'chiriladi.";
+"camera.recordRequest.durationLabel" = "Davomiyligi";
+"camera.recordRequest.durationPlaceholder" = "Davomiyligi: 10 daqiqa";
+"camera.recordRequest.processingHint" = "So'rovni ko'rib chiqish davomiyligi 1 ish kuni davomida bo'lishi mumkin.";
+"camera.recordRequest.sendRequestButton" = "Отправить запрос";
+"camera.recordRequest.submittedMessage" = "24 soat ichida siz bilan bog'lanamiz";
+"camera.recordRequest.timeHoursPlaceholder" = "Vaqt: soat";
+"camera.recordRequest.timeLabel" = "Vaqt";
+"camera.recordRequest.timeMinutesPlaceholder" = "Vaqt: mm";
+
+"camera.selection.title" = "Kamerani tanlang";
+
+/* MARK: - CHAT */
+
+"chat.error.unableToOpenPage" = "Chat sahifasini ochib bo'lmayapti.";
+
+/* MARK: - COMMON */
+
+"common.add" = "Qo'shish";
+"common.all" = "Hamma";
+"common.allow" = "Tanish";
+"common.back" = "Orqaga";
+"common.cancel" = "Bekor qilish";
+"common.delete" = "O'chirish";
+"common.deny" = "Begona";
+"common.disable" = "O'chirish";
+"common.done" = "Tayyor";
+"common.enable" = "Yo'lga qo'yish";
+"common.error" = "Xato";
+"common.ignore" = "E'tiborsiz qoldirish";
+"common.next" = "Keyingi";
+"common.no" = "Yo'q";
+"common.ok" = "OK";
+"common.open" = "Ochish";
+"common.opened" = "Ochilgan";
+"common.reset" = "Tiklash";
+"common.resetDone" = "Tiklandi";
+"common.save" = "Saqlash";
+"common.search" = "Qidiruv";
+"common.settings" = "Sozlamalar";
+"common.yes" = "Ha";
+
+"common.confirmation.title" = "Ishonchingiz komilmi?";
+
+"common.time.hoursShort" = "soat";
+"common.time.minutes" = "daqiqalar";
+"common.time.minutesShort" = "daq";
+"common.time.secondsShort" = "sek";
+
+"common.weekday.short.fri" = "jum";
+"common.weekday.short.mon" = "du";
+"common.weekday.short.sat" = "shan";
+"common.weekday.short.sun" = "yak";
+"common.weekday.short.thu" = "pay";
+"common.weekday.short.tue" = "sesh";
+"common.weekday.short.wed" = "chor";
+
+/* MARK: - ERROR */
+
+"error.address.houseIdMissing" = "Uy IDsi topilmadi. So'rovni bajarib bo'lmaydi";
+
+"error.app.restoreStateFailed" = "Ilova holatini tiklab bo'lmaydi";
+
+"error.auth.accessTokenMissing" = "Kirish belgisi topilmadi. So'rovni bajarib bo'lmaydi";
+"error.auth.clientIdMissing" = "Mijozning IDsi topilmadi. So'rovni bajarib bo'lmaydi";
+"error.auth.contractNumberNotFound" = "Shartnoma raqami topilmadi. So'rovni bajarib bo'lmaydi";
+"error.auth.currentUserPhoneMissing" = "Joriy foydalanuvchining telefon raqami topilmadi";
+"error.auth.userAlreadyLoggedIn" = "Foydalanuvchi allaqachon tizimga kirgan";
+
+"error.camera.setupFailed" = "Kamerani sozlash muvaffaqiyatsiz bo'ldi";
+
+"error.common.unknown" = "Noma'lum xato";
+
+"error.internal.selfDestroyed" = "o'z-o'zini yo'q qildi";
+
+"error.network.baseModelParsingFailed" = "Server javobini asosiy model sifatida ifodalash muvaffaqiyatsiz bo'ldi";
+"error.network.dataFieldMappingFailed" = "Ma'lumotlar maydonini xaritalashda xato, yoki u 204-dan boshqa kod bilan yo'q";
+"error.network.internetRequiredToChangeUser" = "Foydalanuvchini o'zgartirish uchun internet aloqasi kerak";
+"error.network.noConnection" = "Aloqa yo'q";
+
+"error.notifications.appDisabled" = "Ilova sozlamalarida Push-bildirishnomalar o'chirilgan";
+"error.notifications.fcmTokenMissing" = "FCM belgisi yo'q";
+"error.notifications.instanceIdMissing" = "InstanceID ishga tushirilmagan";
+"error.notifications.systemDisabled" = "Tizim darajasida ilova uchun Push-bildirishnomalar o'chirilgan";
+
+"error.permissions.cameraDenied" = "Kameraga kirish imkoni yo'q";
+"error.permissions.contactsDenied" = "Kontaktlarga kirish imkoni yo'q";
+
+"error.request.executionFailed" = "So'rovni bajarish jarayonida xato yuz berdi %@";
+
+/* MARK: - FACE RECOGNITION */
+
+"faceRecognition.addFace.addThisFace" = "Bu yuzni qo'shish kerakmi?";
+
+"faceRecognition.deleteFace.deleteThisFace" = "Bu yuzni o'chirish kerakmi?";
+
+/* MARK: - HISTORY */
+
+"history.title" = "Hodisalar jurnali";
+
+"history.detail.emptyStateMessage" = "Ko'rinib turibdiki, hozircha jurnalda mos keladigan voqealar yo'q.\n\nKvartira egasi voqealar jurnalini yuritishni yoqgani haqida ishonch hosil qiling.\nKeyin, pod'ezdni o'z kalitingiz bilan ochib, tizimda kamida bitta sizning rasmingiz bilan voqea paydo bo'lishi uchun 1 daqiqa kutib turing.\nShundan so'ng, bu bo'limni qayta ochishga harakat qilib ko'ring.\n\nPS: Eslatib o'tamiz, biz har doim chat orqali yoki ushbu ilovaning menyusi orqali texnik yordam telefoni orqali yordam berishga tayyormiz.";
+"history.detail.title" = "Voqealar";
+
+"history.event.answeredCall" = "Javob berilgan qo'ng'iroq";
+"history.event.gateOpeningByNumberplate" = "Nomer belgisi bo'yicha darvoza ochish";
+"history.event.gateOpeningOnCall" = "Qo'ng'iroq bo'yicha darvoza ochish";
+"history.event.guestAllowedHint" = "«‎O'zim» tanlovi tanlansa, biz ushbu voqeadan olingan suratni qo'shamiz, foydalanuvchini yuzi orqali keyingi tanib olish uchun.\nTizimda ro'yxatdan o'tgan barcha yuzlarni Manzillar sozlamalari -> Kirishni boshqarish -> Kalitsiz yuz orqali kirish bo'limida topishingiz mumkin.";
+"history.event.guestDeniedHint" = "«Chet el fuqarosi» tanlansa, biz algoritmimiz noto'g'ri ishlagan sizning ro'yxatdan o'tgan yuzingizni o'chiramiz.\nTizimdagi barcha yuzlar Manzil sozlamalari -> Kirishni boshqarish -> Kalitsiz yuz orqali kirish bo'limida topilishi mumkin.";
+"history.event.imageMissing" = "Rasm yo'q";
+"history.event.missedCall" = "Javob berilmagan qo'ng'iroq";
+"history.event.openingFromApp" = "Ilovadan ochish";
+"history.event.openingWithCode" = "Kod bilan ochish";
+"history.event.openingWithFaceID" = "Yuz-ID bilan ochish";
+"history.event.openingWithKey" = "Kalit bilan ochish";
+"history.event.unknown" = "Noma'lum voqea";
+
+"history.filter.allApartments" = "Barcha xonadonlar";
+"history.filter.allButton" = "Hamma";
+"history.filter.allInApartment" = "Xonadon, hamma";
+"history.filter.allOption" = "hamma";
+"history.filter.apptAllButton" = "Kvartira, hamma";
+"history.filter.faceID" = "Yuz orqali";
+"history.filter.intercom" = "Domofon";
+"history.filter.key" = "Kalit bilan";
+"history.filter.openingByApp" = "Ilova orqali";
+"history.filter.openingByCode" = "Kod orqali";
+"history.filter.openingOnCall" = "Telefon raqami orqali";
+
+"history.videoEventInfo.description" = "Yaqinda sodir bo‘lgan voqealar uchun qisqa video ko‘rsatiladi. Qolganlarida – voqea paytidagi saqlangan kadr ko‘rsatiladi.";
+"history.videoEventInfo.forwardGestureHint" = "videoning o‘ng tomoniga ikki marta bosish – 10 soniyaga oldinga siljish";
+"history.videoEventInfo.gesturesTitle" = "Shuningdek, imo-ishoralardan foydalanishingiz mumkin:";
+"history.videoEventInfo.rewindGestureHint" = "videoning chap tomoniga ikki marta bosish – 10 soniyaga orqaga qaytish";
+"history.videoEventInfo.swipeGestureHint" = "chapga yoki o‘ngga surish – voqealar lentasini ko‘rish";
+"history.videoEventInfo.title" = "Maslahat";
+
+/* MARK: - HOME */
+
+"home.addressCard.cameras.cameras" = "Videokameralar";
+"home.addressCard.cameras.countValue" = "3";
+
+"home.addressCard.events.countValue" = "3";
+"home.addressCard.events.events" = "Hodisalar";
+
+"home.addresses.title" = "Mening manzillarim";
+
+"home.addressesEmpty.listIsEmpty" = "Ro'yxat hozircha bo'sh :(";
+"home.addressesEmpty.offlineTitle" = "Maʼlumotlar hali yoʻq yoki saqlanmagan.";
+"home.addressesEmpty.onlineTitle" = "Manzil qo'shish uchun ekranning yuqori qismidagi \"+\" tugmasini bosing.  Qo'shilgan manzil ko'rsatilmasa, iltimos, bir necha daqiqa kuting. Ro'yxat avtomatik yangilanadi.";
+"home.addressesEmpty.toAddAnAddressTapAtTheTop" = "Для добавления адреса нажмите на \"+\" в верхней части экрана.  Если добавленный адрес не отображается, пожалуйста, подождите несколько минут. Список обновится автоматически.";
+
+/* MARK: - INTERCOM */
+
+"intercom.incoming.addressPlaceholder" = "Тамбов, Советская кўчаси 20, 52-уй";
+"intercom.incoming.answerAction" = "Javob berish";
+"intercom.incoming.callCompletedStatus" = "Qo'ng'iroq yakunlandi";
+"intercom.incoming.connectingStatus" = "Ulanmoqda...";
+"intercom.incoming.conversationStatus" = "Suhbat";
+"intercom.incoming.declineAction" = "Rad etish";
+"intercom.incoming.ignoreAction" = "E'tiborsiz qoldirish";
+"intercom.incoming.microphoneMissingMessage" = "Keyingi qo'ng'iroqlaringizda paydo bo'lishi uchun, iltimos, sozlamalarda mikrofonga kirish huquqini bering";
+"intercom.incoming.microphoneMissingTitle" = "Ushbu qo'ng'iroqda chiquvchi ovoz bo'lmaydi.";
+"intercom.incoming.notificationTitle" = "Kirayotgan qo'ng'iroq";
+"intercom.incoming.openedStatus" = "Ochildi";
+"intercom.incoming.peepholeAction" = "Ko'z teshigi";
+"intercom.incoming.peepholeOnStatus" = "Ko'z teshigi yoqilgan";
+"intercom.incoming.previewAction" = "Ko'zcha";
+"intercom.incoming.speakerAction" = "Dinamik";
+"intercom.incoming.title" = "Domofonga qo'ng'iroq";
+"intercom.incoming.videoAction" = "Video";
+
+/* MARK: - MENU */
+
+"menu.main.menu" = "Menyu";
+
+"menu.support.callToTechSupport" = "Texnik yordamga qo'ng'iroq qilish";
+
+/* MARK: - NETWORK */
+
+"network.vpn.detectedWarning" = "VPN aniqlangan. Ilova beqaror ishlashi mumkin.";
+
+/* MARK: - OFFLINE */
+
+"offline.alert.noConnectionTitle" = "Ulanish yo‘q!";
+"offline.alert.switchMode" = "Onlayn rejimga qaytish uchun \"OK\" tugmasini bosing.\nOflayn rejimda qolish uchun \"Bekor qilish\" tugmasini bosing.";
+
+"offline.hint.swipeToExit" = "Siz hozir oflayn rejimdasiz. Undan chiqish uchun ekranning yuqori qismidan pastga suring.";
+
+"offline.home.title" = "Mening manzillarim";
+
+"offline.message.connectionLost" = "Aloqa uzilganga o‘xshaydi yoki serverda muammolar mavjud.";
+"offline.message.connectionRestored" = "Ura! Aloqa qayta tiklandi!";
+"offline.message.serverUnavailable" = "Hozircha oflayn rejimdan chiqib bo‘lmaydi — server mavjud emas. Keyinroq qayta urinib ko‘ring.";
+
+/* MARK: - ONBOARDING */
+
+"onboarding.coolLetSGetStartedButton" = "Zo'r, boshlaymiz!";
+"onboarding.skipButton" = "O'tkazib yuborish";
+
+"onboarding.awareness.title" = "Uy yaqinida bo'layotgan hamma narsadan xabardor bo'ling";
+
+"onboarding.control.title" = "Hamma nazorat ostida";
+
+"onboarding.intercom.subtitle" = "Domofon, darvoza yoki bar'erlarni smartfoningiz orqali boshqaring";
+
+"onboarding.services.subtitle" = "Ilova orqali xizmatlarni boshqaring va ularni to'lang";
+
+"onboarding.slide.videoSurveillance" = "Videokuzatuv";
+
+"onboarding.slide.awareness.subtitle" = "Uyingiz yaqinida bo'layotgan hamma narsadan xabardor bo'ling";
+
+"onboarding.smartYard.title" = "Aqlli hovli";
+
+/* MARK: - PAYMENTS */
+
+"payments.addressSelection.selectAddress" = "Manzilni tanlang";
+
+"payments.error.unableToOpenPage" = "To'lov sahifasini ochib bo'lmayapti.";
+
+"payments.topUp.amount" = "Summa:";
+"payments.topUp.amountPlaceholder" = "Summa";
+"payments.topUp.contractNumberPlaceholder" = "№68992";
+"payments.topUp.depositTitle" = "To'ldirish";
+"payments.topUp.errorTitle" = "To'lov muvaffaqiyatsiz bo'ldi";
+"payments.topUp.payButton" = "To'lash";
+"payments.topUp.paymentByBankCardButton" = "Bank kartasi orqali to'lov";
+"payments.topUp.recommendedAmountPlaceholder" = "Tavsiya etilgan - 480 rubl";
+"payments.topUp.recommendedLabel" = "Tavsiya etilgan";
+"payments.topUp.successMessage" = "Sizning balansingiz to'ldirildi";
+"payments.topUp.successMessageShort" = "Sizning balansingiz to'ldirildi";
+"payments.topUp.successTitle" = "Tayyor!";
+"payments.topUp.topUpBalance" = "Balansni to'ldirish";
+
+/* MARK: - PERMISSIONS */
+
+"permissions.camera.message" = "Ushbu funksiyadan foydalanish uchun sozlamalarga o'tib, kameraga ruxsat bering";
+"permissions.camera.title" = "Kameraga kirib bo'lmaydi";
+
+"permissions.microphone.title" = "Mikrofonga kirish yo'q";
+
+/* MARK: - PROFILE */
+
+"profile.firstName" = "Ism";
+"profile.patronymic" = "Otasining ismi";
+
+/* MARK: - QUICK ACTION */
+
+"quickAction.error.unsupported" = "Unsupported quick action";
+
+"quickAction.firstAddress.accessTitle" = "Birinchi manzilga kirish";
+"quickAction.firstAddress.camerasNotFound" = "No cameras were found";
+"quickAction.firstAddress.camerasTitle" = "Birinchi manzil kameralari";
+"quickAction.firstAddress.eventsTitle" = "Birinchi manzil hodisalari";
+"quickAction.firstAddress.noAccessSettings" = "The first address has no access settings";
+"quickAction.firstAddress.noAddresses" = "No addresses were found";
+"quickAction.firstAddress.noCameras" = "The first address has no cameras";
+"quickAction.firstAddress.noEvents" = "The first address has no events";
+
+/* MARK: - REQUEST */
+
+"request.common.submittedTitle" = "So'rov yuborildi";
+
+/* MARK: - SERVICES */
+
+"services.activationRequest.oops" = "Ups :(";
+"services.activationRequest.requestButton" = "Ariza qoldirish";
+"services.activationRequest.subtitle" = "Sizning manzilingiz aniqlashtirishni talab qiladi. Mutaxassis qo'ng'irog'ini kutib turing.  Qaysi xizmatni ulamoqchi bo'lar edingiz?";
+
+"services.available.loadingTitle" = "Vazifa yaratish";
+"services.available.title" = "Mavjud xizmatlar";
+
+"services.available.card.smartIntercom" = "Aqlli domofon";
+
+"services.available.error.noServiceSelected" = "Hech qanday xizmat tanlanmagan";
+
+"services.available.smartIntercom.subtitle" = "Shlagbaum, darvoza va pod'ezdga";
+
+"services.catalog.cableTV" = "Kabelli televidenie";
+"services.catalog.internet" = "Internet";
+"services.catalog.mobilePhone" = "Mobil aloqa";
+"services.catalog.smartIntercom" = "Aqlli domofon";
+"services.catalog.videoSurveillance" = "Videokuzatuv";
+"services.catalog.wiredPhone" = "Simli telefon";
+
+"services.request.createButton" = "So'rov yaratish";
+"services.request.loadingTitle" = "Chipta yaratish";
+"services.request.mainUserInfoFormat" = "To'liq ismi: %@\nTelefon: %@\nFoydalanuvchi kirgan manzil: %@";
+"services.request.unknownContractNumber" = "Shartnoma raqami noma'lum";
+
+"services.status.activated.changePlanButton" = "Tarifni o'zgartirish";
+"services.status.activated.changePlanHint" = "Agar tarifni o'zgartirmoqchi bo'lsangiz, ariza qoldiring";
+"services.status.activated.serviceActivated" = "Xizmat ulangan";
+"services.status.activated.titleFormat" = "\"%@\" xizmati ulangan";
+
+"services.status.notActivated.requestButton" = "Ariza qoldirish";
+"services.status.notActivated.subtitle" = "Agar xizmatni faollashtirmoqchi bo'lsangiz,  ariza qoldiring";
+"services.status.notActivated.title" = "Xizmat ulanmagan";
+
+"services.status.soonAvailable.addressInstructionPlaceholder" = "Тамбов шаҳри, Советская кўчаси, 80, 16 манзилида курьерни кутиб олинг ва у келтирган QR-кодни суратга олинг.";
+"services.status.soonAvailable.title" = "Тез орада ҳамма нарса ишлай бошлайди!";
+
+"services.status.unavailable.message" = "Hozirgi vaqtda sizning manzilingiz bo'yicha xizmat mavjud emas. Uni ulash uchun sizning uydan bir necha arizalarni to'plash kerak. Birinchi bo'lib ariza qoldiring!";
+"services.status.unavailable.requestButton" = "Ariza qoldirish";
+"services.status.unavailable.title" = "Xizmat hali mavjud emas";
+
+/* MARK: - SESSION */
+
+"session.conflict.message" = "Boshqa qurilmada avtorizatsiya amalga oshirildi";
+"session.conflict.title" = "Diqqat";
+
+/* MARK: - SETTINGS */
+
+"settings.address.addressSettings" = "Manzil sozlamalari";
+"settings.address.deleteAddressButton" = "Manzilni o'chirish";
+"settings.address.hideEventLogTitle" = "Boshqa kvartira foydalanuvchilaridan\nhodisalar jurnalini yashirish";
+"settings.address.intercom" = "Domofon";
+"settings.address.intercomEnabled" = "Interkom yoqilgan";
+"settings.address.keepAnEventLog" = "Hodisalar jurnalini yuritish";
+"settings.address.label" = "Label";
+"settings.address.noteLabel" = "Eslatma";
+"settings.address.receiveCalls" = "Qo'ng'iroqlarni qabul qilish";
+"settings.address.receivePaperBills" = "Qog'oz hisob-fakturalarni olish";
+"settings.address.recognizeFaces" = "Yuzlarni tanib olish";
+"settings.address.recognizePlates" = "Raqamlarni aniqlash";
+"settings.address.whiteRabbitMode" = "\"Oq quyon\" rejimi";
+
+"settings.address.whiteRabbitInfo.description" = "Bu funksiya kvartiraga qo‘ng‘iroq orqali darvozani, va qo‘ng‘iroqsiz kirish panelini ochish uchun mo‘ljallangan.";
+"settings.address.whiteRabbitInfo.step1" = "Mehmon darvozaga yaqinlashadi va kerakli kvartira raqamini teradi;";
+"settings.address.whiteRabbitInfo.step2" = "Kvartira egasi mehmonning chaqirig‘iga javob beradi va ilovada yoki analog trubkada 'Ochish' tugmasini bosadi;";
+"settings.address.whiteRabbitInfo.step3" = "Mehmon domofon paneliga yaqinlashib, kvartira raqamini teradi. Domofon kvartiraga qo‘ng‘iroq qilmasdan ochiladi.";
+"settings.address.whiteRabbitInfo.stepsTitle" = "Quyidagicha ishlaydi:";
+"settings.address.whiteRabbitInfo.title" = "Oq Quyon";
+"settings.address.whiteRabbitInfo.validityHint" = "Darvoza ochilgandan so‘ng bu funksiya 5 daqiqa davomida faol bo‘ladi.";
+
+"settings.addressAccess.accessToAddress" = "Manzilga kirish";
+"settings.addressAccess.accessToTheBarrierGate" = "Shlagbaum/darvozaga kirish";
+"settings.addressAccess.addressPlaceholder" = "Тамбов ш., Советская кўчаси, 16, к. 4";
+"settings.addressAccess.permanentAccessTitle" = "Doimiy manzilga kirish";
+
+"settings.addressAccess.faceId.beta" = "beta";
+"settings.addressAccess.faceId.disabledMessage" = "Распознавание лиц отключено владельцем квартиры";
+"settings.addressAccess.faceId.registeredFaces" = "Зарегистрированные лица";
+"settings.addressAccess.faceId.setupButton" = "Настроить";
+"settings.addressAccess.faceId.title" = "Вход по лицу без ключа";
+
+"settings.addressAccess.gateDetails.addressPlaceholder" = "г. Тамбов, ул. Советская, 16, к. 4";
+"settings.addressAccess.gateDetails.carFilter" = "Avtomobil raqami orqali";
+"settings.addressAccess.gateDetails.expired" = "muddati tugadi";
+"settings.addressAccess.gateDetails.phoneFilter" = "Telefon raqami orqali";
+"settings.addressAccess.gateDetails.timeRemainingFormat" = "%@ qoldi";
+"settings.addressAccess.gateDetails.title" = "Shlagbaum/darvozaga kirish";
+"settings.addressAccess.gateDetails.unlimited" = "cheksiz";
+
+"settings.addressAccess.guestAccess.alertMessage" = "Domofonga uyingiz raqamini tergan har bir kishiga eshik 60 daqiqa davomida avtomatik ravishda ochiladi. Ushbu vaqt o'tgach, domofon ishlash tartibi avtomatik ravishda standart rejimga qaytadi.";
+"settings.addressAccess.guestAccess.alertTitle" = "Bir soatga mehmonlarga kirish huquqini berasizmi?";
+"settings.addressAccess.guestAccess.sentMessage" = "Mehmon ma'lumotlari muvaffaqiyatli jo'natildi!";
+
+"settings.addressAccess.newPerson.addContact" = "Kontakt qo'shish";
+
+"settings.addressAccess.removeAccess.message" = "Kirish huquqini olib tashlamoqchimisiz?";
+
+"settings.addressAccess.shortcuts.addCar" = "Avtomobil qo‘shish";
+"settings.addressAccess.shortcuts.addPerson" = "Kontakt qo‘shish";
+"settings.addressAccess.shortcuts.allCars" = "Barcha mashinalar";
+"settings.addressAccess.shortcuts.allPeople" = "Barcha odamlar";
+
+"settings.addressAccess.temporaryAccess.codeTitle" = "Ochish kodi";
+"settings.addressAccess.temporaryAccess.guestAccessTitle" = "Bir soatlik mehmon kirishi";
+"settings.addressAccess.temporaryAccess.title" = "Vaqtinchalik domofon kirishi";
+
+"settings.addressAccess.waitingGuestInfo.message" = "Bu funksiyadan siz ishtirok etmasdan mehmonlaringiz domofonni ochishi mumkin: chaqiruv panelida kvartirangiz raqamini terish kifoya, darvoza yoki kirish eshigi darhol ochiladi.";
+"settings.addressAccess.waitingGuestInfo.title" = "Bir soatlik mehmon kirish huquqi";
+"settings.addressAccess.waitingGuestInfo.validity" = "Қосу сәтінен бастап бір сағатқа дейін жарамды.";
+
+"settings.addressDeletion.other" = "Boshqa";
+"settings.addressDeletion.pleaseStateTheReason" = "Sababini ko'rsating";
+"settings.addressDeletion.terminateContractOption" = "Shartnomani bekor qilmoqchiman";
+"settings.addressDeletion.warningMessage" = "Manzilni o'chirgandan keyin sizga manzil xizmatlarini boshqarish imkoni bo'lmaydi";
+
+"settings.addressDeletion.reason.placeholder" = "Sababni ko'rsating";
+"settings.addressDeletion.reason.terminateContract" = "Shartnomani bekor qilmoqchiman";
+"settings.addressDeletion.reason.unspecified" = "Mijoz sabab ko'rsatmadi";
+
+"settings.common.calls" = "Qo'ng'iroqlar";
+"settings.common.deleteAccountButton" = "Hisobni o'chirish";
+"settings.common.logoutButton" = "Chiqish";
+"settings.common.lowBalanceNotificationTitle" = "Balans nolga yaqinlashganda xabar yuborish";
+"settings.common.notifications" = "Xabarlar";
+"settings.common.notifyAboutInsufficientFunds" = "Mablag' yetishmasligi haqida xabar berish";
+"settings.common.profileNamePlaceholder" = "Aleksandr Sergeyevich";
+"settings.common.profilePhonePlaceholder" = "+7 (964) 134 00 00";
+"settings.common.showCamerasOnTheMap" = "Xaritada ko'rsatish";
+"settings.common.showNotifications" = "Xabarlarni ko'rsatish";
+"settings.common.speakerphoneByDefault" = "Odatiy yuqori ovozli aloqa";
+"settings.common.theme" = "Mavzu";
+"settings.common.title" = "Umumiy sozlamalar";
+"settings.common.useCallkit" = "CallKit'dan foydalanish";
+
+"settings.common.addressOrder.description" = "Standart holatda manzillar alifbo tartibida ko‘rsatiladi. Kirish mumkin bo‘lgan manzillar doimo birinchi o‘rinda bo‘ladi. Tartibni qo‘lda sozlash uchun — manzil sarlavhasini bosib turing, “ko‘tarilgan kartochka” effekti paydo bo‘lishi uchun 0.3–0.5 soniya kuting, so‘ng yuqoriga yoki pastga suring. Kerakli joyga qo‘yganingizda — tartib avtomatik tarzda saqlanadi.";
+"settings.common.addressOrder.resetDialogMessage" = "Bu manzillar standart tartibiga qaytariladi.";
+"settings.common.addressOrder.resetDialogTitle" = "Manzillar tartibini tiklash?";
+"settings.common.addressOrder.resetHint" = "Asl tartibga qaytish uchun sozlamalarda “Tiklash” tugmasidan foydalaning.";
+"settings.common.addressOrder.title" = "Manzillar tartibi";
+
+"settings.common.appearance.dark" = "Qorong‘i";
+"settings.common.appearance.light" = "Yorug‘";
+"settings.common.appearance.sheetMessage" = "O‘zingizga qulay mavzuni tanlang.";
+"settings.common.appearance.sheetTitle" = "Ko‘rinishni tanlang";
+"settings.common.appearance.system" = "Tizimiy";
+"settings.common.appearance.title" = "Ko‘rsatish";
+
+"settings.common.callKitInfo.description" = "CallKit rejimi yoqilganida, iPhone qurilmangizga kelayotgan qo‘ng‘iroqlar oddiy qo‘ng‘iroqlar kabi ko‘rinadi. Biroq, bu rejimda siz \"ko‘zchadan\" qarab, domofonga kim kelganini trubkani ko‘tarmasdan bilolmaysiz.";
+"settings.common.callKitInfo.title" = "CallKit funksiyasi";
+
+"settings.common.deleteAccount.message" = "Hisobingizni oʻchirib tashlamoqchimisiz? Oldin qo'shilgan barcha manzillar o'chiriladi";
+"settings.common.deleteAccount.title" = "Hisobni o'chirish";
+
+"settings.common.logout.message" = "Hisobingizdan chiqishni istaysizmi?";
+"settings.common.logout.title" = "Ilovadan chiqish";
+
+"settings.faces.faceRegistration" = "Yuzni ro'yxatdan o'tkazish";
+"settings.faces.registeredFaces" = "Ro'yxatdan o'tgan yuzlar";
+"settings.faces.registrationHint" = "Mehmonlaringizning suratlari Voqealar tarixi bo'limida saqlanadi. \n\nShaxsni tanlash va ro'yxatdan o'tkazish uchun ushbu bo'limga o'ting, Plus tugmasini bosib. \nVoqealar tarixida kerakli voqea yonida ma'lumot belgisini bosib, ochilgan ekranda zarur suratni tanlang.\n\n";
+
+"settings.main.addAddressButton" = "Manzil qo'shish";
+"settings.main.contractNumberTitle" = "Shartnoma raqami";
+"settings.main.openPersonalAccountWebButton" = "Shaxsiy hisobning veb-versiyasini oching";
+
+"settings.main.access.title" = "Kirishni boshqarish";
+
+"settings.main.address.title" = "Manzil sozlamalari";
+
+"settings.main.addresses.title" = "Manzillar sozlamalari";
+
+"settings.main.serviceAction.activateServiceTemplate" = "Salom, men \"%(Y)\" shartnomasiga \"%(X)\" xizmatini ulamoqchiman";
+"settings.main.serviceAction.changeTariffTemplate" = "Salom, men \"%(Y)\" shartnomasi bo'yicha \"%(X)\" xizmati uchun tarifni o'zgartirmoqchiman";
+"settings.main.serviceAction.talkAboutActivationTemplate" = "Salom, \"%(X)\" xizmati mening manzilimda mavjud emas, lekin men uni \"%(Y)\" shartnomasi bo'yicha foydalanmoqchiman";
+
+"settings.shareCar.platePlaceholder" = "М 565 ХВ 68";
+"settings.shareCar.shareAccess" = "Kirishni ulashish";
+"settings.shareCar.subtitle" = "Kirish huquqini bermoqchi bo‘lgan mashina raqamini kiriting.";
+
+"settings.sharePerson.name" = "Ism";
+"settings.sharePerson.shareAccess" = "Kirishni ulashish";
+"settings.sharePerson.shareButton" = "Ulashish";
+"settings.sharePerson.subtitle" = "Kirishni taqdim etmoqchi bo'lgan shaxsning telefon raqamini kiriting yoki uning raqamini kontaktlardan tanlang";
+
+/* MARK: - SUPPORT */
+
+"support.call.phoneAction" = "Telefon qilish";
+
+"support.callback.requestButton" = "Qayta qo'ng'iroq so'rash";
+"support.callback.successMessage" = "Tez orada sizga qo'ng'iroq qilamiz";
+
+/* MARK: - TAB */
+
+"tab.addresses" = "Manzillar";
+"tab.chat" = "Chat";
+"tab.menu" = "Menyu";
+"tab.notifications" = "Bildirishnomalar";
+"tab.payments" = "To'lash";
+
+/* MARK: - VALIDATION */
+
+"validation.phone.invalidFormat" = "Noto'g'ri raqam formati";

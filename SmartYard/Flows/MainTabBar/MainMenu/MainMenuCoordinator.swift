@@ -146,7 +146,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute>, HasDisposeBag {
                 apiWrapper: apiWrapper,
                 networkStateProvider: networkStateProvider,
                 url: url,
-                backButtonLabel: NSLocalizedString("Menu", comment: ""),
+                backButtonLabel: L10n.Tab.menu,
                 push: true,
                 version: version
             )
@@ -161,7 +161,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute>, HasDisposeBag {
                 networkStateProvider: networkStateProvider,
                 content: content,
                 baseURL: baseURL,
-                backButtonLabel: NSLocalizedString("Menu", comment: ""),
+                backButtonLabel: L10n.Tab.menu,
                 push: true,
                 version: version
             )
@@ -195,15 +195,15 @@ private extension MainMenuCoordinator {
                 onSuccess: { [weak self] in
                     self?.trigger(
                         .alert(
-                            title: NSLocalizedString("Request submitted", comment: ""),
-                            message: NSLocalizedString("We will call you shortly", comment: "")
+                            title: L10n.Request.Common.submittedTitle,
+                            message: L10n.Support.Callback.successMessage
                         )
                     )
                 },
                 onFailure: { [weak self] error in
                     self?.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )

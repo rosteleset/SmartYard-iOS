@@ -84,7 +84,7 @@ final class AddressAccessViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )
@@ -350,7 +350,7 @@ final class AddressAccessViewModel: BaseViewModel {
                 onNext: { [weak self] in
                     self?.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Guest information has been successfully sent!", comment: ""),
+                            title: L10n.Settings.AddressAccess.GuestAccess.sentMessage,
                             message: nil,
                             actions: [
                                 UIAlertAction(
@@ -386,7 +386,7 @@ final class AddressAccessViewModel: BaseViewModel {
                 onNext: { [weak self] in
                     self?.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Guest information has been successfully sent!", comment: ""),
+                            title: L10n.Settings.AddressAccess.GuestAccess.sentMessage,
                             message: nil,
                             actions: [
                                 UIAlertAction(
@@ -408,13 +408,13 @@ final class AddressAccessViewModel: BaseViewModel {
                     guard let self else { return }
                     
                     let noAction = UIAlertAction(
-                        title: NSLocalizedString("Cancel", comment: ""),
+                        title: L10n.Common.cancel,
                         style: .cancel,
                         handler: nil
                     )
                     
                     let yesAction = UIAlertAction(
-                        title: NSLocalizedString("Yes", comment: ""),
+                        title: L10n.Common.yes,
                         style: .destructive
                     ) { [weak self] _ in
                         self?.deleteGateAccessContact(person: person)
@@ -422,7 +422,7 @@ final class AddressAccessViewModel: BaseViewModel {
                     
                     self.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Do you want to remove access?", comment: ""),
+                            title: L10n.Settings.AddressAccess.RemoveAccess.message,
                             message: nil,
                             actions: [noAction, yesAction],
                             style: .alert
@@ -438,13 +438,13 @@ final class AddressAccessViewModel: BaseViewModel {
                     guard let self else { return }
                     
                     let noAction = UIAlertAction(
-                        title: NSLocalizedString("Cancel", comment: ""),
+                        title: L10n.Common.cancel,
                         style: .cancel,
                         handler: nil
                     )
                     
                     let yesAction = UIAlertAction(
-                        title: NSLocalizedString("Yes", comment: ""),
+                        title: L10n.Common.yes,
                         style: .destructive
                     ) { [weak self] _ in
                         self?.deleteGateAccessCar(licensePlate: licensePlate)
@@ -452,7 +452,7 @@ final class AddressAccessViewModel: BaseViewModel {
                     
                     self.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Do you want to remove access?", comment: ""),
+                            title: L10n.Settings.AddressAccess.RemoveAccess.message,
                             message: nil,
                             actions: [noAction, yesAction],
                             style: .alert
@@ -470,13 +470,13 @@ final class AddressAccessViewModel: BaseViewModel {
                     }
                     
                     let noAction = UIAlertAction(
-                        title: NSLocalizedString("Cancel", comment: ""),
+                        title: L10n.Common.cancel,
                         style: .cancel,
                         handler: nil
                     )
                     
                     let yesAction = UIAlertAction(
-                        title: NSLocalizedString("Yes", comment: ""),
+                        title: L10n.Common.yes,
                         style: .destructive
                     ) { [weak self] _ in
                         self?.deletePermanentAccessContact(index: index)
@@ -484,7 +484,7 @@ final class AddressAccessViewModel: BaseViewModel {
                     
                     self.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Are you sure?", comment: ""),
+                            title: L10n.Common.Confirmation.title,
                             message: nil,
                             actions: [noAction, yesAction],
                             style: .alert
@@ -602,14 +602,14 @@ final class AddressAccessViewModel: BaseViewModel {
     
     private func toggleGuestAccess() {
         let cancelAction = UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
+            title: L10n.Common.cancel,
             style: .cancel
         ) { _ in
             // nothing
         }
         
         let okAction = UIAlertAction(
-            title: NSLocalizedString("Enable", comment: ""),
+            title: L10n.Common.enable,
             style: .default
         ) { [weak self] _ in
             guard let self = self else {
@@ -647,9 +647,9 @@ final class AddressAccessViewModel: BaseViewModel {
         }
         
         // swiftlint:disable:next line_length
-        let guestAccessAlertText = NSLocalizedString("guestAccessAlertText", comment: "")
+        let guestAccessAlertText = L10n.Settings.AddressAccess.GuestAccess.alertMessage
         
-        let guestAccessAlertTitle = NSLocalizedString("Enable guest access for an hour?", comment: "")
+        let guestAccessAlertTitle = L10n.Settings.AddressAccess.GuestAccess.alertTitle
         
         guard let isGrantedIntercomGuestAccess = try? isGrantedIntercomGuestAccess.value() else {
             return

@@ -91,47 +91,47 @@ final class HistoryTableViewCell: UITableViewCell {
         // настраиваем отображение иконки и заголовка
         switch value.event {
         case .answered:
-            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.title
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             iconImage.image = UIImage(named: "LogsCall")
             description = ""
         case .unanswered:
-            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.title
             titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
             iconImage.image = UIImage(named: "LogsCall")
             description = ""
         case .rfid:
-            titleLabel.text = NSLocalizedString("Opening with a key", comment: "")
+            titleLabel.text = L10n.History.Event.openingWithKey
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             iconImage.image = UIImage(named: "LogsKey")
             description = ""
         case .app:
-            titleLabel.text = NSLocalizedString("Opening from the app", comment: "")
+            titleLabel.text = L10n.History.Event.openingFromApp
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             iconImage.image = UIImage(named: "LogsApp")
             description = ""
         case .face:
-            titleLabel.text = NSLocalizedString("Opening with Face-ID", comment: "")
+            titleLabel.text = L10n.History.Event.openingWithFaceID
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             iconImage.image = UIImage(named: "LogsFace")
             description = ""
         case .passcode:
-            titleLabel.text = NSLocalizedString("Opening with code", comment: "")
+            titleLabel.text = L10n.History.Event.openingWithCode
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             iconImage.image = UIImage(named: "LogsCode")
             description = ""
         case .call:
-            titleLabel.text = NSLocalizedString("Gate opening on call", comment: "")
+            titleLabel.text = L10n.History.Event.gateOpeningOnCall
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             iconImage.image = UIImage(named: "LogsWicket")
             description = ""
         case .plate:
-            titleLabel.text = NSLocalizedString("Gate opening by numberplate", comment: "")
+            titleLabel.text = L10n.History.Event.gateOpeningByNumberplate
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             iconImage.image = UIImage(named: "LogsWicket")
             description = ""
         case .unknown:
-            titleLabel.text = NSLocalizedString("Unknown event", comment: "")
+            titleLabel.text = L10n.History.Event.unknown
             titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
             iconImage.image = UIImage(named: "LogsApp")
             description = ""

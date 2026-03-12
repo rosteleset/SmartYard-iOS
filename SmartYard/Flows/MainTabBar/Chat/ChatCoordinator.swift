@@ -49,8 +49,8 @@ final class ChatCoordinator: NavigationCoordinator<ChatRoute>, HasDisposeBag {
                 super.init(initialRoute: .webView(url: url))
             } else {
                 super.init(initialRoute: .alert(
-                    title: NSLocalizedString("Error", comment: ""),
-                    message: NSLocalizedString("Unable to open chat page.", comment: "")
+                    title: L10n.Common.error,
+                    message: L10n.Chat.Error.unableToOpenPage
                 ))
             }
         }

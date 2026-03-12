@@ -12,9 +12,15 @@ final class AddressesListCameraCell: CustomBorderCollectionViewCell {
     
     @IBOutlet private weak var cameraCountLabel: UILabel!
     @IBOutlet private weak var arrowImageView: UIImageView!
+    @IBOutlet private weak var camerasLabel: UILabel!
+    private func configureUI() {
+        camerasLabel.text = L10n.Home.AddressCard.Cameras.cameras
+        cameraCountLabel.text = L10n.Home.AddressCard.Cameras.countValue
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureUI()
         configure(availableCameras: 0)
     }
     

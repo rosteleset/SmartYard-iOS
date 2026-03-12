@@ -17,7 +17,7 @@ final class ServiceIsNotActivatedViewController: BaseViewController, LoaderPrese
     @IBOutlet private weak var closeButton: CircleIconControl!
     @IBOutlet private weak var sendRequestButton: BlueButton!
     @IBOutlet private weak var backgroundView: UIView!
-    
+    @IBOutlet private weak var subtitleLabel: UILabel!
     private let viewModel: ServiceIsNotActivatedViewModel
     
     var loader: JGProgressHUD?
@@ -34,11 +34,14 @@ final class ServiceIsNotActivatedViewController: BaseViewController, LoaderPrese
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Services.Status.NotActivated.title
+        subtitleLabel.text = L10n.Services.Status.NotActivated.subtitle
+        sendRequestButton.setTitle(L10n.Services.Status.NotActivated.requestButton, for: .normal)
         closeButton.style = .Close.blue
     }
 
@@ -63,7 +66,7 @@ final class ServiceIsNotActivatedViewController: BaseViewController, LoaderPrese
             .drive(
                 onNext: { [weak self] service in
                     self?.titleLabel.text = String.localizedStringWithFormat(
-                        NSLocalizedString("Service not connected", comment: ""),
+                        L10n.Services.Status.NotActivated.title,
                         service.localizedTitle
                     ) 
                 }
@@ -78,7 +81,7 @@ final class ServiceIsNotActivatedViewController: BaseViewController, LoaderPrese
                         self?.view.endEditing(true)
                     }
                     
-                    self?.updateLoader(isEnabled: isLoading, detailText: NSLocalizedString("Creating a ticket", comment: ""))
+                    self?.updateLoader(isEnabled: isLoading, detailText: L10n.Services.Request.loadingTitle)
                 }
             )
             .disposed(by: disposeBag)

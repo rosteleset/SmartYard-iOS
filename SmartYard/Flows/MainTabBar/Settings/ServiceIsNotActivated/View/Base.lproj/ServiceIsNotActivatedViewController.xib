@@ -27,6 +27,7 @@
                 <outlet property="sendRequestButton" destination="WOW-JA-L8S" id="nFD-hL-XQG"/>
                 <outlet property="titleLabel" destination="FRg-G2-ZvH" id="IP5-kU-Kap"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="subtitleLabel" destination="KnB-CN-jeP" id="Prh-VK-woR"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

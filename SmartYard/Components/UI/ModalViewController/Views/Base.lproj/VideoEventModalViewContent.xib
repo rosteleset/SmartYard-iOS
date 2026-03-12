@@ -117,6 +117,14 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="130.3125" y="127.5"/>
+            <connections>
+                <outlet property="titleLabel" destination="gJJ-d5-8aF" id="gwB-uN-O6n"/>
+                <outlet property="descriptionLabel" destination="NwP-ob-Rnk" id="9JE-C3-Hqd"/>
+                <outlet property="gesturesTitleLabel" destination="r6e-0e-e0n" id="Z6J-6a-fU1"/>
+                <outlet property="swipeHintLabel" destination="JX1-P5-f2T" id="zT0-YQ-OaN"/>
+                <outlet property="rewindHintLabel" destination="VOo-Yj-6Gp" id="F03-vp-UuT"/>
+                <outlet property="forwardHintLabel" destination="9Up-ke-t4m" id="3em-6K-opZ"/>
+            </connections>
         </view>
     </objects>
     <resources>

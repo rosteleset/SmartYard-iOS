@@ -91,20 +91,21 @@ final class AuthByContractNumViewController: BaseViewController, LoaderPresentab
     }
     
     private func configureUI() {
+        forgetPassButton.setTitle(L10n.Auth.ContractLogin.forgotPasswordButton, for: .normal)
+        signInButton.setTitle(L10n.Auth.ContractLogin.loginButton, for: .normal)
+        forgetEverythingButton.setTitle(L10n.Auth.ContractLogin.forgotCredentialsButton, for: .normal)
+        noContractButton.setTitle(L10n.Auth.ContractLogin.iDonTHaveAContractButton, for: .normal)
         contractNumberTextField.setPlaceholder(
-            string: NSLocalizedString("Contract number", comment: ""),
+            string: L10n.Auth.ContractLogin.contractNumberPlaceholder,
             isSemiBold: true
         )
         passTextField.setPlaceholder(
-            string: NSLocalizedString("Password", comment: ""),
+            string: L10n.Auth.ContractLogin.passwordPlaceholder,
             isSemiBold: true
         )
         headerView.setText(
-            NSLocalizedString("Do you have an agreement with the operator?", comment: ""),
-            subtitle: NSLocalizedString(
-                "Enter the number and password of the contract associated with this address and manage services from this application.",
-                comment: ""
-            )
+            L10n.Auth.ContractLogin.hasOperatorAgreementTitle,
+            subtitle: L10n.Auth.ContractLogin.subtitle
         )
 
         forgetPassButton.setLeftAlignment()

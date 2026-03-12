@@ -54,6 +54,9 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="138.40579710144928" y="91.741071428571431"/>
+            <connections>
+                <outlet property="titleLabel" destination="ere-oj-jL2" id="XGS-HA-Gt8"/>
+            </connections>
         </collectionViewCell>
     </objects>
     <resources>

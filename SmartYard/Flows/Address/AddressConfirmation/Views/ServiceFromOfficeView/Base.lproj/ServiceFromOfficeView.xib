@@ -90,6 +90,7 @@
             <connections>
                 <outlet property="containerView" destination="59B-VS-YVQ" id="ebo-P1-dQ5"/>
                 <outlet property="doSoButton" destination="bQy-0w-33M" id="14r-cL-qL7"/>
+                <outlet property="instructionsLabel" destination="ydR-2y-k4D" id="1Kh-zf-x1h"/>
             </connections>
             <point key="canvasLocation" x="190.57971014492756" y="-50.892857142857139"/>
         </view>

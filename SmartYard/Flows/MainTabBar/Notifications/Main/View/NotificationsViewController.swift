@@ -35,11 +35,11 @@ final class NotificationsViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureView()
+        configureUI()
         bind()
     }
     
-    private func configureView() {
+    private func configureUI() {
         webView.layerCornerRadius = 24
         webView.layer.maskedCorners = .topCorners
         webView.navigationDelegate = self

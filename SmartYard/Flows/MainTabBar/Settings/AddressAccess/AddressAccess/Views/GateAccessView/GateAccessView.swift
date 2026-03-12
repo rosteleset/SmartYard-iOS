@@ -40,7 +40,7 @@ final class GateAccessView: PMNibLinkableView, UICollectionViewDelegate, HasDisp
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
+        configureUI()
         configureCollectionView()
         bind()
     }
@@ -93,10 +93,10 @@ final class GateAccessView: PMNibLinkableView, UICollectionViewDelegate, HasDisp
 
 extension GateAccessView {
     
-    private func setupUI() {
+    private func configureUI() {
         segmentControl.titles = [
-            NSLocalizedString("By car number", comment: ""),
-            NSLocalizedString("By phone number", comment: "")
+            L10n.Settings.AddressAccess.GateDetails.carFilter,
+            L10n.Settings.AddressAccess.GateDetails.phoneFilter
         ]
     }
     

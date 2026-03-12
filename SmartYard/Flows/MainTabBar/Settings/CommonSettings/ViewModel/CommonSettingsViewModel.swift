@@ -63,7 +63,7 @@ final class CommonSettingsViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )
@@ -85,7 +85,7 @@ final class CommonSettingsViewModel: BaseViewModel {
         let isChangeEnableListButtonVisible = accessService.cctvView == "userDefined"
         let isChangeAppearanceButtonVisible = Constants.isDarkModeEnabled
         let displaySettingsSubject = BehaviorSubject<(Bool, Bool)>(value: (isChangeEnableListButtonVisible, isChangeAppearanceButtonVisible))
-        let appereanceButtonTextSubject = BehaviorSubject<String>(value: NSLocalizedString("System", comment: ""))
+        let appereanceButtonTextSubject = BehaviorSubject<String>(value: L10n.Settings.Common.Appearance.system)
         let resetConfirmed = PublishRelay<Void>()
         let resetDidComplete = resetConfirmed
             .do(onNext: { [weak self] in
@@ -97,15 +97,15 @@ final class CommonSettingsViewModel: BaseViewModel {
                 onNext: { style in
                     switch style {
                     case .unspecified:
-                        appereanceButtonTextSubject.onNext(NSLocalizedString("System", comment: ""))
+                        appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.system)
                     case .light:
-                        appereanceButtonTextSubject.onNext(NSLocalizedString("Light", comment: ""))
+                        appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.light)
                     case .dark:
-                        appereanceButtonTextSubject.onNext(NSLocalizedString("Dark", comment: ""))
+                        appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.dark)
                     @unknown default:
                         Logger.logWarning("!! Unknown UIUserInterfaceStyle encountered: \(style)")
 
-                        appereanceButtonTextSubject.onNext(NSLocalizedString("System", comment: ""))
+                        appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.system)
                     }
                 }
             )
@@ -292,9 +292,9 @@ final class CommonSettingsViewModel: BaseViewModel {
         input.logoutTrigger
             .drive(
                 onNext: { [weak self] in
-                    let noAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil)
+                    let noAction = UIAlertAction(title: L10n.Common.no, style: .cancel, handler: nil)
                     
-                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { [weak self] _ in
+                    let yesAction = UIAlertAction(title: L10n.Common.yes, style: .destructive) { [weak self] _ in
                         guard let self = self else {
                             return
                         }
@@ -317,8 +317,8 @@ final class CommonSettingsViewModel: BaseViewModel {
                     
                     self?.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Exiting the application", comment: ""),
-                            message: NSLocalizedString("Are you sure you want to log out of your account?", comment: ""),
+                            title: L10n.Settings.Common.Logout.title,
+                            message: L10n.Settings.Common.Logout.message,
                             actions: [noAction, yesAction],
                             style: .alert
                         )
@@ -335,35 +335,35 @@ final class CommonSettingsViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] in
                     let systemAction = UIAlertAction(
-                        title: NSLocalizedString("System", comment: ""),
+                        title: L10n.Settings.Common.Appearance.system,
                         style: .default
                     ) { _ in
                         ThemeManager.shared.setTheme(.unspecified)
-                        appereanceButtonTextSubject.onNext(NSLocalizedString("System", comment: ""))
+                        appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.system)
                     }
                     
                     let lightAction = UIAlertAction(
-                        title: NSLocalizedString("Light", comment: ""),
+                        title: L10n.Settings.Common.Appearance.light,
                         style: .default
                     ) { _ in
                         ThemeManager.shared.setTheme(.light)
-                        appereanceButtonTextSubject.onNext(NSLocalizedString("Light", comment: ""))
+                        appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.light)
                     }
                     
                     let darkAction = UIAlertAction(
-                        title: NSLocalizedString("Dark", comment: ""),
+                        title: L10n.Settings.Common.Appearance.dark,
                         style: .default
                     ) { _ in
                         ThemeManager.shared.setTheme(.dark)
-                        appereanceButtonTextSubject.onNext(NSLocalizedString("Dark", comment: ""))
+                        appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.dark)
                     }
                     
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .destructive)
+                    let cancelAction = UIAlertAction(title: L10n.Common.cancel, style: .destructive)
                     
                     self?.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Select Appearance", comment: ""),
-                            message: NSLocalizedString("Please choose your preferred appearance theme.", comment: ""),
+                            title: L10n.Settings.Common.Appearance.sheetTitle,
+                            message: L10n.Settings.Common.Appearance.sheetMessage,
                             actions: [systemAction, lightAction, darkAction, cancelAction],
                             style: .actionSheet
                         )
@@ -377,9 +377,9 @@ final class CommonSettingsViewModel: BaseViewModel {
         input.deleteAccountTrigger
             .drive(
                 onNext: { [weak self] in
-                    let noAction = UIAlertAction(title: NSLocalizedString("No", comment: ""), style: .cancel, handler: nil)
+                    let noAction = UIAlertAction(title: L10n.Common.no, style: .cancel, handler: nil)
                     
-                    let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { [weak self] _ in
+                    let yesAction = UIAlertAction(title: L10n.Common.yes, style: .destructive) { [weak self] _ in
                         guard let self = self else { return }
                         
                         self.apiWrapper.deleteAccount()
@@ -408,8 +408,8 @@ final class CommonSettingsViewModel: BaseViewModel {
                     
                     self?.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Account deleting", comment: ""),
-                            message: NSLocalizedString("Are you sure you want to delete your account? All previously added addresses will be deleted", comment: ""),
+                            title: L10n.Settings.Common.DeleteAccount.title,
+                            message: L10n.Settings.Common.DeleteAccount.message,
                             actions: [noAction, yesAction],
                             style: .alert
                         )
@@ -439,27 +439,21 @@ final class CommonSettingsViewModel: BaseViewModel {
                 onNext: { [weak self] in
                     
                     let cancelAction = UIAlertAction(
-                        title: NSLocalizedString("Cancel", comment: ""),
+                        title: L10n.Common.cancel,
                         style: .cancel
                     ) { _ in
                         // nothing
                     }
                     let okAction = UIAlertAction(
-                        title: NSLocalizedString("Reset", comment: ""),
+                        title: L10n.Common.reset,
                         style: .default
                     ) { _ in
                         resetConfirmed.accept(())
                         NotificationCenter.default.post(name: .addressOrderReset, object: nil)
                     }
                     
-                    let resetOrderAlertTitle = NSLocalizedString(
-                        "Reset address order?",
-                        comment: ""
-                    )
-                    let resetOrderAlertText = NSLocalizedString(
-                        "This will restore the default sorting.",
-                        comment: ""
-                    )
+                    let resetOrderAlertTitle = L10n.Settings.Common.AddressOrder.resetDialogTitle
+                    let resetOrderAlertText = L10n.Settings.Common.AddressOrder.resetDialogMessage
                     
                     self?.router.trigger(
                         .dialog(

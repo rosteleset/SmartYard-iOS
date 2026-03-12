@@ -17,7 +17,7 @@ final class ServiceSoonAvailableViewController: BaseViewController, LoaderPresen
     @IBOutlet private weak var actionButton: WhiteButtonWithBorder!
     @IBOutlet private weak var issueCancelButton: WhiteButtonWithBorder!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
     var loader: JGProgressHUD?
 
     private let viewModel: ServiceSoonAvailableViewModel
@@ -32,8 +32,14 @@ final class ServiceSoonAvailableViewController: BaseViewController, LoaderPresen
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureUI() {
+        titleLabel.text = L10n.Services.Status.SoonAvailable.title
+        hintLabel.text = L10n.Services.Status.SoonAvailable.addressInstructionPlaceholder
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         bind()
     }
     

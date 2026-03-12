@@ -54,6 +54,16 @@
                 <outlet property="whiteRabbitContainerView" destination="pa4-GN-boo" id="UJ6-Db-Ypg"/>
                 <outlet property="whiteRabbitQuestionMark" destination="S3K-hL-sT6" id="q6f-ei-3Ie"/>
                 <outlet property="whiteRabbitSwitch" destination="F7L-aq-SPt" id="tJt-g5-S0W"/>
+                <outlet property="titleLabel" destination="8Eq-Xo-T29" id="6Wk-eA-3ss"/>
+                <outlet property="intercomLabel" destination="TyT-G0-g5P" id="HiK-HO-nIg"/>
+                <outlet property="intercomEnabledLabel" destination="Uhf-0U-VJx" id="A9O-Iz-VX5"/>
+                <outlet property="receiveCallsLabel" destination="r25-qp-rMe" id="Yrs-Cx-KOi"/>
+                <outlet property="whiteRabbitModeLabel" destination="cfP-r1-vq0" id="khS-hy-zLD"/>
+                <outlet property="paperBillsLabel" destination="Pul-Vy-tR0" id="iJQ-tw-OEV"/>
+                <outlet property="eventLogLabel" destination="2pG-Oj-xOo" id="AnE-FS-GuF"/>
+                <outlet property="hideEventLogLabel" destination="oYC-ZJ-cYh" id="P9d-Ct-jVF"/>
+                <outlet property="recognizeFacesLabel" destination="hUw-Nq-3Y7" id="d4N-nb-wEz"/>
+                <outlet property="recognizePlatesLabel" destination="PtT-Pj-osP" id="4a2-He-R3f"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

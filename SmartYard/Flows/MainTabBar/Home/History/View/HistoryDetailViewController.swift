@@ -18,7 +18,7 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var emptyStateView: UIView!
-    
+    @IBOutlet private weak var emptyStateLabel: UILabel!
     fileprivate let viewModel: HistoryViewModel
     fileprivate var dataSource: RxCollectionViewSectionedAnimatedDataSource<HistorySectionModel>?
     fileprivate let selectItemOnLoad: HistoryDataItem?
@@ -61,11 +61,16 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureUI() {
+        emptyStateLabel.text = L10n.History.Detail.emptyStateMessage
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         
         fakeNavBar.configueDarkNavBar()
-        fakeNavBar.setText(NSLocalizedString("Events", comment: ""))
+        fakeNavBar.setText(L10n.History.Detail.title)
         emptyStateView.isHidden = true
         
         setupCollectionView()

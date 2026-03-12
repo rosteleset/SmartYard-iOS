@@ -27,7 +27,8 @@ final class PaymentPopupController: BaseViewController {
     @IBOutlet private weak var payResultHint: UILabel!
     
     @IBOutlet private var animatedViewBottomOffset: NSLayoutConstraint!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var amountLabel: UILabel!
     private var swipeDismissInteractor: SwipeInteractionController?
     
     private let viewModel: PaymentPopupViewModel
@@ -49,7 +50,7 @@ final class PaymentPopupController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
 
@@ -97,7 +98,7 @@ final class PaymentPopupController: BaseViewController {
                     
                     request.paymentSummaryItems = [
                         PKPaymentSummaryItem(
-                            label: NSLocalizedString("Deposit", comment: ""),
+                            label: L10n.Payments.TopUp.depositTitle,
                             amount: amount
                         )
                     ]
@@ -154,13 +155,13 @@ final class PaymentPopupController: BaseViewController {
                     self.sumTextField.isHidden = true
                     self.successView.isHidden = false
                     
-                    let doneText = NSLocalizedString("Done", comment: "")
-                    let errorText = NSLocalizedString("Error", comment: "")
+                    let doneText = L10n.Common.done
+                    let errorText = L10n.Common.error
                     
                     self.payResultTitle.text = isSuccess ? "\(doneText)!" : "\(errorText)!"
                     
-                    let successText = NSLocalizedString("Your balance is topped up", comment: "")
-                    let failText = NSLocalizedString("Payment has failed", comment: "")
+                    let successText = L10n.Payments.TopUp.successMessageShort
+                    let failText = L10n.Payments.TopUp.errorTitle
                     self.payResultHint.text = isSuccess ? successText : failText
                     
                     let resultImageName = isSuccess ? "SuccessIcon" : "ErrorIcon"
@@ -182,7 +183,7 @@ final class PaymentPopupController: BaseViewController {
                     
                     self?.recommendedSumLabel.isHidden = false
                     // swiftlint:disable:next line_length
-                    self?.recommendedSumLabel.text = NSLocalizedString("Recommended", comment: "") + " - " + String(uSum)
+                    self?.recommendedSumLabel.text = L10n.Payments.TopUp.recommendedLabel + " - " + String(uSum)
                 }
             )
             .disposed(by: disposeBag)
@@ -202,7 +203,16 @@ final class PaymentPopupController: BaseViewController {
         
     }
     
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Payments.TopUp.topUpBalance
+        contractNumberLabel.text = L10n.Payments.TopUp.contractNumberPlaceholder
+        recommendedSumLabel.text = L10n.Payments.TopUp.recommendedAmountPlaceholder
+        sumTextField.placeholder = L10n.Payments.TopUp.amountPlaceholder
+        payButton.setTitle(L10n.Payments.TopUp.payButton, for: .normal)
+        amountLabel.text = L10n.Payments.TopUp.amount
+        cardButton.setTitle(L10n.Payments.TopUp.paymentByBankCardButton, for: .normal)
+        payResultTitle.text = L10n.Payments.TopUp.successTitle
+        payResultHint.text = L10n.Payments.TopUp.successMessage
         configureSwipeAction()
         configureRxKeyboard()
         view.backgroundColor = .clear

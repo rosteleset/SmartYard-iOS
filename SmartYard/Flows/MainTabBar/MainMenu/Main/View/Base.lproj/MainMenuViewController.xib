@@ -20,6 +20,7 @@
                 <outlet property="mainContainerView" destination="bdD-ER-KhT" id="Ean-xy-KJO"/>
                 <outlet property="skeletonContainer" destination="FNu-Nz-syI" id="aqm-yz-m3l"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="oGM-tc-KqL" id="hjB-5K-B7f"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

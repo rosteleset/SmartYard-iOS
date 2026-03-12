@@ -20,6 +20,7 @@
                 <outlet property="emptyStateView" destination="er8-BG-sa1" id="cih-5C-cmH"/>
                 <outlet property="fakeNavBar" destination="JXc-hx-DfM" id="aVs-JN-mO7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="emptyStateLabel" destination="RHh-uL-LfI" id="RSj-Zw-AcN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

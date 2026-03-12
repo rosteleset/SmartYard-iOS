@@ -70,7 +70,7 @@ final class AddressSettingsViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )
@@ -335,7 +335,7 @@ final class AddressSettingsViewModel: BaseViewModel {
             areLogsVisibleOnlyForOwner: areLogsVisibleOnlyForOwnerSubject.asDriver(onErrorJustReturn: nil),
             isFRSEnabled: isFRSEnabledSubject.asDriver(onErrorJustReturn: false),
             isLPRSEnabled: isLPRSEnabledSubject.asDriver(onErrorJustReturn: false),
-            ringtone: .just(NSLocalizedString("Note", comment: "")),
+            ringtone: .just(L10n.Settings.Address.noteLabel),
             hasDomophone: .just(hasDomophone),
             isLoading: activityTracker.asDriver(),
             shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
@@ -348,9 +348,9 @@ final class AddressSettingsViewModel: BaseViewModel {
             return
         }
         
-        let noAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil)
+        let noAction = UIAlertAction(title: L10n.Common.cancel, style: .cancel, handler: nil)
         
-        let yesAction = UIAlertAction(title: NSLocalizedString("Yes", comment: ""), style: .destructive) { [weak self] _ in
+        let yesAction = UIAlertAction(title: L10n.Common.yes, style: .destructive) { [weak self] _ in
             guard let self = self else {
                 return
             }
@@ -377,7 +377,7 @@ final class AddressSettingsViewModel: BaseViewModel {
         
         self.router.trigger(
             .dialog(
-                title: NSLocalizedString("Are you sure?", comment: ""),
+                title: L10n.Common.Confirmation.title,
                 message: nil,
                 actions: [noAction, yesAction],
                 style: .alert

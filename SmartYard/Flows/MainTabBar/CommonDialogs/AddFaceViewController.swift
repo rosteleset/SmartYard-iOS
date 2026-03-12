@@ -16,7 +16,7 @@ final class AddFaceViewController: BaseViewController {
     @IBOutlet private weak var imageView: ScaledHeightImageView!
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var addButton: UIButton!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
     private let event: APIPlog
     private let apiWrapper: APIWrapper
     
@@ -107,8 +107,15 @@ final class AddFaceViewController: BaseViewController {
         
     }
     
+    private func configureUI() {
+        titleLabel.text = L10n.FaceRecognition.AddFace.addThisFace
+        addButton.setTitle(L10n.Common.add, for: .normal)
+        cancelButton.setTitle(L10n.Common.cancel, for: .normal)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         guard let url = self.event.previewURL,
               let rect = self.event.detailX?.face?.asCGRect else {
             return

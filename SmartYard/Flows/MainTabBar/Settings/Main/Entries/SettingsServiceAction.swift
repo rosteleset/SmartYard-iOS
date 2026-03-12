@@ -24,30 +24,21 @@ enum SettingsServiceAction: String {
     func request(for serviceType: SettingsServiceType, contractName: String?) -> String {
         return templateText
             .replacingOccurrences(of: "%(X)", with: serviceType.localizedTitle)
-            .replacingOccurrences(of: "%(Y)", with: contractName ?? NSLocalizedString("Contract number unknown", comment: ""))
+            .replacingOccurrences(of: "%(Y)", with: contractName ?? L10n.Services.Request.unknownContractNumber)
     }
     
     private var changeTariffTemplate: String {
-        let text = NSLocalizedString(
-            "Hello, I would like to change the tariff for the service \"%(X)\" on the contract \"%(Y)\"",
-            comment: ""
-        )
+        let text = L10n.Settings.Main.ServiceAction.changeTariffTemplate
         return text
     }
     
     private var activateServiceTemplate: String {
-        let text = NSLocalizedString(
-            "Hello, I would like to connect the service \"%(X)\" to the contract \"%(Y)\"",
-            comment: ""
-        )
+        let text = L10n.Settings.Main.ServiceAction.activateServiceTemplate
         return text
     }
     
     private var talkAboutActivationTemplate: String {
-        let text = NSLocalizedString(
-            "Hello, the \"%(X)\" service is not available at my address, but I want to use it on the \"%(Y)\" contract",
-            comment: ""
-        )
+        let text = L10n.Settings.Main.ServiceAction.talkAboutActivationTemplate
         return text
     }
     

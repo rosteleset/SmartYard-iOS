@@ -118,7 +118,7 @@ final class CamerasListViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )

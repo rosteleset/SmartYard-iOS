@@ -15,7 +15,7 @@ struct NamePartValidator: TextValidation {
 
     init(config: NamePartConfig, serverRegex: String?) {
         self.allowEmpty = config.allowEmpty
-        self.errorMessage = NSLocalizedString(config.errorMessageKey, comment: "")
+        self.errorMessage = L10n.tr(config.errorMessageKey)
 
         var rules: [ValidationRule] = [
             .minLength(config.min),

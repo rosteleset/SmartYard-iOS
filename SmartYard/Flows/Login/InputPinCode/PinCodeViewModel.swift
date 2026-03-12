@@ -53,10 +53,10 @@ final class PinCodeViewModel: BaseViewModel {
                         isPinCorrect.onNext(false)
                         
                     case 429:
-                        let message = NSLocalizedString("You are requesting a code too often. Please try again later", comment: "")
+                        let message = L10n.Auth.CodeRateLimit.message
                         self?.router.trigger(
                             .alert(
-                                title: NSLocalizedString("Error", comment: ""),
+                                title: L10n.Common.error,
                                 message: message
                             )
                         )
@@ -64,7 +64,7 @@ final class PinCodeViewModel: BaseViewModel {
                     default:
                         self?.router.trigger(
                             .alert(
-                                title: NSLocalizedString("Error", comment: ""),
+                                title: L10n.Common.error,
                                 message: error.localizedDescription
                             )
                         )
@@ -82,7 +82,36 @@ final class PinCodeViewModel: BaseViewModel {
             )
             .filter { $0.count == Constants.pinLength }
             .flatMapLatest { [weak self] smsCode -> Driver<ConfirmCodeResponseData?> in
-                guard let self = self else {
+                guard let self else { return .just(nil) }
+
+                return apiWrapper.confirmCode(
+                    userPhone: AccessService.shared.phonePrefix + phoneNumber,
+                    smsCode: smsCode
+                )
+                .trackActivity(activityTracker)
+                .trackError(errorTracker)
+                .catch { [weak self] error in
+                    guard let self else {  return .just(nil) }
+                    let nsError = error as NSError
+
+                    if nsError.code == 403 {
+                        let okAction = UIAlertAction(
+                            title: L10n.Common.ok,
+                            style: .default,
+                            handler: { [weak self] _ in
+                                self?.router.trigger(.phoneNumber)
+                            }
+                        )
+
+                        self.alertService.showDialog(
+                            title: L10n.Common.error,
+                            message: nsError.localizedDescription,
+                            preferredStyle: .alert,
+                            actions: [okAction],
+                            priority: 250
+                        )
+                    }
+
                     return .just(nil)
                 }
                 

@@ -16,7 +16,7 @@ final class DeleteFaceViewController: BaseViewController {
     @IBOutlet private weak var imageView: ScaledHeightImageView!
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var deleteButton: UIButton!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
     private let image: UIImage?
     private let imageURL: String?
     private let faceId: Int?
@@ -137,8 +137,15 @@ final class DeleteFaceViewController: BaseViewController {
         
     }
     
+    private func configureUI() {
+        titleLabel.text = L10n.FaceRecognition.DeleteFace.deleteThisFace
+        deleteButton.setTitle(L10n.Common.delete, for: .normal)
+        cancelButton.setTitle(L10n.Common.cancel, for: .normal)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         if self.image != nil {
             imageView.image = image
         } else {

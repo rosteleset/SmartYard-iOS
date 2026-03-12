@@ -27,6 +27,7 @@
                 <outlet property="sendCodeAgainLabelView" destination="cMX-s0-EoV" id="hMV-H1-GkL"/>
                 <outlet property="timerLabel" destination="26f-34-CC5" id="RVD-3V-BV8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="resendHintLabel" destination="GMd-is-zf9" id="naT-Wa-0RH"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

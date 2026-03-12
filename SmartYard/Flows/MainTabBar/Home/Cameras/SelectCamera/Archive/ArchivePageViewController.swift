@@ -80,7 +80,7 @@ final class ArchivePageViewController: BaseViewController, LoaderPresentable {
         
         super.init(nibName: nil, bundle: nil)
         
-        title = NSLocalizedString("Archive", comment: "")
+        title = L10n.Camera.Archive.title
     }
     
     @available(*, unavailable)

@@ -1,9 +1,0 @@
-
-/* Class = "UILabel"; text = "01:00"; ObjectID = "26f-34-CC5"; */
-"26f-34-CC5.text" = "01:00";
-
-/* Class = "UILabel"; text = "Отправить код повторно можно через"; ObjectID = "GMd-is-zf9"; */
-"GMd-is-zf9.text" = "يمكن إعادة إرسال الرمز بعد";
-
-/* Class = "UILabel"; text = "Введите код из СМС,  отправленный на номер +79025308094"; ObjectID = "eDz-2O-KUv"; */
-"eDz-2O-KUv.text" = "أدخل الرمز من رسالة SMS\nالمرسلة إلى الرقم +79025308094";

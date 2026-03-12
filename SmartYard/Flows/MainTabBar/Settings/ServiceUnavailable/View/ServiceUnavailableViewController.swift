@@ -17,7 +17,7 @@ final class ServiceUnavailableViewController: BaseViewController, LoaderPresenta
     @IBOutlet private weak var closeButton: CircleIconControl!
     @IBOutlet private weak var sendRequestButton: BlueButton!
     @IBOutlet private weak var backgroundView: UIView!
-    
+    @IBOutlet private weak var messageLabel: UILabel!
     private let viewModel: ServiceUnavailableViewModel
     
     var loader: JGProgressHUD?
@@ -34,11 +34,14 @@ final class ServiceUnavailableViewController: BaseViewController, LoaderPresenta
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Services.Status.Unavailable.title
+        messageLabel.text = L10n.Services.Status.Unavailable.message
+        sendRequestButton.setTitle(L10n.Services.Status.Unavailable.requestButton, for: .normal)
         closeButton.style = .Close.blue
     }
 
@@ -63,7 +66,7 @@ final class ServiceUnavailableViewController: BaseViewController, LoaderPresenta
             .drive(
                 onNext: { [weak self] service in
                     self?.titleLabel.text = String.localizedStringWithFormat(
-                        NSLocalizedString("Service not available yet", comment: ""),
+                        L10n.Services.Status.Unavailable.title,
                         service.localizedTitle
                     )
                 }
@@ -78,7 +81,7 @@ final class ServiceUnavailableViewController: BaseViewController, LoaderPresenta
                         self?.view.endEditing(true)
                     }
                     
-                    self?.updateLoader(isEnabled: isLoading, detailText: NSLocalizedString("Creating a ticket", comment: ""))
+                    self?.updateLoader(isEnabled: isLoading, detailText: L10n.Services.Request.loadingTitle)
                 }
             )
             .disposed(by: disposeBag)

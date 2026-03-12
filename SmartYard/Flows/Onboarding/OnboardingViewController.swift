@@ -32,7 +32,7 @@ final class OnboardingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configurePageControl()
+        configureUI()
         scrollView.delegate = self
         letsStartButton.isHidden = true
         bind()
@@ -73,7 +73,10 @@ final class OnboardingViewController: BaseViewController {
         _ = viewModel.transform(input: input)
     }
     
-    private func configurePageControl() {
+    private func configureUI() {
+        skipButton.setTitle(L10n.Onboarding.skipButton, for: .normal)
+        nextButton.setTitle(L10n.Common.next, for: .normal)
+        letsStartButton.setTitle(L10n.Onboarding.coolLetSGetStartedButton, for: .normal)
         pageControl.numberOfPages = OnboardingPage.allCases.count
         pageControl.currentPageIndicatorTintColor = UIColor.SmartYard.blue
         pageControl.pageIndicatorTintColor = UIColor.SmartYard.gray.withAlphaComponent(0.2)

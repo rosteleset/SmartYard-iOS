@@ -63,6 +63,17 @@
                 <outlet property="textNotificationsSwitch" destination="pqi-cU-gi7" id="dhL-1A-CnA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="сollapsedDisplayBottomConstraint" destination="4uV-WE-AaG" id="xFE-T7-Xdc"/>
+                <outlet property="notificationsLabel" destination="Udn-vA-xLw" id="vAP-5R-BjC"/>
+                <outlet property="showNotificationsLabel" destination="tfa-8o-Ay8" id="7Tj-Hu-in6"/>
+                <outlet property="insufficientFundsLabel" destination="VJ4-nm-C6t" id="lCw-Yy-BZF"/>
+                <outlet property="lowBalanceHintLabel" destination="Se0-Td-bhj" id="yUo-Ym-C8n"/>
+                <outlet property="callsLabel" destination="mSK-dn-aYH" id="LTd-5y-coO"/>
+                <outlet property="speakerphoneLabel" destination="dKt-Xe-i1X" id="f3l-xd-VOR"/>
+                <outlet property="callKitLabel" destination="XUA-3w-YEb" id="loN-tN-fT3"/>
+                <outlet property="appearanceLabel" destination="AmF-1g-Ii8" id="GWs-X4-4wA"/>
+                <outlet property="mapCamerasLabel" destination="mLP-oQ-Prc" id="DdO-SH-Q9P"/>
+                <outlet property="addressOrderLabel" destination="1qg-rb-8HA" id="9J7-V7-BLD"/>
+                <outlet property="themeLabel" destination="BAH-ga-Qff" id="cdk-wa-sPa"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

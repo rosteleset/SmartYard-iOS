@@ -36,7 +36,7 @@ final class HomeOfflineViewController: BaseViewController, UIScrollViewDelegate 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        configureUI()
         bind()
     }
 
@@ -47,20 +47,16 @@ final class HomeOfflineViewController: BaseViewController, UIScrollViewDelegate 
         }
     }
 
-    private func setupUI() {
+    private func configureUI() {
         presentationController?.delegate = self
-        configureView()
-        configureCollectionView()
-    }
-
-    private func configureView() {
         headerView.setText(
-            NSLocalizedString("My Addresses", comment: ""),
-            subtitle: NSLocalizedString("offline.hint.swipe_to_exit", comment: ""),
+            L10n.Offline.Home.title,
+            subtitle: L10n.Offline.Hint.swipeToExit,
         )
 
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
+        configureCollectionView()
     }
 
     private func configureCollectionView() {

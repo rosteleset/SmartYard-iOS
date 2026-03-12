@@ -35,6 +35,8 @@
                 <outlet property="successView" destination="xmW-0h-krF" id="VjS-zL-v5f"/>
                 <outlet property="sumTextField" destination="Wwk-4I-F7O" id="Kdh-cs-fM3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="yfI-I0-XKC" id="U9b-YC-BRA"/>
+                <outlet property="amountLabel" destination="fd5-bC-tmj" id="U85-hV-asx"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

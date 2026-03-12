@@ -25,7 +25,7 @@ final class SmartYardThinSearchTextField: SmartYardLicensePlateTextField {
     }
     
     private func configureUI() {
-        placeholder = NSLocalizedString("Search", comment: "")
+        placeholder = L10n.Common.search
         layer.cornerRadius = 8
         layer.borderWidth = 1
         layer.borderColor = UIColor.SmartYard.gray.withAlphaComponent(0.3).cgColor

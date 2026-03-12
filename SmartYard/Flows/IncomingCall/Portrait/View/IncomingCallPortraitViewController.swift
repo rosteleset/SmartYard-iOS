@@ -38,7 +38,10 @@ final class IncomingCallPortraitViewController: BaseViewController {
     @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
     
     @IBOutlet private weak var fullscreenButton: UIButton!
-    
+    @IBOutlet private weak var answerButtonLabel: UILabel!
+    @IBOutlet private weak var speakerButtonLabel: UILabel!
+    @IBOutlet private weak var openedButtonLabel: UILabel!
+    @IBOutlet private weak var openButtonLabel: UILabel!
     private let viewModel: IncomingCallViewModel
     
     init(viewModel: IncomingCallViewModel) {
@@ -53,7 +56,7 @@ final class IncomingCallPortraitViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureButtons()
+        configureUI()
         bind()
     }
     
@@ -67,7 +70,15 @@ final class IncomingCallPortraitViewController: BaseViewController {
         videoPreview.layerCornerRadius = 24 / scaleRatio
     }
     
-    private func configureButtons() {
+    private func configureUI() {
+        titleLabel.text = L10n.Intercom.Incoming.title
+        subtitleLabel.text = L10n.Intercom.Incoming.addressPlaceholder
+        previewButtonLabel.text = L10n.Intercom.Incoming.previewAction
+        answerButtonLabel.text = L10n.Intercom.Incoming.answerAction
+        speakerButtonLabel.text = L10n.Intercom.Incoming.speakerAction
+        ignoreButtonLabel.text = L10n.Intercom.Incoming.ignoreAction
+        openedButtonLabel.text = L10n.Intercom.Incoming.openedStatus
+        openButtonLabel.text = L10n.Common.`open`
         previewButton.setImage(UIImage(named: "PreviewUnselectedIcon"), for: .normal)
         previewButton.setImage(UIImage(named: "PreviewUnselectedIcon")?.darkened(), for: [.normal, .highlighted])
         previewButton.setImage(UIImage(named: "PreviewSelectedIcon"), for: .selected)
@@ -202,27 +213,27 @@ final class IncomingCallPortraitViewController: BaseViewController {
         
         switch (state.callState, state.previewState) {
         case (.callReceived, .staticImage):
-            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
-            ignoreButtonLabel.text = NSLocalizedString("Ignore", comment: "")
-            previewButtonLabel.text = NSLocalizedString("Peephole", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.title
+            ignoreButtonLabel.text = L10n.Common.ignore
+            previewButtonLabel.text = L10n.Intercom.Incoming.peepholeAction
             
         case (.callReceived, .video):
-            titleLabel.text = NSLocalizedString("Peephole on", comment: "")
-            ignoreButtonLabel.text = NSLocalizedString("Ignore", comment: "")
-            previewButtonLabel.text = NSLocalizedString("Peephole", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.peepholeOnStatus
+            ignoreButtonLabel.text = L10n.Common.ignore
+            previewButtonLabel.text = L10n.Intercom.Incoming.peepholeAction
             
         case (.establishingConnection, _):
-            titleLabel.text = NSLocalizedString("Connecting...", comment: "")
-            ignoreButtonLabel.text = NSLocalizedString("Decline", comment: "")
-            previewButtonLabel.text = NSLocalizedString("Video", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.connectingStatus
+            ignoreButtonLabel.text = L10n.Intercom.Incoming.declineAction
+            previewButtonLabel.text = L10n.Intercom.Incoming.videoAction
             
         case (.callActive, _):
-            titleLabel.text = NSLocalizedString("Conversation", comment: "")
-            ignoreButtonLabel.text = NSLocalizedString("Decline", comment: "")
-            previewButtonLabel.text = NSLocalizedString("Video", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.conversationStatus
+            ignoreButtonLabel.text = L10n.Intercom.Incoming.declineAction
+            previewButtonLabel.text = L10n.Intercom.Incoming.videoAction
             
         case (.callFinished, _):
-            titleLabel.text = NSLocalizedString("Call completed", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.callCompletedStatus
         }
     }
 

@@ -32,20 +32,20 @@ final class MainMenuViewModel: BaseViewModel {
             accessService.showCityCams ?
             [
             MenuListItem.essential(
-                label: NSLocalizedString("Public cams", comment: ""),
+                label: L10n.Camera.City.publicCamerasTitle,
                 iconName: "PublicCamsMenuIcon",
                 route: .cityCams,
                 order: 100
             ) ] : []
         ) + [
             MenuListItem.essential(
-                label: NSLocalizedString("Address settings", comment: ""),
+                label: L10n.Settings.Main.Address.title,
                 iconName: "HomeIcon",
                 route: .settings,
                 order: 200
             ),
             MenuListItem.essential(
-                label: NSLocalizedString("Common settings", comment: ""),
+                label: L10n.Settings.Common.title,
                 iconName: "SettingsMenuIcon",
                 route: .profile,
                 order: 300
@@ -64,7 +64,7 @@ final class MainMenuViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )

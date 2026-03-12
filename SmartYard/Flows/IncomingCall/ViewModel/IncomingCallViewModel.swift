@@ -130,8 +130,8 @@ final class IncomingCallViewModel: BaseViewModel {
         
         // MARK: Обработка ошибок
         
-        let micMsg = NSLocalizedString("There will be no outgoing audio on this call.", comment: "") + " " +
-        NSLocalizedString("To make it appear in your next calls, please grant access to the microphone in the settings", comment: "")
+        let micMsg = L10n.Intercom.Incoming.microphoneMissingTitle + " " +
+        L10n.Intercom.Incoming.microphoneMissingMessage
         
         errorTracker.asDriver()
             .drive(
@@ -139,7 +139,7 @@ final class IncomingCallViewModel: BaseViewModel {
                     if (error as NSError) == NSError.PermissionError.noMicPermission {
                         self?.router.trigger(
                             .alert(
-                                title: NSLocalizedString("No microphone access", comment: ""),
+                                title: L10n.Permissions.Microphone.title,
                                 message: micMsg
                             )
                         )
@@ -148,7 +148,7 @@ final class IncomingCallViewModel: BaseViewModel {
                     
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )

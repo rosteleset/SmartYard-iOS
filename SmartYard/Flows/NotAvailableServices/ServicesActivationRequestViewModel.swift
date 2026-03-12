@@ -112,11 +112,11 @@ final class ServicesActivationRequestViewModel: BaseViewModel {
     }
     
     private func getServiceModels() -> [ServiceModel] {
-        let domophone = NSLocalizedString("Smart intercom", comment: "")
-        let cctv = NSLocalizedString("Video surveillance", comment: "")
-        let internet = NSLocalizedString("Internet", comment: "")
-        let iptv = NSLocalizedString("Cable TV", comment: "")
-        let phone = NSLocalizedString("Wired Phone", comment: "")
+        let domophone = L10n.Services.Catalog.smartIntercom
+        let cctv = L10n.Services.Catalog.videoSurveillance
+        let internet = L10n.Services.Catalog.internet
+        let iptv = L10n.Services.Catalog.cableTV
+        let phone = L10n.Services.Catalog.wiredPhone
         
         return [
             ServiceModel(id: "0", icon: "domophone", name: domophone, description: "", state: .uncheckedActive),

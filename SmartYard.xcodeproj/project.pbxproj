@@ -738,6 +738,8 @@
 		E9E4273D23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */; };
 		F05CF42A050E47DD1C09583F /* Pods_SmartYard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E65EC65DF6EAF2CB3A1B831 /* Pods_SmartYard.framework */; };
 		FA1A22A12CE3893800B8F919 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A22A02CE3893000B8F919 /* ThemeManager.swift */; };
+		8BF9A1D12F79E10000C0D001 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9A1D32F79E10000C0D001 /* L10n.swift */; };
+		8BF9A1D22F79E10000C0D001 /* L10n+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9A1D42F79E10000C0D001 /* L10n+Generated.swift */; };
 		FA9E30EC2BBBEFFA0087E689 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */; };
 		FA9E30EE2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30ED2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift */; };
 		FA9E30F02BBBF0450087E689 /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9E30EF2BBBF0450087E689 /* CameraButton.swift */; };
@@ -840,11 +842,10 @@
 		3A11480F296EC23100AAD2D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Intents.strings; sourceTree = "<group>"; };
 		3A114811296EC23300AAD2D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3A114813296EC3A300AAD2D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InputAddressViewController.xib; sourceTree = "<group>"; };
-		3A114818296EC3D100AAD2D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InputAddressViewController.strings; sourceTree = "<group>"; };
 		3A11481A296EC46C00AAD2D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectProviderViewController.xib; sourceTree = "<group>"; };
-		3A11481D296EC47100AAD2D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SelectProviderViewController.strings; sourceTree = "<group>"; };
 		3A114827296EC93D00AAD2D6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A114829296EC94200AAD2D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8C6A61012F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = hy.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewModel.swift; sourceTree = "<group>"; };
 		3A18346E25D9AD8600139385 /* CityCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewController.swift; sourceTree = "<group>"; };
 		3A1BDEC526285DB60075410B /* HistoryHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryHelpers.swift; sourceTree = "<group>"; };
@@ -863,7 +864,6 @@
 		3A2881512657EE7100F42097 /* FaceIdAccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceIdAccessView.swift; sourceTree = "<group>"; };
 		3A288198265D42AA00F42097 /* SafeCachedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeCachedButton.swift; sourceTree = "<group>"; };
 		3A2881B02665093100F42097 /* AddFaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFaceViewController.swift; sourceTree = "<group>"; };
-		3A3B5DE229ACEB0900053124 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressSettingsViewController.strings; sourceTree = "<group>"; };
 		3A3B8B9425A5CD2500BFB72E /* MainMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuCoordinator.swift; sourceTree = "<group>"; };
 		3A3B8BA125A5CF6F00BFB72E /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
 		3A3B8BB125A5D00C00BFB72E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
@@ -876,7 +876,6 @@
 		3A4A4A772704826600C5B609 /* SharedFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunctions.swift; sourceTree = "<group>"; };
 		3A4E5A4627AEE910002DE633 /* WebViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewCoordinator.swift; sourceTree = "<group>"; };
 		3A5030622B0A7F5F00699A3B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SettingsAddAddressCell.xib; sourceTree = "<group>"; };
-		3A5030652B0A7F6200699A3B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SettingsAddAddressCell.strings; sourceTree = "<group>"; };
 		3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SmartYardIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A555B0F2700573400E70CB9 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		3A555B122700573400E70CB9 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -903,113 +902,71 @@
 		3A8FC6742B065B7200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressesListViewController.xib; sourceTree = "<group>"; };
 		3A8FC67A2B065BFF00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressConfirmationViewController.xib; sourceTree = "<group>"; };
 		3A8FC67F2B065C7400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceFromCourierView.xib; sourceTree = "<group>"; };
-		3A8FC6822B065C7800F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
 		3A8FC6842B065CEF00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceFromOfficeView.xib; sourceTree = "<group>"; };
-		3A8FC6872B065CF300F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServiceFromOfficeView.strings; sourceTree = "<group>"; };
 		3A8FC6892B065D7C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AvailableServiceCell.xib; sourceTree = "<group>"; };
-		3A8FC68C2B065D7F00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AvailableServiceCell.strings; sourceTree = "<group>"; };
 		3A8FC68E2B065DB600F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AvailableServicesViewController.xib; sourceTree = "<group>"; };
-		3A8FC6912B065DBB00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AvailableServicesViewController.strings; sourceTree = "<group>"; };
 		3A8FC6932B065DDC00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IncomingCallPortraitViewController.xib; sourceTree = "<group>"; };
-		3A8FC6962B065DE000F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/IncomingCallPortraitViewController.strings; sourceTree = "<group>"; };
 		3A8FC6982B065E1400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IncomingCallLandscapeViewController.xib; sourceTree = "<group>"; };
 		3A8FC69D2B065E2C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OutgoingCallViewController.xib; sourceTree = "<group>"; };
-		3A8FC6A02B065E3100F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/OutgoingCallViewController.strings; sourceTree = "<group>"; };
 		3A8FC6A72B065EB500F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ProviderCell.xib; sourceTree = "<group>"; };
 		3A8FC6A92B065EDA00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AuthByContractNumViewController.xib; sourceTree = "<group>"; };
-		3A8FC6AC2B065EDE00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AuthByContractNumViewController.strings; sourceTree = "<group>"; };
 		3A8FC6AE2B065F4800F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
-		3A8FC6B12B065F5100F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InputPhoneNumberViewController.strings; sourceTree = "<group>"; };
 		3A8FC6B32B065F8700F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PinCodeViewController.xib; sourceTree = "<group>"; };
-		3A8FC6B62B065F8B00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PinCodeViewController.strings; sourceTree = "<group>"; };
 		3A8FC6B82B065FC200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RestoreMethodCell.xib; sourceTree = "<group>"; };
-		3A8FC6BB2B065FC800F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RestoreMethodCell.strings; sourceTree = "<group>"; };
 		3A8FC6BD2B065FD400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RestorePasswordViewController.xib; sourceTree = "<group>"; };
-		3A8FC6C02B065FD700F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RestorePasswordViewController.strings; sourceTree = "<group>"; };
 		3A8FC6C22B06603C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PassConfirmationPinViewController.xib; sourceTree = "<group>"; };
-		3A8FC6C52B06604A00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PassConfirmationPinViewController.strings; sourceTree = "<group>"; };
 		3A8FC6C72B06608600F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddFaceViewController.xib; sourceTree = "<group>"; };
-		3A8FC6CA2B06608A00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddFaceViewController.strings; sourceTree = "<group>"; };
 		3A8FC6CC2B0660A000F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DeleteFaceViewController.xib; sourceTree = "<group>"; };
-		3A8FC6CF2B0660A400F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DeleteFaceViewController.strings; sourceTree = "<group>"; };
 		3A8FC6D12B0660BA00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FaceViewController.xib; sourceTree = "<group>"; };
 		3A8FC6DB2B06612200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressesListCameraCell.xib; sourceTree = "<group>"; };
-		3A8FC6DE2B06612500F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressesListCameraCell.strings; sourceTree = "<group>"; };
 		3A8FC6E02B06613700F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressesListHistoryCell.xib; sourceTree = "<group>"; };
-		3A8FC6E32B06613A00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
 		3A8FC6E52B06617500F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CamerasListViewController.xib; sourceTree = "<group>"; };
 		3A8FC6EA2B06618C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FullscreenPlayerViewController.xib; sourceTree = "<group>"; };
 		3A8FC6EF2B06619A00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ArchivePageViewController.xib; sourceTree = "<group>"; };
 		3A8FC6F42B0661B700F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PlayArchiveVideoViewController.xib; sourceTree = "<group>"; };
-		3A8FC6F72B0661BB00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PlayArchiveVideoViewController.strings; sourceTree = "<group>"; };
 		3A8FC6F92B0661E800F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectCameraContainerViewController.xib; sourceTree = "<group>"; };
 		3A8FC6FE2B0661FB00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/YardMapViewController.xib; sourceTree = "<group>"; };
-		3A8FC7012B0661FF00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/YardMapViewController.strings; sourceTree = "<group>"; };
 		3A8FC7032B06621300F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HistoryViewController.xib; sourceTree = "<group>"; };
-		3A8FC7062B06621600F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HistoryViewController.strings; sourceTree = "<group>"; };
 		3A8FC7082B06623200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/HistoryDetailViewController.xib; sourceTree = "<group>"; };
-		3A8FC70B2B06623500F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HistoryDetailViewController.strings; sourceTree = "<group>"; };
 		3A8FC70D2B06626800F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PaymentsViewController.xib; sourceTree = "<group>"; };
-		3A8FC7102B06626B00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PaymentsViewController.strings; sourceTree = "<group>"; };
 		3A8FC7122B06628400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PaymentPopupController.xib; sourceTree = "<group>"; };
-		3A8FC7152B06628700F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PaymentPopupController.strings; sourceTree = "<group>"; };
 		3A8FC7172B079E7900F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressAccessViewController.xib; sourceTree = "<group>"; };
-		3A8FC71A2B079E8500F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressAccessViewController.strings; sourceTree = "<group>"; };
 		3A8FC71C2B079ED400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressDeletionViewController.xib; sourceTree = "<group>"; };
-		3A8FC71F2B079EDA00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressDeletionViewController.strings; sourceTree = "<group>"; };
 		3A8FC7212B079F2200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CommonSettingsViewController.xib; sourceTree = "<group>"; };
-		3A8FC7242B079F2600F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CommonSettingsViewController.strings; sourceTree = "<group>"; };
 		3A8FC7262B079FA100F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EditNameViewController.xib; sourceTree = "<group>"; };
-		3A8FC7292B079FA400F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EditNameViewController.strings; sourceTree = "<group>"; };
 		3A8FC72B2B09E49B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FacesSettingsViewController.xib; sourceTree = "<group>"; };
-		3A8FC72E2B09E4A200F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
 		3A8FC7302B09E51200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SettingsViewController.xib; sourceTree = "<group>"; };
 		3A8FC7352B09E53B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NewAllowedPersonViewController.xib; sourceTree = "<group>"; };
-		3A8FC7382B09E53F00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
 		3A8FC73A2B09E62A00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceIsActivatedViewController.xib; sourceTree = "<group>"; };
-		3A8FC73D2B09E63100F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServiceIsActivatedViewController.strings; sourceTree = "<group>"; };
 		3A8FC73F2B09EA1500F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceIsNotActivatedViewController.xib; sourceTree = "<group>"; };
-		3A8FC7422B09EA1900F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServiceIsNotActivatedViewController.strings; sourceTree = "<group>"; };
 		3A8FC7442B09EA8700F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceUnavailableViewController.xib; sourceTree = "<group>"; };
-		3A8FC7472B09EA8E00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServiceUnavailableViewController.strings; sourceTree = "<group>"; };
 		3A8FC7492B09ED7B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RequestRecordViewController.xib; sourceTree = "<group>"; };
-		3A8FC74C2B09ED8100F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
 		3A8FC74E2B09F0F400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CityMapViewController.xib; sourceTree = "<group>"; };
 		3A8FC7532B09F11400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CityCameraViewController.xib; sourceTree = "<group>"; };
-		3A8FC7562B09F11800F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
 		3A8FC7582B09F19000F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/BottomCell.xib; sourceTree = "<group>"; };
-		3A8FC75B2B09F19400F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/BottomCell.strings; sourceTree = "<group>"; };
 		3A8FC75D2B09F1E300F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenuViewController.xib; sourceTree = "<group>"; };
-		3A8FC7602B09F1E700F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenuViewController.strings; sourceTree = "<group>"; };
 		3A8FC7622B09F21F00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServicesActivationRequestViewController.xib; sourceTree = "<group>"; };
-		3A8FC7652B09F22200F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServicesActivationRequestViewController.strings; sourceTree = "<group>"; };
 		3A8FC7672B09F7AF00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OnboardingBaseView.xib; sourceTree = "<group>"; };
-		3A8FC76A2B09F7B600F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/OnboardingBaseView.strings; sourceTree = "<group>"; };
 		3A8FC76C2B09F89C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OnboardingViewController.xib; sourceTree = "<group>"; };
-		3A8FC76F2B09F8A000F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/OnboardingViewController.strings; sourceTree = "<group>"; };
 		3A8FC7712B09F97C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/QRCodeScanViewController.xib; sourceTree = "<group>"; };
-		3A8FC7742B09F98000F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QRCodeScanViewController.strings; sourceTree = "<group>"; };
 		3A8FC7762B09F9A400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceSoonAvailableViewController.xib; sourceTree = "<group>"; };
-		3A8FC7792B09F9A700F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServiceSoonAvailableViewController.strings; sourceTree = "<group>"; };
 		3A8FC77B2B09FC8C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UserNameViewController.xib; sourceTree = "<group>"; };
-		3A8FC77E2B09FC9100F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UserNameViewController.strings; sourceTree = "<group>"; };
 		3A8FC7892B0A025E00F90D73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A8FC78B2B0A052200F90D73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A8FC78E2B0A06CC00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = SmartYard/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		3A8FC7902B0A072000F90D73 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ../ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8C6A61022F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = ../hy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3A8FC7922B0A09C900F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NewPersonCell.xib; sourceTree = "<group>"; };
-		3A8FC7952B0A09CD00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewPersonCell.strings; sourceTree = "<group>"; };
 		3A8FC7972B0A09E400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AccessView.xib; sourceTree = "<group>"; };
 		3A8FC79C2B0A09F500F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IntercomTemporaryAccessView.xib; sourceTree = "<group>"; };
-		3A8FC79F2B0A09F800F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/IntercomTemporaryAccessView.strings; sourceTree = "<group>"; };
 		3A8FC7A12B0A0A3100F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FaceIdAccessView.xib; sourceTree = "<group>"; };
-		3A8FC7A42B0A0A3400F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FaceIdAccessView.strings; sourceTree = "<group>"; };
 		3A8FC7A62B0A0F6500F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen_en.storyboard; sourceTree = "<group>"; };
 		3A9C5E27261B7895004FB962 /* HistorySectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySectionModel.swift; sourceTree = "<group>"; };
 		3A9C5E2C261B7989004FB962 /* HistoryDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDataItem.swift; sourceTree = "<group>"; };
 		3A9E72402A4C7F8900ECDD18 /* SYImageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYImageType.swift; sourceTree = "<group>"; };
 		3AAAB4902B0A7C8B003DDBA6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3AAAB4922B0A7C8F003DDBA6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8C6A61032F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = hy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3AAB0D3C26E4035200A5AD75 /* HistoryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCoordinator.swift; sourceTree = "<group>"; };
 		3AB41E0025C0879200AEC8C3 /* BottomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomCell.swift; sourceTree = "<group>"; };
 		3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityMapViewModel.swift; sourceTree = "<group>"; };
@@ -1025,168 +982,17 @@
 		3AC5C71526131D4A008D74DE /* HistoryLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		3AC7CA7C271D7048007F35C7 /* AccountParams+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountParams+Extensions.swift"; sourceTree = "<group>"; };
 		3ACD65332B1F649300146796 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FakeNavBar.xib; sourceTree = "<group>"; };
-		3ACD65362B1F649600146796 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
 		3ACD65372B27345100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/Intents.strings; sourceTree = "<group>"; };
-		3ACD65382B27345100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
-		3ACD653B2B27345200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
-		3ACD653C2B27345300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceFromOfficeView.strings; sourceTree = "<group>"; };
-		3ACD653E2B27345300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/InputAddressViewController.strings; sourceTree = "<group>"; };
-		3ACD653F2B27345400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AvailableServiceCell.strings; sourceTree = "<group>"; };
-		3ACD65402B27345400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AvailableServicesViewController.strings; sourceTree = "<group>"; };
-		3ACD65412B27345400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/IncomingCallPortraitViewController.strings; sourceTree = "<group>"; };
-		3ACD65432B27345500146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/OutgoingCallViewController.strings; sourceTree = "<group>"; };
-		3ACD65442B27345500146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ProviderCell.strings; sourceTree = "<group>"; };
-		3ACD65452B27345600146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/SelectProviderViewController.strings; sourceTree = "<group>"; };
-		3ACD65462B27345600146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AuthByContractNumViewController.strings; sourceTree = "<group>"; };
-		3ACD65472B27345600146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/InputPhoneNumberViewController.strings; sourceTree = "<group>"; };
-		3ACD65482B27345700146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/PinCodeViewController.strings; sourceTree = "<group>"; };
-		3ACD65492B27345700146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/RestoreMethodCell.strings; sourceTree = "<group>"; };
-		3ACD654A2B27345700146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/RestorePasswordViewController.strings; sourceTree = "<group>"; };
-		3ACD654B2B27345800146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/PassConfirmationPinViewController.strings; sourceTree = "<group>"; };
-		3ACD654C2B27345800146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddFaceViewController.strings; sourceTree = "<group>"; };
-		3ACD654D2B27345800146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/DeleteFaceViewController.strings; sourceTree = "<group>"; };
-		3ACD65512B27345A00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressesListCameraCell.strings; sourceTree = "<group>"; };
-		3ACD65522B27345A00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
-		3ACD65562B27345B00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/PlayArchiveVideoViewController.strings; sourceTree = "<group>"; };
-		3ACD65582B27345C00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/YardMapViewController.strings; sourceTree = "<group>"; };
-		3ACD65592B27345C00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/HistoryViewController.strings; sourceTree = "<group>"; };
-		3ACD655A2B27345D00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/HistoryDetailViewController.strings; sourceTree = "<group>"; };
-		3ACD655B2B27345D00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/PaymentsViewController.strings; sourceTree = "<group>"; };
-		3ACD655C2B27345D00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/PaymentPopupController.strings; sourceTree = "<group>"; };
-		3ACD655D2B27345E00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/NewPersonCell.strings; sourceTree = "<group>"; };
-		3ACD655F2B27345E00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/IntercomTemporaryAccessView.strings; sourceTree = "<group>"; };
-		3ACD65602B27345F00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/FaceIdAccessView.strings; sourceTree = "<group>"; };
-		3ACD65612B27345F00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressAccessViewController.strings; sourceTree = "<group>"; };
-		3ACD65622B27345F00146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressDeletionViewController.strings; sourceTree = "<group>"; };
-		3ACD65632B27346000146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressSettingsViewController.strings; sourceTree = "<group>"; };
-		3ACD65642B27346000146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/CommonSettingsViewController.strings; sourceTree = "<group>"; };
-		3ACD65652B27346000146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/EditNameViewController.strings; sourceTree = "<group>"; };
-		3ACD65662B27346100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
-		3ACD65672B27346100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/SettingsAddAddressCell.strings; sourceTree = "<group>"; };
-		3ACD65692B27346100146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
-		3ACD656A2B27346200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceIsActivatedViewController.strings; sourceTree = "<group>"; };
-		3ACD656B2B27346200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceIsNotActivatedViewController.strings; sourceTree = "<group>"; };
-		3ACD656C2B27346200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceUnavailableViewController.strings; sourceTree = "<group>"; };
-		3ACD656D2B27346200146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
-		3ACD656F2B27346300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
-		3ACD65702B27346300146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/BottomCell.strings; sourceTree = "<group>"; };
-		3ACD65712B27346400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/MainMenuViewController.strings; sourceTree = "<group>"; };
-		3ACD65722B27346400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServicesActivationRequestViewController.strings; sourceTree = "<group>"; };
-		3ACD65732B27346400146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/OnboardingBaseView.strings; sourceTree = "<group>"; };
-		3ACD65742B27346500146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/OnboardingViewController.strings; sourceTree = "<group>"; };
-		3ACD65752B27346500146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/QRCodeScanViewController.strings; sourceTree = "<group>"; };
-		3ACD65762B27346500146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/ServiceSoonAvailableViewController.strings; sourceTree = "<group>"; };
-		3ACD65772B27346600146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/UserNameViewController.strings; sourceTree = "<group>"; };
 		3ACD65782B27346600146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3ACD65792B27346600146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = ../kk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3ACD657A2B27346600146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3ACD657B2B27346700146796 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3ACD657C2B2734CD00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/Intents.strings; sourceTree = "<group>"; };
-		3ACD657D2B2734CD00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
-		3ACD65802B2734CE00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
-		3ACD65812B2734CE00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceFromOfficeView.strings; sourceTree = "<group>"; };
-		3ACD65832B2734CF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/InputAddressViewController.strings; sourceTree = "<group>"; };
-		3ACD65842B2734CF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AvailableServiceCell.strings; sourceTree = "<group>"; };
-		3ACD65852B2734CF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AvailableServicesViewController.strings; sourceTree = "<group>"; };
-		3ACD65862B2734D000146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/IncomingCallPortraitViewController.strings; sourceTree = "<group>"; };
-		3ACD65882B2734D000146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/OutgoingCallViewController.strings; sourceTree = "<group>"; };
-		3ACD65892B2734D000146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ProviderCell.strings; sourceTree = "<group>"; };
-		3ACD658A2B2734D100146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/SelectProviderViewController.strings; sourceTree = "<group>"; };
-		3ACD658B2B2734D100146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AuthByContractNumViewController.strings; sourceTree = "<group>"; };
-		3ACD658C2B2734D100146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/InputPhoneNumberViewController.strings; sourceTree = "<group>"; };
-		3ACD658D2B2734D100146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/PinCodeViewController.strings; sourceTree = "<group>"; };
-		3ACD658E2B2734D200146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/RestoreMethodCell.strings; sourceTree = "<group>"; };
-		3ACD658F2B2734D200146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/RestorePasswordViewController.strings; sourceTree = "<group>"; };
-		3ACD65902B2734D200146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/PassConfirmationPinViewController.strings; sourceTree = "<group>"; };
-		3ACD65912B2734D200146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddFaceViewController.strings; sourceTree = "<group>"; };
-		3ACD65922B2734D300146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/DeleteFaceViewController.strings; sourceTree = "<group>"; };
-		3ACD65962B2734D400146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressesListCameraCell.strings; sourceTree = "<group>"; };
-		3ACD65972B2734D400146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
-		3ACD659B2B2734D500146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/PlayArchiveVideoViewController.strings; sourceTree = "<group>"; };
-		3ACD659D2B2734D600146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/YardMapViewController.strings; sourceTree = "<group>"; };
-		3ACD659E2B2734D600146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/HistoryViewController.strings; sourceTree = "<group>"; };
-		3ACD659F2B2734D600146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/HistoryDetailViewController.strings; sourceTree = "<group>"; };
-		3ACD65A02B2734D600146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/PaymentsViewController.strings; sourceTree = "<group>"; };
-		3ACD65A12B2734D700146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/PaymentPopupController.strings; sourceTree = "<group>"; };
-		3ACD65A22B2734D700146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/NewPersonCell.strings; sourceTree = "<group>"; };
-		3ACD65A42B2734D700146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/IntercomTemporaryAccessView.strings; sourceTree = "<group>"; };
-		3ACD65A52B2734D800146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/FaceIdAccessView.strings; sourceTree = "<group>"; };
-		3ACD65A62B2734D800146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressAccessViewController.strings; sourceTree = "<group>"; };
-		3ACD65A72B2734D800146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressDeletionViewController.strings; sourceTree = "<group>"; };
-		3ACD65A82B2734D800146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressSettingsViewController.strings; sourceTree = "<group>"; };
-		3ACD65A92B2734D900146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/CommonSettingsViewController.strings; sourceTree = "<group>"; };
-		3ACD65AA2B2734D900146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/EditNameViewController.strings; sourceTree = "<group>"; };
-		3ACD65AB2B2734D900146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
-		3ACD65AC2B2734DA00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/SettingsAddAddressCell.strings; sourceTree = "<group>"; };
-		3ACD65AE2B2734DA00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
-		3ACD65AF2B2734DA00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceIsActivatedViewController.strings; sourceTree = "<group>"; };
-		3ACD65B02B2734DB00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceIsNotActivatedViewController.strings; sourceTree = "<group>"; };
-		3ACD65B12B2734DB00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceUnavailableViewController.strings; sourceTree = "<group>"; };
-		3ACD65B22B2734DB00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
-		3ACD65B42B2734DC00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
-		3ACD65B52B2734DC00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/BottomCell.strings; sourceTree = "<group>"; };
-		3ACD65B62B2734DC00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/MainMenuViewController.strings; sourceTree = "<group>"; };
-		3ACD65B72B2734DD00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServicesActivationRequestViewController.strings; sourceTree = "<group>"; };
-		3ACD65B82B2734DD00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/OnboardingBaseView.strings; sourceTree = "<group>"; };
-		3ACD65B92B2734DD00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/OnboardingViewController.strings; sourceTree = "<group>"; };
-		3ACD65BA2B2734DD00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/QRCodeScanViewController.strings; sourceTree = "<group>"; };
-		3ACD65BB2B2734DE00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/ServiceSoonAvailableViewController.strings; sourceTree = "<group>"; };
-		3ACD65BC2B2734DE00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/UserNameViewController.strings; sourceTree = "<group>"; };
 		3ACD65BD2B2734DE00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3ACD65BE2B2734DE00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = ../uz.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3ACD65BF2B2734DF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3ACD65C02B2734DF00146796 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3AD02E6D2B304B6B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Intents.strings; sourceTree = "<group>"; };
-		3AD02E6E2B304B6B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
-		3AD02E712B304B6D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
-		3AD02E722B304B6D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceFromOfficeView.strings; sourceTree = "<group>"; };
-		3AD02E742B304B6E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/InputAddressViewController.strings; sourceTree = "<group>"; };
-		3AD02E752B304B6E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AvailableServiceCell.strings; sourceTree = "<group>"; };
-		3AD02E762B304B6F001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AvailableServicesViewController.strings; sourceTree = "<group>"; };
-		3AD02E772B304B6F001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/IncomingCallPortraitViewController.strings; sourceTree = "<group>"; };
-		3AD02E792B304B70001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/OutgoingCallViewController.strings; sourceTree = "<group>"; };
-		3AD02E7A2B304B70001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ProviderCell.strings; sourceTree = "<group>"; };
-		3AD02E7B2B304B71001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/SelectProviderViewController.strings; sourceTree = "<group>"; };
-		3AD02E7C2B304B71001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AuthByContractNumViewController.strings; sourceTree = "<group>"; };
-		3AD02E7D2B304B71001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/InputPhoneNumberViewController.strings; sourceTree = "<group>"; };
-		3AD02E7E2B304B72001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/PinCodeViewController.strings; sourceTree = "<group>"; };
-		3AD02E7F2B304B72001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/RestoreMethodCell.strings; sourceTree = "<group>"; };
-		3AD02E802B304B72001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/RestorePasswordViewController.strings; sourceTree = "<group>"; };
-		3AD02E812B304B73001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/PassConfirmationPinViewController.strings; sourceTree = "<group>"; };
-		3AD02E822B304B73001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddFaceViewController.strings; sourceTree = "<group>"; };
-		3AD02E832B304B73001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/DeleteFaceViewController.strings; sourceTree = "<group>"; };
-		3AD02E872B304B74001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressesListCameraCell.strings; sourceTree = "<group>"; };
-		3AD02E882B304B75001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
-		3AD02E8C2B304B76001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/PlayArchiveVideoViewController.strings; sourceTree = "<group>"; };
-		3AD02E8E2B304B76001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/YardMapViewController.strings; sourceTree = "<group>"; };
-		3AD02E8F2B304B76001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/HistoryViewController.strings; sourceTree = "<group>"; };
-		3AD02E902B304B77001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/HistoryDetailViewController.strings; sourceTree = "<group>"; };
-		3AD02E912B304B77001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/PaymentsViewController.strings; sourceTree = "<group>"; };
-		3AD02E922B304B77001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/PaymentPopupController.strings; sourceTree = "<group>"; };
-		3AD02E932B304B77001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/NewPersonCell.strings; sourceTree = "<group>"; };
-		3AD02E952B304B78001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/IntercomTemporaryAccessView.strings; sourceTree = "<group>"; };
-		3AD02E962B304B78001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/FaceIdAccessView.strings; sourceTree = "<group>"; };
-		3AD02E972B304B78001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressAccessViewController.strings; sourceTree = "<group>"; };
-		3AD02E982B304B79001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressDeletionViewController.strings; sourceTree = "<group>"; };
-		3AD02E992B304B79001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressSettingsViewController.strings; sourceTree = "<group>"; };
-		3AD02E9A2B304B79001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/CommonSettingsViewController.strings; sourceTree = "<group>"; };
-		3AD02E9B2B304B7A001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/EditNameViewController.strings; sourceTree = "<group>"; };
-		3AD02E9C2B304B7A001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
-		3AD02E9D2B304B7A001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/SettingsAddAddressCell.strings; sourceTree = "<group>"; };
-		3AD02E9F2B304B7B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
-		3AD02EA02B304B7B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceIsActivatedViewController.strings; sourceTree = "<group>"; };
-		3AD02EA12B304B7B001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceIsNotActivatedViewController.strings; sourceTree = "<group>"; };
-		3AD02EA22B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceUnavailableViewController.strings; sourceTree = "<group>"; };
-		3AD02EA32B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
-		3AD02EA52B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
-		3AD02EA62B304B7C001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/BottomCell.strings; sourceTree = "<group>"; };
-		3AD02EA72B304B7D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/MainMenuViewController.strings; sourceTree = "<group>"; };
-		3AD02EA82B304B7D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServicesActivationRequestViewController.strings; sourceTree = "<group>"; };
-		3AD02EA92B304B7D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/OnboardingBaseView.strings; sourceTree = "<group>"; };
-		3AD02EAA2B304B7D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/OnboardingViewController.strings; sourceTree = "<group>"; };
-		3AD02EAB2B304B7D001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/QRCodeScanViewController.strings; sourceTree = "<group>"; };
-		3AD02EAC2B304B7E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/ServiceSoonAvailableViewController.strings; sourceTree = "<group>"; };
-		3AD02EAD2B304B7E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/UserNameViewController.strings; sourceTree = "<group>"; };
 		3AD02EAE2B304B7E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3AD02EAF2B304B7E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = ../bg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3AD02EB02B304B7E001C4717 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1408,8 +1214,6 @@
 		8B23F9D32E868CA600E57573 /* SmartYardSegmentControlViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentControlViewProtocol.swift; sourceTree = "<group>"; };
 		8B2ACD4F2E1EE6040067438F /* LicencePlateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicencePlateValidator.swift; sourceTree = "<group>"; };
 		8B32EDF72E3E6B4A0049B9A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DetailGateAccessViewController.xib; sourceTree = "<group>"; };
-		8B32EDFB2E3E6B4F0049B9A5 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
-		8B32EDFD2E3E6B500049B9A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
 		8B3595C52F2A277000254A9F /* OnlineSelectionNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSelectionNavigator.swift; sourceTree = "<group>"; };
 		8B3595C72F2A278100254A9F /* OnlinePlaybackBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePlaybackBinder.swift; sourceTree = "<group>"; };
 		8B3ADCEF2F51951C002FFED1 /* QuickActionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionsService.swift; sourceTree = "<group>"; };
@@ -1422,47 +1226,19 @@
 		8B4C56BC2E1E71A300D5496B /* NewAllowedCarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllowedCarViewModel.swift; sourceTree = "<group>"; };
 		8B4C56BE2E1E71B300D5496B /* NewAllowedCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAllowedCarViewController.swift; sourceTree = "<group>"; };
 		8B4C56BF2E1E71B300D5496B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NewAllowedCarViewController.xib; sourceTree = "<group>"; };
-		8B4C56C02E1E71B300D5496B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
-		8B4C56C12E1E71B300D5496B /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
-		8B4C56C22E1E71B300D5496B /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
-		8B4C56C32E1E71B300D5496B /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
 		8B4D95FB2F35E8E400A37232 /* PlayerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTheme.swift; sourceTree = "<group>"; };
 		8B4D95FD2F35EF8C00A37232 /* PlayerThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerThemeManager.swift; sourceTree = "<group>"; };
 		8B5A08012EE9AC5B00E7EAAB /* OfflineDoor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineDoor.swift; sourceTree = "<group>"; };
 		8B5A08032EE9AC6200E7EAAB /* OfflineAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAddress.swift; sourceTree = "<group>"; };
 		8B6C1BD62DC2142500617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WaitingGuestModalViewContent.xib; sourceTree = "<group>"; };
-		8B6C1BDA2DC2142900617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BDC2DC2142A00617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BDE2DC2142B00617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BE02DC2142B00617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
 		8B6C1BE12DC21B3600617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/VideoEventModalViewContent.xib; sourceTree = "<group>"; };
-		8B6C1BE52DC21B3800617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BE72DC21B3900617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BE92DC21B3A00617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BEB2DC21B3B00617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
 		8B6C1BEC2DC21C2600617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WhiteRabbitModalViewContent.xib; sourceTree = "<group>"; };
-		8B6C1BF02DC21C2800617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BF22DC21C2800617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BF42DC21C2800617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BF62DC21C2900617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
 		8B6C1BF72DC21ED100617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CallKitModalViewContent.xib; sourceTree = "<group>"; };
-		8B6C1BFB2DC21ED300617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BFD2DC21ED300617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1BFF2DC21ED400617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
-		8B6C1C012DC21ED500617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
 		8B6C1C022DC2205E00617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WhiteSectionHeaderView.xib; sourceTree = "<group>"; };
-		8B6C1C062DC2206000617CF8 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
-		8B6C1C082DC2206100617CF8 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
-		8B6C1C0A2DC2206200617CF8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
-		8B6C1C0C2DC2206300617CF8 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
 		8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNDetector.swift; sourceTree = "<group>"; };
 		8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardBannerColors.swift; sourceTree = "<group>"; };
 		8B7035682E885D2F0078DCE6 /* VPNBannerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNBannerHelper.swift; sourceTree = "<group>"; };
 		8B7148992EFACA150099703B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressesListEmptyStateCell.xib; sourceTree = "<group>"; };
-		8B71489A2EFACA150099703B /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/AddressesListEmptyStateCell.strings; sourceTree = "<group>"; };
-		8B71489B2EFACA150099703B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AddressesListEmptyStateCell.strings; sourceTree = "<group>"; };
-		8B71489C2EFACA150099703B /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/AddressesListEmptyStateCell.strings; sourceTree = "<group>"; };
-		8B71489D2EFACA150099703B /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/AddressesListEmptyStateCell.strings; sourceTree = "<group>"; };
 		8B71489F2EFACA150099703B /* AddressesListEmptyStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListEmptyStateCell.swift; sourceTree = "<group>"; };
 		8B714CAD2EFACCAD0099703B /* OfflineAddressListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAddressListDataSource.swift; sourceTree = "<group>"; };
 		8B714CB02EFACCAD0099703B /* CachedAddress+CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CachedAddress+CoreData.swift"; sourceTree = "<group>"; };
@@ -1705,80 +1481,18 @@
 		8B9FCAD92E38FFBF00A23E23 /* DetailGateAccessSkeletonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailGateAccessSkeletonView.xib; sourceTree = "<group>"; };
 		8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUUID.swift; sourceTree = "<group>"; };
 		8BA57F932EFAF20E00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Intents.strings; sourceTree = "<group>"; };
-		8BA57F942EFAF21600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/FakeNavBar.strings; sourceTree = "<group>"; };
-		8BA57F952EFAF22200B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/WaitingGuestModalViewContent.strings; sourceTree = "<group>"; };
-		8BA57F962EFAF22300B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/VideoEventModalViewContent.strings; sourceTree = "<group>"; };
-		8BA57F972EFAF22300B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/WhiteRabbitModalViewContent.strings; sourceTree = "<group>"; };
-		8BA57F982EFAF22500B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/CallKitModalViewContent.strings; sourceTree = "<group>"; };
-		8BA57F992EFAF22600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AddressOrderModalViewContent.strings; sourceTree = "<group>"; };
-		8BA57F9C2EFAF22700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ServiceFromCourierView.strings; sourceTree = "<group>"; };
-		8BA57F9D2EFAF22700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ServiceFromOfficeView.strings; sourceTree = "<group>"; };
-		8BA57F9F2EFAF22700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InputAddressViewController.strings; sourceTree = "<group>"; };
-		8BA57FA02EFAF22700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AvailableServiceCell.strings; sourceTree = "<group>"; };
-		8BA57FA12EFAF22800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AvailableServicesViewController.strings; sourceTree = "<group>"; };
-		8BA57FA22EFAF23000B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/IncomingCallPortraitViewController.strings; sourceTree = "<group>"; };
-		8BA57FA42EFAF23300B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/OutgoingCallViewController.strings; sourceTree = "<group>"; };
-		8BA57FA52EFAF23400B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ProviderCell.strings; sourceTree = "<group>"; };
-		8BA57FA62EFAF23400B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/SelectProviderViewController.strings; sourceTree = "<group>"; };
-		8BA57FA72EFAF23500B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AuthByContractNumViewController.strings; sourceTree = "<group>"; };
-		8BA57FA82EFAF23500B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InputPhoneNumberViewController.strings; sourceTree = "<group>"; };
-		8BA57FA92EFAF23600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/PinCodeViewController.strings; sourceTree = "<group>"; };
-		8BA57FAA2EFAF23600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/RestoreMethodCell.strings; sourceTree = "<group>"; };
-		8BA57FAB2EFAF23600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/RestorePasswordViewController.strings; sourceTree = "<group>"; };
-		8BA57FAC2EFAF23600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/PassConfirmationPinViewController.strings; sourceTree = "<group>"; };
-		8BA57FAD2EFAF23600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AddFaceViewController.strings; sourceTree = "<group>"; };
-		8BA57FAE2EFAF23700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/DeleteFaceViewController.strings; sourceTree = "<group>"; };
-		8BA57FB12EFAF23700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AddressesListCameraCell.strings; sourceTree = "<group>"; };
-		8BA57FB22EFAF23700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AddressesListHistoryCell.strings; sourceTree = "<group>"; };
-		8BA57FB32EFAF23700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AddressesListEmptyStateCell.strings; sourceTree = "<group>"; };
-		8BA57FB62EFAF23800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/WhiteSectionHeaderView.strings; sourceTree = "<group>"; };
-		8BA57FB82EFAF23800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/PlayArchiveVideoViewController.strings; sourceTree = "<group>"; };
-		8BA57FBA2EFAF23800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/YardMapViewController.strings; sourceTree = "<group>"; };
-		8BA57FBB2EFAF23800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/HistoryViewController.strings; sourceTree = "<group>"; };
-		8BA57FBC2EFAF23800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/HistoryDetailViewController.strings; sourceTree = "<group>"; };
-		8BA57FBD2EFAF23800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/PaymentsViewController.strings; sourceTree = "<group>"; };
-		8BA57FBE2EFAF23900B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/PaymentPopupController.strings; sourceTree = "<group>"; };
-		8BA57FC02EFAF23900B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/NewPersonCell.strings; sourceTree = "<group>"; };
-		8BA57FC22EFAF23900B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/IntercomTemporaryAccessView.strings; sourceTree = "<group>"; };
-		8BA57FC32EFAF23900B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/FaceIdAccessView.strings; sourceTree = "<group>"; };
-		8BA57FC42EFAF23900B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AddressAccessViewController.strings; sourceTree = "<group>"; };
-		8BA57FC62EFAF23A00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
-		8BA57FC72EFAF23A00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AddressDeletionViewController.strings; sourceTree = "<group>"; };
-		8BA57FC82EFAF23A00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AddressSettingsViewController.strings; sourceTree = "<group>"; };
-		8BA57FC92EFAF23A00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/CommonSettingsViewController.strings; sourceTree = "<group>"; };
-		8BA57FCA2EFAF23D00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/EditNameViewController.strings; sourceTree = "<group>"; };
-		8BA57FCB2EFAF23D00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/FacesSettingsViewController.strings; sourceTree = "<group>"; };
-		8BA57FCC2EFAF23D00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/SettingsAddAddressCell.strings; sourceTree = "<group>"; };
-		8BA57FCE2EFAF23E00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/NewAllowedCarViewController.strings; sourceTree = "<group>"; };
-		8BA57FCF2EFAF23E00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/NewAllowedPersonViewController.strings; sourceTree = "<group>"; };
-		8BA57FD02EFAF23F00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ServiceIsActivatedViewController.strings; sourceTree = "<group>"; };
-		8BA57FD12EFAF24100B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ServiceIsNotActivatedViewController.strings; sourceTree = "<group>"; };
-		8BA57FD22EFAF24500B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ServiceUnavailableViewController.strings; sourceTree = "<group>"; };
-		8BA57FD32EFAF24600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/RequestRecordViewController.strings; sourceTree = "<group>"; };
-		8BA57FD52EFAF24800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/CityCameraViewController.strings; sourceTree = "<group>"; };
-		8BA57FD62EFAF24D00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/BottomCell.strings; sourceTree = "<group>"; };
-		8BA57FD72EFAF24F00B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MainMenuViewController.strings; sourceTree = "<group>"; };
-		8BA57FD82EFAF25100B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ServicesActivationRequestViewController.strings; sourceTree = "<group>"; };
-		8BA57FD92EFAF25100B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/OnboardingBaseView.strings; sourceTree = "<group>"; };
-		8BA57FDA2EFAF25200B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/OnboardingViewController.strings; sourceTree = "<group>"; };
-		8BA5802C2EFAF25300B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/QRCodeScanViewController.strings; sourceTree = "<group>"; };
-		8BA5802D2EFAF25400B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/ServiceSoonAvailableViewController.strings; sourceTree = "<group>"; };
-		8BA5802E2EFAF25500B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/UserNameViewController.strings; sourceTree = "<group>"; };
 		8BA5802F2EFAF25600B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		8BA580302EFAF25700B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ../ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8BA580312EFAF25800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8BA580322EFAF25800B63297 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8C6A61042F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = hy.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllowedCar.swift; sourceTree = "<group>"; };
 		8BA6EA5D2DFA21C800CDA2DA /* GateAccessDataItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GateAccessDataItem.swift; sourceTree = "<group>"; };
 		8BA6EA5F2DFA222700CDA2DA /* GateAccessDataItemIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GateAccessDataItemIdentity.swift; sourceTree = "<group>"; };
 		8BA6EA612DFA223D00CDA2DA /* GateAccessSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GateAccessSectionModel.swift; sourceTree = "<group>"; };
 		8BBEC5A52E279849003A33B6 /* LicensePlateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateFormatter.swift; sourceTree = "<group>"; };
 		8BC048602DD20AB400F345C6 /* SmartYardActionModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardActionModeButton.swift; sourceTree = "<group>"; };
-		8BC048B32DD639B100F345C6 /* CallKitModalViewContent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CallKitModalViewContent.xib; path = Base.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
-		8BC048B42DD639B100F345C6 /* CallKitModalViewContent.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = CallKitModalViewContent.strings; path = bg.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
-		8BC048B52DD639B100F345C6 /* CallKitModalViewContent.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = CallKitModalViewContent.strings; path = en.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
-		8BC048B62DD639B100F345C6 /* CallKitModalViewContent.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = CallKitModalViewContent.strings; path = kk.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
-		8BC048B72DD639B100F345C6 /* CallKitModalViewContent.strings */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = CallKitModalViewContent.strings; path = uz.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
+		8BC048B32DD639B100F345C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
 		8BC766D22E311F160065546B /* DetailGateAccessAddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGateAccessAddCell.swift; sourceTree = "<group>"; };
 		8BC766D32E311F160065546B /* SettingsAddAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingsAddAddressCell.xib; path = Base.lproj/DetailGateAccessAddCell.xib; sourceTree = "<group>"; };
 		8BCECFE12DEF38CF000D7D6D /* SmartYardHighlightSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardHighlightSegmentedControlView.swift; sourceTree = "<group>"; };
@@ -1816,8 +1530,6 @@
 		8BF6C5EF2F25520A008AA137 /* OnlineSectionControllersProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSectionControllersProvider.swift; sourceTree = "<group>"; };
 		8BF6C5F02F25520A008AA137 /* OnlineSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSectionModel.swift; sourceTree = "<group>"; };
 		8BF6C5F32F25520A008AA137 /* OnlinePageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageState.swift; sourceTree = "<group>"; };
-		8BF749CF2E3E6B6300547D19 /* kk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = kk; path = kk.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
-		8BF749D12E3E6B6300547D19 /* uz */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uz; path = uz.lproj/DetailGateAccessViewController.strings; sourceTree = "<group>"; };
 		8BF854D82E9009600074F080 /* SharedWebKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedWebKit.swift; sourceTree = "<group>"; };
 		8E65EC65DF6EAF2CB3A1B831 /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9632D77FAF39A6CB99673DCB /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1915,6 +1627,8 @@
 		E9E4273823F5609E00F5D593 /* ServiceSoonAvailableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewController.swift; sourceTree = "<group>"; };
 		E9E4273C23F560C400F5D593 /* ServiceSoonAvailableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceSoonAvailableViewModel.swift; sourceTree = "<group>"; };
 		FA1A22A02CE3893000B8F919 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		8BF9A1D32F79E10000C0D001 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
+		8BF9A1D42F79E10000C0D001 /* L10n+Generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "L10n+Generated.swift"; sourceTree = "<group>"; };
 		FA9E30EB2BBBEFFA0087E689 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		FA9E30ED2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoRefreshingCachedImageView.swift; sourceTree = "<group>"; };
 		FA9E30EF2BBBF0450087E689 /* CameraButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraButton.swift; sourceTree = "<group>"; };
@@ -3246,6 +2960,8 @@
 				8B7035682E885D2F0078DCE6 /* VPNBannerHelper.swift */,
 				8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */,
 				8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */,
+				8BF9A1D32F79E10000C0D001 /* L10n.swift */,
+				8BF9A1D42F79E10000C0D001 /* L10n+Generated.swift */,
 				FAD4E0732D31CF5E00B0130C /* Logger.swift */,
 				FA9EEFA02D0B115B006933A3 /* FontHelper.swift */,
 				FA1A22A02CE3893000B8F919 /* ThemeManager.swift */,
@@ -5945,6 +5661,7 @@
 				ru,
 				Base,
 				en,
+				hy,
 				kk,
 				uz,
 				bg,
@@ -6263,13 +5980,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -6512,6 +6225,8 @@
 				84854B3B23FA8C38001B44F2 /* LoaderPresentable.swift in Sources */,
 				8B07CD602E083BF700625C59 /* SmartYardLicensePlateTextField.swift in Sources */,
 				FA9EEFA12D0B1160006933A3 /* FontHelper.swift in Sources */,
+				8BF9A1D12F79E10000C0D001 /* L10n.swift in Sources */,
+				8BF9A1D22F79E10000C0D001 /* L10n+Generated.swift in Sources */,
 				E94B6C4523FFFF5D00FD9F65 /* Date+Conversion.swift in Sources */,
 				84854B4323FAA266001B44F2 /* NavigationTransitions.swift in Sources */,
 				8B70309C2E87E18F0078DCE6 /* VPNDetector.swift in Sources */,
@@ -7017,11 +6732,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A114813296EC3A300AAD2D6 /* Base */,
-				3A114818296EC3D100AAD2D6 /* en */,
-				3ACD653E2B27345300146796 /* kk */,
-				3ACD65832B2734CF00146796 /* uz */,
-				3AD02E742B304B6E001C4717 /* bg */,
-				8BA57F9F2EFAF22700B63297 /* ar */,
 			);
 			name = InputAddressViewController.xib;
 			sourceTree = "<group>";
@@ -7030,11 +6740,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A11481A296EC46C00AAD2D6 /* Base */,
-				3A11481D296EC47100AAD2D6 /* en */,
-				3ACD65452B27345600146796 /* kk */,
-				3ACD658A2B2734D100146796 /* uz */,
-				3AD02E7B2B304B71001C4717 /* bg */,
-				8BA57FA62EFAF23400B63297 /* ar */,
 			);
 			name = SelectProviderViewController.xib;
 			sourceTree = "<group>";
@@ -7048,6 +6753,7 @@
 				3ACD65BF2B2734DF00146796 /* uz */,
 				3AD02EB02B304B7E001C4717 /* bg */,
 				8BA580312EFAF25800B63297 /* ar */,
+				8C6A61012F8A100000A1B201 /* hy */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -7055,12 +6761,7 @@
 		3A3B5DE029ACEAFF00053124 /* AddressSettingsViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3A3B5DE229ACEB0900053124 /* en */,
 				3A43DAA429B1EC6D00DED9BE /* Base */,
-				3ACD65632B27346000146796 /* kk */,
-				3ACD65A82B2734D800146796 /* uz */,
-				3AD02E992B304B79001C4717 /* bg */,
-				8BA57FC82EFAF23A00B63297 /* ar */,
 			);
 			name = AddressSettingsViewController.xib;
 			sourceTree = "<group>";
@@ -7069,11 +6770,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A5030622B0A7F5F00699A3B /* Base */,
-				3A5030652B0A7F6200699A3B /* en */,
-				3ACD65672B27346100146796 /* kk */,
-				3ACD65AC2B2734DA00146796 /* uz */,
-				3AD02E9D2B304B7A001C4717 /* bg */,
-				8BA57FCC2EFAF23D00B63297 /* ar */,
 			);
 			name = SettingsAddAddressCell.xib;
 			sourceTree = "<group>";
@@ -7112,11 +6808,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC67F2B065C7400F90D73 /* Base */,
-				3A8FC6822B065C7800F90D73 /* en */,
-				3ACD653B2B27345200146796 /* kk */,
-				3ACD65802B2734CE00146796 /* uz */,
-				3AD02E712B304B6D001C4717 /* bg */,
-				8BA57F9C2EFAF22700B63297 /* ar */,
 			);
 			name = ServiceFromCourierView.xib;
 			sourceTree = "<group>";
@@ -7125,11 +6816,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6842B065CEF00F90D73 /* Base */,
-				3A8FC6872B065CF300F90D73 /* en */,
-				3ACD653C2B27345300146796 /* kk */,
-				3ACD65812B2734CE00146796 /* uz */,
-				3AD02E722B304B6D001C4717 /* bg */,
-				8BA57F9D2EFAF22700B63297 /* ar */,
 			);
 			name = ServiceFromOfficeView.xib;
 			sourceTree = "<group>";
@@ -7138,11 +6824,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6892B065D7C00F90D73 /* Base */,
-				3A8FC68C2B065D7F00F90D73 /* en */,
-				3ACD653F2B27345400146796 /* kk */,
-				3ACD65842B2734CF00146796 /* uz */,
-				3AD02E752B304B6E001C4717 /* bg */,
-				8BA57FA02EFAF22700B63297 /* ar */,
 			);
 			name = AvailableServiceCell.xib;
 			sourceTree = "<group>";
@@ -7151,11 +6832,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC68E2B065DB600F90D73 /* Base */,
-				3A8FC6912B065DBB00F90D73 /* en */,
-				3ACD65402B27345400146796 /* kk */,
-				3ACD65852B2734CF00146796 /* uz */,
-				3AD02E762B304B6F001C4717 /* bg */,
-				8BA57FA12EFAF22800B63297 /* ar */,
 			);
 			name = AvailableServicesViewController.xib;
 			sourceTree = "<group>";
@@ -7164,11 +6840,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6932B065DDC00F90D73 /* Base */,
-				3A8FC6962B065DE000F90D73 /* en */,
-				3ACD65412B27345400146796 /* kk */,
-				3ACD65862B2734D000146796 /* uz */,
-				3AD02E772B304B6F001C4717 /* bg */,
-				8BA57FA22EFAF23000B63297 /* ar */,
 			);
 			name = IncomingCallPortraitViewController.xib;
 			sourceTree = "<group>";
@@ -7185,11 +6856,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC69D2B065E2C00F90D73 /* Base */,
-				3A8FC6A02B065E3100F90D73 /* en */,
-				3ACD65432B27345500146796 /* kk */,
-				3ACD65882B2734D000146796 /* uz */,
-				3AD02E792B304B70001C4717 /* bg */,
-				8BA57FA42EFAF23300B63297 /* ar */,
 			);
 			name = OutgoingCallViewController.xib;
 			sourceTree = "<group>";
@@ -7198,10 +6864,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6A72B065EB500F90D73 /* Base */,
-				3ACD65442B27345500146796 /* kk */,
-				3ACD65892B2734D000146796 /* uz */,
-				3AD02E7A2B304B70001C4717 /* bg */,
-				8BA57FA52EFAF23400B63297 /* ar */,
 			);
 			name = ProviderCell.xib;
 			sourceTree = "<group>";
@@ -7210,11 +6872,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6A92B065EDA00F90D73 /* Base */,
-				3A8FC6AC2B065EDE00F90D73 /* en */,
-				3ACD65462B27345600146796 /* kk */,
-				3ACD658B2B2734D100146796 /* uz */,
-				3AD02E7C2B304B71001C4717 /* bg */,
-				8BA57FA72EFAF23500B63297 /* ar */,
 			);
 			name = AuthByContractNumViewController.xib;
 			sourceTree = "<group>";
@@ -7223,11 +6880,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6AE2B065F4800F90D73 /* Base */,
-				3A8FC6B12B065F5100F90D73 /* en */,
-				3ACD65472B27345600146796 /* kk */,
-				3ACD658C2B2734D100146796 /* uz */,
-				3AD02E7D2B304B71001C4717 /* bg */,
-				8BA57FA82EFAF23500B63297 /* ar */,
 			);
 			name = InputPhoneNumberViewController.xib;
 			sourceTree = "<group>";
@@ -7236,11 +6888,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6B32B065F8700F90D73 /* Base */,
-				3A8FC6B62B065F8B00F90D73 /* en */,
-				3ACD65482B27345700146796 /* kk */,
-				3ACD658D2B2734D100146796 /* uz */,
-				3AD02E7E2B304B72001C4717 /* bg */,
-				8BA57FA92EFAF23600B63297 /* ar */,
 			);
 			name = PinCodeViewController.xib;
 			sourceTree = "<group>";
@@ -7249,11 +6896,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6B82B065FC200F90D73 /* Base */,
-				3A8FC6BB2B065FC800F90D73 /* en */,
-				3ACD65492B27345700146796 /* kk */,
-				3ACD658E2B2734D200146796 /* uz */,
-				3AD02E7F2B304B72001C4717 /* bg */,
-				8BA57FAA2EFAF23600B63297 /* ar */,
 			);
 			name = RestoreMethodCell.xib;
 			sourceTree = "<group>";
@@ -7262,11 +6904,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6BD2B065FD400F90D73 /* Base */,
-				3A8FC6C02B065FD700F90D73 /* en */,
-				3ACD654A2B27345700146796 /* kk */,
-				3ACD658F2B2734D200146796 /* uz */,
-				3AD02E802B304B72001C4717 /* bg */,
-				8BA57FAB2EFAF23600B63297 /* ar */,
 			);
 			name = RestorePasswordViewController.xib;
 			sourceTree = "<group>";
@@ -7275,11 +6912,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6C22B06603C00F90D73 /* Base */,
-				3A8FC6C52B06604A00F90D73 /* en */,
-				3ACD654B2B27345800146796 /* kk */,
-				3ACD65902B2734D200146796 /* uz */,
-				3AD02E812B304B73001C4717 /* bg */,
-				8BA57FAC2EFAF23600B63297 /* ar */,
 			);
 			name = PassConfirmationPinViewController.xib;
 			sourceTree = "<group>";
@@ -7288,11 +6920,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6C72B06608600F90D73 /* Base */,
-				3A8FC6CA2B06608A00F90D73 /* en */,
-				3ACD654C2B27345800146796 /* kk */,
-				3ACD65912B2734D200146796 /* uz */,
-				3AD02E822B304B73001C4717 /* bg */,
-				8BA57FAD2EFAF23600B63297 /* ar */,
 			);
 			name = AddFaceViewController.xib;
 			sourceTree = "<group>";
@@ -7301,11 +6928,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6CC2B0660A000F90D73 /* Base */,
-				3A8FC6CF2B0660A400F90D73 /* en */,
-				3ACD654D2B27345800146796 /* kk */,
-				3ACD65922B2734D300146796 /* uz */,
-				3AD02E832B304B73001C4717 /* bg */,
-				8BA57FAE2EFAF23700B63297 /* ar */,
 			);
 			name = DeleteFaceViewController.xib;
 			sourceTree = "<group>";
@@ -7322,11 +6944,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6DB2B06612200F90D73 /* Base */,
-				3A8FC6DE2B06612500F90D73 /* en */,
-				3ACD65512B27345A00146796 /* kk */,
-				3ACD65962B2734D400146796 /* uz */,
-				3AD02E872B304B74001C4717 /* bg */,
-				8BA57FB12EFAF23700B63297 /* ar */,
 			);
 			name = AddressesListCameraCell.xib;
 			sourceTree = "<group>";
@@ -7335,11 +6952,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6E02B06613700F90D73 /* Base */,
-				3A8FC6E32B06613A00F90D73 /* en */,
-				3ACD65522B27345A00146796 /* kk */,
-				3ACD65972B2734D400146796 /* uz */,
-				3AD02E882B304B75001C4717 /* bg */,
-				8BA57FB22EFAF23700B63297 /* ar */,
 			);
 			name = AddressesListHistoryCell.xib;
 			sourceTree = "<group>";
@@ -7372,11 +6984,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6F42B0661B700F90D73 /* Base */,
-				3A8FC6F72B0661BB00F90D73 /* en */,
-				3ACD65562B27345B00146796 /* kk */,
-				3ACD659B2B2734D500146796 /* uz */,
-				3AD02E8C2B304B76001C4717 /* bg */,
-				8BA57FB82EFAF23800B63297 /* ar */,
 			);
 			name = PlayArchiveVideoViewController.xib;
 			sourceTree = "<group>";
@@ -7393,11 +7000,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC6FE2B0661FB00F90D73 /* Base */,
-				3A8FC7012B0661FF00F90D73 /* en */,
-				3ACD65582B27345C00146796 /* kk */,
-				3ACD659D2B2734D600146796 /* uz */,
-				3AD02E8E2B304B76001C4717 /* bg */,
-				8BA57FBA2EFAF23800B63297 /* ar */,
 			);
 			name = YardMapViewController.xib;
 			sourceTree = "<group>";
@@ -7406,11 +7008,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7032B06621300F90D73 /* Base */,
-				3A8FC7062B06621600F90D73 /* en */,
-				3ACD65592B27345C00146796 /* kk */,
-				3ACD659E2B2734D600146796 /* uz */,
-				3AD02E8F2B304B76001C4717 /* bg */,
-				8BA57FBB2EFAF23800B63297 /* ar */,
 			);
 			name = HistoryViewController.xib;
 			sourceTree = "<group>";
@@ -7419,11 +7016,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7082B06623200F90D73 /* Base */,
-				3A8FC70B2B06623500F90D73 /* en */,
-				3ACD655A2B27345D00146796 /* kk */,
-				3ACD659F2B2734D600146796 /* uz */,
-				3AD02E902B304B77001C4717 /* bg */,
-				8BA57FBC2EFAF23800B63297 /* ar */,
 			);
 			name = HistoryDetailViewController.xib;
 			sourceTree = "<group>";
@@ -7432,11 +7024,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC70D2B06626800F90D73 /* Base */,
-				3A8FC7102B06626B00F90D73 /* en */,
-				3ACD655B2B27345D00146796 /* kk */,
-				3ACD65A02B2734D600146796 /* uz */,
-				3AD02E912B304B77001C4717 /* bg */,
-				8BA57FBD2EFAF23800B63297 /* ar */,
 			);
 			name = PaymentsViewController.xib;
 			sourceTree = "<group>";
@@ -7445,11 +7032,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7122B06628400F90D73 /* Base */,
-				3A8FC7152B06628700F90D73 /* en */,
-				3ACD655C2B27345D00146796 /* kk */,
-				3ACD65A12B2734D700146796 /* uz */,
-				3AD02E922B304B77001C4717 /* bg */,
-				8BA57FBE2EFAF23900B63297 /* ar */,
 			);
 			name = PaymentPopupController.xib;
 			sourceTree = "<group>";
@@ -7458,11 +7040,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7172B079E7900F90D73 /* Base */,
-				3A8FC71A2B079E8500F90D73 /* en */,
-				3ACD65612B27345F00146796 /* kk */,
-				3ACD65A62B2734D800146796 /* uz */,
-				3AD02E972B304B78001C4717 /* bg */,
-				8BA57FC42EFAF23900B63297 /* ar */,
 			);
 			name = AddressAccessViewController.xib;
 			sourceTree = "<group>";
@@ -7471,11 +7048,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC71C2B079ED400F90D73 /* Base */,
-				3A8FC71F2B079EDA00F90D73 /* en */,
-				3ACD65622B27345F00146796 /* kk */,
-				3ACD65A72B2734D800146796 /* uz */,
-				3AD02E982B304B79001C4717 /* bg */,
-				8BA57FC72EFAF23A00B63297 /* ar */,
 			);
 			name = AddressDeletionViewController.xib;
 			sourceTree = "<group>";
@@ -7484,11 +7056,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7212B079F2200F90D73 /* Base */,
-				3A8FC7242B079F2600F90D73 /* en */,
-				3ACD65642B27346000146796 /* kk */,
-				3ACD65A92B2734D900146796 /* uz */,
-				3AD02E9A2B304B79001C4717 /* bg */,
-				8BA57FC92EFAF23A00B63297 /* ar */,
 			);
 			name = CommonSettingsViewController.xib;
 			sourceTree = "<group>";
@@ -7497,11 +7064,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7262B079FA100F90D73 /* Base */,
-				3A8FC7292B079FA400F90D73 /* en */,
-				3ACD65652B27346000146796 /* kk */,
-				3ACD65AA2B2734D900146796 /* uz */,
-				3AD02E9B2B304B7A001C4717 /* bg */,
-				8BA57FCA2EFAF23D00B63297 /* ar */,
 			);
 			name = EditNameViewController.xib;
 			sourceTree = "<group>";
@@ -7510,11 +7072,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC72B2B09E49B00F90D73 /* Base */,
-				3A8FC72E2B09E4A200F90D73 /* en */,
-				3ACD65662B27346100146796 /* kk */,
-				3ACD65AB2B2734D900146796 /* uz */,
-				3AD02E9C2B304B7A001C4717 /* bg */,
-				8BA57FCB2EFAF23D00B63297 /* ar */,
 			);
 			name = FacesSettingsViewController.xib;
 			sourceTree = "<group>";
@@ -7531,11 +7088,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7352B09E53B00F90D73 /* Base */,
-				3A8FC7382B09E53F00F90D73 /* en */,
-				3ACD65692B27346100146796 /* kk */,
-				3ACD65AE2B2734DA00146796 /* uz */,
-				3AD02E9F2B304B7B001C4717 /* bg */,
-				8BA57FCF2EFAF23E00B63297 /* ar */,
 			);
 			name = NewAllowedPersonViewController.xib;
 			sourceTree = "<group>";
@@ -7544,11 +7096,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC73A2B09E62A00F90D73 /* Base */,
-				3A8FC73D2B09E63100F90D73 /* en */,
-				3ACD656A2B27346200146796 /* kk */,
-				3ACD65AF2B2734DA00146796 /* uz */,
-				3AD02EA02B304B7B001C4717 /* bg */,
-				8BA57FD02EFAF23F00B63297 /* ar */,
 			);
 			name = ServiceIsActivatedViewController.xib;
 			sourceTree = "<group>";
@@ -7557,11 +7104,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC73F2B09EA1500F90D73 /* Base */,
-				3A8FC7422B09EA1900F90D73 /* en */,
-				3ACD656B2B27346200146796 /* kk */,
-				3ACD65B02B2734DB00146796 /* uz */,
-				3AD02EA12B304B7B001C4717 /* bg */,
-				8BA57FD12EFAF24100B63297 /* ar */,
 			);
 			name = ServiceIsNotActivatedViewController.xib;
 			sourceTree = "<group>";
@@ -7570,11 +7112,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7442B09EA8700F90D73 /* Base */,
-				3A8FC7472B09EA8E00F90D73 /* en */,
-				3ACD656C2B27346200146796 /* kk */,
-				3ACD65B12B2734DB00146796 /* uz */,
-				3AD02EA22B304B7C001C4717 /* bg */,
-				8BA57FD22EFAF24500B63297 /* ar */,
 			);
 			name = ServiceUnavailableViewController.xib;
 			sourceTree = "<group>";
@@ -7583,11 +7120,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7492B09ED7B00F90D73 /* Base */,
-				3A8FC74C2B09ED8100F90D73 /* en */,
-				3ACD656D2B27346200146796 /* kk */,
-				3ACD65B22B2734DB00146796 /* uz */,
-				3AD02EA32B304B7C001C4717 /* bg */,
-				8BA57FD32EFAF24600B63297 /* ar */,
 			);
 			name = RequestRecordViewController.xib;
 			sourceTree = "<group>";
@@ -7604,11 +7136,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7532B09F11400F90D73 /* Base */,
-				3A8FC7562B09F11800F90D73 /* en */,
-				3ACD656F2B27346300146796 /* kk */,
-				3ACD65B42B2734DC00146796 /* uz */,
-				3AD02EA52B304B7C001C4717 /* bg */,
-				8BA57FD52EFAF24800B63297 /* ar */,
 			);
 			name = CityCameraViewController.xib;
 			sourceTree = "<group>";
@@ -7617,11 +7144,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7582B09F19000F90D73 /* Base */,
-				3A8FC75B2B09F19400F90D73 /* en */,
-				3ACD65702B27346300146796 /* kk */,
-				3ACD65B52B2734DC00146796 /* uz */,
-				3AD02EA62B304B7C001C4717 /* bg */,
-				8BA57FD62EFAF24D00B63297 /* ar */,
 			);
 			name = BottomCell.xib;
 			sourceTree = "<group>";
@@ -7630,11 +7152,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC75D2B09F1E300F90D73 /* Base */,
-				3A8FC7602B09F1E700F90D73 /* en */,
-				3ACD65712B27346400146796 /* kk */,
-				3ACD65B62B2734DC00146796 /* uz */,
-				3AD02EA72B304B7D001C4717 /* bg */,
-				8BA57FD72EFAF24F00B63297 /* ar */,
 			);
 			name = MainMenuViewController.xib;
 			sourceTree = "<group>";
@@ -7643,11 +7160,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7622B09F21F00F90D73 /* Base */,
-				3A8FC7652B09F22200F90D73 /* en */,
-				3ACD65722B27346400146796 /* kk */,
-				3ACD65B72B2734DD00146796 /* uz */,
-				3AD02EA82B304B7D001C4717 /* bg */,
-				8BA57FD82EFAF25100B63297 /* ar */,
 			);
 			name = ServicesActivationRequestViewController.xib;
 			sourceTree = "<group>";
@@ -7656,11 +7168,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7672B09F7AF00F90D73 /* Base */,
-				3A8FC76A2B09F7B600F90D73 /* en */,
-				3ACD65732B27346400146796 /* kk */,
-				3ACD65B82B2734DD00146796 /* uz */,
-				3AD02EA92B304B7D001C4717 /* bg */,
-				8BA57FD92EFAF25100B63297 /* ar */,
 			);
 			name = OnboardingBaseView.xib;
 			sourceTree = "<group>";
@@ -7669,11 +7176,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC76C2B09F89C00F90D73 /* Base */,
-				3A8FC76F2B09F8A000F90D73 /* en */,
-				3ACD65742B27346500146796 /* kk */,
-				3ACD65B92B2734DD00146796 /* uz */,
-				3AD02EAA2B304B7D001C4717 /* bg */,
-				8BA57FDA2EFAF25200B63297 /* ar */,
 			);
 			name = OnboardingViewController.xib;
 			sourceTree = "<group>";
@@ -7682,11 +7184,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7712B09F97C00F90D73 /* Base */,
-				3A8FC7742B09F98000F90D73 /* en */,
-				3ACD65752B27346500146796 /* kk */,
-				3ACD65BA2B2734DD00146796 /* uz */,
-				3AD02EAB2B304B7D001C4717 /* bg */,
-				8BA5802C2EFAF25300B63297 /* ar */,
 			);
 			name = QRCodeScanViewController.xib;
 			sourceTree = "<group>";
@@ -7695,11 +7192,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7762B09F9A400F90D73 /* Base */,
-				3A8FC7792B09F9A700F90D73 /* en */,
-				3ACD65762B27346500146796 /* kk */,
-				3ACD65BB2B2734DE00146796 /* uz */,
-				3AD02EAC2B304B7E001C4717 /* bg */,
-				8BA5802D2EFAF25400B63297 /* ar */,
 			);
 			name = ServiceSoonAvailableViewController.xib;
 			sourceTree = "<group>";
@@ -7708,11 +7200,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC77B2B09FC8C00F90D73 /* Base */,
-				3A8FC77E2B09FC9100F90D73 /* en */,
-				3ACD65772B27346600146796 /* kk */,
-				3ACD65BC2B2734DE00146796 /* uz */,
-				3AD02EAD2B304B7E001C4717 /* bg */,
-				8BA5802E2EFAF25500B63297 /* ar */,
 			);
 			name = UserNameViewController.xib;
 			sourceTree = "<group>";
@@ -7726,6 +7213,7 @@
 				3ACD65BE2B2734DE00146796 /* uz */,
 				3AD02EAF2B304B7E001C4717 /* bg */,
 				8BA580302EFAF25700B63297 /* ar */,
+				8C6A61022F8A100000A1B201 /* hy */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -7734,11 +7222,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7922B0A09C900F90D73 /* Base */,
-				3A8FC7952B0A09CD00F90D73 /* en */,
-				3ACD655D2B27345E00146796 /* kk */,
-				3ACD65A22B2734D700146796 /* uz */,
-				3AD02E932B304B77001C4717 /* bg */,
-				8BA57FC02EFAF23900B63297 /* ar */,
 			);
 			name = NewPersonCell.xib;
 			sourceTree = "<group>";
@@ -7755,11 +7238,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC79C2B0A09F500F90D73 /* Base */,
-				3A8FC79F2B0A09F800F90D73 /* en */,
-				3ACD655F2B27345E00146796 /* kk */,
-				3ACD65A42B2734D700146796 /* uz */,
-				3AD02E952B304B78001C4717 /* bg */,
-				8BA57FC22EFAF23900B63297 /* ar */,
 			);
 			name = IntercomTemporaryAccessView.xib;
 			sourceTree = "<group>";
@@ -7768,11 +7246,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3A8FC7A12B0A0A3100F90D73 /* Base */,
-				3A8FC7A42B0A0A3400F90D73 /* en */,
-				3ACD65602B27345F00146796 /* kk */,
-				3ACD65A52B2734D800146796 /* uz */,
-				3AD02E962B304B78001C4717 /* bg */,
-				8BA57FC32EFAF23900B63297 /* ar */,
 			);
 			name = FaceIdAccessView.xib;
 			sourceTree = "<group>";
@@ -7794,6 +7267,7 @@
 				3ACD65C02B2734DF00146796 /* uz */,
 				3AD02EB12B304B7F001C4717 /* bg */,
 				8BA580322EFAF25800B63297 /* ar */,
+				8C6A61032F8A100000A1B201 /* hy */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -7802,11 +7276,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				3ACD65332B1F649300146796 /* Base */,
-				3ACD65362B1F649600146796 /* en */,
-				3ACD65382B27345100146796 /* kk */,
-				3ACD657D2B2734CD00146796 /* uz */,
-				3AD02E6E2B304B6B001C4717 /* bg */,
-				8BA57F942EFAF21600B63297 /* ar */,
 			);
 			name = FakeNavBar.xib;
 			sourceTree = "<group>";
@@ -7820,6 +7289,7 @@
 				3ACD65BD2B2734DE00146796 /* uz */,
 				3AD02EAE2B304B7E001C4717 /* bg */,
 				8BA5802F2EFAF25600B63297 /* ar */,
+				8C6A61042F8A100000A1B201 /* hy */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -7844,11 +7314,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B32EDF72E3E6B4A0049B9A5 /* Base */,
-				8B32EDFB2E3E6B4F0049B9A5 /* bg */,
-				8B32EDFD2E3E6B500049B9A5 /* en */,
-				8BF749CF2E3E6B6300547D19 /* kk */,
-				8BF749D12E3E6B6300547D19 /* uz */,
-				8BA57FC62EFAF23A00B63297 /* ar */,
 			);
 			name = DetailGateAccessViewController.xib;
 			sourceTree = "<group>";
@@ -7857,11 +7322,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B4C56BF2E1E71B300D5496B /* Base */,
-				8B4C56C02E1E71B300D5496B /* en */,
-				8B4C56C12E1E71B300D5496B /* kk */,
-				8B4C56C22E1E71B300D5496B /* uz */,
-				8B4C56C32E1E71B300D5496B /* bg */,
-				8BA57FCE2EFAF23E00B63297 /* ar */,
 			);
 			name = NewAllowedCarViewController.xib;
 			sourceTree = "<group>";
@@ -7870,11 +7330,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B6C1BD62DC2142500617CF8 /* Base */,
-				8B6C1BDA2DC2142900617CF8 /* bg */,
-				8B6C1BDC2DC2142A00617CF8 /* en */,
-				8B6C1BDE2DC2142B00617CF8 /* kk */,
-				8B6C1BE02DC2142B00617CF8 /* uz */,
-				8BA57F952EFAF22200B63297 /* ar */,
 			);
 			name = WaitingGuestModalViewContent.xib;
 			sourceTree = "<group>";
@@ -7883,11 +7338,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B6C1BE12DC21B3600617CF8 /* Base */,
-				8B6C1BE52DC21B3800617CF8 /* bg */,
-				8B6C1BE72DC21B3900617CF8 /* en */,
-				8B6C1BE92DC21B3A00617CF8 /* kk */,
-				8B6C1BEB2DC21B3B00617CF8 /* uz */,
-				8BA57F962EFAF22300B63297 /* ar */,
 			);
 			name = VideoEventModalViewContent.xib;
 			sourceTree = "<group>";
@@ -7896,11 +7346,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B6C1BEC2DC21C2600617CF8 /* Base */,
-				8B6C1BF02DC21C2800617CF8 /* bg */,
-				8B6C1BF22DC21C2800617CF8 /* en */,
-				8B6C1BF42DC21C2800617CF8 /* kk */,
-				8B6C1BF62DC21C2900617CF8 /* uz */,
-				8BA57F972EFAF22300B63297 /* ar */,
 			);
 			name = WhiteRabbitModalViewContent.xib;
 			sourceTree = "<group>";
@@ -7909,11 +7354,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B6C1BF72DC21ED100617CF8 /* Base */,
-				8B6C1BFB2DC21ED300617CF8 /* bg */,
-				8B6C1BFD2DC21ED300617CF8 /* en */,
-				8B6C1BFF2DC21ED400617CF8 /* kk */,
-				8B6C1C012DC21ED500617CF8 /* uz */,
-				8BA57F982EFAF22500B63297 /* ar */,
 			);
 			name = CallKitModalViewContent.xib;
 			sourceTree = "<group>";
@@ -7922,11 +7362,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B6C1C022DC2205E00617CF8 /* Base */,
-				8B6C1C062DC2206000617CF8 /* bg */,
-				8B6C1C082DC2206100617CF8 /* kk */,
-				8B6C1C0A2DC2206200617CF8 /* en */,
-				8B6C1C0C2DC2206300617CF8 /* uz */,
-				8BA57FB62EFAF23800B63297 /* ar */,
 			);
 			name = WhiteSectionHeaderView.xib;
 			sourceTree = "<group>";
@@ -7935,11 +7370,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				8B7148992EFACA150099703B /* Base */,
-				8B71489A2EFACA150099703B /* bg */,
-				8B71489B2EFACA150099703B /* en */,
-				8B71489C2EFACA150099703B /* kk */,
-				8B71489D2EFACA150099703B /* uz */,
-				8BA57FB32EFAF23700B63297 /* ar */,
 			);
 			name = AddressesListEmptyStateCell.xib;
 			sourceTree = "<group>";
@@ -7947,12 +7377,7 @@
 		8BC048B82DD639B100F345C6 /* AddressOrderModalViewContent.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8BC048B32DD639B100F345C6 /* CallKitModalViewContent.xib */,
-				8BC048B42DD639B100F345C6 /* CallKitModalViewContent.strings */,
-				8BC048B52DD639B100F345C6 /* CallKitModalViewContent.strings */,
-				8BC048B62DD639B100F345C6 /* CallKitModalViewContent.strings */,
-				8BC048B72DD639B100F345C6 /* CallKitModalViewContent.strings */,
-				8BA57F992EFAF22600B63297 /* ar */,
+				8BC048B32DD639B100F345C6 /* Base */,
 			);
 			name = AddressOrderModalViewContent.xib;
 			sourceTree = "<group>";

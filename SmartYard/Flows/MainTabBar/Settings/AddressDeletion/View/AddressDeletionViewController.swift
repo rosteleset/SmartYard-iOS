@@ -26,7 +26,10 @@ final class AddressDeletionViewController: BaseViewController {
     
     @IBOutlet private weak var deleteButton: BlueButton!
     @IBOutlet private weak var cancelButton: UIButton!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var terminateContractLabel: UILabel!
+    @IBOutlet private weak var otherLabel: UILabel!
+    @IBOutlet private weak var warningLabel: UILabel!
     private let viewModel: AddressDeletionViewModel
     
     init(viewModel: AddressDeletionViewModel) {
@@ -41,7 +44,7 @@ final class AddressDeletionViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         configureRxKeyboard()
         bind()
     }
@@ -93,9 +96,15 @@ final class AddressDeletionViewController: BaseViewController {
         _ = viewModel.transform(input)
     }
     
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.AddressDeletion.pleaseStateTheReason
+        terminateContractLabel.text = L10n.Settings.AddressDeletion.terminateContractOption
+        otherLabel.text = L10n.Settings.AddressDeletion.other
+        warningLabel.text = L10n.Settings.AddressDeletion.warningMessage
+        deleteButton.setTitle(L10n.Common.delete, for: .normal)
+        cancelButton.setTitle(L10n.Common.cancel, for: .normal)
         let attrString = NSAttributedString(
-            string: NSLocalizedString("Specify a reason", comment: ""),
+            string: L10n.Settings.AddressDeletion.Reason.placeholder,
             attributes: [
                 .font: UIFont.SourceSansPro.regular(size: 14),
                 .foregroundColor: UIColor.SmartYard.gray.withAlphaComponent(0.4) as Any

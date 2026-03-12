@@ -17,7 +17,7 @@ final class ServiceIsActivatedViewController: BaseViewController, LoaderPresenta
     @IBOutlet private weak var closeButton: CircleIconControl!
     @IBOutlet private weak var changePlanButton: BlueButton!
     @IBOutlet private weak var backgroundView: UIView!
-    
+    @IBOutlet private weak var changePlanHintLabel: UILabel!
     private let viewModel: ServiceIsActivatedViewModel
     
     var loader: JGProgressHUD?
@@ -34,11 +34,14 @@ final class ServiceIsActivatedViewController: BaseViewController, LoaderPresenta
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Services.Status.Activated.serviceActivated
+        changePlanHintLabel.text = L10n.Services.Status.Activated.changePlanHint
+        changePlanButton.setTitle(L10n.Services.Status.Activated.changePlanButton, for: .normal)
         closeButton.style = .Close.blue
     }
     
@@ -63,7 +66,7 @@ final class ServiceIsActivatedViewController: BaseViewController, LoaderPresenta
             .drive(
                 onNext: { [weak self] service in
                     let text = String.localizedStringWithFormat(
-                        NSLocalizedString("Service \"%@\" is connected", comment: ""),
+                        L10n.Services.Status.Activated.titleFormat,
                         "\(service.localizedTitle)"
                     )
                     self?.titleLabel.text = text
@@ -78,7 +81,7 @@ final class ServiceIsActivatedViewController: BaseViewController, LoaderPresenta
                     if isLoading {
                         self?.view.endEditing(true)
                     }
-                    let text = NSLocalizedString("Create a request", comment: "")
+                    let text = L10n.Services.Request.createButton
                     self?.updateLoader(isEnabled: isLoading, detailText: text)
                 }
             )

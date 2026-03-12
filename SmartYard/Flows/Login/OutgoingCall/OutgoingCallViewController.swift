@@ -26,6 +26,8 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     
     // swiftlint:disable all
     @IBOutlet weak var makeCallButton: BlueButton!
+    @IBOutlet private weak var callPrefixLabel: UILabel!
+    @IBOutlet private weak var callSuffixLabel: UILabel!
     // swiftlint:enable all
 
     private let copyPhoneNumberTapGesture = UITapGestureRecognizer()
@@ -48,10 +50,16 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         
         bind()
-        configureView()
+        configureUI()
     }
     
-    private func configureView() {
+    private func configureUI() {
+        hintInputPhoneLabel.text = L10n.Auth.CallVerification.confirmPhoneTitle
+        fixPhoneNumberButton.setTitle(L10n.Auth.CallVerification.editPhoneButton, for: .normal)
+        makeCallButton.setTitle(L10n.Auth.CallVerification.callButton, for: .normal)
+        callPrefixLabel.text = L10n.Auth.CallVerification.callInstructionPrefix
+        messageLabel.text = L10n.Auth.CallVerification.phoneNumberPlaceholder
+        callSuffixLabel.text = L10n.Auth.CallVerification.callInstructionSuffix
         makeCallButton.isHidden = false
         numberPhoneLabel.isUserInteractionEnabled = true
 
@@ -70,7 +78,7 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
         output.phoneNumber
             .drive(with: self) { owner, phoneNumber in
                 let text = String.localizedStringWithFormat(
-                    NSLocalizedString("We need to make sure\nthat the number +%@ is really yours.", comment: ""),
+                    L10n.Auth.CallVerification.confirmPhoneTitleFormat,
                     "\(AccessService.shared.phonePrefix)\(phoneNumber)"
                 )
                 owner.hintInputPhoneLabel.text = text

@@ -52,7 +52,7 @@ final class SettingsViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         configureCollectionView()
         bind()
     }
@@ -242,11 +242,11 @@ final class SettingsViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    private func configureView() {
+    private func configureUI() {
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
 
-        headerView.setText(NSLocalizedString("Addresses settings", comment: ""))
+        headerView.setText(L10n.Settings.Main.Addresses.title)
     }
     
     private func configureCollectionView() {

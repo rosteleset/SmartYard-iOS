@@ -64,6 +64,7 @@
             <size key="customSize" width="399" height="295"/>
             <connections>
                 <outlet property="subtitleLabel" destination="iZ7-hx-jin" id="tpU-ac-18r"/>
+                <outlet property="titleLabel" destination="E5D-C5-3Lf" id="IN7-oa-vT9"/>
             </connections>
             <point key="canvasLocation" x="32.608695652173914" y="165.06696428571428"/>
         </collectionViewCell>

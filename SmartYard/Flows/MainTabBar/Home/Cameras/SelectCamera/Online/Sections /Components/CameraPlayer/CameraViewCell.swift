@@ -17,7 +17,7 @@ final class CameraViewCell: UICollectionViewCell, PlayerAttachable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        configureUI()
     }
 
     required init?(coder: NSCoder) {
@@ -30,7 +30,7 @@ final class CameraViewCell: UICollectionViewCell, PlayerAttachable {
 }
 
 private extension CameraViewCell {
-    func setupUI() {
+    func configureUI() {
         backgroundColor = .clear
         contentView.backgroundColor = .black
         contentView.layer.cornerRadius = 12

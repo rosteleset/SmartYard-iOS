@@ -128,7 +128,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
         output.address
             .drive(onNext: { [weak self] address in
                 self?.headerView.setText(
-                    NSLocalizedString("Select camera", comment: ""),
+                    L10n.Camera.Selection.title,
                     subtitle: address ?? ""
                 )
             })

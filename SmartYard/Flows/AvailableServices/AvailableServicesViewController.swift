@@ -37,7 +37,7 @@ final class AvailableServicesViewController: BaseViewController, LoaderPresentab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
+        configureUI()
         bind()
     }
     
@@ -59,7 +59,7 @@ final class AvailableServicesViewController: BaseViewController, LoaderPresentab
             .drive(
                 onNext: { [weak self] address in
                     self?.headerView.setText(
-                        NSLocalizedString("Available services", comment: ""),
+                        L10n.Services.Available.title,
                         subtitle: address ?? ""
                     )
                 }
@@ -72,7 +72,7 @@ final class AvailableServicesViewController: BaseViewController, LoaderPresentab
                 onNext: { [weak self] isLoading in
                     self?.updateLoader(
                         isEnabled: isLoading,
-                        detailText: NSLocalizedString("Creating a task", comment: "")
+                        detailText: L10n.Services.Available.loadingTitle
                     )
                 }
             )
@@ -87,7 +87,8 @@ final class AvailableServicesViewController: BaseViewController, LoaderPresentab
             .disposed(by: disposeBag)
     }
     
-    private func configureTableView() {
+    private func configureUI() {
+        nextButton.setTitle(L10n.Common.next, for: .normal)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(nibWithCellClass: AvailableServiceCell.self)

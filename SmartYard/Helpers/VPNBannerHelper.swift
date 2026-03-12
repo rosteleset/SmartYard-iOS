@@ -15,7 +15,7 @@ enum VPNBannerHelper {
         guard VPNDetector.isVPNActive, !hasShownThisSession else { return }
 
         StatusBarNotificationBanner(
-            title: NSLocalizedString("VPN detected. The application may work unstable.", comment: ""),
+            title: L10n.Network.VPN.detectedWarning,
             style: .danger,
             colors: SmartYardBannerColors()
         ).show()

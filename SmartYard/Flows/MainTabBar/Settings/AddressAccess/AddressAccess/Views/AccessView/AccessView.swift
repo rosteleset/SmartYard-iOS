@@ -138,14 +138,14 @@ extension AccessView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteButton = UITableViewRowAction(
             style: .default,
-            title: NSLocalizedString("Delete", comment: "")
+            title: L10n.Common.delete
         ) { [weak self] _, indexPath in
             self?.deletePressedSubject.onNext(indexPath.row)
             return
         }
         
         deleteButton.backgroundColor = UIColor.SmartYard.incorrectDataRed
-        deleteButton.title = NSLocalizedString("Delete", comment: "")
+        deleteButton.title = L10n.Common.delete
         
         return [deleteButton]
     }

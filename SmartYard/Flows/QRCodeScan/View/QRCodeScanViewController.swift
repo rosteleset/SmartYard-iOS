@@ -18,7 +18,7 @@ final class QRCodeScanViewController: BaseViewController {
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var flashButton: UIButton!
     @IBOutlet private weak var scanningArea: UIView!
-    
+    @IBOutlet private weak var qrCodeHintLabel: UILabel!
     private let viewModel: QRCodeScanViewModel
     
     private let cameraFailureTrigger = PublishSubject<Void>()
@@ -42,7 +42,7 @@ final class QRCodeScanViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
-        configureView()
+        configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +66,8 @@ final class QRCodeScanViewController: BaseViewController {
         frameLayer?.frame = view.bounds
     }
     
-    private func configureView() {
+    private func configureUI() {
+        qrCodeHintLabel.text = L10n.Address.QRScan.pointYourCameraAtTheQrCode
         guard configureCaptureSession() else {
             cameraFailureTrigger.onNext(())
             return

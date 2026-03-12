@@ -27,12 +27,13 @@ final class ModalViewController: BaseViewController {
     
     @IBOutlet private weak var cancelButton: CircleIconControl!
     @IBOutlet private weak var containerView: UIView!
-    
+    private let content: ModalContent
     private let contentView: UIView
     
     init (dismissCallback: (@escaping () -> Void), content: ModalContent) {
         
         let nib = Bundle.main.loadNibNamed(content.rawValue, owner: nil, options: nil)
+        self.content = content
         self.contentView = nib?.first as? UIView ?? UIView()
         let dismissGesture = UITapGestureRecognizer()
         super.init(nibName: nil, bundle: nil)
@@ -60,5 +61,97 @@ final class ModalViewController: BaseViewController {
         cancelButton.style = .Close.blue
         self.containerView.addSubview(self.contentView)
         contentView.alignToView(containerView)
+    }
+}
+
+final class AddressOrderModalViewContent: UIView {
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var resetHintLabel: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.Common.AddressOrder.title
+        descriptionLabel.text = L10n.Settings.Common.AddressOrder.description
+        resetHintLabel.text = L10n.Settings.Common.AddressOrder.resetHint
+    }
+}
+
+final class CallKitModalViewContent: UIView {
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.Common.CallKitInfo.title
+        descriptionLabel.text = L10n.Settings.Common.CallKitInfo.description
+    }
+}
+
+final class VideoEventModalViewContent: UIView {
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var gesturesTitleLabel: UILabel!
+    @IBOutlet private weak var swipeHintLabel: UILabel!
+    @IBOutlet private weak var rewindHintLabel: UILabel!
+    @IBOutlet private weak var forwardHintLabel: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.History.VideoEventInfo.title
+        descriptionLabel.text = L10n.History.VideoEventInfo.description
+        gesturesTitleLabel.text = L10n.History.VideoEventInfo.gesturesTitle
+        swipeHintLabel.text = L10n.History.VideoEventInfo.swipeGestureHint
+        rewindHintLabel.text = L10n.History.VideoEventInfo.rewindGestureHint
+        forwardHintLabel.text = L10n.History.VideoEventInfo.forwardGestureHint
+    }
+}
+
+final class WaitingGuestModalViewContent: UIView {
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var messageLabel: UILabel!
+    @IBOutlet private weak var validityLabel: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.AddressAccess.WaitingGuestInfo.title
+        messageLabel.text = L10n.Settings.AddressAccess.WaitingGuestInfo.message
+        validityLabel.text = L10n.Settings.AddressAccess.WaitingGuestInfo.validity
+    }
+}
+
+final class WhiteRabbitModalViewContent: UIView {
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var validityHintLabel: UILabel!
+    @IBOutlet private weak var stepsTitleLabel: UILabel!
+    @IBOutlet private weak var stepOneLabel: UILabel!
+    @IBOutlet private weak var stepTwoLabel: UILabel!
+    @IBOutlet private weak var stepThreeLabel: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.Address.WhiteRabbitInfo.title
+        descriptionLabel.text = L10n.Settings.Address.WhiteRabbitInfo.description
+        validityHintLabel.text = L10n.Settings.Address.WhiteRabbitInfo.validityHint
+        stepsTitleLabel.text = L10n.Settings.Address.WhiteRabbitInfo.stepsTitle
+        stepOneLabel.text = L10n.Settings.Address.WhiteRabbitInfo.step1
+        stepTwoLabel.text = L10n.Settings.Address.WhiteRabbitInfo.step2
+        stepThreeLabel.text = L10n.Settings.Address.WhiteRabbitInfo.step3
     }
 }

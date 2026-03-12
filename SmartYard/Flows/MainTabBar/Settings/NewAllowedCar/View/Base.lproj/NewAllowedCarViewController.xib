@@ -25,6 +25,8 @@
                 <outlet property="backgroundView" destination="t6t-mh-46c" id="fdG-6k-XnM"/>
                 <outlet property="textField" destination="NgQ-I8-VyB" id="a3P-df-VkX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="Dfi-LL-a4L" id="Cd6-ZA-FDC"/>
+                <outlet property="carNumberHintLabel" destination="78M-RE-ZaJ" id="A46-nC-Ne0"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

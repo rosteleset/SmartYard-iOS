@@ -38,10 +38,10 @@ final class InputPhoneNumberViewModel: BaseViewModel {
                     
                     switch nsError.code {
                     case 429:
-                        let message = NSLocalizedString("You are requesting a code too often. Please try again later", comment: "")
+                        let message = L10n.Auth.CodeRateLimit.message
                         self?.router.trigger(
                             .alert(
-                                title: NSLocalizedString("Error", comment: ""),
+                                title: L10n.Common.error,
                                 message: message
                             )
                         )
@@ -49,7 +49,7 @@ final class InputPhoneNumberViewModel: BaseViewModel {
                     default:
                         self?.router.trigger(
                             .alert(
-                                title: NSLocalizedString("Error", comment: ""),
+                                title: L10n.Common.error,
                                 message: error.localizedDescription
                             )
                         )
@@ -110,8 +110,8 @@ final class InputPhoneNumberViewModel: BaseViewModel {
                     case .outgoingCall(let confirmNumbers):
                         guard let confirmNumber = confirmNumbers.first else {
                             self.router.trigger(.alert(
-                                title: NSLocalizedString("Error", comment: ""),
-                                message: NSLocalizedString("Missing confirmation number", comment: "")
+                                title: L10n.Common.error,
+                                message: L10n.Auth.PhoneEntry.Error.confirmationNumberMissing
                             ))
                             return
                         }

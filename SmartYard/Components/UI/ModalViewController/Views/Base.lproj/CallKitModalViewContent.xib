@@ -49,6 +49,10 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="127.48091603053435" y="-15.492957746478874"/>
+            <connections>
+                <outlet property="titleLabel" destination="EOV-NL-76Y" id="ITZ-M5-jtg"/>
+                <outlet property="descriptionLabel" destination="B9b-OK-jJU" id="Ue5-2R-vEJ"/>
+            </connections>
         </view>
     </objects>
     <resources>

@@ -24,6 +24,7 @@ final class ServiceFromOfficeView: PMNibLinkableView {
 
     @IBOutlet fileprivate weak var doSoButton: BlueButton!
     @IBOutlet private weak var containerView: UIView!
+    @IBOutlet private weak var instructionsLabel: UILabel!
     private var shownAnnotation: ViewAnnotation?
     private var mapView: MapView!
     
@@ -31,10 +32,12 @@ final class ServiceFromOfficeView: PMNibLinkableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureMapBox()
+        configureUI()
     }
     
-    fileprivate func configureMapBox() {
+    fileprivate func configureUI() {
+        instructionsLabel.text = L10n.Address.Confirmation.Office.instructions
+        doSoButton.setTitle(L10n.Address.Confirmation.Office.iLlDoSoButton, for: .normal)
         let cameraOptions = CameraOptions(
             center: Constants.defaultMapCenterCoordinates,
             zoom: 8,

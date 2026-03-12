@@ -316,10 +316,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
                 break
             default:
                 self.trigger(.alert(
-                    title: NSLocalizedString(
-                        "First, log in to the application, and then try to add the address again",
-                        comment: ""
-                    ),
+                    title: L10n.Address.QRCode.loginRequiredMessage,
                     message: nil
                 ))
                 return .none()
@@ -427,7 +424,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         
         providerProxy.reportIncomingCall(
             uuid: uuid,
-            handle: NSLocalizedString("Incoming call", comment: ""),
+            handle: L10n.Intercom.Incoming.notificationTitle,
             hasVideo: true,
             completion: callKitCompletion
         )
@@ -709,8 +706,8 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         }
 
         alertService.showDialog(
-            title: NSLocalizedString("offline.alert.no_connection_title", comment: ""),
-            message: NSLocalizedString("offline.message.connection_lost", comment: ""),
+            title: L10n.Offline.Alert.noConnectionTitle,
+            message: L10n.Offline.Message.connectionLost,
             preferredStyle: .alert,
             actions: [okAction],
             priority: 1000
@@ -727,13 +724,13 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             trigger(.dismissOffline)
         }
         let cancelAction = UIAlertAction(
-            title: NSLocalizedString("Cancel", comment: ""),
+            title: L10n.Common.cancel,
             style: .destructive
         )
 
         alertService.showDialog(
-            title: NSLocalizedString("offline.message.connection_restored", comment: ""),
-            message: NSLocalizedString("offline.alert.switch_mode", comment: ""),
+            title: L10n.Offline.Message.connectionRestored,
+            message: L10n.Offline.Alert.switchMode,
             preferredStyle: .alert,
             actions: [okAction, cancelAction],
             priority: 1000

@@ -1,9 +1,0 @@
-
-/* Class = "UILabel"; text = "Данная функция позволяет вашим гостям открывать домофон без вашего участия: на вызывной панели достаточно набрать номер вашей квартиры и калитка или дверь подъезда сразу откроется."; ObjectID = "NwP-ob-Rnk"; */
-"NwP-ob-Rnk.text" = "This feature allows your guests to open the intercom without your involvement: it’s enough to dial your apartment number on the call panel, and the gate or entrance door will open immediately.";
-
-/* Class = "UILabel"; text = "Гостевой доступ  на час"; ObjectID = "gJJ-d5-8aF"; */
-"gJJ-d5-8aF.text" = "Guest access for one hour";
-
-/* Class = "UILabel"; text = "Время действия - один час с момента включения."; ObjectID = "ahP-hS-7Ud"; */
-"ahP-hS-7Ud.text" = "Valid for one hour from activation.";

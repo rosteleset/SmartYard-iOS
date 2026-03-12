@@ -32,21 +32,21 @@ final class SupportCallActionsPresenter: SupportCallActionsPresenting {
 
         alert.addAction(
             UIAlertAction(
-                title: NSLocalizedString("Request a call back", comment: ""),
+                title: L10n.Support.Callback.requestButton,
                 style: .default,
                 handler: { _ in onAction(.requestCallback) }
             )
         )
         alert.addAction(
             UIAlertAction(
-                title: NSLocalizedString("Make a phone call", comment: ""),
+                title: L10n.Support.Call.phoneAction,
                 style: .default,
                 handler: { _ in onAction(.phoneCall) }
             )
         )
         alert.addAction(
             UIAlertAction(
-                title: NSLocalizedString("Cancel", comment: ""),
+                title: L10n.Common.cancel,
                 style: .cancel
             )
         )

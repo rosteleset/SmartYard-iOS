@@ -17,6 +17,9 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var facesCollectionView: UICollectionView!
     @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var registeredFacesLabel: UILabel!
+    @IBOutlet private weak var registrationHintLabel: UILabel!
     private let viewModel: FacesSettingsViewModel
     
     var loader: JGProgressHUD?
@@ -39,7 +42,7 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     
@@ -48,7 +51,10 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
         
        }
     
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.Faces.faceRegistration
+        registeredFacesLabel.text = L10n.Settings.Faces.registeredFaces
+        registrationHintLabel.text = L10n.Settings.Faces.registrationHint
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
         

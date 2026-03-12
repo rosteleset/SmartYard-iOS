@@ -31,6 +31,7 @@
                 <outlet property="skeletonViewTopConstraint" destination="P1s-N4-PId" id="uPG-8j-Z1z"/>
                 <outlet property="stackViewTopConstraint" destination="udz-p8-7J4" id="dUs-Gy-WjH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="64e-yd-Rd4" id="ant-hX-OtI"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

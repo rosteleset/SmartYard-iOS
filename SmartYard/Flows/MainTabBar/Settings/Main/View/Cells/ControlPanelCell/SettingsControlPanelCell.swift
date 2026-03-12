@@ -21,7 +21,7 @@ final class SettingsControlPanelCell: CustomBorderCollectionViewCell, HasDispose
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        configureButtons()
+        configureUI()
     }
     
     override func prepareForReuse() {
@@ -67,7 +67,7 @@ final class SettingsControlPanelCell: CustomBorderCollectionViewCell, HasDispose
         eyeButton.isEnabled = serviceStates[.cctv] != nil
     }
     
-    private func configureButtons() {
+    private func configureUI() {
         wifiButton.configureSelectableButton(
             imageForNormal: SettingsServiceType.internet.unselectedIcon,
             imageForSelected: SettingsServiceType.internet.selectedIcon

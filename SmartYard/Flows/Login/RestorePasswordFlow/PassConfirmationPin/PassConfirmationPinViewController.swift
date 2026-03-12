@@ -25,7 +25,7 @@ final class PassConfirmationPinViewController: BaseViewController, LoaderPresent
     // swiftlint:enable all
     
     @IBOutlet private weak var sendCodeAgainGroupViewBottomConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var resendHintLabel: UILabel!
     var timer: Timer?
     var timeEnd: Date?
     
@@ -47,7 +47,7 @@ final class PassConfirmationPinViewController: BaseViewController, LoaderPresent
         super.viewDidLoad()
         
         bind()
-        configureView()
+        configureUI()
         configureRxKeyboard()
     }
     
@@ -63,7 +63,11 @@ final class PassConfirmationPinViewController: BaseViewController, LoaderPresent
         view.isUserInteractionEnabled = true
     }
     
-    private func configureView() {
+    private func configureUI() {
+        titleMessageLabel.text = L10n.Auth.PasswordRecovery.Code.sentToPhoneTitle
+        resendHintLabel.text = L10n.Auth.PasswordRecovery.Code.resendHint
+        timerLabel.text = L10n.Auth.PasswordRecovery.Code.timerValue
+        sendCodeAgainButton.setTitle(L10n.Auth.PasswordRecovery.Code.resendButton, for: .normal)
         pinTextField.reset()
         sendCodeAgainMessageView.isHidden = false
         sendCodeAgainButton.isHidden = true

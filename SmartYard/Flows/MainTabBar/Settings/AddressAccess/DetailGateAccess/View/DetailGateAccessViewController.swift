@@ -26,7 +26,7 @@ final class DetailGateAccessViewController: BaseViewController, UIScrollViewDele
     @IBOutlet private weak var stackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var collectionViewHeightConstant: NSLayoutConstraint!
     @IBOutlet private weak var skeletonViewTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
     // MARK: - Properties
     
     private let addButtonTappedRelay = PublishRelay<Void>()
@@ -52,7 +52,7 @@ final class DetailGateAccessViewController: BaseViewController, UIScrollViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         configureCollectionView()
         bind()
     }
@@ -159,10 +159,12 @@ final class DetailGateAccessViewController: BaseViewController, UIScrollViewDele
 
 extension DetailGateAccessViewController {
 
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.AddressAccess.GateDetails.title
+        addressLabel.text = L10n.Settings.AddressAccess.GateDetails.addressPlaceholder
         segmentControl.titles = [
-            NSLocalizedString("By car number", comment: ""),
-            NSLocalizedString("By phone number", comment: "")
+            L10n.Settings.AddressAccess.GateDetails.carFilter,
+            L10n.Settings.AddressAccess.GateDetails.phoneFilter
         ]
         
         scrollView.isHidden = true

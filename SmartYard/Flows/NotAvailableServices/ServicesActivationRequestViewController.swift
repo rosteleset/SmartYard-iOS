@@ -16,7 +16,8 @@ final class ServicesActivationRequestViewController: BaseViewController, LoaderP
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var sendRequestButton: BlueButton!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    
+    @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
     private let viewModel: ServicesActivationRequestViewModel
     private let itemsProxy = BehaviorSubject<[ServiceModel]>(value: [])
     
@@ -41,7 +42,7 @@ final class ServicesActivationRequestViewController: BaseViewController, LoaderP
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureTableView()
+        configureUI()
         fakeNavBar.configureBlueNavBar()
         bind()
     }
@@ -86,7 +87,10 @@ final class ServicesActivationRequestViewController: BaseViewController, LoaderP
             .disposed(by: disposeBag)
     }
     
-    private func configureTableView() {
+    private func configureUI() {
+        subtitleLabel.text = L10n.Services.ActivationRequest.subtitle
+        sendRequestButton.setTitle(L10n.Services.ActivationRequest.requestButton, for: .normal)
+        titleLabel.text = L10n.Services.ActivationRequest.oops
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(nibWithCellClass: ServicesActivationRequestСell.self)

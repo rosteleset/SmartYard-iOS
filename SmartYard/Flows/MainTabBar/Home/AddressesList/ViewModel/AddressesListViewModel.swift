@@ -88,14 +88,11 @@ final class AddressesListViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] error in
                     if (error as NSError) == NSError.PermissionError.noCameraPermission {
-                        let msg = NSLocalizedString(
-                            "To use this feature, go to settings and grant access to the camera",
-                            comment: ""
-                        )
+                        let msg = L10n.Permissions.Camera.message
                         
                         self?.router.trigger(
                             .appSettings(
-                            title: NSLocalizedString("Can't access camera", comment: ""),
+                            title: L10n.Permissions.Camera.title,
                             message: msg
                             )
                         )
@@ -104,7 +101,7 @@ final class AddressesListViewModel: BaseViewModel {
                     }
                     
                     self?.alertService.showAlert(
-                        title: NSLocalizedString("Error", comment: ""),
+                        title: L10n.Common.error,
                         message: error.localizedDescription,
                         priority: 250
                     )
@@ -775,9 +772,9 @@ extension AddressesListViewModel {
             break
             
         case .upgrade:
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
+            let cancelAction = UIAlertAction(title: L10n.Common.cancel, style: .cancel)
             
-            let updateAction = UIAlertAction(title: NSLocalizedString("Update", comment: ""), style: .default) { _ in
+            let updateAction = UIAlertAction(title: L10n.App.Update.action, style: .default) { _ in
                 guard let url = URL(string: Constants.appstoreUrl) else {
                     return
                 }
@@ -786,14 +783,14 @@ extension AddressesListViewModel {
             }
             
             alertService.showDialog(
-                title: NSLocalizedString("A new version of the application is available", comment: ""),
+                title: L10n.App.Update.availableTitle,
                 message: nil,
                 actions: [cancelAction, updateAction],
                 priority: 5000
             )
             
         case .forceUpgrade:
-            let updateAction = UIAlertAction(title: NSLocalizedString("Update", comment: ""), style: .default) { _ in
+            let updateAction = UIAlertAction(title: L10n.App.Update.action, style: .default) { _ in
                 guard let url = URL(string: Constants.appstoreUrl) else {
                     return
                 }
@@ -802,8 +799,8 @@ extension AddressesListViewModel {
             }
             
             alertService.showDialog(
-                title: NSLocalizedString("App version out of date", comment: ""),
-                message: NSLocalizedString("To continue using the app, please update it", comment: ""),
+                title: L10n.App.Update.requiredTitle,
+                message: L10n.App.Update.requiredMessage,
                 actions: [updateAction],
                 priority: 5000
             )

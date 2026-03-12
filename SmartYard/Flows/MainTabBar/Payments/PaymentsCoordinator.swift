@@ -54,8 +54,8 @@ final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute>, HasDispos
                 super.init(initialRoute: .webView(url: url))
             } else {
                 super.init(initialRoute: .alert(
-                    title: NSLocalizedString("Error", comment: ""),
-                    message: NSLocalizedString("Unable to open payment page.", comment: "")
+                    title: L10n.Common.error,
+                    message: L10n.Payments.Error.unableToOpenPage
                 ))
             }
         }

@@ -19,7 +19,8 @@ final class NewAllowedCarViewController: BaseViewController {
     @IBOutlet weak var textField: SmartYardLicensePlateTextField!
     // swiftlint:enable all
     @IBOutlet private weak var backgroundView: UIView!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var carNumberHintLabel: UILabel!
     private let viewModel: NewAllowedCarViewModel
     
     init(viewModel: NewAllowedCarViewModel) {
@@ -32,8 +33,15 @@ final class NewAllowedCarViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.ShareCar.shareAccess
+        textField.placeholder = L10n.Settings.ShareCar.platePlaceholder
+        carNumberHintLabel.text = L10n.Settings.ShareCar.subtitle
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         view.hideKeyboardWhenTapped = true
         bind()
     }

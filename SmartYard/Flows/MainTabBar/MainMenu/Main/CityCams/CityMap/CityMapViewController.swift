@@ -36,10 +36,10 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func configureView() {
-        fakeNavBar.setText(NSLocalizedString("Menu", comment: ""))
+    fileprivate func configureUI() {
+        fakeNavBar.setText(L10n.Tab.menu)
 
-        headerView.setText(NSLocalizedString("Public cams", comment: ""))
+        headerView.setText(L10n.Camera.City.publicCamerasTitle)
     }
     
     fileprivate func configureMapBox() {
@@ -67,7 +67,7 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         configureMapBox()
         bind()
     }

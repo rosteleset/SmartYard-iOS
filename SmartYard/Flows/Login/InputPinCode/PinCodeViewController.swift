@@ -28,6 +28,7 @@ final class PinCodeViewController: BaseViewController, LoaderPresentable {
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var sendCodeAgainLabelView: UIView!
     @IBOutlet weak var sendCodeAgainButton: BlueButton!
+    @IBOutlet private weak var resendHintLabel: UILabel!
     // swiftlint:enable all
 
     private let viewModel: PinCodeViewModel
@@ -54,7 +55,7 @@ final class PinCodeViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         
         bind()
-        configureView()
+        configureUI()
         configureRxKeyboard()
     }
     
@@ -70,7 +71,10 @@ final class PinCodeViewController: BaseViewController, LoaderPresentable {
         view.isUserInteractionEnabled = true
     }
     
-    private func configureView() {
+    private func configureUI() {
+        hintInputPhoneLabel.text = L10n.Auth.SMSCode.sentToPhoneTitle
+        resendHintLabel.text = L10n.Auth.SMSCode.resendHint
+        timerLabel.text = L10n.Auth.SMSCode.timerValue
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true
         sendCodeAgainButton.isHidden = false
@@ -136,13 +140,13 @@ final class PinCodeViewController: BaseViewController, LoaderPresentable {
                     guard let self = self else { return }
                     if self.useFlashCall {
                         let text = String.localizedStringWithFormat(
-                            NSLocalizedString("Enter the last 4 digits of the number\nfrom which the call will come to the number +%@", comment: ""),
+                            L10n.Auth.FlashCall.enterLastDigitsTitleFormat,
                             "\(AccessService.shared.phonePrefix)\(phoneNumber)"
                         )
                         self.hintInputPhoneLabel.text = text
                     } else {
                         let text = String.localizedStringWithFormat(
-                            NSLocalizedString("Enter the code from SMS\nsent to +%@", comment: ""), "\(AccessService.shared.phonePrefix)\(phoneNumber)"
+                            L10n.Auth.SMSCode.sentToPhoneTitleFormat, "\(AccessService.shared.phonePrefix)\(phoneNumber)"
                         )
                         self.hintInputPhoneLabel.text = text
                     }
@@ -182,4 +186,3 @@ final class PinCodeViewController: BaseViewController, LoaderPresentable {
     }
     
 }
-

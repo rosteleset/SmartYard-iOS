@@ -27,19 +27,19 @@ enum EventsFilter: Int, CaseIterable {
         switch self {
         
         case .all:
-            return NSLocalizedString("All", comment: "")
+            return L10n.Common.all
         case .domophones:
-            return NSLocalizedString("Intercom", comment: "")
+            return L10n.History.Filter.intercom
         case .keys:
-            return NSLocalizedString("Key", comment: "")
+            return L10n.History.Filter.key
         case .faces:
-            return NSLocalizedString("Face-ID", comment: "")
+            return L10n.History.Filter.faceID
         case .phoneCall:
-            return NSLocalizedString("Opening on call", comment: "")
+            return L10n.History.Filter.openingOnCall
         case .application:
-            return NSLocalizedString("Opening by app", comment: "")
+            return L10n.History.Filter.openingByApp
         case .code:
-            return NSLocalizedString("Opening by code", comment: "")
+            return L10n.History.Filter.openingByCode
         }
     }
     

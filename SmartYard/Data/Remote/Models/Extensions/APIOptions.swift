@@ -162,8 +162,8 @@ enum DeliveryTab: String, Codable, CaseIterable {
 
     var title: String {
         switch self {
-        case .courier: return NSLocalizedString("Via Courier", comment: "")
-        case .office:  return NSLocalizedString("In Office", comment: "")
+        case .courier: return L10n.Address.Confirmation.Delivery.courierShort
+        case .office:  return L10n.Address.Confirmation.Delivery.officeShort
         }
     }
 }

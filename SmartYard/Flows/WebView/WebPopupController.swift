@@ -57,7 +57,7 @@ final class WebPopupController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     
@@ -132,7 +132,7 @@ isAppInstalled = function(url, callbackFunc ) {
         }()
     }
     
-    private func configureView() {
+    private func configureUI() {
         configureSwipeAction()
         configureRxKeyboard()
         view.backgroundColor = .clear
@@ -511,7 +511,7 @@ extension WebPopupController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         let alert = UIAlertController(
-            title: NSLocalizedString("Error", comment: ""),
+            title: L10n.Common.error,
             message: error.localizedDescription,
             preferredStyle: .alert
         )

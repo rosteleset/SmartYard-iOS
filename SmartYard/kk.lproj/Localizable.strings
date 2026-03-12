@@ -5,259 +5,616 @@
   Created by Александр Васильев on 11.01.2023.
   Copyright © 2023 LanTa. All rights reserved.
 */
-"minutes" = "минут";
-"Open" = "Ашу";
-"Opened" = "Ашылған";
-"Cancel" = "Болдырмау";
-"Settings" = "Параметрлер";
-"Ignore" = "Елемеу";
-"Error" = "Қате";
-"Back" = "Артқа";
-"Smart intercom" = "Ақпаратты домофон";
-"Video surveillance" = "Бейне көзделу";
-"Internet" = "Интернет";
-"Cable TV" = "Теле";
-"Wired Phone" = "Телефон";
-"Mobile Phone" = "Мобильді телефон";
-"Creating a task" = "Тапсырма жасау";
-"No service selected" = "Қызмет таңдалмаған";
-"Via Courier" = "Курьер арқылы";
-"In Office" = "Офиста";
-"City" = "Қала";
-"Street" = "Көше";
-"Building" = "Үй";
-"Appartment" = "Келешек";
-"To use this feature, go to settings and grant access to the camera" = "Осы мүмкіндікті қолдану үшін параметрлерге өтіп, камераға кіруге рұқсат беріңіз";
-"Can't access camera" = "Камераге кіру мүмкін емес";
-"appartment" = "келешек";
-"Addresses" = "Мекен-жайлар";
-"Notifications" = "Хабарландырулар";
-"Chat" = "Сөйлеу";
-"Pay" = "Төлеу";
-"Menu" = "Мәзір";
-"First, log in to the application, and then try to add the address again" = "Алдымен, қосымшаға кіру үшін кіріңіз, содан кейін мекен-жайды қосуға ықпал етіңіз";
-"Incoming call" = "Келуші звонок";
-"Call a courier" = "Курьерге қоңырау шақыру";
-"I'll come to the office myself" = "Өзім офиске барамын";
-"To confirm the address, you need to bring a utility bill no older than three months to our nearest office." = "Мекенжайды растау үшін сіз қызмет қауіпсіздігінің үміті бір айдан алты айға дейін болуы керек";
-"Wait for the courier at {value} and take a photo of the QR code he brings." = "{value} мекенжайда курьерді күтіп, оның орнатқан QR-кодты суретке түсіріңіз";
-"Pickup" = "Қабылдау";
-"Courier" = "Курьер";
-"The delivery method has changed. The client will come to the office." = "Жеткізу әдісі өзгертілді. Клиент офиске келеді.";
-"The delivery method has changed. Prepare a package for the courier." = "Жеткізу әдісі өзгертілді. Курьер үшін пакетті дайындаңыз.";
-"To use this feature, go to settings and grant access to the camera" = "Осы мүмкіндікті қолдану үшін параметрлерге өтіп, камераға кіруге рұқсат беріңіз";
-"First Name" = "Аты";
-"Patronymic" = "Әкесінің аты";
-"Service not available yet" = "Қызмет %@ қазірда қол жетімді емес";
-"Creating a ticket" = "Тапсырма жасау";
-"Guest information has been successfully sent!" = "Қонақ ақпараты сәтті жіберілді!";
-"Yes" = "Ия";
-"Are you sure?" = "Сіз сенімдісіз бе?";
-"Do you want to remove access?" = "Қолжетімді жойғыңыз келе ме?";
-"Enable" = "Қосу";
-"Disable" = "Өшіру";
-"guestAccessAlertText" = "Домофонда сіздің келешекті дәрігер саныңызды терген барлық адамдар 60 минут ішінде автоматты түрде жақ
 
-тарды ашады. Бұл уақыт аяғында домофон бекітілген көзқарас режиміне кайтады.";
-"Enable guest access for an hour?" = "Бір сағаттық гостевой доступты қосу керек пе?";
-"Wrong number format" = "Дұрыс емес номер форматы";
-"Delete" = "Жою";
-"Service not connected" = "Қызмет %@ қосылмаған";
-"Everything's under control" = "Барлығы бастапқыда";
-"Smart yard" = "Ақпаратты аула";
-"Be aware of everything that happens near the house" = "Үй жағдайлары туралы барлығын біліңіз";
-"Manage services and pay for them via the app" = "Қызметтерді басқарып, оларды осы қолданбадан төлеңіз";
-"Control your intercom, gate or barrier from your smartphone" = "Смартфонға сіздің домофонды, шайырмалы немесе барьерді бақылаңыз";
-"I want to cancel my contract" = "Мен договорды болдырмақ қалаймын";
-"Customer didn't provide a reason" = "Мұрагер себеп бермеді";
-"Specify a reason" = "Себепті көрсетіңіз";
-"Exiting the application" = "Қолданбадан шығу";
-"Are you sure you want to log out of your account?" = "Сіз сөйлеміңіз келсе, сіз жеке кабинетіңізден шығу керек пе?";
-"Account deleting" = "Есептік жазбаны жою";
-"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Есептік жазбаңызды шынымен жойғыңыз келе ме? Бұрын қосылған барлық мекенжайлар жойылады";
-"Number of contract" = "Договор нөмері";
-"Address settings" = "Мекен-жай параметрлері";
-"Access setting" = "Кіруге рұқсат беру параметрлері";
-"Open web version of personal account" = "Жеке тіркеудің веб нұсқасын ашу";
-"Attention" = "Ескерту";
-"You have been authorized on another device" = "Сіз басқа құрылғыда рұқсат алдыңыз";
-"Call to intercom" = "Домофонға звонок";
-"Peephole" = "Шеруақ";
-"Peephole on" = "Шеруақ қосылған";
-"Connecting..." = "Байланыс...";
-"Decline" = "Өшіру";
-"Video" = "Бейне";
-"Conversation" = "Сөйлем";
-"Call completed" = "Қоңырау аяқталды";
-"There will be no outgoing audio on this call." = "Бұл қоңырауда шығарылатын аудио жоқ болады.";
-"To make it appear in your next calls, please grant access to the microphone in the settings" = "Келесі қоңырауларыңызда оны көрсету үшін, настройкаларда микрофонға доступ беріңіз";
-"No microphone access" = "Микрофонға қатынау жоқ";
-"We need to make sure that the number is indeed yours." = "Сан еңбекқорынан сенімді болуы керек.";
-"Confirmation code has been sent to your " = "Растау коды сіздің ";
-"Send recovery code to " = "Қалпына келтіру кодын ";
-"email" = "электронды пошта";
-"phone" = "телефон";
-"Failed to load provider list, please try again later." = "Қамтамасыз етіледі, жеке көрсетуді көріңіз.";
-"Contract number" = "Шарттың нөмірі";
-"Password" = "Құпия сөз";
-"Create" = "Жасау";
-"Create a request for restoration by contract number?" = "Шарт нөмірімен қалпына келтіру кодын жасаңыз ба?";
-"You are requesting a code too often. Please try again later" = "Сіз кодты тым көп сұрағансыз. Кейінірек қайталап көріңіз";
-"Missing confirmation number" = "Растау нөмірі жоқ";
-"Enter code from SMS sent to number" = "Телефон нөміріне жіберілген SMS-ден кодты енгізіңіз";
-"Invalid contract number entered" = "Жарамсыз шарт нөмірі енгізілді";
-"The password for the specified entry has been sent to the specified" = "Көрсетілген енгізу үшін құпия сөз көрсетілгенге жіберілді";
-"To use this feature, go to settings and grant access to the camera" = "Бұл функциядан пайдалану үшін параметрлерге өту және камераға рұқсат беріңіз";
-"Can't access camera" = "Камераге кіруге болмайды";
-"Update" = "Жаңарту";
-"A new version of the application is available" = "Қолданбаның жаңа нұсқасы қол жетімді";
-"App version out of date" = "Қолданбаның нұсқасы ескірді";
-"To continue using the app, please update it" = "Қолданбаны пайдалануды жалғастыру үшін, оны жаңартыңыз";
-"sec" = "сек";
-"Archive" = "Архив";
-"Online" = "Онлайн";
-"Select Appearance" = "Көріністі таңдаңыз";
-"Please choose your preferred appearance theme." = "Өзіңізге ыңғайлы тақырыпты таңдаңыз.";
-"System" = "Жүйелік";
-"Light" = "Жарық";
-"Dark" = "Қараңғы";
-"Thank you" = "Рахмет";
-"Video in progress" = "Видео жүргізілімдегі";
-"As soon as the process is over..." = "Процесс аяқталған соң...";
-"Link to video copied to clipboard" = "Видеоға сілтеме буферге көшірілді";
-"Video dated" = "Датаған видео";
-"Opening with a key" = "Кілтпен ашу";
-"Opening from the app" = "Қолданбадан ашу";
-"Opening with Face-ID" = "Face
+/* MARK: - ADDRESS */
+
+"address.confirmation.subtitle" = "Сізге ол қалай ыңғайлы?";
+"address.confirmation.title" = "Мекен-жай растау";
+
+"address.confirmation.courier.activationHint" = "Сіз моментальдықтан «Ақпаратты жүйесі» қолданбасының барлық функциясына қол жеткізесіз.";
+"address.confirmation.courier.envelopeHint" = "Аптадан ішкі айға жеткізуші сыртқы мүра";
+"address.confirmation.courier.hintFormat" = "{value} мекенжайда курьерді күтіп, оның орнатқан QR-кодты суретке түсіріңіз";
+"address.confirmation.courier.leaveARequest" = "Өтінім қалдырыңыз";
+"address.confirmation.courier.qrCodeHint" = "Ол құлақта болады";
+"address.confirmation.courier.requestButton" = "Супер! Өтінім қалдыру";
+"address.confirmation.courier.scanTheQrCode" = "QR-кодты сканерлеңіз";
+"address.confirmation.courier.use" = "Пайдаланыңыз!";
+
+"address.confirmation.delivery.courierChangeMessage" = "Жеткізу әдісі өзгертілді. Курьер үшін пакетті дайындаңыз.";
+"address.confirmation.delivery.courierOption" = "Курьерге қоңырау шақыру";
+"address.confirmation.delivery.courierShort" = "Курьер арқылы";
+"address.confirmation.delivery.courierTitle" = "Курьер";
+"address.confirmation.delivery.officeChangeMessage" = "Жеткізу әдісі өзгертілді. Клиент офиске келеді.";
+"address.confirmation.delivery.officeOption" = "Өзім офиске барамын";
+"address.confirmation.delivery.officeShort" = "Офиста";
+"address.confirmation.delivery.pickupTitle" = "Қабылдау";
+
+"address.confirmation.office.hint" = "Мекенжайды растау үшін сіз қызмет қауіпсіздігінің үміті бір айдан алты айға дейін болуы керек";
+"address.confirmation.office.iLlDoSoButton" = "Сонша жасарын";
+"address.confirmation.office.instructions" = "Бұл қонақтаңыздың ЖКХ шотымен бірге жақын болатын офисімізге барыңыз және біз кез-келгендікте ақпаратты домофон және бейне көру функциясын әкелеміз.";
+
+"address.entry.checkAvailableServicesButton" = "Доступтың бар қызметтерін тексеру";
+"address.entry.iHaveQrCodeButton" = "Менде QR-код бар";
+"address.entry.title" = "Мекенжайыңызды енгізіңіз";
+
+"address.form.apartment" = "Келешек";
+"address.form.apartmentValue" = "келешек";
+"address.form.building" = "Үй";
+"address.form.city" = "Қала";
+"address.form.street" = "Көше";
+
+"address.qrCode.loginRequiredMessage" = "Алдымен, қосымшаға кіру үшін кіріңіз, содан кейін мекен-жайды қосуға ықпал етіңіз";
+
+"address.qrScan.pointYourCameraAtTheQrCode" = "QR-кодға камераны ойнаңыз";
+
+/* MARK: - APP */
+
+"app.update.action" = "Жаңарту";
+"app.update.availableTitle" = "Қолданбаның жаңа нұсқасы қол жетімді";
+"app.update.requiredMessage" = "Қолданбаны пайдалануды жалғастыру үшін, оны жаңартыңыз";
+"app.update.requiredTitle" = "Қолданбаның нұсқасы ескірді";
+
+/* MARK: - AUTH */
+
+"auth.callVerification.callButton" = "Қоңырау шалу";
+"auth.callVerification.callInstructionPrefix" = "Телефон номеріне тегін қоңырау шалыңыз";
+"auth.callVerification.callInstructionSuffix" = "Біз сіздің нөміріңізді \nрастауға мүмкіндік беру үшін";
+"auth.callVerification.confirmPhoneTitle" = "Біз сіздің телефон нөміріңіздің \n+79025308094 дұрыс сізге тиесілі мінездіктігін тексеруіміз керек.";
+"auth.callVerification.confirmPhoneTitleFormat" = "Сіздің +%@ нөміріңіздің сенімін тексеруіміз керек.";
+"auth.callVerification.editPhoneButton" = "Телефон нөмірін түзету";
+"auth.callVerification.phoneNumberPlaceholder" = "+7 (1234) 12-34-56";
+
+"auth.codeRateLimit.message" = "Сіз кодты тым көп сұрағансыз. Кейінірек қайталап көріңіз";
+
+"auth.contractLogin.contractNumberPlaceholder" = "Шарттың нөмірі";
+"auth.contractLogin.createButton" = "Жасау";
+"auth.contractLogin.forgotCredentialsButton" = "Нәтіжесіз есті ештеңе естемін";
+"auth.contractLogin.forgotPasswordButton" = "Құпия сөзді естемін";
+"auth.contractLogin.hasOperatorAgreementTitle" = "Сізде оператормен келісім бар ма?";
+"auth.contractLogin.iDonTHaveAContractButton" = "Менде келісім жоқ";
+"auth.contractLogin.loginButton" = "Кіру";
+"auth.contractLogin.passwordPlaceholder" = "Құпия сөз";
+"auth.contractLogin.restoreByContractPrompt" = "Шарт нөмірімен қалпына келтіру кодын жасаңыз ба?";
+"auth.contractLogin.subtitle" = "Берілген мекенжайға байланыстырылған келісімнің нөмірін және күйгі парольді енгізіңіз және осы қосымшадан қызметтерді басқарыңыз.";
+
+"auth.flashCall.enterLastDigitsTitleFormat" = "Қоңыраудың келетін нөміріне жіберілетін соңғы 4 цифрді енгізіңіз\n%@ нөміріне.";
+
+"auth.passwordRecovery.chooseMethodButton" = "Қол жетімді әдістерді алу";
+"auth.passwordRecovery.codeSentMessage" = "Көрсетілген енгізу үшін құпия сөз көрсетілгенге жіберілді";
+"auth.passwordRecovery.contractPlaceholder" = "Договор нөмірі";
+"auth.passwordRecovery.restoreAccess" = "Кіруге мүмкіндікті калпақтандыру";
+"auth.passwordRecovery.sendCodeButton" = "Тастама кодын алу";
+"auth.passwordRecovery.subtitle" = "Өтінемін, договор нөміріңізді енгізіңіз және договорды тіркеу кезінде пайдаланған email немесе телефон нөмірін көрсетіңіз";
+
+"auth.passwordRecovery.code.resendButton" = "Кодты қайтадан жіберу";
+"auth.passwordRecovery.code.resendHint" = "Кодты қайтадан жіберу мүмкін";
+"auth.passwordRecovery.code.sentToPhoneTitle" = "Тастама коды +79025308094 телефон нөміріне жіберілді";
+"auth.passwordRecovery.code.timerValue" = "01:00";
+
+"auth.passwordRecovery.error.invalidContract" = "Жарамсыз шарт нөмірі енгізілді";
+
+"auth.passwordRecovery.method.email" = "электронды пошта";
+"auth.passwordRecovery.method.maskedContactPlaceholder" = "Кодты екіп алуға mi****@yandex.ru поштасына жіберу";
+"auth.passwordRecovery.method.phone" = "телефон";
+"auth.passwordRecovery.method.sendCodePrefix" = "Қалпына келтіру кодын ";
+"auth.passwordRecovery.method.titlePrefix" = "Растау коды сіздің ";
+
+"auth.phoneEntry.changeProviderButton" = "Ұсынысқа қайта оралу";
+"auth.phoneEntry.providerName" = "Провайдердің атауы";
+"auth.phoneEntry.title" = "Введите номер телефона  для регистрации";
+
+"auth.phoneEntry.error.confirmationNumberMissing" = "Растау нөмірі жоқ";
+
+"auth.providerSelection.chooseAProvider" = "Ұсынушыны таңдаңыз";
+"auth.providerSelection.searchPlaceholder" = " компанияның атауын енгізіңіз";
+"auth.providerSelection.subtitle" = "Қол жетімділік ұсынушысын тізімнен таңдаңыз немесе іздеуден пайдаланыңыз. ";
+
+"auth.providerSelection.error.loadFailed" = "Қамтамасыз етіледі, жеке көрсетуді көріңіз.";
+
+"auth.providerSelection.method.maskedContactPlaceholder" = "Қалпына келтіру кодын mi****@yandex.ru поштасына жіберу";
+
+"auth.smsCode.resendHint" = "Кодты қайтадан жіберу мүмкін";
+"auth.smsCode.sentToPhoneTitle" = "+79025308094 нөміріне жіберілген СМС-тен кодты енгізіңіз";
+"auth.smsCode.sentToPhoneTitleFormat" = "SMS-пен жіберілген кодты енгізіңіз\n%@ нөміріне.";
+"auth.smsCode.timerValue" = "01:00";
+
+"auth.userName.howCanICallYou" = "Сізге қалай шағым беруге болады?";
+
+/* MARK: - CAMERA */
+
+"camera.archive.title" = "Архив";
+
+"camera.archive.export.linkCopiedMessage" = "Видеоға сілтеме буферге көшірілді";
+"camera.archive.export.processingMessage" = "Процесс аяқталған соң...";
+"camera.archive.export.processingTitle" = "Видео жүргізілімдегі";
+"camera.archive.export.successTitle" = "Рахмет";
+
+"camera.archivePlayer.downloadAndGetLinkButton" = "Жүктеу және сілтеме алу";
+"camera.archivePlayer.halfSpeedButton" = "0.5x";
+"camera.archivePlayer.oneAndHalfSpeedButton" = "1.5x";
+"camera.archivePlayer.selectFragmentButton" = "Фрагментты таңдау";
+"camera.archivePlayer.videoDated" = "Датаған видео";
+
+"camera.city.incidentsTitle" = "Оқиғалар";
+"camera.city.mapTitle" = "Карта";
+"camera.city.publicCamerasTitle" = "Қоғамдық камералар";
+"camera.city.requestRecordButton" = "Жазбаға сұрау";
+
+"camera.city.detail.addressPlaceholder" = "г. Тамбов, ул. Советская, 16";
+"camera.city.detail.title" = "Камера ";
+
+"camera.online.title" = "Онлайн";
+
+"camera.recordRequest.commentPlaceholder" = "Пікір";
+"camera.recordRequest.dateLabel" = "Жазба күні";
+"camera.recordRequest.datePlaceholder" = "Жазбаның күні: 5.09.2020";
+"camera.recordRequest.durationHint" = "Сіз 1 сағаттан аспайтын үзіндіні сұрай аласыз. Біздің қызмет бейне жазбаларды 10 күннен артық сақтауға мүмкіндік бермейді, содан кейін бейнелер мұрағаттан қайтарымсыз жойылады.";
+"camera.recordRequest.durationLabel" = "Ұзақтығы";
+"camera.recordRequest.durationPlaceholder" = "Қолжетімділік: 10 мин";
+"camera.recordRequest.processingHint" = "Сұрау өңделу уақыты 1 жұмыс күніне дейін болуы мүмкін.";
+"camera.recordRequest.sendRequestButton" = "Отправить запрос";
+"camera.recordRequest.submittedMessage" = "24 сағат ішінде сізге хабарласамыз";
+"camera.recordRequest.timeHoursPlaceholder" = "Уақыт: чч";
+"camera.recordRequest.timeLabel" = "Уақыты";
+"camera.recordRequest.timeMinutesPlaceholder" = "Уақыт: мм";
+
+"camera.selection.title" = "Камераны таңдаңыз";
+
+/* MARK: - CHAT */
+
+"chat.error.unableToOpenPage" = "Сөйлем бетін ашу мүмкін емес.";
+
+/* MARK: - COMMON */
+
+"common.add" = "Қосу";
+"common.all" = "Барлық";
+"common.allow" = "Таныс";
+"common.back" = "Артқа";
+"common.cancel" = "Болдырмау";
+"common.delete" = "Жою";
+"common.deny" = "Бөгде";
+"common.disable" = "Өшіру";
+"common.done" = "Аяқталды";
+"common.enable" = "Қосу";
+"common.error" = "Қате";
+"common.ignore" = "Елемеу";
+"common.next" = "Келесі";
+"common.no" = "Жоқ";
+"common.ok" = "OK";
+"common.open" = "Ашу";
+"common.opened" = "Ашылған";
+"common.reset" = "Қалпына келтіру";
+"common.resetDone" = "Қалпына келтірілді";
+"common.save" = "Сақтау";
+"common.search" = "Іздеу";
+"common.settings" = "Параметрлер";
+"common.yes" = "Ия";
+
+"common.confirmation.title" = "Сіз сенімдісіз бе?";
+
+"common.time.hoursShort" = "сағ";
+"common.time.minutes" = "минут";
+"common.time.minutesShort" = "мин";
+"common.time.secondsShort" = "сек";
+
+"common.weekday.short.fri" = "жұм";
+"common.weekday.short.mon" = "дүй";
+"common.weekday.short.sat" = "сен";
+"common.weekday.short.sun" = "жек";
+"common.weekday.short.thu" = "бей";
+"common.weekday.short.tue" = "сей";
+"common.weekday.short.wed" = "сәр";
+
+/* MARK: - ERROR */
+
+"error.address.houseIdMissing" = "Үй идентификаторы табылмады. Сұрау орындала алмайды";
+
+"error.app.restoreStateFailed" = "Программа күйін жаңарту мүмкін емес";
+
+"error.auth.accessTokenMissing" = "Кіру белгісі табылмады. Сұрау орындала алмайды";
+"error.auth.clientIdMissing" = "Клиент идентификаторы табылмады. Сұрау орындала алмайды";
+"error.auth.contractNumberNotFound" = "Шарт нөмірі табылмады. Сұрау орындала алмайды";
+"error.auth.currentUserPhoneMissing" = "Ағымдағы пайдаланушының телефоны табылмады";
+"error.auth.userAlreadyLoggedIn" = "Пайдаланушы қазірдің аралығында";
+
+"error.camera.setupFailed" = "Камераны орнату мүмкін болмады";
+
+"error.common.unknown" = "Белгісіз қате";
+
+"error.internal.selfDestroyed" = "өзі езілген";
+
+"error.network.baseModelParsingFailed" = "Серверден келген жауапты негізгі модельдің қалыптасуы мүмкін емес";
+"error.network.dataFieldMappingFailed" = "Деректер өрісін карталандыруда қате пайда болды, немесе ол 204-тен басқа кодпен жоқ";
+"error.network.internetRequiredToChangeUser" = "Пайдаланушыны өзгерту үшін интернет байланысы қажет";
+"error.network.noConnection" = "Байланысты жоқ";
+
+"error.notifications.appDisabled" = "Программа параметрлерінде басқарма дағдылары өшірілді";
+"error.notifications.fcmTokenMissing" = "FCM белгісі жоқ";
+"error.notifications.instanceIdMissing" = "InstanceID іске қосылмаған";
+"error.notifications.systemDisabled" = "Система деңгейінде басқарма дағдылары өшірілді";
+
+"error.permissions.cameraDenied" = "Камераға қатынау жоқ";
+"error.permissions.contactsDenied" = "Контакттарға қатынау жоқ";
+
+"error.request.executionFailed" = "Сұрау орындалатын уақытта қате пайда болды: %@";
+
+/* MARK: - FACE RECOGNITION */
+
+"faceRecognition.addFace.addThisFace" = "Осы кісіді қосу керек пе?";
+
+"faceRecognition.deleteFace.deleteThisFace" = "Осы кісіді жою керек пе?";
+
+/* MARK: - HISTORY */
+
+"history.title" = "Оқиғалар журналы";
+
+"history.detail.emptyStateMessage" = "Журналда қажетті оқиғалар жоқ көрінеді.\n\nҚұрылымның қолданушысының оқиғалар журналын қосқанын тексеріңіз.\nСонан кіріңіз алдыңғы кілтімен шақырып, сіздің фотосыңызбен кем дегенде бір оқиға жүзеге асырылатындай системада 1 минут күтіңіз. \nСодан кейін бұл бөлімді қайтадан ашу қатарынан қайталайтыніз.\n\nPS: Естеріңізді осы бағдарламаның мәзірі арқылы келісіммен немесе телефон арқылы қолдау қызметі чатты немесе чатты немесе чатты кезеңдер арқылы кезеңдер арқылы жіберуге дайынмыз.";
+"history.detail.title" = "Оқиғалар";
+
+"history.event.answeredCall" = "Жауап берілген қоңырау";
+"history.event.gateOpeningByNumberplate" = "Номер плитасы бойынша қақпақтарды ашу";
+"history.event.gateOpeningOnCall" = "Қоңырауда шығу үшін шаруашы";
+"history.event.guestAllowedHint" = "Егер Сіз Рұқсат ету дегенді таңдасаңыз...";
+"history.event.guestDeniedHint" = "Егер Сіз Жоқ дегенді таңдасаңыз...";
+"history.event.imageMissing" = "Сурет жоқ";
+"history.event.missedCall" = "Қақты қоңырау";
+"history.event.openingFromApp" = "Қолданбадан ашу";
+"history.event.openingWithCode" = "Код пен ашу";
+"history.event.openingWithFaceID" = "Face
 
 -ID пен ашу";
-"Opening with code" = "Код пен ашу";
-"Gate opening on call" = "Қоңырауда шығу үшін шаруашы";
-"Gate opening by numberplate" = "Номер плитасы бойынша қақпақтарды ашу";
-"Unknown event" = "Белгісіз үздік";
-"Answered call" = "Жауап берілген қоңырау";
-"Missed call" = "Қақты қоңырау";
-"Image missing" = "Сурет жоқ";
-"If you select Deny..." = "Егер Сіз Жоқ дегенді таңдасаңыз...";
-"If you select Allow..." = "Егер Сіз Рұқсат ету дегенді таңдасаңыз...";
-"all" = "барлық";
-"All" = "Барлық";
-"Addresses" = "Мекенжайлар";
-"All apts" = "Барлық апартаменттер";
-"Appartment" = "Көлік";
-"Appartment, all" = "Көлік, барлық";
-"Events" = "Оқиғалар";
-"Intercom" = "Домофон";
-"Key" = "Кілт";
-"Face-ID" = "Face-ID";
-"Opening on call" = "Қоңырауда ашу";
-"Opening by app" = "Қолданбадан ашу";
-"Opening by code" = "Код бойынша ашу";
-"Unable to open chat page." = "Сөйлем бетін ашу мүмкін емес.";
-"Unable to open payment page." = "Төлем бетін ашу мүмкін емес.";
-"Deposit" = "Депозит";
-"Done" = "Аяқталды";
-"Your balance is topped up" = "Сіздің төлеміңіз толтырылды";
-"Payment has failed" = "Төлем қабылданған жоқ";
-"Recommended" = "Ұсынылған";
-"Note" = "Ескерту";
-"Request submitted" = "Сұрақ жіберілді";
-"We will call you shortly" = "Сізге қысқаша қоңырау шаламыз";
-"Request a call back" = "Қайта қоңырау жүргізу";
-"Make a phone call" = "Телефон алыңыз";
-"Map" = "Карта";
-"We need to make sure\nthat the number +%@ is really yours." = "Сіздің +%@ нөміріңіздің сенімін тексеруіміз керек.";
-"Enter the last 4 digits of the number\nfrom which the call will come to the number +%@" = "Қоңыраудың келетін нөміріне жіберілетін соңғы 4 цифрді енгізіңіз\n%@ нөміріне.";
-"Enter the code from SMS\nsent to +%@" = "SMS-пен жіберілген кодты енгізіңіз\n%@ нөміріне.";
-"Full name: %@\Phone: %@\Address entered by user: %@" = "Толық аты: %@\Телефон: %@\Пайдаланушы таратқан мекенжай: %@";
-"Contract number unknown" = "Шарт нөмірі белгісіз";
-"Hello, I would like to change the tariff for the service \"%(X)\" on the contract \"%(Y)\"" = "С
+"history.event.openingWithKey" = "Кілтпен ашу";
+"history.event.unknown" = "Белгісіз үздік";
+
+"history.filter.allApartments" = "Барлық апартаменттер";
+"history.filter.allButton" = "Барлық";
+"history.filter.allInApartment" = "Көлік, барлық";
+"history.filter.allOption" = "барлық";
+"history.filter.apptAllButton" = "Құрылым, барлығы";
+"history.filter.faceID" = "Face-ID";
+"history.filter.intercom" = "Домофон";
+"history.filter.key" = "Кілт";
+"history.filter.openingByApp" = "Қолданбадан ашу";
+"history.filter.openingByCode" = "Код бойынша ашу";
+"history.filter.openingOnCall" = "Қоңырауда ашу";
+
+"history.videoEventInfo.description" = "Жуырдағы оқиғалар үшін қысқа бейне көрсетіледі. Қалғандары үшін – оқиға сәтіндегі кадр сақталады.";
+"history.videoEventInfo.forwardGestureHint" = "бейнежазбаның оң жағында екі рет түрту – 10 секундке алға жылжу";
+"history.videoEventInfo.gesturesTitle" = "Сондай-ақ ымдарды пайдалануға болады:";
+"history.videoEventInfo.rewindGestureHint" = "бейнежазбаның сол жағында екі рет түрту – 10 секундке артқа айналдыру";
+"history.videoEventInfo.swipeGestureHint" = "cолға немесе оңға сырғыту – оқиғалар таспасын қарау";
+"history.videoEventInfo.title" = "Кеңес";
+
+/* MARK: - HOME */
+
+"home.addressCard.cameras.cameras" = "Бейне камералар";
+"home.addressCard.cameras.countValue" = "3";
+
+"home.addressCard.events.countValue" = "3";
+"home.addressCard.events.events" = "Оқиғалар";
+
+"home.addresses.title" = "Менің мекенжайларым";
+
+"home.addressesEmpty.listIsEmpty" = "Тізім қазір бос :(";
+"home.addressesEmpty.offlineTitle" = "Деректер әлі жоқ немесе сақталмаған сияқты.";
+"home.addressesEmpty.onlineTitle" = "Мекенжай қосу үшін экранның жоғарғы бөлігінде \"+\" түймесін басыңыз. Қосылған мекенжай көрсетілмейтін болса, күте тұрып көп мүнут күтіңіз. Тізім автоматты түрде жаңартылады.";
+"home.addressesEmpty.toAddAnAddressTapAtTheTop" = "Для добавления адреса нажмите на \"+\" в верхней части экрана.  Если добавленный адрес не отображается, пожалуйста, подождите несколько минут. Список обновится автоматически.";
+
+/* MARK: - INTERCOM */
+
+"intercom.incoming.addressPlaceholder" = "Тамбов, ул. Советская 20, кв. 52";
+"intercom.incoming.answerAction" = "Жауап беру";
+"intercom.incoming.callCompletedStatus" = "Қоңырау аяқталды";
+"intercom.incoming.connectingStatus" = "Байланыс...";
+"intercom.incoming.conversationStatus" = "Сөйлем";
+"intercom.incoming.declineAction" = "Өшіру";
+"intercom.incoming.ignoreAction" = "Елемеу";
+"intercom.incoming.microphoneMissingMessage" = "Келесі қоңырауларыңызда оны көрсету үшін, настройкаларда микрофонға доступ беріңіз";
+"intercom.incoming.microphoneMissingTitle" = "Бұл қоңырауда шығарылатын аудио жоқ болады.";
+"intercom.incoming.notificationTitle" = "Келуші звонок";
+"intercom.incoming.openedStatus" = "Ашық";
+"intercom.incoming.peepholeAction" = "Шеруақ";
+"intercom.incoming.peepholeOnStatus" = "Шеруақ қосылған";
+"intercom.incoming.previewAction" = "Көздігін";
+"intercom.incoming.speakerAction" = "Динамик";
+"intercom.incoming.title" = "Домофонға звонок";
+"intercom.incoming.videoAction" = "Бейне";
+
+/* MARK: - MENU */
+
+"menu.main.menu" = "Мәзір";
+
+"menu.support.callToTechSupport" = "Техникалық қолдауға қоңырау шалу";
+
+/* MARK: - NETWORK */
+
+"network.vpn.detectedWarning" = "Открит е VPN. Приложението може да работи нестабилно.";
+
+/* MARK: - OFFLINE */
+
+"offline.alert.noConnectionTitle" = "Байланыс жоқ!";
+"offline.alert.switchMode" = "Онлайн режимге оралу үшін \"OK\" түймесін басыңыз.\nОффлайн режимде қалу үшін \"Болдырмау\" түймесін басыңыз.";
+
+"offline.hint.swipeToExit" = "Сіз оффлайн режимдесіз. Одан шығу үшін экранның жоғарғы жағынан төмен қарай сырғытыңыз.";
+
+"offline.home.title" = "Менің мекенжайларым";
+
+"offline.message.connectionLost" = "Байланыс үзілген сияқты немесе серверде ақаулар бар.";
+"offline.message.connectionRestored" = "Ура! Байланыс қайта қалпына келді!";
+"offline.message.serverUnavailable" = "Қазір оффлайн режимінен шығу мүмкін емес — сервер қолжетімсіз. Кейінірек қайталап көріңіз.";
+
+/* MARK: - ONBOARDING */
+
+"onboarding.coolLetSGetStartedButton" = "Класс, бастауымыз!";
+"onboarding.skipButton" = "Өткізу";
+
+"onboarding.awareness.title" = "Үй жағдайлары туралы барлығын біліңіз";
+
+"onboarding.control.title" = "Барлығы бастапқыда";
+
+"onboarding.intercom.subtitle" = "Смартфонға сіздің домофонды, шайырмалы немесе барьерді бақылаңыз";
+
+"onboarding.services.subtitle" = "Қызметтерді басқарып, оларды осы қолданбадан төлеңіз";
+
+"onboarding.slide.videoSurveillance" = "Бейнеге қарау";
+
+"onboarding.slide.awareness.subtitle" = "Үй жағында бола тұрған не болып жатқаныңмен таныс бол";
+
+"onboarding.smartYard.title" = "Ақпаратты аула";
+
+/* MARK: - PAYMENTS */
+
+"payments.addressSelection.selectAddress" = "Мекен-жайты таңдаңыз";
+
+"payments.error.unableToOpenPage" = "Төлем бетін ашу мүмкін емес.";
+
+"payments.topUp.amount" = "Сома:";
+"payments.topUp.amountPlaceholder" = "Сома";
+"payments.topUp.contractNumberPlaceholder" = "№68992";
+"payments.topUp.depositTitle" = "Депозит";
+"payments.topUp.errorTitle" = "Төлем қабылданған жоқ";
+"payments.topUp.payButton" = "Төлеу";
+"payments.topUp.paymentByBankCardButton" = "Карта арқылы төлем";
+"payments.topUp.recommendedAmountPlaceholder" = "Ұсынылатын - 480 рублей";
+"payments.topUp.recommendedLabel" = "Ұсынылған";
+"payments.topUp.successMessage" = "Сіздің балансңыз толтырылды";
+"payments.topUp.successMessageShort" = "Сіздің төлеміңіз толтырылды";
+"payments.topUp.successTitle" = "Дайын!";
+"payments.topUp.topUpBalance" = "Балансыңызды толтыру";
+
+/* MARK: - PERMISSIONS */
+
+"permissions.camera.message" = "Осы мүмкіндікті қолдану үшін параметрлерге өтіп, камераға кіруге рұқсат беріңіз";
+"permissions.camera.title" = "Камераге кіру мүмкін емес";
+
+"permissions.microphone.title" = "Микрофонға қатынау жоқ";
+
+/* MARK: - PROFILE */
+
+"profile.firstName" = "Аты";
+"profile.patronymic" = "Әкесінің аты";
+
+/* MARK: - QUICK ACTION */
+
+"quickAction.error.unsupported" = "Unsupported quick action";
+
+"quickAction.firstAddress.accessTitle" = "Бірінші мекенжайға қолжеткізу";
+"quickAction.firstAddress.camerasNotFound" = "No cameras were found";
+"quickAction.firstAddress.camerasTitle" = "Бірінші мекенжай камералары";
+"quickAction.firstAddress.eventsTitle" = "Бірінші мекенжай оқиғалары";
+"quickAction.firstAddress.noAccessSettings" = "The first address has no access settings";
+"quickAction.firstAddress.noAddresses" = "No addresses were found";
+"quickAction.firstAddress.noCameras" = "The first address has no cameras";
+"quickAction.firstAddress.noEvents" = "The first address has no events";
+
+/* MARK: - REQUEST */
+
+"request.common.submittedTitle" = "Сұрақ жіберілді";
+
+/* MARK: - SERVICES */
+
+"services.activationRequest.oops" = "Упс :(";
+"services.activationRequest.requestButton" = "Өтінім қалдыру";
+"services.activationRequest.subtitle" = "Сіздің мекен-жайыңыз дәлденуі керек. Мұрагерді күтуді күтіңіз.  Қандай қызметті қосу керек?";
+
+"services.available.loadingTitle" = "Тапсырма жасау";
+"services.available.title" = "Қол жетімді қызметтер";
+
+"services.available.card.smartIntercom" = "Ақпаратты домофон";
+
+"services.available.error.noServiceSelected" = "Қызмет таңдалмаған";
+
+"services.available.smartIntercom.subtitle" = "Шлагбаум, тауары және кіру";
+
+"services.catalog.cableTV" = "Теле";
+"services.catalog.internet" = "Интернет";
+"services.catalog.mobilePhone" = "Мобильді телефон";
+"services.catalog.smartIntercom" = "Ақпаратты домофон";
+"services.catalog.videoSurveillance" = "Бейне көзделу";
+"services.catalog.wiredPhone" = "Телефон";
+
+"services.request.createButton" = "Сұрақ құру";
+"services.request.loadingTitle" = "Тапсырма жасау";
+"services.request.mainUserInfoFormat" = "Толық аты: %@\nТелефон: %@\nПайдаланушы таратқан мекенжай: %@";
+"services.request.unknownContractNumber" = "Шарт нөмірі белгісіз";
+
+"services.status.activated.changePlanButton" = "Тарифты ауыстыру";
+"services.status.activated.changePlanHint" = "Тарифті ауыстыру керек болса, өтініш қалдырыңыз";
+"services.status.activated.serviceActivated" = "Қызмет жеткізілген";
+"services.status.activated.titleFormat" = "\"%@\" қызметі қосылған";
+
+"services.status.notActivated.requestButton" = "Өтініш қалдыру";
+"services.status.notActivated.subtitle" = "Егер сіз қызметті активдеуге келе берсеңіз, өтініш қалдырыңыз";
+"services.status.notActivated.title" = "Қызмет %@ қосылмаған";
+
+"services.status.soonAvailable.addressInstructionPlaceholder" = "Тамбов, Советская, 80, 16 мекенжайында курьерді күтіңіз және ол келетін QR-кодты суретке түсіріңіз.";
+"services.status.soonAvailable.title" = "Жақсы, көрсеткен күнде барлық не іске қосылады!";
+
+"services.status.unavailable.message" = "Қазірғі уақытта қызмет сіздің мекенжайыңызда қолжетімді емес. Оны қосу үшін өз үйіңізден бірнеше өтініш жинау керек. Бірінші болып өтініш қалдырыңыз!";
+"services.status.unavailable.requestButton" = "Өтініш қалдыру";
+"services.status.unavailable.title" = "Қызмет %@ қазірда қол жетімді емес";
+
+/* MARK: - SESSION */
+
+"session.conflict.message" = "Сіз басқа құрылғыда рұқсат алдыңыз";
+"session.conflict.title" = "Ескерту";
+
+/* MARK: - SETTINGS */
+
+"settings.address.addressSettings" = "Мекен-жай параметрлері";
+"settings.address.deleteAddressButton" = "Мекенжайды жою";
+"settings.address.hideEventLogTitle" = "Басқа жайлардың қонақтарынан\nоқиғалар журналын жасыру";
+"settings.address.intercom" = "Домофон";
+"settings.address.intercomEnabled" = "Интерком қосылған";
+"settings.address.keepAnEventLog" = "Оқиғалар журналын жүргізу";
+"settings.address.label" = "Құжат атауы";
+"settings.address.noteLabel" = "Ескерту";
+"settings.address.receiveCalls" = "Шағымдарды қабылдау";
+"settings.address.receivePaperBills" = "Қағаз есептіктерін алу";
+"settings.address.recognizeFaces" = "Беталарды анықтау";
+"settings.address.recognizePlates" = "Нөмірлерді тану";
+"settings.address.whiteRabbitMode" = "Режим \"Ақ айық\"";
+
+"settings.address.whiteRabbitInfo.description" = "Бұл функция пәтерге қоңырау шалу арқылы қақпаны және қоңыраусыз кіреберіс панелін ашуға арналған.";
+"settings.address.whiteRabbitInfo.step1" = "Қонақ қақпаға жақындап, қажетті пәтер нөмірін тереді;";
+"settings.address.whiteRabbitInfo.step2" = "Пәтер иесі қонаққа жауап беріп, қолданбада немесе аналогты түтікте Ашу батырмасын басады;";
+"settings.address.whiteRabbitInfo.step3" = "Қонақ домофон панеліне жақындап, пәтер нөмірін тереді. Домофон пәтерге қоңырау шалмай-ақ ашылады.";
+"settings.address.whiteRabbitInfo.stepsTitle" = "Ол келесідей жұмыс істейді:";
+"settings.address.whiteRabbitInfo.title" = "Ақ Қоян";
+"settings.address.whiteRabbitInfo.validityHint" = "Қақпа ашылғаннан кейін бұл функция 5 минут бойы белсенді болады.";
+
+"settings.addressAccess.accessToAddress" = "Мекен-жайға кіру";
+"settings.addressAccess.accessToTheBarrierGate" = "“Шлагбаумға/қақпаға кіру құқығы”";
+"settings.addressAccess.addressPlaceholder" = "г. Тамбов, ул. Советская, 16, к. 4";
+"settings.addressAccess.permanentAccessTitle" = "Мекен-жайға деңгейленген кіру";
+
+"settings.addressAccess.faceId.beta" = "бета";
+"settings.addressAccess.faceId.disabledMessage" = "Жүзді анықтау құжатының иесінің өшіруі";
+"settings.addressAccess.faceId.registeredFaces" = "Тіркеуге алынған жүздер";
+"settings.addressAccess.faceId.setupButton" = "Орнату";
+"settings.addressAccess.faceId.title" = "Кілтіз жүз бойынша кіру";
+
+"settings.addressAccess.gateDetails.addressPlaceholder" = "г. Тамбов, ул. Советская, 16, к. 4";
+"settings.addressAccess.gateDetails.carFilter" = "Көлік нөмірі бойынша";
+"settings.addressAccess.gateDetails.expired" = "мерзімі өтті";
+"settings.addressAccess.gateDetails.phoneFilter" = "Телефон нөмірі бойынша";
+"settings.addressAccess.gateDetails.timeRemainingFormat" = "%@ қалды";
+"settings.addressAccess.gateDetails.title" = "Шлагбаумға/қақпаға қол жеткізу";
+"settings.addressAccess.gateDetails.unlimited" = "шексіз";
+
+"settings.addressAccess.guestAccess.alertMessage" = "Домофонда сіздің келешекті дәрігер саныңызды терген барлық адамдар 60 минут ішінде автоматты түрде жақ
+
+тарды ашады. Бұл уақыт аяғында домофон бекітілген көзқарас режиміне кайтады.";
+"settings.addressAccess.guestAccess.alertTitle" = "Бір сағаттық гостевой доступты қосу керек пе?";
+"settings.addressAccess.guestAccess.sentMessage" = "Қонақ ақпараты сәтті жіберілді!";
+
+"settings.addressAccess.newPerson.addContact" = "Контакт қосу";
+
+"settings.addressAccess.removeAccess.message" = "Қолжетімді жойғыңыз келе ме?";
+
+"settings.addressAccess.shortcuts.addCar" = "Көлікті қосу";
+"settings.addressAccess.shortcuts.addPerson" = "Контактіні қосу";
+"settings.addressAccess.shortcuts.allCars" = "Барлық көліктер";
+"settings.addressAccess.shortcuts.allPeople" = "Барлық адамдар";
+
+"settings.addressAccess.temporaryAccess.codeTitle" = "Ашу коды";
+"settings.addressAccess.temporaryAccess.guestAccessTitle" = "Сағаттық қонақ кіру";
+"settings.addressAccess.temporaryAccess.title" = "Домофонға уақытша қол жеткізу";
+
+"settings.addressAccess.waitingGuestInfo.message" = "Бұл функция сіздің қатысуыңызсыз қонақтарыңызға домофонды ашуға мүмкіндік береді: қоңырау панелінде пәтер нөміріңізді теру жеткілікті, сонда қақпа немесе кіреберіс есік бірден ашылады.";
+"settings.addressAccess.waitingGuestInfo.title" = "Бір сағатқа қонақтарға қол жеткізу";
+"settings.addressAccess.waitingGuestInfo.validity" = "Valid for one hour from activation.";
+
+"settings.addressDeletion.other" = "Басқа";
+"settings.addressDeletion.pleaseStateTheReason" = "Себепті көрсетіңіз";
+"settings.addressDeletion.terminateContractOption" = "Шартты тоқтату керек";
+"settings.addressDeletion.warningMessage" = "Мекен-жай жою кезінде сізге мекен-жай қызметтерін басқару мүмкіндігі болмайды";
+
+"settings.addressDeletion.reason.placeholder" = "Себепті көрсетіңіз";
+"settings.addressDeletion.reason.terminateContract" = "Мен договорды болдырмақ қалаймын";
+"settings.addressDeletion.reason.unspecified" = "Мұрагер себеп бермеді";
+
+"settings.common.calls" = "Қоңырау";
+"settings.common.deleteAccountButton" = "Есептік жазбаны жою";
+"settings.common.logoutButton" = "Шығу";
+"settings.common.lowBalanceNotificationTitle" = "Баланс нөлге жақын келгенде хабарлама жіберу";
+"settings.common.notifications" = "Хабарламалар";
+"settings.common.notifyAboutInsufficientFunds" = "Қаражат жеткіліктері туралы хабарлау";
+"settings.common.profileNamePlaceholder" = "Александр Сергейевич";
+"settings.common.profilePhonePlaceholder" = "+7 (964) 134 00 00";
+"settings.common.showCamerasOnTheMap" = "Картада көрсету";
+"settings.common.showNotifications" = "Хабарламаларды көрсету";
+"settings.common.speakerphoneByDefault" = "Әдепкі деңгейдегі қалыпты байланыс";
+"settings.common.theme" = "Тақырып";
+"settings.common.title" = "Жалпы параметрлер";
+"settings.common.useCallkit" = "CallKit пайдалану";
+
+"settings.common.addressOrder.description" = "Әдепкі бойынша мекенжайлар әліпби ретімен көрсетіледі. Қолжетімді кіреберістері бар мекенжайлар әрдайым бірінші болып көрсетіледі. Реттілікті қолмен баптау үшін — жай ғана мекенжай тақырыбын ұзақ басып тұрыңыз, “көтерілген карточка” әсері пайда болғанша 0.3–0.5 секунд күтіңіз, содан кейін жоғары немесе төмен жылжытыңыз. Қажетті орынға жеткізгеннен кейін — реттілік автоматты түрде сақталады.";
+"settings.common.addressOrder.resetDialogMessage" = "Бұл мекенжайлардың әдепкі ретін қайтарады.";
+"settings.common.addressOrder.resetDialogTitle" = "Мекенжайлар тәртібін қалпына келтіру?";
+"settings.common.addressOrder.resetHint" = "Әдепкі ретке қайтару үшін параметрлердегі «Қалпына келтіру» түймесін пайдаланыңыз.";
+"settings.common.addressOrder.title" = "Мекенжайлар тәртібі";
+
+"settings.common.appearance.dark" = "Қараңғы";
+"settings.common.appearance.light" = "Жарық";
+"settings.common.appearance.sheetMessage" = "Өзіңізге ыңғайлы тақырыпты таңдаңыз.";
+"settings.common.appearance.sheetTitle" = "Көріністі таңдаңыз";
+"settings.common.appearance.system" = "Жүйелік";
+"settings.common.appearance.title" = "Көрсету";
+
+"settings.common.callKitInfo.description" = "CallKit режимі қосылған кезде, iPhone-ға қоңыраулар кәдімгі қоңыраулар сияқты көрінеді. Бірақ бұл режимде сіз \"тесікке\" қарап, домофонға кім келгенін құлақаспапты көтермей көре алмайсыз.";
+"settings.common.callKitInfo.title" = "CallKit функциясы";
+
+"settings.common.deleteAccount.message" = "Есептік жазбаңызды шынымен жойғыңыз келе ме? Бұрын қосылған барлық мекенжайлар жойылады";
+"settings.common.deleteAccount.title" = "Есептік жазбаны жою";
+
+"settings.common.logout.message" = "Сіз сөйлеміңіз келсе, сіз жеке кабинетіңізден шығу керек пе?";
+"settings.common.logout.title" = "Қолданбадан шығу";
+
+"settings.faces.faceRegistration" = "Адамның тіркеуі";
+"settings.faces.registeredFaces" = "Тіркелген адамдар";
+"settings.faces.registrationHint" = "Сіздің азаматтарыңыздың суреттері Құрылыс істориясы бөлімінде сақталады. \n\nАдамның таңдауы және тіркеуі үшін көрсетілген бөлімге өту үшін Плюс түймесін басыңыз. \nІстория жазбалары бөлімінде, қажетті оқиғаға қарсы ақпарат белгісін басып, ашылған көрсеткінің ерекшеліктерін таңдаңыз және қажетті суретті таңдаңыз.\n\n";
+
+"settings.main.addAddressButton" = "Мекен-жай қосу";
+"settings.main.contractNumberTitle" = "Договор нөмері";
+"settings.main.openPersonalAccountWebButton" = "Жеке тіркеудің веб нұсқасын ашу";
+
+"settings.main.access.title" = "Кіруге рұқсат беру параметрлері";
+
+"settings.main.address.title" = "Мекен-жай параметрлері";
+
+"settings.main.addresses.title" = "Мекен-жай параметрлері";
+
+"settings.main.serviceAction.activateServiceTemplate" = "Сәлеметсіз бе, мен қызметті \"%(X)\" келісімі \"%(Y)\" үшін қосу туралы тілеймін";
+"settings.main.serviceAction.changeTariffTemplate" = "С
 
 әлеметсіз бе, мен қызметтің \"%(X)\" тарифін құпия шарты \"%(Y)\" үшін өзгертуді тілеймін";
-"Hello, I would like to connect the service \"%(X)\" to the contract \"%(Y)\"" = "Сәлеметсіз бе, мен қызметті \"%(X)\" келісімі \"%(Y)\" үшін қосу туралы тілеймін";
-"Hello, the \"%(X)\" service is not available at my address, but I want to use it on the \"%(Y)\" contract" = "Сәлеметсіз бе, \"%(X)\" қызметі менің мекенжайымда қолжетімді емес, бірақ мен оны \"%(Y)\" шартында пайдалану керек";
-"Service \"%@\" is connected" = "\"%@\" қызметі қосылған";
-"Create a request" = "Сұрақ құру";
-"Request submitted" = "Сұрақ жіберілді";
-"We will contact you within 24 hours" = "24 сағат ішінде сізге хабарласамыз";
-"Public cams" = "Қоғамдық камералар";
-"Request a record" = "Жазбаға сұрау";
-"Incidents" = "Оқиғалар";
-"Addresses settings" = "Мекен-жай параметрлері";
-"Common settings" = "Жалпы параметрлер";
+"settings.main.serviceAction.talkAboutActivationTemplate" = "Сәлеметсіз бе, \"%(X)\" қызметі менің мекенжайымда қолжетімді емес, бірақ мен оны \"%(Y)\" шартында пайдалану керек";
 
-// Errors
-"noConnectionError"  = "Байланысты жоқ";
-"An error occurred while executing the request" = "Сұрау орындалатын уақытта қате пайда болды: %@";
-"Access token not found. Request cannot be completed" = "Кіру белгісі табылмады. Сұрау орындала алмайды";
-"Client id not found. Request cannot be completed" = "Клиент идентификаторы табылмады. Сұрау орындала алмайды";
-"User is already logged in" = "Пайдаланушы қазірдің аралығында";
-"House id not found. Request cannot be completed" = "Үй идентификаторы табылмады. Сұрау орындала алмайды";
-"Current user's phone number not found" = "Ағымдағы пайдаланушының телефоны табылмады";
-"The contract number was not found. It is impossible to complete the request" = "Шарт нөмірі табылмады. Сұрау орындала алмайды";
-"Unable to restore application state" = "Программа күйін жаңарту мүмкін емес";
-"Push notifications are disabled for the application at the system level" = "Система деңгейінде басқарма дағдылары өшірілді";
-"Push notifications are disabled in the app settings" = "Программа параметрлерінде басқарма дағдылары өшірілді";
-"Missing FCM token" = "FCM белгісі жоқ";
-"InstanceID not initialized" = "InstanceID іске қосылмаған";
-"Internet connection required to change user" = "Пайдаланушыны өзгерту үшін интернет байланысы қажет";
-"No access to contacts" = "Контакттарға қатынау жоқ";
-"No camera access" = "Камераға қатынау жоқ";
+"settings.shareCar.platePlaceholder" = "М 565 ХВ 68";
+"settings.shareCar.shareAccess" = "Доступты бөлісу";
+"settings.shareCar.subtitle" = "Қолжетімділік бергіңіз келетін көліктің нөмірін енгізіңіз.";
 
+"settings.sharePerson.name" = "Аты";
+"settings.sharePerson.shareAccess" = "Доступты бөлісу";
+"settings.sharePerson.shareButton" = "Бөлісу";
+"settings.sharePerson.subtitle" = "Кіру үшін қолданушының телефонын енгізіңіз, немесе контакттардан таңдаңыз";
 
-"No microphone access" = "Микрофонға қатынау жоқ";
-"self destroyed" = "өзі езілген";
-"Unknown error" = "Белгісіз қате";
-"Failed to setup camera" = "Камераны орнату мүмкін болмады";
-"Failed to represent server response as base model" = "Серверден келген жауапты негізгі модельдің қалыптасуы мүмкін емес";
-"Error mapping the Data field, or it is missing with a code other than 204" = "Деректер өрісін карталандыруда қате пайда болды, немесе ол 204-тен басқа кодпен жоқ";
-"Date of record" = "Жазба күні";
-"Time" = "Уақыты";
-"Duration" = "Ұзақтығы";
-"h" = "сағ";
-"m" = "мин";
-"Allow" = "Таныс";
-"Deny" = "Бөгде";
-"Enable" = "Қосу";
-"Disable" = "Сөндіру";
-"Reset" = "Қалпына келтіру";
-"Reset done" = "Қалпына келтірілді";
-"Reset address order?" = "Мекенжайлар тәртібін қалпына келтіру?";
-"This will restore the default sorting." = "Бұл мекенжайлардың әдепкі ретін қайтарады.";
-"By car number" = "Көлік нөмірі бойынша";
-"By phone number" = "Телефон нөмірі бойынша";
-"All cars" = "Барлық көліктер";
-"All people" = "Барлық адамдар";
-"Add car" = "Көлікті қосу";      
-"Add person" = "Контактіні қосу";
-"TimeLeftFormat" = "%@ қалды";
-"expired" = "мерзімі өтті";
-"Add" = "Қосу";
-"unlimited" = "шексіз";
-"Address confirmation" = "Мекен-жай растау";
-"How would it be more convenient for you to do this?" = "Сізге ол қалай ыңғайлы?";
-"Input your address" = "Мекенжайыңызды енгізіңіз";
-"Available services" = "Қол жетімді қызметтер";
-"Do you have an agreement with the operator?" = "Сізде оператормен келісім бар ма?";
-"Enter the number and password of the contract associated with this address and manage services from this application." = "Берілген мекенжайға байланыстырылған келісімнің нөмірін және күйгі парольді енгізіңіз және осы қосымшадан қызметтерді басқарыңыз.";
-"Select camera" = "Камераны таңдаңыз";
-"Events log" = "Оқиғалар журналы";
-"Common settings" = "Жалпы параметрлер";
-"Addresses settings" = "Мекен-жай қосу";
-"Request a record" = "Жазбаны сұрау қылу";
-"Public cams" = "Қала камералары";
-"Search" = "Іздеу";
-"VPN detected. The application may work unstable." = "Открит е VPN. Приложението може да работи нестабилно.";
-"List Empty Online List" = "Мекенжай қосу үшін экранның жоғарғы бөлігінде \"+\" түймесін басыңыз. Қосылған мекенжай көрсетілмейтін болса, күте тұрып көп мүнут күтіңіз. Тізім автоматты түрде жаңартылады.";
-"List Empty Offline List" = "Деректер әлі жоқ немесе сақталмаған сияқты.";
-"offline.alert.switch_mode" = "Онлайн режимге оралу үшін \"OK\" түймесін басыңыз.\nОффлайн режимде қалу үшін \"Болдырмау\" түймесін басыңыз.";
-"offline.alert.no_connection_title" = "Байланыс жоқ!";
-"offline.message.connection_lost" = "Байланыс үзілген сияқты немесе серверде ақаулар бар.";
-"offline.message.server_unavailable" = "Қазір оффлайн режимінен шығу мүмкін емес — сервер қолжетімсіз. Кейінірек қайталап көріңіз.";
-"offline.hint.swipe_to_exit" = "Сіз оффлайн режимдесіз. Одан шығу үшін экранның жоғарғы жағынан төмен қарай сырғытыңыз.";
-"offline.message.connection_restored" = "Ура! Байланыс қайта қалпына келді!";
-"My addresses" = "Менің мекенжайларым";
-"First address cameras" = "Бірінші мекенжай камералары";
-"First address events" = "Бірінші мекенжай оқиғалары";
-"First address access" = "Бірінші мекенжайға қолжеткізу";
-"Phone number copied to clipboard" = "Телефон нөмірі алмасу буферіне көшірілді";
+/* MARK: - SUPPORT */
+
+"support.call.phoneAction" = "Телефон алыңыз";
+
+"support.callback.requestButton" = "Қайта қоңырау жүргізу";
+"support.callback.successMessage" = "Сізге қысқаша қоңырау шаламыз";
+
+/* MARK: - TAB */
+
+"tab.addresses" = "Мекен-жайлар";
+"tab.chat" = "Сөйлеу";
+"tab.menu" = "Мәзір";
+"tab.notifications" = "Хабарландырулар";
+"tab.payments" = "Төлеу";
+
+/* MARK: - VALIDATION */
+
+"validation.phone.invalidFormat" = "Дұрыс емес номер форматы";

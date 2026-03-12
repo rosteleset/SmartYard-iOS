@@ -8,4 +8,16 @@
 
 import UIKit
 
-final class NewPersonCell: UITableViewCell { }
+final class NewPersonCell: UITableViewCell {
+
+    @IBOutlet private weak var titleLabel: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.AddressAccess.NewPerson.addContact
+    }
+
+}

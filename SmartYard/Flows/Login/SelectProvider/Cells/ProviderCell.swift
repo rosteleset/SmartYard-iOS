@@ -19,8 +19,13 @@ final class ProviderCell: UITableViewCell {
         }
     }
     
+    private func configureUI() {
+        titleLabel.text = L10n.Auth.ProviderSelection.Method.maskedContactPlaceholder
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureUI()
         titleLabel.text = nil
     }
     

@@ -21,6 +21,7 @@
                 <outlet property="previewContainer" destination="KRA-aQ-t4M" id="8co-aj-RhZ"/>
                 <outlet property="scanningArea" destination="Yae-7q-jNa" id="Hcf-AC-Rki"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="qrCodeHintLabel" destination="8Ho-fS-vsp" id="MzT-m0-uYs"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

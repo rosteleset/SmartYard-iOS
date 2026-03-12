@@ -86,6 +86,13 @@
             <connections>
                 <outlet property="separatorView" destination="ffr-rU-R6s" id="XcO-Fg-R1V"/>
                 <outlet property="separatorViewHeightConstraint" destination="fcF-ra-0JI" id="z1S-Uw-q44"/>
+                <outlet property="localizedMonLabel" destination="OKf-7G-pq7" id="0E2-Yy-MLo"/>
+                <outlet property="localizedTueLabel" destination="okx-4L-yO9" id="23Z-bQ-4aV"/>
+                <outlet property="localizedWedLabel" destination="IPN-pa-FJC" id="ltG-Kq-veF"/>
+                <outlet property="localizedThuLabel" destination="OkH-GG-ejk" id="3q8-0t-XAy"/>
+                <outlet property="localizedFriLabel" destination="Jim-Vd-O1V" id="Zyd-kP-7ip"/>
+                <outlet property="localizedSatLabel" destination="DS5-XI-UgN" id="sU1-vd-8cE"/>
+                <outlet property="localizedSunLabel" destination="cXq-H7-tSv" id="AjF-43-MTf"/>
             </connections>
             <point key="canvasLocation" x="596" y="314"/>
         </view>

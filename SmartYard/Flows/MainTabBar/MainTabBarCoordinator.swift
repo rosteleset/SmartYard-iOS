@@ -108,7 +108,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute>, HasDispos
         )
 
         let homeTabBarItem = UITabBarItem(
-            title: NSLocalizedString("Addresses", comment: ""),
+            title: L10n.Tab.addresses,
             image: UIImage(named: "HomeTabUnselected"),
             selectedImage: UIImage(named: "HomeTabSelected")
         )
@@ -127,7 +127,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute>, HasDispos
         )
         
         let notificationsTabBarItem = UITabBarItem(
-            title: NSLocalizedString("Notifications", comment: ""),
+            title: L10n.Tab.notifications,
             image: UIImage(named: "NotificationsTabUnselected"),
             selectedImage: UIImage(named: "NotificationsTabSelected")
         )
@@ -146,7 +146,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute>, HasDispos
         )
         
         let chatTabBarItem = UITabBarItem(
-            title: NSLocalizedString("Chat", comment: ""),
+            title: L10n.Tab.chat,
             image: UIImage(named: "ChatTabUnselected"),
             selectedImage: UIImage(named: "ChatTabSelected")
         )
@@ -161,7 +161,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute>, HasDispos
         )
 
         let paymentsTabBarItem = UITabBarItem(
-            title: NSLocalizedString("Pay", comment: ""),
+            title: L10n.Tab.payments,
             image: UIImage(named: "PaymentsTabUnselected"),
             selectedImage: UIImage(named: "PaymentsTabSelected")
         )
@@ -185,7 +185,7 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute>, HasDispos
         )
 
         let menuTabBarItem = UITabBarItem(
-            title: NSLocalizedString("Menu", comment: ""),
+            title: L10n.Tab.menu,
             image: UIImage(named: "MenuTabUnselected"),
             selectedImage: UIImage(named: "MenuTabSelected")
         )

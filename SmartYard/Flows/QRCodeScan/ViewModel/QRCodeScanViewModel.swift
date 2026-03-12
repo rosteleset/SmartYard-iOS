@@ -113,7 +113,7 @@ final class QRCodeScanViewModel: BaseViewModel {
                     
                     self?.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: message,
                             actions: [okAction]
                         )

@@ -30,6 +30,8 @@
                 <outlet property="selectFromContactButton" destination="cUW-vr-H7B" id="Flg-Go-fAj"/>
                 <outlet property="textField" destination="NgQ-I8-VyB" id="a3P-df-VkX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="gda-I1-7lg" id="BJW-41-zc9"/>
+                <outlet property="phoneHintLabel" destination="xKP-zL-fU1" id="lpF-oi-13r"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

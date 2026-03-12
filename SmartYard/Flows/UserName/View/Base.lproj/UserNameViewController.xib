@@ -27,6 +27,7 @@
                 <outlet property="middleNameTextField" destination="PoY-jf-rQZ" id="CcG-Xw-0E2"/>
                 <outlet property="nameTextField" destination="EEN-Gu-xjS" id="ap6-iP-yBt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="VBg-Y6-ldi" id="Qoq-wQ-ktb"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

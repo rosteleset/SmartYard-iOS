@@ -13,6 +13,15 @@ import RxCocoa
 final class FakeNavBar: PMNibLinkableView {
 
     @IBOutlet fileprivate weak var backButton: UIButton!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        backButton.setTitle(L10n.Common.back, for: .normal)
+    }
     
     func configureBlueNavBar() {
         backButton.setTitleColor(UIColor.SmartYard.blue, for: .normal)

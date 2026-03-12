@@ -26,7 +26,8 @@ final class RequestRecordViewController: BaseViewController, LoaderPresentable, 
     @IBOutlet private weak var minutesTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var durationTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var notesTextField: SmartYardBorderedTextField!
-
+    @IBOutlet private weak var durationHintLabel: UILabel!
+    @IBOutlet private weak var processingHintLabel: UILabel!
     private var datePicker: UIDatePicker
     private var periodPicker: PeriodPicker
     private var selectedDate: Date
@@ -55,7 +56,7 @@ final class RequestRecordViewController: BaseViewController, LoaderPresentable, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     private func bind() {
@@ -71,12 +72,20 @@ final class RequestRecordViewController: BaseViewController, LoaderPresentable, 
             )
 
         headerView.setText(
-            NSLocalizedString("Request a record", comment: ""),
+            L10n.Camera.City.requestRecordButton,
             subtitle: output.camera.name
         )
     }
-    fileprivate func configureView() {
-        fakeNavBar.setText(NSLocalizedString("Public cams", comment: ""))
+    fileprivate func configureUI() {
+        hoursTextField.text = L10n.Camera.RecordRequest.timeHoursPlaceholder
+        minutesTextField.text = L10n.Camera.RecordRequest.timeMinutesPlaceholder
+        dateTextField.text = L10n.Camera.RecordRequest.datePlaceholder
+        durationTextField.text = L10n.Camera.RecordRequest.durationPlaceholder
+        notesTextField.placeholder = L10n.Camera.RecordRequest.commentPlaceholder
+        durationHintLabel.text = L10n.Camera.RecordRequest.durationHint
+        processingHintLabel.text = L10n.Camera.RecordRequest.processingHint
+        button.setTitle(L10n.Camera.RecordRequest.sendRequestButton, for: .normal)
+        fakeNavBar.setText(L10n.Camera.City.publicCamerasTitle)
 
         view.hideKeyboardWhenTapped = true
         
@@ -144,10 +153,10 @@ extension RequestRecordViewController {
         formatter.dateFormat = "mm"
         let minuteString = formatter.string(from: selectedDate)
         
-        let dateLabel = NSLocalizedString("Date of record", comment: "")
-        let timeLabel = NSLocalizedString("Time", comment: "")
-        let hourSuffix = NSLocalizedString("h", comment: "")
-        let minuteSuffix = NSLocalizedString("m", comment: "")
+        let dateLabel = L10n.Camera.RecordRequest.dateLabel
+        let timeLabel = L10n.Camera.RecordRequest.timeLabel
+        let hourSuffix = L10n.Common.Time.hoursShort
+        let minuteSuffix = L10n.Common.Time.minutesShort
         
         dateTextField.text = "\(dateLabel): \(dateString)"
         hoursTextField.text = "\(timeLabel): \(hourString) \(hourSuffix)"
@@ -155,8 +164,8 @@ extension RequestRecordViewController {
     }
 
     func selectPeriodAction(_ value: Int) {
-        let durationLabel = NSLocalizedString("Duration", comment: "")
-        let minuteSuffix = NSLocalizedString("m", comment: "")
+        let durationLabel = L10n.Camera.RecordRequest.durationLabel
+        let minuteSuffix = L10n.Common.Time.minutesShort
         
         durationTextField.text = "\(durationLabel): \(value) \(minuteSuffix)"
         periodProxy.onNext(value)

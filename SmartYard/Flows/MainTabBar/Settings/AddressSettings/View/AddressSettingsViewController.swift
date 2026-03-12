@@ -56,7 +56,16 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
     @IBOutlet private var notificationsViewTopConstraint: NSLayoutConstraint!
     
     @IBOutlet private weak var deleteAddressButton: UIButton!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var intercomLabel: UILabel!
+    @IBOutlet private weak var intercomEnabledLabel: UILabel!
+    @IBOutlet private weak var receiveCallsLabel: UILabel!
+    @IBOutlet private weak var whiteRabbitModeLabel: UILabel!
+    @IBOutlet private weak var paperBillsLabel: UILabel!
+    @IBOutlet private weak var eventLogLabel: UILabel!
+    @IBOutlet private weak var hideEventLogLabel: UILabel!
+    @IBOutlet private weak var recognizeFacesLabel: UILabel!
+    @IBOutlet private weak var recognizePlatesLabel: UILabel!
     private let viewModel: AddressSettingsViewModel
     
     private let cmsTapGesture = UITapGestureRecognizer()
@@ -82,7 +91,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     
@@ -104,8 +113,19 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
         notificationsViewTopConstraint.constant = neededInset
     }
     
-    private func configureView() {
-        
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.Address.addressSettings
+        intercomLabel.text = L10n.Settings.Address.intercom
+        intercomEnabledLabel.text = L10n.Settings.Address.intercomEnabled
+        receiveCallsLabel.text = L10n.Settings.Address.receiveCalls
+        whiteRabbitModeLabel.text = L10n.Settings.Address.whiteRabbitMode
+        paperBillsLabel.text = L10n.Settings.Address.receivePaperBills
+        eventLogLabel.text = L10n.Settings.Address.keepAnEventLog
+        hideEventLogLabel.text = L10n.Settings.Address.hideEventLogTitle
+        recognizeFacesLabel.text = L10n.Settings.Address.recognizeFaces
+        recognizePlatesLabel.text = L10n.Settings.Address.recognizePlates
+        deleteAddressButton.setTitle(L10n.Settings.Address.deleteAddressButton, for: .normal)
+        addressLabel.text = L10n.Settings.Address.label
         [
             addressContainerView,
             notificationsContainerView,

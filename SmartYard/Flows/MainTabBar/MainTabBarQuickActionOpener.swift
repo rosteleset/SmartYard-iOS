@@ -118,7 +118,7 @@ private extension MainTabBarQuickActionOpener {
 
     func showQuickActionUnavailableAlert(message: String) {
         alertService.showAlert(
-            title: NSLocalizedString("Error", comment: ""),
+            title: L10n.Common.error,
             message: message,
             priority: 250
         )
@@ -126,7 +126,7 @@ private extension MainTabBarQuickActionOpener {
 
     func showQuickActionErrorAlert(error: Error) {
         alertService.showAlert(
-            title: NSLocalizedString("Error", comment: ""),
+            title: L10n.Common.error,
             message: error.localizedDescription,
             priority: 250
         )

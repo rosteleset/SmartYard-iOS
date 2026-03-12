@@ -27,6 +27,9 @@
                 <outlet property="mainContainerView" destination="8MI-1O-eYe" id="tw5-Jg-in3"/>
                 <outlet property="scrollView" destination="gga-je-1mc" id="4go-g1-Ck9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="Fyv-Y1-rkc" id="fn3-Hw-m1m"/>
+                <outlet property="registeredFacesLabel" destination="aDB-gW-47T" id="qRU-Vt-tH3"/>
+                <outlet property="registrationHintLabel" destination="6no-0a-lvC" id="yqE-w3-Tpc"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

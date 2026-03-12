@@ -18,8 +18,10 @@ final class FaceIdAccessView: PMNibLinkableView, HasDisposeBag {
     @IBOutlet private weak var disabledView: UIView!
     
     @IBOutlet fileprivate weak var button: UIButton!
-    
-    
+    @IBOutlet private weak var registeredFacesTitleLabel: UILabel!
+    @IBOutlet private weak var disabledMessageLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var betaLabel: UILabel!
     var isAvailable = false {
         didSet {
             disabledView.isHidden = isAvailable
@@ -27,9 +29,17 @@ final class FaceIdAccessView: PMNibLinkableView, HasDisposeBag {
         }
     }
     
+    private func configureUI() {
+        registeredFacesTitleLabel.text = L10n.Settings.AddressAccess.FaceID.registeredFaces
+        button.setTitle(L10n.Settings.AddressAccess.FaceID.setupButton, for: .normal)
+        disabledMessageLabel.text = L10n.Settings.AddressAccess.FaceID.disabledMessage
+        titleLabel.text = L10n.Settings.AddressAccess.FaceID.title
+        betaLabel.text = L10n.Settings.AddressAccess.FaceID.beta
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        configureUI()
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
     

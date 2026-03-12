@@ -109,14 +109,14 @@ final class DetailGateAccessViewModel: BaseViewModel {
     private func makeRemainingTimePresentation(until expireDate: Date?, now: Date = Date()) -> RemainingTimePresentation {
         guard let expireDate else {
             return RemainingTimePresentation(
-                text: NSLocalizedString("unlimited", comment: ""),
+                text: L10n.Settings.AddressAccess.GateDetails.unlimited,
                 isExpired: false
             )
         }
 
         guard expireDate > now else {
             return RemainingTimePresentation(
-                text: NSLocalizedString("expired", comment: ""),
+                text: L10n.Settings.AddressAccess.GateDetails.expired,
                 isExpired: true
             )
         }
@@ -130,7 +130,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
         formatter.calendar?.locale = Locale.current
 
         let timeString = formatter.string(from: now, to: expireDate) ?? ""
-        let format = NSLocalizedString("TimeLeftFormat", comment: "")
+        let format = L10n.Settings.AddressAccess.GateDetails.timeRemainingFormat
         return RemainingTimePresentation(
             text: String(format: format, timeString),
             isExpired: false
@@ -243,7 +243,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
             .drive { [weak self] error in
                 self?.router.trigger(
                     .alert(
-                        title: NSLocalizedString("Error", comment: ""),
+                        title: L10n.Common.error,
                         message: error.localizedDescription
                     )
                 )
@@ -494,7 +494,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
                 onNext: { [weak self] in
                     self?.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Guest information has been successfully sent!", comment: ""),
+                            title: L10n.Settings.AddressAccess.GuestAccess.sentMessage,
                             message: nil,
                             actions: [
                                 UIAlertAction(
@@ -516,13 +516,13 @@ final class DetailGateAccessViewModel: BaseViewModel {
                     guard let self else { return }
                     
                     let noAction = UIAlertAction(
-                        title: NSLocalizedString("Cancel", comment: ""),
+                        title: L10n.Common.cancel,
                         style: .cancel,
                         handler: nil
                     )
                     
                     let yesAction = UIAlertAction(
-                        title: NSLocalizedString("Yes", comment: ""),
+                        title: L10n.Common.yes,
                         style: .destructive
                     ) { [weak self] _ in
                         self?.deleteAccessContact(person: person)
@@ -530,7 +530,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
                     
                     self.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Do you want to remove access?", comment: ""),
+                            title: L10n.Settings.AddressAccess.RemoveAccess.message,
                             message: nil,
                             actions: [noAction, yesAction],
                             style: .alert
@@ -546,13 +546,13 @@ final class DetailGateAccessViewModel: BaseViewModel {
                     guard let self else { return }
                     
                     let noAction = UIAlertAction(
-                        title: NSLocalizedString("Cancel", comment: ""),
+                        title: L10n.Common.cancel,
                         style: .cancel,
                         handler: nil
                     )
                     
                     let yesAction = UIAlertAction(
-                        title: NSLocalizedString("Yes", comment: ""),
+                        title: L10n.Common.yes,
                         style: .destructive
                     ) { [weak self] _ in
                         self?.deleteAccessCar(licensePlate: licensePlate)
@@ -560,7 +560,7 @@ final class DetailGateAccessViewModel: BaseViewModel {
                     
                     self.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Do you want to remove access?", comment: ""),
+                            title: L10n.Settings.AddressAccess.RemoveAccess.message,
                             message: nil,
                             actions: [noAction, yesAction],
                             style: .alert

@@ -15,7 +15,7 @@ final class PaymentsViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var skeletonContainer: UIView!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
     private var refreshControl = UIRefreshControl()
     
     private let viewModel: PaymentsViewModel
@@ -41,7 +41,7 @@ final class PaymentsViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureTableView()
+        configureUI()
         bind()
     }
     
@@ -108,7 +108,8 @@ final class PaymentsViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
-    private func configureTableView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Payments.AddressSelection.selectAddress
         collectionView.delegate = self
         collectionView.dataSource = self
         

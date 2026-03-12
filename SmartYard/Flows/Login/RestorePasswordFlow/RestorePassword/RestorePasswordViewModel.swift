@@ -57,10 +57,10 @@ final class RestorePasswordViewModel: BaseViewModel {
                     
                     switch nsError.code {
                     case 422, 404:
-                        let message = NSLocalizedString("Invalid contract number entered", comment: "")
+                        let message = L10n.Auth.PasswordRecovery.Error.invalidContract
                         self?.router.trigger(
                             .alert(
-                                title: NSLocalizedString("Error", comment: ""),
+                                title: L10n.Common.error,
                                 message: message
                             )
                         )
@@ -68,7 +68,7 @@ final class RestorePasswordViewModel: BaseViewModel {
                     default:
                         self?.router.trigger(
                             .alert(
-                                title: NSLocalizedString("Error", comment: ""),
+                                title: L10n.Common.error,
                                 message: error.localizedDescription
                             )
                         )

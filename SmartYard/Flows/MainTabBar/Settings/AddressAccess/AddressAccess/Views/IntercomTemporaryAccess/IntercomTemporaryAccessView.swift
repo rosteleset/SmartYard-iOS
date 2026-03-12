@@ -21,8 +21,9 @@ final class IntercomTemporaryAccessView: PMNibLinkableView, HasDisposeBag {
     @IBOutlet private weak var containerView: FullRoundedView!
     
     @IBOutlet private var guestAccessToSuperviewTopConstraint: NSLayoutConstraint!
-    
-    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var codeTitleLabel: UILabel!
+    @IBOutlet private weak var guestAccessTitleLabel: UILabel!
     var isAccessGranted = false {
         didSet {
             openButton.isOn = isAccessGranted
@@ -36,8 +37,16 @@ final class IntercomTemporaryAccessView: PMNibLinkableView, HasDisposeBag {
         }
     }
     
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.AddressAccess.TemporaryAccess.title
+        codeTitleLabel.text = L10n.Settings.AddressAccess.TemporaryAccess.codeTitle
+        guestAccessTitleLabel.text = L10n.Settings.AddressAccess.TemporaryAccess.guestAccessTitle
+        openButton.setTitle(L10n.Common.`open`, for: .normal)
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureUI()
         openButton.mode = AccessService.shared.guestAccessModeOnOnly ? .open : .enable
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
         waitingGuestsQuestionMark.style = .Others.question

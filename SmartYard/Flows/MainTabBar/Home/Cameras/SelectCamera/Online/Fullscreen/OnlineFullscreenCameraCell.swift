@@ -17,7 +17,7 @@ final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        configureUI()
     }
 
     override func prepareForReuse() {
@@ -51,7 +51,7 @@ final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable {
 }
 
 private extension OnlineFullscreenCameraCell {
-    func setupUI() {
+    func configureUI() {
         backgroundColor = .black
         contentView.backgroundColor = .black
 

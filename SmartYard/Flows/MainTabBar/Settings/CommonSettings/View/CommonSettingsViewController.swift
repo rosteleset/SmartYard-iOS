@@ -74,7 +74,17 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     @IBOutlet private weak var deleteAccountButton: UIButton!
     
     @IBOutlet private weak var deleteAccountBottomConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var notificationsLabel: UILabel!
+    @IBOutlet private weak var showNotificationsLabel: UILabel!
+    @IBOutlet private weak var insufficientFundsLabel: UILabel!
+    @IBOutlet private weak var lowBalanceHintLabel: UILabel!
+    @IBOutlet private weak var callsLabel: UILabel!
+    @IBOutlet private weak var speakerphoneLabel: UILabel!
+    @IBOutlet private weak var callKitLabel: UILabel!
+    @IBOutlet private weak var appearanceLabel: UILabel!
+    @IBOutlet private weak var mapCamerasLabel: UILabel!
+    @IBOutlet private weak var addressOrderLabel: UILabel!
+    @IBOutlet private weak var themeLabel: UILabel!
     private let viewModel: CommonSettingsViewModel
     
     private let viewToScrollTo = BehaviorSubject<UIView?>(value: nil)
@@ -99,7 +109,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     
@@ -115,15 +125,30 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         }
     }
     
-    private func configureView() {
+    private func configureUI() {
+        nameTextLabel.text = L10n.Settings.Common.profileNamePlaceholder
+        phoneTextLabel.text = L10n.Settings.Common.profilePhonePlaceholder
+        notificationsLabel.text = L10n.Settings.Common.notifications
+        showNotificationsLabel.text = L10n.Settings.Common.showNotifications
+        insufficientFundsLabel.text = L10n.Settings.Common.notifyAboutInsufficientFunds
+        lowBalanceHintLabel.text = L10n.Settings.Common.lowBalanceNotificationTitle
+        callsLabel.text = L10n.Settings.Common.calls
+        speakerphoneLabel.text = L10n.Settings.Common.speakerphoneByDefault
+        callKitLabel.text = L10n.Settings.Common.useCallkit
+        appearanceLabel.text = L10n.Settings.Common.Appearance.title
+        mapCamerasLabel.text = L10n.Settings.Common.showCamerasOnTheMap
+        addressOrderLabel.text = L10n.Settings.Common.AddressOrder.title
+        addressOrderResetButton.setTitle(L10n.Common.reset, for: .normal)
+        themeLabel.text = L10n.Settings.Common.theme
+        changeAppereanceButton.setTitle(L10n.Settings.Common.Appearance.system, for: .normal)
+        logoutButton.setTitle(L10n.Settings.Common.logoutButton, for: .normal)
+        deleteAccountButton.setTitle(L10n.Settings.Common.deleteAccountButton, for: .normal)
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
 
         callkitQuestionMark.style = .Others.question
         addressOrderQuestionMark.style = .Others.question
-
-        headerView.setText(NSLocalizedString("Common settings", comment: ""))
-
+        headerView.setText(L10n.Settings.Common.title)
         editNameButton.setImage(UIImage(named: "pencil"), for: .normal)
         editNameButton.setImage(UIImage(named: "pencil")?.darkened(), for: .highlighted)
         editNameButton.touchAreaInsets = UIEdgeInsets(inset: 24)
@@ -309,7 +334,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         output.appereanceButtonText
             .drive(
                 onNext: { [weak self] text in
-                    self?.changeAppereanceButton.setTitle(NSLocalizedString(text, comment: ""), for: .normal)
+                    self?.changeAppereanceButton.setTitle(L10n.tr(text), for: .normal)
                 }
             )
             .disposed(by: disposeBag)

@@ -21,7 +21,8 @@ final class RestorePasswordViewController: BaseViewController, LoaderPresentable
     
     @IBOutlet private weak var getCodeButtonBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var getMethodsButtonBottomConstraint: NSLayoutConstraint!
-
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
     var loader: JGProgressHUD?
     
     private let viewModel: RestorePasswordViewModel
@@ -62,6 +63,11 @@ final class RestorePasswordViewController: BaseViewController, LoaderPresentable
     }
 
     private func configureUI() {
+        titleLabel.text = L10n.Auth.PasswordRecovery.restoreAccess
+        subtitleLabel.text = L10n.Auth.PasswordRecovery.subtitle
+        contractTextField.placeholder = L10n.Auth.PasswordRecovery.contractPlaceholder
+        getCodeButton.setTitle(L10n.Auth.PasswordRecovery.sendCodeButton, for: .normal)
+        getRestoreMethodsButton.setTitle(L10n.Auth.PasswordRecovery.chooseMethodButton, for: .normal)
         view.hideKeyboardWhenTapped = true
         getRestoreMethodsButton.titleLabel?.textAlignment = .center
         

@@ -52,7 +52,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         configureCollectionView()
         bind()
     }
@@ -228,8 +228,8 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
         }
     }
     
-    private func configureView() {
-        headerView.text = NSLocalizedString("My addresses", comment: "")
+    private func configureUI() {
+        headerView.text = L10n.Home.Addresses.title
         
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners

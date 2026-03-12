@@ -26,6 +26,8 @@
                 <outlet property="sendRequestButton" destination="V11-jX-2gX" id="iWy-Bk-m9x"/>
                 <outlet property="tableView" destination="NCc-qc-mWX" id="CDG-SS-qEf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="subtitleLabel" destination="aJH-T6-aZr" id="Zi4-zj-lGe"/>
+                <outlet property="titleLabel" destination="drb-lf-7Tm" id="XSn-pU-i0o"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

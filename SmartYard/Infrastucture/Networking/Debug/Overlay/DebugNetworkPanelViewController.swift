@@ -41,14 +41,13 @@ final class DebugNetworkPanelViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        configureUI()
         syncFromState()
         bindActions()
     }
 
     // MARK: - Setup
-
-    private func setupUI() {
+    private func configureUI() {
         view.backgroundColor = .clear
 
         containerView.backgroundColor = UIColor.black.withAlphaComponent(0.85)

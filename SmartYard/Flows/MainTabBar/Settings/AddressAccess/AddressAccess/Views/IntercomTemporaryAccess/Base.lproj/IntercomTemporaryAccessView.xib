@@ -146,6 +146,9 @@
                 <outlet property="openButton" destination="enN-rb-QVd" id="Y2k-HD-7mO"/>
                 <outlet property="refreshButton" destination="1Ew-Yt-rLv" id="ZOT-Zv-Eoj"/>
                 <outlet property="waitingGuestsQuestionMark" destination="0Ij-0C-KKs" id="epR-MY-Q0q"/>
+                <outlet property="titleLabel" destination="tfD-m2-Zi6" id="YSC-7z-lXA"/>
+                <outlet property="codeTitleLabel" destination="puz-1u-oTr" id="Blp-9D-v7H"/>
+                <outlet property="guestAccessTitleLabel" destination="7lW-Yj-xxP" id="jwD-OO-fEW"/>
             </connections>
             <point key="canvasLocation" x="42.028985507246382" y="-88.727678571428569"/>
         </view>

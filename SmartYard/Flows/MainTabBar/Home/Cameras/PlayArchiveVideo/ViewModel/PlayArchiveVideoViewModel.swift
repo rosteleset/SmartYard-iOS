@@ -48,7 +48,7 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )
@@ -145,13 +145,13 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
                 onNext: { [weak self] responseData in
                     // Если нет урла - показываем "видео готовится"
                     guard let stringUrl = responseData.url else {
-                        let msg = NSLocalizedString("As soon as the process is over...", comment: "")
+                        let msg = L10n.Camera.Archive.Export.processingMessage
                         
-                        let okAction = UIAlertAction(title: NSLocalizedString("Thank you", comment: ""), style: .default, handler: nil)
+                        let okAction = UIAlertAction(title: L10n.Camera.Archive.Export.successTitle, style: .default, handler: nil)
                         
                         self?.router.trigger(
                             .dialog(
-                                title: NSLocalizedString("Video in progress", comment: ""),
+                                title: L10n.Camera.Archive.Export.processingTitle,
                                 message: msg,
                                 actions: [okAction]
                             )
@@ -167,7 +167,7 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
                             
                             self?.router.trigger(
                                 .alert(
-                                    title: NSLocalizedString("Link to video copied to clipboard", comment: ""),
+                                    title: L10n.Camera.Archive.Export.linkCopiedMessage,
                                     message: nil
                                 )
                             )

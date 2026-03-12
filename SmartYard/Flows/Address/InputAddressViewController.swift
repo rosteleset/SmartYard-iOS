@@ -199,11 +199,13 @@ final class InputAddressViewController: BaseViewController {
     }
     
     private func configureUI() {
-        cityTextField.setPlaceholder(string: NSLocalizedString("City", comment: ""))
-        streetTextField.setPlaceholder(string: NSLocalizedString("Street", comment: ""))
-        buildingTextField.setPlaceholder(string: NSLocalizedString("Building", comment: ""))
-        flatTextField.setPlaceholder(string: NSLocalizedString("Appartment", comment: ""))
-        headerView.setText(NSLocalizedString("Input your address", comment: ""))
+        checkAvailableServicesButton.setTitle(L10n.Address.Entry.checkAvailableServicesButton, for: .normal)
+        qrCodeButton.setTitle(L10n.Address.Entry.iHaveQrCodeButton, for: .normal)
+        cityTextField.setPlaceholder(string: L10n.Address.Form.city)
+        streetTextField.setPlaceholder(string: L10n.Address.Form.street)
+        buildingTextField.setPlaceholder(string: L10n.Address.Form.building)
+        flatTextField.setPlaceholder(string: L10n.Address.Form.apartment)
+        headerView.setText(L10n.Address.Entry.title)
 
         qrCodeButton.setLeftAlignment()
         

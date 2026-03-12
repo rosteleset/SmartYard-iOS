@@ -60,22 +60,22 @@ final class SmartYardActionModeButton: UIButton {
 
         switch mode {
         case .open:
-            setTitle(NSLocalizedString("Open", comment: ""), for: .normal)
-            setTitle(NSLocalizedString("Opened", comment: ""), for: .disabled)
+            setTitle(L10n.Common.`open`, for: .normal)
+            setTitle(L10n.Common.opened, for: .disabled)
             
             setTitleColor(.SmartYard.blue.darken(by: 0.1), for: .highlighted)
 
         case .enable:
-            setTitle(NSLocalizedString("Enable", comment: ""), for: .normal)
-            setTitle(NSLocalizedString("Disable", comment: ""), for: .selected)
-            setTitle(NSLocalizedString("Disable", comment: ""), for: [.highlighted, .selected])
+            setTitle(L10n.Common.enable, for: .normal)
+            setTitle(L10n.Common.disable, for: .selected)
+            setTitle(L10n.Common.disable, for: [.highlighted, .selected])
             
             setTitleColor(.SmartYard.blue.darken(by: 0.1), for: .highlighted)
             setTitleColor(.SmartYard.secondBackgroundColor.darken(by: 0.1), for: [.highlighted, .selected])
 
         case .reset:
-            setTitle(NSLocalizedString("Reset", comment: ""), for: .normal)
-            setTitle(NSLocalizedString("Reset done", comment: ""), for: .disabled)
+            setTitle(L10n.Common.reset, for: .normal)
+            setTitle(L10n.Common.resetDone, for: .disabled)
             
             setTitleColor(.SmartYard.blue.darken(by: 0.1), for: .highlighted)
         }

@@ -16,7 +16,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var continueButton: UIButton!
     
     @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
     private let viewModel: UserNameViewModel
     private let preloadedName: APIClientName?
     
@@ -35,7 +35,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         configureRxKeyboard()
         bind()
     }
@@ -46,7 +46,9 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         view.isUserInteractionEnabled = true
     }
     
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Auth.UserName.howCanICallYou
+        continueButton.setTitle(L10n.Common.next, for: .normal)
         let gesture = UITapGestureRecognizer()
         view.addGestureRecognizer(gesture)
 
@@ -69,13 +71,12 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
-        nameTextField.setPlaceholder(string: NSLocalizedString("First Name", comment: ""), isRequiredField: true)
+        nameTextField.setPlaceholder(string: L10n.Profile.firstName, isRequiredField: true)
         nameTextField.delegate = self
         nameTextField.text = preloadedName?.name
         nameTextField.sendActions(for: .allEditingEvents)
         nameTextField.configure(with: validators.first)
-
-        middleNameTextField.setPlaceholder(string: NSLocalizedString("Patronymic", comment: ""))
+        middleNameTextField.setPlaceholder(string: L10n.Profile.patronymic)
         middleNameTextField.delegate = self
         middleNameTextField.text = preloadedName?.patronymic
         middleNameTextField.sendActions(for: .allEditingEvents)

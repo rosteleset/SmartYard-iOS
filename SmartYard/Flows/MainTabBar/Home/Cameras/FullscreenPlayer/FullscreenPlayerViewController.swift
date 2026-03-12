@@ -125,7 +125,7 @@ final class FullscreenPlayerViewController: UIViewController, HasDisposeBag {
         }
         
         player.seek(offset)
-        let secText = NSLocalizedString("sec", comment: "")
+        let secText = L10n.Common.Time.secondsShort
         let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) \(secText)") : UILabel(text: "-\(abs(offset)) \(secText)")
         label.font = UIFont(name: "System", size: 16)
         label.font = label.font.bold

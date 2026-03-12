@@ -17,7 +17,8 @@ final class SelectProviderViewController: BaseViewController, LoaderPresentable 
     @IBOutlet private weak var selectProviderButton: WhiteButtonWithBorder!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
     var loader: JGProgressHUD?
     
     private let viewModel: SelectProviderViewModel
@@ -44,6 +45,10 @@ final class SelectProviderViewController: BaseViewController, LoaderPresentable 
     }
 
     private func configureUI() {
+        titleLabel.text = L10n.Auth.ProviderSelection.chooseAProvider
+        subtitleLabel.text = L10n.Auth.ProviderSelection.subtitle
+        providerTextField.placeholder = L10n.Auth.ProviderSelection.searchPlaceholder
+        selectProviderButton.setTitle(L10n.Common.next, for: .normal)
         view.hideKeyboardWhenTapped = true
         selectProviderButton.titleLabel?.textAlignment = .center
         

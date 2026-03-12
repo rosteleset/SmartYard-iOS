@@ -50,12 +50,12 @@ final class AddressDeletionViewModel: BaseViewModel {
                     let reason: String = {
                         switch deletionReason {
                         case .wantToBreakTheContract:
-                            return NSLocalizedString("I want to cancel my contract", comment: "")
+                            return L10n.Settings.AddressDeletion.Reason.terminateContract
                             
                         case .other:
                             let trimmed = (customDescription ?? "").trimmed
                             
-                            return trimmed.isEmpty ? NSLocalizedString("Customer didn't provide a reason", comment: "") : trimmed
+                            return trimmed.isEmpty ? L10n.Settings.AddressDeletion.Reason.unspecified : trimmed
                         }
                     }()
                     

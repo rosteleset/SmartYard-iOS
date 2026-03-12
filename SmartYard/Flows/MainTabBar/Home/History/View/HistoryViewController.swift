@@ -40,7 +40,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     
     fileprivate let viewModel: HistoryViewModel
     internal var eventsFilter = BehaviorRelay<EventsFilter>(value: .all)
-    private var apptsFilterString = BehaviorRelay<String>(value: NSLocalizedString("all", comment: ""))
+    private var apptsFilterString = BehaviorRelay<String>(value: L10n.History.Filter.allOption)
     private let apptsFilter = BehaviorRelay<[Int]>(value: [])
     
     private let loadDayTriger = PublishSubject<Date>()
@@ -112,9 +112,15 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         scrollUpButton.view.clipsToBounds = false
     }
     
+    private func configureUI() {
+        eventsFilterButton.setTitle(L10n.History.Filter.allButton, for: .normal)
+        appartmentFilterButton.setTitle(L10n.History.Filter.apptAllButton, for: .normal)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        fakeNavBar.setText(NSLocalizedString("Addresses", comment: ""))
+        configureUI()
+        fakeNavBar.setText(L10n.Tab.addresses)
         setupShadows()
         setupTableView()
         bind()
@@ -168,7 +174,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
             .drive(
                 onNext: { [weak self] address in
                     self?.headerView.setText(
-                        NSLocalizedString("Events log", comment: ""),
+                        L10n.History.title,
                         subtitle: address ?? ""
                     )
                 }
@@ -279,8 +285,8 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     }
     
     @IBAction private func tapAppartments(_ sender: UIView) {
-        let flatLabels = [NSLocalizedString("All apts", comment: "")] +
-            viewModel.flatNumbers.map { NSLocalizedString("Appartment", comment: "") + " " + String($0) }
+        let flatLabels = [L10n.History.Filter.allApartments] +
+            viewModel.flatNumbers.map { L10n.Address.Form.apartment + " " + String($0) }
         let itemsId = [""] + viewModel.flatIds.map { String($0) }
         
         let selectedRow = { () -> Int in
@@ -297,12 +303,12 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
             onSelect: { _, selectedRow in
                 if selectedRow == 0 {
                     self.appartmentFilterButton.setTitle(
-                        NSLocalizedString("Appartment, all", comment: ""),
+                        L10n.History.Filter.allInApartment,
                         for: .normal
                     )
                 } else {
                     self.appartmentFilterButton.setTitle(
-                        NSLocalizedString("Appartment", comment: "")
+                        L10n.Address.Form.apartment
                         + ", \(self.viewModel.flatNumbers[selectedRow - 1])",
                         for: .normal
                     )

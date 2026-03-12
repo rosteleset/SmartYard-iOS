@@ -217,6 +217,12 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="requestButton" destination="tO8-Xk-JaM" id="w8j-VT-CM4"/>
+                <outlet property="titleLabel" destination="mNi-2b-TlW" id="ALr-CF-QPS"/>
+                <outlet property="envelopeHintLabel" destination="YxH-AT-uxw" id="6Yw-fu-NhF"/>
+                <outlet property="qrCodeTitleLabel" destination="paM-th-zUQ" id="LOv-2m-pbU"/>
+                <outlet property="qrCodeHintLabel" destination="bVA-4d-BdL" id="rhT-ox-Ykv"/>
+                <outlet property="useLabel" destination="a1P-Cb-nhI" id="B0d-gY-j2S"/>
+                <outlet property="activationHintLabel" destination="b5M-ID-Ktm" id="oc0-KO-67I"/>
             </connections>
             <point key="canvasLocation" x="13.043478260869566" y="-109.82142857142857"/>
         </view>

@@ -82,6 +82,7 @@
             <connections>
                 <outlet property="arrowImageView" destination="cUS-jh-sG1" id="59V-fC-XaF"/>
                 <outlet property="cameraCountLabel" destination="mPJ-dN-ej9" id="Hyu-uK-2nH"/>
+                <outlet property="camerasLabel" destination="aQK-bW-8un" id="RB4-HF-R64"/>
             </connections>
             <point key="canvasLocation" x="-25.362318840579711" y="113.50446428571428"/>
         </collectionViewCell>

@@ -15,6 +15,16 @@ final class OnboardingBaseView: PMNibLinkableView {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subTitleLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.Onboarding.Slide.videoSurveillance
+        subTitleLabel.text = L10n.Onboarding.Slide.Awareness.subtitle
+    }
+
     func configure(with pageType: OnboardingPage) {
         imageView.image = pageType.image
         titleLabel.text = pageType.titleText

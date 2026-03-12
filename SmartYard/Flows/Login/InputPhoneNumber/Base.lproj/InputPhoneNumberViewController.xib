@@ -22,6 +22,7 @@
                 <outlet property="phoneTextView" destination="Soq-Bs-M2f" id="UFc-xt-xgK"/>
                 <outlet property="selectedProviderNameLabel" destination="mFk-jt-akI" id="dkS-M4-AiV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="5mZ-NZ-IAo" id="JMW-a4-cFu"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

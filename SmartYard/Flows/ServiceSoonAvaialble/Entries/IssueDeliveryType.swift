@@ -16,8 +16,8 @@ enum IssueDeliveryType: String, Codable {
     
     var changeTypeActionText: String {
         switch self {
-        case .office: return NSLocalizedString("Call a courier", comment: "")
-        case .courier: return NSLocalizedString("I'll come to the office myself", comment: "")
+        case .office: return L10n.Address.Confirmation.Delivery.courierOption
+        case .courier: return L10n.Address.Confirmation.Delivery.officeOption
         }
     }
     
@@ -25,9 +25,9 @@ enum IssueDeliveryType: String, Codable {
         switch self {
         case .office:
             // swiftlint:disable:next line_length
-            return NSLocalizedString("To confirm the address, you need to bring a utility bill no older than three months to our nearest office.", comment: "")
+            return L10n.Address.Confirmation.Office.hint
         case .courier:
-            return NSLocalizedString("Wait for the courier at {value} and take a photo of the QR code he brings.", comment: "")
+            return L10n.Address.Confirmation.Courier.hintFormat
         }
     }
     
@@ -46,8 +46,8 @@ enum IssueDeliveryType: String, Codable {
         var params: [String: String] = ["number": "10941"]
         
         switch self {
-        case .office: params["value"] = NSLocalizedString("Pickup", comment: "")
-        case .courier: params["value"] = NSLocalizedString("Courier", comment: "")
+        case .office: params["value"] = L10n.Address.Confirmation.Delivery.pickupTitle
+        case .courier: params["value"] = L10n.Address.Confirmation.Delivery.courierTitle
         }
         
         return [params]
@@ -55,8 +55,8 @@ enum IssueDeliveryType: String, Codable {
     
     var deliveryComment: String {
         switch self {
-        case .office: return NSLocalizedString("The delivery method has changed. The client will come to the office.", comment: "")
-        case .courier: return NSLocalizedString("The delivery method has changed. Prepare a package for the courier.", comment: "")
+        case .office: return L10n.Address.Confirmation.Delivery.officeChangeMessage
+        case .courier: return L10n.Address.Confirmation.Delivery.courierChangeMessage
         }
     }
     

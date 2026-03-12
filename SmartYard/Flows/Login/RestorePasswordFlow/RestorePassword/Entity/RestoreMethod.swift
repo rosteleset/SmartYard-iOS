@@ -28,18 +28,18 @@ enum RestoreMethod {
     }
     
     var displayedTextHasBeenSent: String {
-        let baseText = NSLocalizedString("Confirmation code has been sent to your ", comment: "")
+        let baseText = L10n.Auth.PasswordRecovery.Method.titlePrefix
         switch self {
-        case let .byEmail(_, contact): return baseText + NSLocalizedString("email", comment: "") + " \(contact)"
-        case let .byPhoneNumber(_, contact): return baseText + NSLocalizedString("phone", comment: "") + " \(contact)"
+        case let .byEmail(_, contact): return baseText + L10n.Auth.PasswordRecovery.Method.email + " \(contact)"
+        case let .byPhoneNumber(_, contact): return baseText + L10n.Auth.PasswordRecovery.Method.phone + " \(contact)"
         }
     }
     
     var displayedTextShouldSent: String {
-        let baseText = NSLocalizedString("Send recovery code to ", comment: "")
+        let baseText = L10n.Auth.PasswordRecovery.Method.sendCodePrefix
         switch self {
-        case let .byEmail(_, contact): return baseText + NSLocalizedString("email", comment: "") + " \(contact)"
-        case let .byPhoneNumber(_, contact): return baseText + NSLocalizedString("phone", comment: "") + " \(contact)"
+        case let .byEmail(_, contact): return baseText + L10n.Auth.PasswordRecovery.Method.email + " \(contact)"
+        case let .byPhoneNumber(_, contact): return baseText + L10n.Auth.PasswordRecovery.Method.phone + " \(contact)"
         }
     }
     

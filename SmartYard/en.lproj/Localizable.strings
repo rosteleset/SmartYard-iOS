@@ -5,252 +5,610 @@
   Created by Александр Васильев on 11.01.2023.
   Copyright © 2023 LanTa. All rights reserved.
 */
-"minutes" = "minutes";
-"Open" = "Open";
-"Opened" = "Opened";
-"Cancel" = "Cancel";
-"Settings" = "Settings";
-"Ignore" = "Ignore";
-"Error" = "Error";
-"Back" = "Back";
-"Smart intercom" = "Smart intercom";
-"Video surveillance" = "Video surveillance";
-"Internet" = "Internet";
-"Cable TV" = "Cable TV";
-"Wired Phone" = "Wired Phone";
-"Mobile Phone" = "Mobile Phone";
-"Creating a task" = "Creating a task";
-"No service selected" = "No service selected";
-"Via Courier" = "Via Courier";
-"In Office" = "In Office";
-"City" = "City";
-"Street" = "Street";
-"Building" = "Building";
-"Appartment" = "Appartment";
-"To use this feature, go to settings and grant access to the camera" = "To use this feature, go to settings and grant access to the camera";
-"Can't access camera" = "Can't access camera";
-"appartment" = "appartment";
-"Addresses" = "Addresses";
-"Notifications" = "Notifications";
-"Chat" = "Chat";
-"Pay" = "Pay";
-"Menu" = "Menu";
-"First, log in to the application, and then try to add the address again" = "First, log in to the application, and then try to add the address again";
-"Incoming call" = "Incoming call";
-"Call a courier" = "Call a courier";
-"I'll come to the office myself" = "I'll come to the office myself";
-"To confirm the address, you need to bring a utility bill no older than three months to our nearest office." = "Application accepted. Expect a call from an operator within one business day.";
-"Wait for the courier at {value} and take a photo of the QR code he brings." = "Wait for the courier at {value} and take a photo of the QR code he brings.";
-"Pickup" = "Pickup";
-"Courier" = "Courier";
-"The delivery method has changed. The client will come to the office." = "The delivery method has changed. The client will come to the office.";
-"The delivery method has changed. Prepare a package for the courier." = "The delivery method has changed. Prepare a package for the courier.";
-"To use this feature, go to settings and grant access to the camera" = "To use this feature, go to settings and grant access to the camera";
-"First Name" = "First Name";
-"Patronymic" = "Patronymic";
-"Service not available yet" = "Service %@ not available yet";
-"Creating a ticket" = "Creating a ticket";
-"Guest information has been successfully sent!" = "Guest information has been successfully sent!";
-"Yes" = "Yes";
-"Are you sure?" = "Are you sure?";
-"Do you want to remove access?" = "Do you want to remove access?";
-"Enable" = "Enable";
-"Disable" = "Disable";
-"guestAccessAlertText" = "To everyone who dials your apartment number on the intercom, the door will open automatically for 60 minutes. After this time, the intercom will return to standard mode automatically.";
-"Enable guest access for an hour?" = "Enable guest access for an hour?";
-"Wrong number format" = "Wrong number format";
-"Delete" = "Delete";
-"Service not connected" = "Service %@ not connected";
-"Everything's under control" = "Everything's under control";
-"Smart yard" = "Smart yard";
-"Be aware of everything that happens near the house" = "Be aware of everything that happens near the house";
-"Manage services and pay for them via the app" = "Manage services and pay for them via the app";
-"Control your intercom, gate or barrier from your smartphone" = "Control your intercom, gate or barrier from your smartphone";
-"I want to cancel my contract" = "I want to cancel my contract";
-"Customer didn't provide a reason" = "Customer didn't provide a reason";
-"Specify a reason" = "Specify a reason";
-"Exiting the application" = "Exiting the application";
-"Are you sure you want to log out of your account?" = "Are you sure you want to log out of your account?";
-"Account deleting" = "Account deleting";
-"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Are you sure you want to delete your account? All previously added addresses will be deleted";
-"Number of contract" = "Number of contract";
-"Address settings" = "Address settings";
-"Access setting" = "Access setting";
-"Open web version of personal account" = "Open web version of personal account";
-"Attention" = "Attention";
-"You have been authorized on another device" = "You have been authorized on another device";
-"Call to intercom" = "Call to intercom";
-"Peephole" = "Peephole";
-"Peephole on" = "Peephole on";
-"Connecting..." = "Connecting...";
-"Decline" = "Decline";
-"Video" = "Video";
-"Conversation" = "Conversation";
-"Call completed" = "Call completed";
-"There will be no outgoing audio on this call." = "There will be no outgoing audio on this call.";
-"To make it appear in your next calls, please grant access to the microphone in the settings" = "To make it appear in your next calls, please grant access to the microphone in the settings";
-"No microphone access" = "No microphone access";
-"We need to make sure that the number is indeed yours." = "We need to make sure\n that the number %@ is indeed yours.";
-"Confirmation code has been sent to your " = "Сonfirmation code has been sent to your ";
-"Send recovery code to " = "Send recovery code to ";
-"email" = "email";
-"phone" = "phone";
-"Failed to load provider list, please try again later." = "Failed to load provider list, please try again later.";
-"Contract number" = "Contract number";
-"Password" = "Password";
-"Create" = "Create";
-"Create a request for restoration by contract number?" = "Create a request for restoration by contract number?";
-"You are requesting a code too often. Please try again later" = "You are requesting a code too often. Please try again later";
-"Missing confirmation number" = "Missing confirmation number";
-"Enter code from SMS sent to number" = "Enter code from SMS\nsent to number ";
-"Invalid contract number entered" = "Invalid contract number entered";
-"The password for the specified entry has been sent to the specified" = "The password for the specified entry has been sent to the specified";
-"To use this feature, go to settings and grant access to the camera" = "To use this feature, go to settings and grant access to the camera";
-"Can't access camera" = "Can't access camera";
-"Update" = "Update";
-"A new version of the application is available" = "A new version of the application is available";
-"App version out of date" = "App version out of date";
-"To continue using the app, please update it" = "To continue using the app, please update it";
-"sec" = "sec";
-"Archive" = "Archive";
-"Online" = "Online";
-"Select Appearance" = "Select Appearance";
-"Please choose your preferred appearance theme." = "Please choose your preferred appearance theme.";
-"System" = "System";
-"Light" = "Light";
-"Dark" = "Dark";
-"Thank you" = "Thank you";
-"Video in progress" = "Video in progress";
-"As soon as the process is over..." = "As soon as the process is over, you will receive a message in the chat.\nDepending on the length of the video, the download process can take anywhere from a few minutes to several hours.";
-"Link to video copied to clipboard" = "Link to video copied to clipboard";
-"Video dated" = "Video dated";
-"Opening with a key" = "Opening with a key";
-"Opening from the app" = "Opening from the app";
-"Opening with Face-ID" = "Opening with Face-ID";
-"Opening with code" = "Opening with code";
-"Gate opening on call" = "Gate opening on call";
-"Gate opening by numberplate" = "Gate opening by numberplate";
-"Unknown event" = "Unknown event";
-"Answered call" = "Answered call";
-"Missed call" = "Missed call";
-"Image missing" = "Image missing";
-"If you select Deny..." = "If you select 'Deny', we will delete your registered face that our algorithms falsely triggered.\nAll faces registered in the system can be found in Address Settings -> Access Control -> Face Keyless Entry.";
-"If you select Allow..." = "If you select 'Allow', we will add a photo from this event for further face recognition of a visitor.\nAll faces registered in the system can be found in Address Settings -> Access Control -> Face Keyless Entry.";
-"all" = "all";
-"All" = "All";
-"Addresses" = "Addresses";
-"All apts" = "All apts";
-"Appartment" = "Appartment";
-"Appartment, all" = "Appartment, all";
-"Events" = "Events";
-"Intercom" = "Intercom";
-"Key" = "Key";
-"Face-ID" = "Face-ID";
-"Opening on call" = "Opening on call";
-"Opening by app" = "Opening by app";
-"Opening by code" = "Opening by code";
-"Unable to open chat page." = "Unable to open chat page.";
-"Unable to open payment page." = "Unable to open payment page.";
-"Deposit" = "Deposit";
-"Done" = "Done";
-"Your balance is topped up" = "Your balance is topped up";
-"Payment has failed" = "Payment has failed";
-"Recommended" = "Recommended";
-"Note" = "Note";
-"Request submitted" = "Request submitted";
-"We will call you shortly" = "We will call you shortly";
-"Request a call back" = "Request a call back";
-"Make a phone call" = "Make a phone call";
-"Map" = "Map";
-"We need to make sure" = "We need to make sure\nthat the number +%@ is really yours.";
-"Enter the last 4 digits of the number\nfrom which the call will come to the number +%@" = "Enter the last 4 digits of the number\nfrom which the call will come to the number +%@";
-"Enter the code from SMS\nsent to +%@" = "Enter the code from SMS\nsent to +%@";
-"Full name: %@\Phone: %@\Address entered by user: %@" = "Full name: %@\Phone: %@\Address entered by user: %@";
-"Contract number unknown" = "Contract number unknown";
-"Hello, I would like to change the tariff for the service \"%(X)\" on the contract \"%(Y)\"" = "Hello, I would like to change the tariff for the service \"%(X)\" on the contract \"%(Y)\"";
-"Hello, I would like to connect the service \"%(X)\" to the contract \"%(Y)\"" = "Hello, I would like to connect the service \"%(X)\" to the contract \"%(Y)\"";
-"Hello, the \"%(X)\" service is not available at my address, but I want to use it on the \"%(Y)\" contract" = "Hello, the \"%(X)\" service is not available at my address, but I want to use it on the \"%(Y)\" contract";
-"Service \"%@\" is connected" = "Service \"%@\" is connected";
-"Create a request" = "Create a request";
-"Request submitted" = "Request submitted";
-"We will contact you within 24 hours" = "We will contact you within 24 hours";
-"Public cams" = "Public cams";
-"Request a record" = "Request a record";
-"Incidents" = "Incidents";
-"Addresses settings" = "Addresses settings";
-"Common settings" = "Common settings";
 
-// Errors
-"noConnectionError"  = "No connection";
-"An error occurred while executing the request" = "An error %@ occurred while executing the request";
-"Access token not found. Request cannot be completed" = "Access token not found. Request cannot be completed";
-"Client id not found. Request cannot be completed" = "Client id not found. Request cannot be completed";
-"User is already logged in" = "User is already logged in";
-"House id not found. Request cannot be completed" = "House id not found. Request cannot be completed";
-"Current user's phone number not found" = "Current user's phone number not found";
-"The contract number was not found. It is impossible to complete the request" = "Не найден номер договора. Выполнить запрос невозможно";
-"Unable to restore application state" = "Unable to restore application state";
-"Push notifications are disabled for the application at the system level" = "Push notifications are disabled for the application at the system level";
-"Push notifications are disabled in the app settings" = "Push notifications are disabled in the app settings";
-"Missing FCM token" = "Missing FCM token";
-"InstanceID not initialized" = "InstanceID not initialized";
-"Internet connection required to change user" = "Internet connection required to change user";
-"No access to contacts" = "No access to contacts";
-"No camera access" = "No camera access";
-"No microphone access" = "No microphone access";
-"self destroyed" = "self destroyed";
-"Unknown error" = "Unknown error";
-"Failed to setup camera" = "Failed to setup camera";
-"Failed to represent server response as base model" = "Failed to represent server response as base model";
-"Error mapping the Data field, or it is missing with a code other than 204" = "Error mapping the Data field, or it is missing with a code other than 204";
-"Date of record" = "Date of record";
-"Time" = "Time";
-"Duration" = "Duration";
-"h" = "h";
-"m" = "m";
-"Allow" = "Allow";
-"Deny" = "Deny";
-"Enable" = "Enable";
-"Disable" = "Disable";
-"Reset" = "Reset";
-"Reset address order?" = "Reset address order?";
-"This will restore the default sorting." = "Reset address order?";
-"By car number" = "By car number";
-"By phone number" = "By phone number";
-"All cars" = "All cars";
-"All people" = "All people";  
-"Add car" = "Add car";
-"Add person" = "Add person";
-"TimeLeftFormat" = "%@ left";
-"еxpired" = "еxpired";
-"Add" = "Add";
-"unlimited" = "unlimited";
-"Address confirmation" = "Address confirmation";
-"How would it be more convenient for you to do this?" = "How would it be more convenient for you to do this?";
-"Input your address" = "Input your address";
-"Available services" = "Available services";
-"Do you have an agreement with the operator?" = "Do you have an agreement with the operator?";
-"Enter the number and password of the contract associated with this address and manage services from this application." = "Enter the number and password of the contract associated with this address and manage services from this application.";
-"Select camera" = "Select camera";
-"Events log" = "Events log";
-"Common settings" = "Common settings";
-"Addresses settings" = "Addresses settings";
-"Request a record" = "Request a record";
-"Public cams" = "Public cams";
-"Search" = "Search";
-"VPN detected. The application may work unstable." = "VPN detected. The application may work unstable.";
-"List Empty Online List" = "To add an address, click on \"+\" at the top of the screen.
-If the added address does not appear, please wait a few minutes. The list will update automatically.";
-"List Empty Offline List" = "Looks like there's no data yet or it hasn't been saved.";
-"offline.alert.switch_mode" = "Tap \"OK\" to return to online mode.\nTap \"Cancel\" to stay in offline mode.";
-"offline.alert.no_connection_title" = "No connection!";
-"offline.message.connection_lost" = "It looks like the connection was lost or the server is experiencing issues.";
-"offline.message.server_unavailable" = "You can’t exit offline mode right now — the server is unavailable. Please try again later.";
-"offline.hint.swipe_to_exit" = "You are currently in offline mode. To exit it, swipe down from the top of the screen.";
-"offline.message.connection_restored" = "Hooray! The connection is back!";
-"My addresses" = "My addresses";
-"guestAccessAlertText" = "For the next 60 minutes, the door will open automatically for anyone dialing your apartment number on the intercom. After this time, the intercom will automatically return to its standard mode.";
-"First address cameras" = "First address cameras";
-"First address events" = "First address events";
-"First address access" = "First address access";
-"Phone number copied to clipboard" = "Phone number copied to clipboard";
+/* MARK: - ADDRESS */
+
+"address.confirmation.subtitle" = "How would it be more convenient for you to do this?";
+"address.confirmation.title" = "Address confirmation";
+
+"address.confirmation.courier.activationHint" = "You will immediately gain access to all the functionality of the Smart Intercom app.";
+"address.confirmation.courier.envelopeHint" = "Within a week, the courier will bring a secret envelope";
+"address.confirmation.courier.hintFormat" = "Wait for the courier at {value} and take a photo of the QR code he brings.";
+"address.confirmation.courier.leaveARequest" = "Leave a request";
+"address.confirmation.courier.qrCodeHint" = "It will be inside the envelope";
+"address.confirmation.courier.requestButton" = "Super! Leave a request";
+"address.confirmation.courier.scanTheQrCode" = "Scan the QR code";
+"address.confirmation.courier.use" = "Use!";
+
+"address.confirmation.delivery.courierChangeMessage" = "The delivery method has changed. Prepare a package for the courier.";
+"address.confirmation.delivery.courierOption" = "Call a courier";
+"address.confirmation.delivery.courierShort" = "Via Courier";
+"address.confirmation.delivery.courierTitle" = "Courier";
+"address.confirmation.delivery.officeChangeMessage" = "The delivery method has changed. The client will come to the office.";
+"address.confirmation.delivery.officeOption" = "I'll come to the office myself";
+"address.confirmation.delivery.officeShort" = "In Office";
+"address.confirmation.delivery.pickupTitle" = "Pickup";
+
+"address.confirmation.office.hint" = "Application accepted. Expect a call from an operator within one business day.";
+"address.confirmation.office.iLlDoSoButton" = "I'll do so";
+"address.confirmation.office.instructions" = "Visit our nearest office with a utility bill for this apartment, and we will immediately activate the smart intercom and video surveillance service.";
+
+"address.entry.checkAvailableServicesButton" = "Check available services";
+"address.entry.iHaveQrCodeButton" = "I have QR-code";
+"address.entry.title" = "Input your address";
+
+"address.form.apartment" = "Appartment";
+"address.form.apartmentValue" = "appartment";
+"address.form.building" = "Building";
+"address.form.city" = "City";
+"address.form.street" = "Street";
+
+"address.qrCode.loginRequiredMessage" = "First, log in to the application, and then try to add the address again";
+
+"address.qrScan.pointYourCameraAtTheQrCode" = "Point your camera at the QR code";
+
+/* MARK: - APP */
+
+"app.update.action" = "Update";
+"app.update.availableTitle" = "A new version of the application is available";
+"app.update.requiredMessage" = "To continue using the app, please update it";
+"app.update.requiredTitle" = "App version out of date";
+
+/* MARK: - AUTH */
+
+"auth.callVerification.callButton" = "Call";
+"auth.callVerification.callInstructionPrefix" = "Make a free call to the number";
+"auth.callVerification.callInstructionSuffix" = "so we can confirm \nthat this is your number";
+"auth.callVerification.confirmPhoneTitle" = "We need to make sure\nthat +79025308094 really belongs to you.";
+"auth.callVerification.confirmPhoneTitleFormat" = "We need to make sure\nthat +%@ really belongs to you.";
+"auth.callVerification.editPhoneButton" = "Correct phone number";
+"auth.callVerification.phoneNumberPlaceholder" = "+7 (1234) 12-34-56";
+
+"auth.codeRateLimit.message" = "You are requesting a code too often. Please try again later";
+
+"auth.contractLogin.contractNumberPlaceholder" = "Contract number";
+"auth.contractLogin.createButton" = "Create";
+"auth.contractLogin.forgotCredentialsButton" = "I don't remember anything";
+"auth.contractLogin.forgotPasswordButton" = "Forget password";
+"auth.contractLogin.hasOperatorAgreementTitle" = "Do you have an agreement with the operator?";
+"auth.contractLogin.iDonTHaveAContractButton" = "I don't have a contract";
+"auth.contractLogin.loginButton" = "Login";
+"auth.contractLogin.passwordPlaceholder" = "Password";
+"auth.contractLogin.restoreByContractPrompt" = "Create a request for restoration by contract number?";
+"auth.contractLogin.subtitle" = "Enter the number and password of the contract associated with this address and manage services from this application.";
+
+"auth.flashCall.enterLastDigitsTitleFormat" = "Enter the last 4 digits of the number\nfrom which the call will come to the number +%@";
+
+"auth.passwordRecovery.chooseMethodButton" = "Get available methods";
+"auth.passwordRecovery.codeSentMessage" = "The password for the specified entry has been sent to the specified";
+"auth.passwordRecovery.contractPlaceholder" = "Contract number";
+"auth.passwordRecovery.restoreAccess" = "Restore access";
+"auth.passwordRecovery.sendCodeButton" = "Get verification code";
+"auth.passwordRecovery.subtitle" = "Please enter your contract number and indicate the email or phone number you used when registering the contract";
+
+"auth.passwordRecovery.code.resendButton" = "Resend code";
+"auth.passwordRecovery.code.resendHint" = "You can resend the code after";
+"auth.passwordRecovery.code.sentToPhoneTitle" = "Confirmation code sent to +79025308094";
+"auth.passwordRecovery.code.timerValue" = "01:00";
+
+"auth.passwordRecovery.error.invalidContract" = "Invalid contract number entered";
+
+"auth.passwordRecovery.method.email" = "email";
+"auth.passwordRecovery.method.maskedContactPlaceholder" = "Send a recovery code to mi****@yandex.ru";
+"auth.passwordRecovery.method.phone" = "phone";
+"auth.passwordRecovery.method.sendCodePrefix" = "Send recovery code to ";
+"auth.passwordRecovery.method.titlePrefix" = "Сonfirmation code has been sent to your ";
+
+"auth.phoneEntry.changeProviderButton" = "Return to choosing a provider";
+"auth.phoneEntry.providerName" = "Provider name";
+"auth.phoneEntry.title" = "Enter your phone number to register";
+
+"auth.phoneEntry.error.confirmationNumberMissing" = "Missing confirmation number";
+
+"auth.providerSelection.chooseAProvider" = "Choose a provider";
+"auth.providerSelection.searchPlaceholder" = " Enter company name";
+"auth.providerSelection.subtitle" = "Please, select your service provider form the list or use the search. ";
+
+"auth.providerSelection.error.loadFailed" = "Failed to load provider list, please try again later.";
+
+"auth.providerSelection.method.maskedContactPlaceholder" = "Send a recovery code to mi****@yandex.ru";
+
+"auth.smsCode.resendHint" = "You can resend the code after";
+"auth.smsCode.sentToPhoneTitle" = "Enter the SMS code sent to +79025308094";
+"auth.smsCode.sentToPhoneTitleFormat" = "Enter the code from SMS\nsent to +%@";
+"auth.smsCode.timerValue" = "01:00";
+
+"auth.userName.howCanICallYou" = "How can I call you?";
+
+/* MARK: - CAMERA */
+
+"camera.archive.title" = "Archive";
+
+"camera.archive.export.linkCopiedMessage" = "Link to video copied to clipboard";
+"camera.archive.export.processingMessage" = "As soon as the process is over, you will receive a message in the chat.\nDepending on the length of the video, the download process can take anywhere from a few minutes to several hours.";
+"camera.archive.export.processingTitle" = "Video in progress";
+"camera.archive.export.successTitle" = "Thank you";
+
+"camera.archivePlayer.downloadAndGetLinkButton" = "Download and get link";
+"camera.archivePlayer.halfSpeedButton" = "0.5x";
+"camera.archivePlayer.oneAndHalfSpeedButton" = "1.5x";
+"camera.archivePlayer.selectFragmentButton" = "Select fragment";
+"camera.archivePlayer.videoDated" = "Video dated";
+
+"camera.city.incidentsTitle" = "Incidents";
+"camera.city.mapTitle" = "Map";
+"camera.city.publicCamerasTitle" = "Public cams";
+"camera.city.requestRecordButton" = "Request a record";
+
+"camera.city.detail.addressPlaceholder" = "Tambov, Sovetskaya St., 16";
+"camera.city.detail.title" = "Camera ";
+
+"camera.online.title" = "Online";
+
+"camera.recordRequest.commentPlaceholder" = "Comment";
+"camera.recordRequest.dateLabel" = "Date of record";
+"camera.recordRequest.datePlaceholder" = "Date of record: 5.09.2020";
+"camera.recordRequest.durationHint" = "You can request a fragment of no more than 1 hour. Our service allows you to store video recordings for no more than 10 days, after that the video is irrevocably deleted from the archive.";
+"camera.recordRequest.durationLabel" = "Duration";
+"camera.recordRequest.durationPlaceholder" = "Duration: 10 m";
+"camera.recordRequest.processingHint" = "Duration of processing your request may takes up to 1 working day";
+"camera.recordRequest.sendRequestButton" = "Send request";
+"camera.recordRequest.submittedMessage" = "We will contact you within 24 hours";
+"camera.recordRequest.timeHoursPlaceholder" = "Time: hh";
+"camera.recordRequest.timeLabel" = "Time";
+"camera.recordRequest.timeMinutesPlaceholder" = "Time: mm";
+
+"camera.selection.title" = "Select camera";
+
+/* MARK: - CHAT */
+
+"chat.error.unableToOpenPage" = "Unable to open chat page.";
+
+/* MARK: - COMMON */
+
+"common.add" = "Add";
+"common.all" = "All";
+"common.allow" = "Allow";
+"common.back" = "Back";
+"common.cancel" = "Cancel";
+"common.delete" = "Delete";
+"common.deny" = "Deny";
+"common.disable" = "Disable";
+"common.done" = "Done";
+"common.enable" = "Enable";
+"common.error" = "Error";
+"common.ignore" = "Ignore";
+"common.next" = "Next";
+"common.no" = "No";
+"common.ok" = "OK";
+"common.open" = "Open";
+"common.opened" = "Opened";
+"common.reset" = "Reset";
+"common.resetDone" = "Reset done";
+"common.save" = "Save";
+"common.search" = "Search";
+"common.settings" = "Settings";
+"common.yes" = "Yes";
+
+"common.confirmation.title" = "Are you sure?";
+
+"common.time.hoursShort" = "h";
+"common.time.minutes" = "minutes";
+"common.time.minutesShort" = "m";
+"common.time.secondsShort" = "sec";
+
+"common.weekday.short.fri" = "Fri";
+"common.weekday.short.mon" = "Mon";
+"common.weekday.short.sat" = "Sat";
+"common.weekday.short.sun" = "Sun";
+"common.weekday.short.thu" = "Thu";
+"common.weekday.short.tue" = "Tue";
+"common.weekday.short.wed" = "Wed";
+
+/* MARK: - ERROR */
+
+"error.address.houseIdMissing" = "House id not found. Request cannot be completed";
+
+"error.app.restoreStateFailed" = "Unable to restore application state";
+
+"error.auth.accessTokenMissing" = "Access token not found. Request cannot be completed";
+"error.auth.clientIdMissing" = "Client id not found. Request cannot be completed";
+"error.auth.contractNumberNotFound" = "Не найден номер договора. Выполнить запрос невозможно";
+"error.auth.currentUserPhoneMissing" = "Current user's phone number not found";
+"error.auth.userAlreadyLoggedIn" = "User is already logged in";
+
+"error.camera.setupFailed" = "Failed to setup camera";
+
+"error.common.unknown" = "Unknown error";
+
+"error.internal.selfDestroyed" = "self destroyed";
+
+"error.network.baseModelParsingFailed" = "Failed to represent server response as base model";
+"error.network.dataFieldMappingFailed" = "Error mapping the Data field, or it is missing with a code other than 204";
+"error.network.internetRequiredToChangeUser" = "Internet connection required to change user";
+"error.network.noConnection" = "No connection";
+
+"error.notifications.appDisabled" = "Push notifications are disabled in the app settings";
+"error.notifications.fcmTokenMissing" = "Missing FCM token";
+"error.notifications.instanceIdMissing" = "InstanceID not initialized";
+"error.notifications.systemDisabled" = "Push notifications are disabled for the application at the system level";
+
+"error.permissions.cameraDenied" = "No camera access";
+"error.permissions.contactsDenied" = "No access to contacts";
+
+"error.request.executionFailed" = "An error %@ occurred while executing the request";
+
+/* MARK: - FACE RECOGNITION */
+
+"faceRecognition.addFace.addThisFace" = "Add this face?";
+
+"faceRecognition.deleteFace.deleteThisFace" = "Delete this face?";
+
+/* MARK: - HISTORY */
+
+"history.title" = "Events log";
+
+"history.detail.emptyStateMessage" = "It looks like there are no suitable events in the log yet.\n\nMake sure that the owner of the apartment has enabled event logging.\nThen, try to open the entrance with your key and wait 1 minute for at least one event with your photo to appear in the system. \nThen try again to open this section again.\n\nPS: We remind you that we are always ready to help in chat or by calling technical support through the menu of this application.";
+"history.detail.title" = "Events";
+
+"history.event.answeredCall" = "Answered call";
+"history.event.gateOpeningByNumberplate" = "Gate opening by numberplate";
+"history.event.gateOpeningOnCall" = "Gate opening on call";
+"history.event.guestAllowedHint" = "If you select 'Allow', we will add a photo from this event for further face recognition of a visitor.\nAll faces registered in the system can be found in Address Settings -> Access Control -> Face Keyless Entry.";
+"history.event.guestDeniedHint" = "If you select 'Deny', we will delete your registered face that our algorithms falsely triggered.\nAll faces registered in the system can be found in Address Settings -> Access Control -> Face Keyless Entry.";
+"history.event.imageMissing" = "Image missing";
+"history.event.missedCall" = "Missed call";
+"history.event.openingFromApp" = "Opening from the app";
+"history.event.openingWithCode" = "Opening with code";
+"history.event.openingWithFaceID" = "Opening with Face-ID";
+"history.event.openingWithKey" = "Opening with a key";
+"history.event.unknown" = "Unknown event";
+
+"history.filter.allApartments" = "All apts";
+"history.filter.allButton" = "All";
+"history.filter.allInApartment" = "Appartment, all";
+"history.filter.allOption" = "all";
+"history.filter.apptAllButton" = "Appt, all";
+"history.filter.faceID" = "Face-ID";
+"history.filter.intercom" = "Intercom";
+"history.filter.key" = "Key";
+"history.filter.openingByApp" = "Opening by app";
+"history.filter.openingByCode" = "Opening by code";
+"history.filter.openingOnCall" = "Opening on call";
+
+"history.videoEventInfo.description" = "Recent events show a short video clip. Others show a saved frame at the moment of the event.";
+"history.videoEventInfo.forwardGestureHint" = "double-tap on the right side of the video – skip forward 10 seconds";
+"history.videoEventInfo.gesturesTitle" = "You can also use gestures:";
+"history.videoEventInfo.rewindGestureHint" = "double-tap on the left side of the video – rewind 10 seconds";
+"history.videoEventInfo.swipeGestureHint" = "swipe left or right – scroll through the event feed";
+"history.videoEventInfo.title" = "Hint";
+
+/* MARK: - HOME */
+
+"home.addressCard.cameras.cameras" = "Cameras";
+"home.addressCard.cameras.countValue" = "3";
+
+"home.addressCard.events.countValue" = "3";
+"home.addressCard.events.events" = "Events";
+
+"home.addresses.title" = "My addresses";
+
+"home.addressesEmpty.listIsEmpty" = "List is empty :(";
+"home.addressesEmpty.offlineTitle" = "Looks like there's no data yet or it hasn't been saved.";
+"home.addressesEmpty.onlineTitle" = "To add an address, click on \"+\" at the top of the screen.\nIf the added address does not appear, please wait a few minutes. The list will update automatically.";
+"home.addressesEmpty.toAddAnAddressTapAtTheTop" = "To add an address, tap \"+\" at the top of the screen. If the added address does not appear, please wait a few minutes. The list will update automatically.";
+
+/* MARK: - INTERCOM */
+
+"intercom.incoming.addressPlaceholder" = "Tambov, Sovetskaya St. 20, Apt. 52";
+"intercom.incoming.answerAction" = "Answer";
+"intercom.incoming.callCompletedStatus" = "Call completed";
+"intercom.incoming.connectingStatus" = "Connecting...";
+"intercom.incoming.conversationStatus" = "Conversation";
+"intercom.incoming.declineAction" = "Decline";
+"intercom.incoming.ignoreAction" = "Ignore";
+"intercom.incoming.microphoneMissingMessage" = "To make it appear in your next calls, please grant access to the microphone in the settings";
+"intercom.incoming.microphoneMissingTitle" = "There will be no outgoing audio on this call.";
+"intercom.incoming.notificationTitle" = "Incoming call";
+"intercom.incoming.openedStatus" = "Opened";
+"intercom.incoming.peepholeAction" = "Peephole";
+"intercom.incoming.peepholeOnStatus" = "Peephole on";
+"intercom.incoming.previewAction" = "Preview";
+"intercom.incoming.speakerAction" = "Speaker";
+"intercom.incoming.title" = "Call to intercom";
+"intercom.incoming.videoAction" = "Video";
+
+/* MARK: - MENU */
+
+"menu.main.menu" = "Menu";
+
+"menu.support.callToTechSupport" = "Call to tech support";
+
+/* MARK: - NETWORK */
+
+"network.vpn.detectedWarning" = "VPN detected. The application may work unstable.";
+
+/* MARK: - OFFLINE */
+
+"offline.alert.noConnectionTitle" = "No connection!";
+"offline.alert.switchMode" = "Tap \"OK\" to return to online mode.\nTap \"Cancel\" to stay in offline mode.";
+
+"offline.hint.swipeToExit" = "You are currently in offline mode. To exit it, swipe down from the top of the screen.";
+
+"offline.home.title" = "My Addresses";
+
+"offline.message.connectionLost" = "It looks like the connection was lost or the server is experiencing issues.";
+"offline.message.connectionRestored" = "Hooray! The connection is back!";
+"offline.message.serverUnavailable" = "You can’t exit offline mode right now — the server is unavailable. Please try again later.";
+
+/* MARK: - ONBOARDING */
+
+"onboarding.coolLetSGetStartedButton" = "Cool, let's get started!";
+"onboarding.skipButton" = "Skip";
+
+"onboarding.awareness.title" = "Be aware of everything that happens near the house";
+
+"onboarding.control.title" = "Everything's under control";
+
+"onboarding.intercom.subtitle" = "Control your intercom, gate or barrier from your smartphone";
+
+"onboarding.services.subtitle" = "Manage services and pay for them via the app";
+
+"onboarding.slide.videoSurveillance" = "Video surveillance";
+
+"onboarding.slide.awareness.subtitle" = "Be aware of everything that happens near your home";
+
+"onboarding.smartYard.title" = "Smart yard";
+
+/* MARK: - PAYMENTS */
+
+"payments.addressSelection.selectAddress" = "Select address";
+
+"payments.error.unableToOpenPage" = "Unable to open payment page.";
+
+"payments.topUp.amount" = "Amount:";
+"payments.topUp.amountPlaceholder" = "Amount";
+"payments.topUp.contractNumberPlaceholder" = "№68992";
+"payments.topUp.depositTitle" = "Deposit";
+"payments.topUp.errorTitle" = "Payment has failed";
+"payments.topUp.payButton" = "Pay";
+"payments.topUp.paymentByBankCardButton" = "Payment by bank card";
+"payments.topUp.recommendedAmountPlaceholder" = "Recommended - 480 rubles";
+"payments.topUp.recommendedLabel" = "Recommended";
+"payments.topUp.successMessage" = "Your balance has been replenished";
+"payments.topUp.successMessageShort" = "Your balance is topped up";
+"payments.topUp.successTitle" = "Done!";
+"payments.topUp.topUpBalance" = "Top up balance";
+
+/* MARK: - PERMISSIONS */
+
+"permissions.camera.message" = "To use this feature, go to settings and grant access to the camera";
+"permissions.camera.title" = "Can't access camera";
+
+"permissions.microphone.title" = "No microphone access";
+
+/* MARK: - PROFILE */
+
+"profile.firstName" = "First Name";
+"profile.patronymic" = "Patronymic";
+
+/* MARK: - QUICK ACTION */
+
+"quickAction.error.unsupported" = "Unsupported quick action";
+
+"quickAction.firstAddress.accessTitle" = "First address access";
+"quickAction.firstAddress.camerasNotFound" = "No cameras were found";
+"quickAction.firstAddress.camerasTitle" = "First address cameras";
+"quickAction.firstAddress.eventsTitle" = "First address events";
+"quickAction.firstAddress.noAccessSettings" = "The first address has no access settings";
+"quickAction.firstAddress.noAddresses" = "No addresses were found";
+"quickAction.firstAddress.noCameras" = "The first address has no cameras";
+"quickAction.firstAddress.noEvents" = "The first address has no events";
+
+/* MARK: - REQUEST */
+
+"request.common.submittedTitle" = "Request submitted";
+
+/* MARK: - SERVICES */
+
+"services.activationRequest.oops" = "Oops :(";
+"services.activationRequest.requestButton" = "Leave a request";
+"services.activationRequest.subtitle" = "Your address needs clarification. Wait for a specialist to call.\n\nWhat service would you like to connect to?";
+
+"services.available.loadingTitle" = "Creating a task";
+"services.available.title" = "Available services";
+
+"services.available.card.smartIntercom" = "Smart intercom";
+
+"services.available.error.noServiceSelected" = "No service selected";
+
+"services.available.smartIntercom.subtitle" = "For barriers, gates and entrances";
+
+"services.catalog.cableTV" = "Cable TV";
+"services.catalog.internet" = "Internet";
+"services.catalog.mobilePhone" = "Mobile Phone";
+"services.catalog.smartIntercom" = "Smart intercom";
+"services.catalog.videoSurveillance" = "Video surveillance";
+"services.catalog.wiredPhone" = "Wired Phone";
+
+"services.request.createButton" = "Create a request";
+"services.request.loadingTitle" = "Creating a ticket";
+"services.request.mainUserInfoFormat" = "Full name: %@\nPhone: %@\nAddress entered by user: %@";
+"services.request.unknownContractNumber" = "Contract number unknown";
+
+"services.status.activated.changePlanButton" = "Change plan";
+"services.status.activated.changePlanHint" = "If you wish to change a plan, please leave a request";
+"services.status.activated.serviceActivated" = "Service activated";
+"services.status.activated.titleFormat" = "Service \"%@\" is connected";
+
+"services.status.notActivated.requestButton" = "Leave a request";
+"services.status.notActivated.subtitle" = "If you want to activate the service, leave a request";
+"services.status.notActivated.title" = "Service %@ not connected";
+
+"services.status.soonAvailable.addressInstructionPlaceholder" = "Wait for the courier at Tambov, Sovetskaya, 80, 16 and take a photo of the QR code he brings.";
+"services.status.soonAvailable.title" = "Everything will work very soon!";
+
+"services.status.unavailable.message" = "Servive unavailable at this moment for your address. To activate it, we need to collect several requests from your building.  Leave a request first!";
+"services.status.unavailable.requestButton" = "Leave a request";
+"services.status.unavailable.title" = "Service %@ not available yet";
+
+/* MARK: - SESSION */
+
+"session.conflict.message" = "You have been authorized on another device";
+"session.conflict.title" = "Attention";
+
+/* MARK: - SETTINGS */
+
+"settings.address.addressSettings" = "Address settings";
+"settings.address.deleteAddressButton" = "Delete address";
+"settings.address.hideEventLogTitle" = "Hide the event log\nfrom other apartment users";
+"settings.address.intercom" = "Intercom";
+"settings.address.intercomEnabled" = "Intercom enabled";
+"settings.address.keepAnEventLog" = "Keep an event log";
+"settings.address.label" = "Label";
+"settings.address.noteLabel" = "Note";
+"settings.address.receiveCalls" = "Receive calls";
+"settings.address.receivePaperBills" = "Receive paper bills";
+"settings.address.recognizeFaces" = "Recognize faces";
+"settings.address.recognizePlates" = "Recognize plates";
+"settings.address.whiteRabbitMode" = "\"White Rabbit\" mode";
+
+"settings.address.whiteRabbitInfo.description" = "A feature designed to open the gate by calling the apartment and open the entrance panel by apartment number without calling the apartment.";
+"settings.address.whiteRabbitInfo.step1" = "The guest approaches the gate and enters the desired apartment number;";
+"settings.address.whiteRabbitInfo.step2" = "The apartment owner answers the guest and presses the Open button in the app or on the analog handset;";
+"settings.address.whiteRabbitInfo.step3" = "The guest approaches the intercom panel and enters the apartment number. The intercom will open without calling the apartment.";
+"settings.address.whiteRabbitInfo.stepsTitle" = "Works as follows:";
+"settings.address.whiteRabbitInfo.title" = "White Rabbit";
+"settings.address.whiteRabbitInfo.validityHint" = "This feature remains active for 5 minutes after the gate is opened.";
+
+"settings.addressAccess.accessToAddress" = "Access to address";
+"settings.addressAccess.accessToTheBarrierGate" = "Access to the barrier/gate";
+"settings.addressAccess.addressPlaceholder" = "Tambov, Sovetskaya St., 16, Bldg. 4";
+"settings.addressAccess.permanentAccessTitle" = "Permanent access to the address";
+
+"settings.addressAccess.faceId.beta" = "beta";
+"settings.addressAccess.faceId.disabledMessage" = "Facial recognition disabled by apartment owner";
+"settings.addressAccess.faceId.registeredFaces" = "Registered faces";
+"settings.addressAccess.faceId.setupButton" = "Setup";
+"settings.addressAccess.faceId.title" = "Keyless face entry";
+
+"settings.addressAccess.gateDetails.addressPlaceholder" = "Tambov, Sovetskaya St., 16, Bldg. 4";
+"settings.addressAccess.gateDetails.carFilter" = "By car number";
+"settings.addressAccess.gateDetails.expired" = "expired";
+"settings.addressAccess.gateDetails.phoneFilter" = "By phone number";
+"settings.addressAccess.gateDetails.timeRemainingFormat" = "%@ left";
+"settings.addressAccess.gateDetails.title" = "Gate/barrier access";
+"settings.addressAccess.gateDetails.unlimited" = "unlimited";
+
+"settings.addressAccess.guestAccess.alertMessage" = "To everyone who dials your apartment number on the intercom, the door will open automatically for 60 minutes. After this time, the intercom will return to standard mode automatically.";
+"settings.addressAccess.guestAccess.alertTitle" = "Enable guest access for an hour?";
+"settings.addressAccess.guestAccess.sentMessage" = "Guest information has been successfully sent!";
+
+"settings.addressAccess.newPerson.addContact" = "Add contact";
+
+"settings.addressAccess.removeAccess.message" = "Do you want to remove access?";
+
+"settings.addressAccess.shortcuts.addCar" = "Add car";
+"settings.addressAccess.shortcuts.addPerson" = "Add person";
+"settings.addressAccess.shortcuts.allCars" = "All cars";
+"settings.addressAccess.shortcuts.allPeople" = "All people";
+
+"settings.addressAccess.temporaryAccess.codeTitle" = "Opening code";
+"settings.addressAccess.temporaryAccess.guestAccessTitle" = "Guest access for an hour";
+"settings.addressAccess.temporaryAccess.title" = "Temporary access to intercom";
+
+"settings.addressAccess.waitingGuestInfo.message" = "This feature allows your guests to open the intercom without your involvement: it’s enough to dial your apartment number on the call panel, and the gate or entrance door will open immediately.";
+"settings.addressAccess.waitingGuestInfo.title" = "Guest access for one hour";
+"settings.addressAccess.waitingGuestInfo.validity" = "Valid for one hour from activation.";
+
+"settings.addressDeletion.other" = "Other";
+"settings.addressDeletion.pleaseStateTheReason" = "Please state the reason";
+"settings.addressDeletion.terminateContractOption" = "I want to terminate the contract";
+"settings.addressDeletion.warningMessage" = "When you delete an address, you will not be able to manage the services of the address.";
+
+"settings.addressDeletion.reason.placeholder" = "Specify a reason";
+"settings.addressDeletion.reason.terminateContract" = "I want to cancel my contract";
+"settings.addressDeletion.reason.unspecified" = "Customer didn't provide a reason";
+
+"settings.common.calls" = "Calls";
+"settings.common.deleteAccountButton" = "Delete account";
+"settings.common.logoutButton" = "Logout";
+"settings.common.lowBalanceNotificationTitle" = "Send a notification when the balance is close to zero";
+"settings.common.notifications" = "Notifications";
+"settings.common.notifyAboutInsufficientFunds" = "Notify about insufficient funds";
+"settings.common.profileNamePlaceholder" = "Alexander Sergeevich";
+"settings.common.profilePhonePlaceholder" = "+7 (964) 134 00 00";
+"settings.common.showCamerasOnTheMap" = "Show cameras on the map";
+"settings.common.showNotifications" = "Show notifications";
+"settings.common.speakerphoneByDefault" = "Speakerphone by default";
+"settings.common.theme" = "Theme";
+"settings.common.title" = "Common settings";
+"settings.common.useCallkit" = "Use CallKit";
+
+"settings.common.addressOrder.description" = "By default, addresses are displayed in alphabetical order. Addresses with available entrances are always shown first. You can adjust the order manually — just hold your finger on the address header, wait 0.3–0.5 seconds for the “lifted card” effect to appear, then drag it up or down. Release at the desired position — the order will be saved automatically.";
+"settings.common.addressOrder.resetDialogMessage" = "Reset address order?";
+"settings.common.addressOrder.resetDialogTitle" = "Reset address order?";
+"settings.common.addressOrder.resetHint" = "To restore the default order, use the “Reset” button in settings.";
+"settings.common.addressOrder.title" = "Address order";
+
+"settings.common.appearance.dark" = "Dark";
+"settings.common.appearance.light" = "Light";
+"settings.common.appearance.sheetMessage" = "Please choose your preferred appearance theme.";
+"settings.common.appearance.sheetTitle" = "Select Appearance";
+"settings.common.appearance.system" = "System";
+"settings.common.appearance.title" = "Appereance";
+
+"settings.common.callKitInfo.description" = "When CallKit mode is enabled, calls to your iPhone will appear as regular calls. But in this mode, you won’t be able to peek through the \"peephole\" to see who is at your intercom without picking up the call.";
+"settings.common.callKitInfo.title" = "CallKit Feature";
+
+"settings.common.deleteAccount.message" = "Are you sure you want to delete your account? All previously added addresses will be deleted";
+"settings.common.deleteAccount.title" = "Account deleting";
+
+"settings.common.logout.message" = "Are you sure you want to log out of your account?";
+"settings.common.logout.title" = "Exiting the application";
+
+"settings.faces.faceRegistration" = "Face registration";
+"settings.faces.registeredFaces" = "Registered faces";
+"settings.faces.registrationHint" = "Photos of your guests are stored in the Event History section. \n\nTo select and register a person, go to the specified section by clicking on Plus. \nIn the Event History, click on the information icon opposite the desired event and select the required photo on the screen that opens.\n\n";
+
+"settings.main.addAddressButton" = "Add address";
+"settings.main.contractNumberTitle" = "Number of contract";
+"settings.main.openPersonalAccountWebButton" = "Open web version of personal account";
+
+"settings.main.access.title" = "Access setting";
+
+"settings.main.address.title" = "Address settings";
+
+"settings.main.addresses.title" = "Addresses settings";
+
+"settings.main.serviceAction.activateServiceTemplate" = "Hello, I would like to connect the service \"%(X)\" to the contract \"%(Y)\"";
+"settings.main.serviceAction.changeTariffTemplate" = "Hello, I would like to change the tariff for the service \"%(X)\" on the contract \"%(Y)\"";
+"settings.main.serviceAction.talkAboutActivationTemplate" = "Hello, the \"%(X)\" service is not available at my address, but I want to use it on the \"%(Y)\" contract";
+
+"settings.shareCar.platePlaceholder" = "M 565 XB 68";
+"settings.shareCar.shareAccess" = "Share access";
+"settings.shareCar.subtitle" = "Enter the car number you want to grant access to.";
+
+"settings.sharePerson.name" = "Name";
+"settings.sharePerson.shareAccess" = "Share access";
+"settings.sharePerson.shareButton" = "Share";
+"settings.sharePerson.subtitle" = "Enter the phone number of the person you want to grant access to, or select them from your contacts";
+
+/* MARK: - SUPPORT */
+
+"support.call.phoneAction" = "Make a phone call";
+
+"support.callback.requestButton" = "Request a call back";
+"support.callback.successMessage" = "We will call you shortly";
+
+/* MARK: - TAB */
+
+"tab.addresses" = "Addresses";
+"tab.chat" = "Chat";
+"tab.menu" = "Menu";
+"tab.notifications" = "Notifications";
+"tab.payments" = "Pay";
+
+/* MARK: - VALIDATION */
+
+"validation.phone.invalidFormat" = "Wrong number format";

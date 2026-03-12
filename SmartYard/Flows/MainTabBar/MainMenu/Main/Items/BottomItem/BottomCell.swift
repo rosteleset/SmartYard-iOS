@@ -10,9 +10,14 @@ import UIKit
 
 final class BottomCell: UICollectionViewCell {
 
+    @IBOutlet private weak var titleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.Menu.Support.callToTechSupport
     }
 
 }

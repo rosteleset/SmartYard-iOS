@@ -13,15 +13,15 @@ final class BlueButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        configureUI()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupUI()
+        configureUI()
     }
     
-    private func setupUI() {
+    private func configureUI() {
         layerCornerRadius = 12
         backgroundColor = UIColor.SmartYard.blue
         titleLabel?.textColor = UIColor.SmartYard.secondBackgroundColor

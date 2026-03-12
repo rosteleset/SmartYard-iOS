@@ -60,7 +60,7 @@ final class OnlinePageViewController: BaseViewController {
     init(viewModel: OnlinePageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        title = NSLocalizedString("Online", comment: "")
+        title = L10n.Camera.Online.title
     }
 
     @available(*, unavailable)

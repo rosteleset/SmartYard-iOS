@@ -101,7 +101,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         }
         
         seekVideo(offsetSeconds: offset)
-        let secText = NSLocalizedString("sec", comment: "")
+        let secText = L10n.Common.Time.secondsShort
         videoPlayerViewContainer.backgroundColor = .black
         let label = (offset > 0) ? UILabel(text: "+\(abs(offset)) \(secText)") : UILabel(text: "-\(abs(offset)) \(secText)")
         label.font = UIFont(name: "System", size: 16)
@@ -219,8 +219,8 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         descriptionLabel.isHidden = false
         descriptionLabel.text = ""
         
-        let denyTitle = NSLocalizedString("Deny", comment: "")
-        let openTitle = NSLocalizedString("Allow", comment: "")
+        let denyTitle = L10n.Common.deny
+        let openTitle = L10n.Common.allow
         
         denyAccessButton.setTitleForAllStates(denyTitle)
         openAccessButton.setTitleForAllStates(openTitle)
@@ -249,42 +249,42 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         
         switch value.event {
         case .answered:
-            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.title
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
-            callStatusLabel.text = NSLocalizedString("Answered call", comment: "")
+            callStatusLabel.text = L10n.History.Event.answeredCall
             callStatusLabel.textColor = UIColor.SmartYard.darkGreen
             callStatusIcon.image = UIImage(named: "AnsweredCall")
         case .unanswered:
-            titleLabel.text = NSLocalizedString("Call to intercom", comment: "")
+            titleLabel.text = L10n.Intercom.Incoming.title
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
-            callStatusLabel.text = NSLocalizedString("Missed call", comment: "")
+            callStatusLabel.text = L10n.History.Event.missedCall
             callStatusLabel.textColor = UIColor.SmartYard.incorrectDataRed
             callStatusIcon.image = UIImage(named: "MissedCall")
         case .rfid:
-            titleLabel.text = NSLocalizedString("Opening with a key", comment: "")
+            titleLabel.text = L10n.History.Event.openingWithKey
             titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .app:
-            titleLabel.text = NSLocalizedString("Opening from the app", comment: "")
+            titleLabel.text = L10n.History.Event.openingFromApp
             titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .face:
-            titleLabel.text = NSLocalizedString("Opening with Face-ID", comment: "")
+            titleLabel.text = L10n.History.Event.openingWithFaceID
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             faceFrameColor = .green
         case .passcode:
-            titleLabel.text = NSLocalizedString("Opening with code", comment: "")
+            titleLabel.text = L10n.History.Event.openingWithCode
             titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .call:
-            titleLabel.text = NSLocalizedString("Gate opening on call", comment: "")
+            titleLabel.text = L10n.History.Event.gateOpeningOnCall
             titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .plate:
-            titleLabel.text = NSLocalizedString("Gate opening by numberplate", comment: "")
+            titleLabel.text = L10n.History.Event.gateOpeningByNumberplate
             titleLabel.textColor = UIColor.SmartYard.semiBlack
         case .unknown:
-            titleLabel.text = NSLocalizedString("Unknown event", comment: "")
+            titleLabel.text = L10n.History.Event.unknown
             titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
         }
         image.image = nil
@@ -294,7 +294,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
                 urlString: value.previewURL ?? "",
                 cache: cache,
                 label: underImageLabel,
-                errorMessage: NSLocalizedString("Image missing", comment: ""),
+                errorMessage: L10n.History.Event.imageMissing,
                 rect: value.detailX?.face?.asCGRect,
                 rectColor: faceFrameColor
             )
@@ -312,11 +312,11 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
             if flags.contains("canDislike") || flags.contains("canDisLike") {
                 denyAccessButton.isHidden = false
                 // swiftlint:disable:next line_length
-                actionsDescriptionLabel.text = NSLocalizedString("If you select Deny...", comment: "")
+                actionsDescriptionLabel.text = L10n.History.Event.guestDeniedHint
             } else {
                 openAccessButton.isHidden = false
                 // swiftlint:disable:next line_length
-                actionsDescriptionLabel.text = NSLocalizedString("If you select Allow...", comment: "")
+                actionsDescriptionLabel.text = L10n.History.Event.guestAllowedHint
                 
             }
             

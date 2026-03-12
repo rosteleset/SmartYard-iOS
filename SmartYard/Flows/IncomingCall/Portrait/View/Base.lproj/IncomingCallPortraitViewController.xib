@@ -39,6 +39,10 @@
                 <outlet property="videoPreview" destination="qZy-mX-wC7" id="00X-h0-Zjs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webRTCView" destination="kjw-hq-KIl" id="K0m-Zz-F5W"/>
+                <outlet property="answerButtonLabel" destination="OFY-ve-MGk" id="A5K-3G-6tP"/>
+                <outlet property="speakerButtonLabel" destination="I5j-fH-LRs" id="wy1-Qq-jJS"/>
+                <outlet property="openedButtonLabel" destination="qoh-Fa-xYP" id="rip-W9-EwN"/>
+                <outlet property="openButtonLabel" destination="T2d-Xs-GlG" id="sRw-L8-5O2"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

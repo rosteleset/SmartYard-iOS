@@ -85,11 +85,11 @@ final class InputAddressViewModel: BaseViewModel {
                     }
                     
                     if nsError == NSError.PermissionError.noCameraPermission {
-                        let msg = NSLocalizedString("To use this feature, go to settings and grant access to the camera", comment: "")
+                        let msg = L10n.Permissions.Camera.message
                         
                         self?.router.trigger(
                             .appSettings(
-                                title: NSLocalizedString("Can't access camera", comment: ""),
+                                title: L10n.Permissions.Camera.title,
                                 message: msg
                             )
                         )
@@ -99,7 +99,7 @@ final class InputAddressViewModel: BaseViewModel {
                     
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )
@@ -264,7 +264,7 @@ final class InputAddressViewModel: BaseViewModel {
                 var addressString = [uCityName, uStreetName, uBuildingName].joined(separator: ", ")
                 
                 if let uFlatName = flatName?.trimmed, !uFlatName.isEmpty {
-                    addressString += ", " + NSLocalizedString("appartment", comment: "") + " \(uFlatName)"
+                    addressString += ", " + L10n.Address.Form.apartmentValue + " \(uFlatName)"
                 }
                 
                 guard let buildings = self.loadedBuildings[uStreetName] else {

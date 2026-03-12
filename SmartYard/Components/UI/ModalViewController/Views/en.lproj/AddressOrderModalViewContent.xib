@@ -1,8 +1,0 @@
-/* Class = "UILabel"; text = "По умолчанию адреса отображаются в алфавитном порядке. Адреса с доступными входами всегда выводятся первыми. Вы можете настроить порядок вручную — просто удержите палец на заголовке адреса, подождите 0.3–0.5 секунды до появления эффекта “поднятой карточки”, а затем перетащите его вверх или вниз. Отпустите в нужном месте — порядок автоматически сохранится."; ObjectID = "B9b-OK-jJU"; */
-"B9b-OK-jJU.text" = "By default, addresses are displayed in alphabetical order. Addresses with available entrances are always shown first. You can adjust the order manually — just hold your finger on the address header, wait 0.3–0.5 seconds for the “lifted card” effect to appear, then drag it up or down. Release at the desired position — the order will be saved automatically.";
-
-/* Class = "UILabel"; text = "Порядок адресов"; ObjectID = "EOV-NL-76Y"; */
-"EOV-NL-76Y.text" = "Address order";
-
-/* Class = "UILabel"; text = "Чтобы вернуть порядок по умолчанию, воспользуйтесь кнопкой «Сбросить» в настройках."; ObjectID = "p1n-A6-xlb"; */
-"p1n-A6-xlb.text" = "To restore the default order, use the “Reset” button in settings.";

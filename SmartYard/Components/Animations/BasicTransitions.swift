@@ -34,9 +34,9 @@ extension Transition {
     static func appSettingsTransition(title: String, message: String?) -> Transition {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
+        let cancelAction = UIAlertAction(title: L10n.Common.cancel, style: .cancel)
         
-        let settingsAction = UIAlertAction(title: NSLocalizedString("Settings", comment: ""), style: .default) { _ in
+        let settingsAction = UIAlertAction(title: L10n.Common.settings, style: .default) { _ in
             UIApplication.shared.open(
                 URL(string: UIApplication.openSettingsURLString)!,
                 options: [:],

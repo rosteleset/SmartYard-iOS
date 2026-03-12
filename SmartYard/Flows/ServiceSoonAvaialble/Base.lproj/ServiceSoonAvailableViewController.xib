@@ -26,6 +26,7 @@
                 <outlet property="qrCodeButton" destination="sY4-Hs-Ho1" id="vK1-Xw-P52"/>
                 <outlet property="titleImageView" destination="k2J-IV-yeb" id="tOG-ee-W0b"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="L7d-yT-XF9" id="y8d-nc-uUV"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

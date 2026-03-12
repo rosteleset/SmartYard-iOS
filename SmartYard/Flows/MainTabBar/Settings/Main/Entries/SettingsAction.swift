@@ -15,9 +15,9 @@ enum SettingsAction: Hashable {
     
     var localizedTitle: String {
         switch self {
-        case .openAddressSettings: return NSLocalizedString("Address settings", comment: "")
-        case .grantAccess: return NSLocalizedString("Access setting", comment: "")
-        case .openWebVersion: return NSLocalizedString("Open web version of personal account", comment: "")
+        case .openAddressSettings: return L10n.Settings.Main.Address.title
+        case .grantAccess: return L10n.Settings.Main.Access.title
+        case .openWebVersion: return L10n.Settings.Main.openPersonalAccountWebButton
         }
     }
     

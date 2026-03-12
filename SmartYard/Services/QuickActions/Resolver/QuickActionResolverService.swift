@@ -34,7 +34,7 @@ final class QuickActionResolverService {
         default:
             return .just(
                 .unavailable(
-                    message: NSLocalizedString("Unsupported quick action", comment: "")
+                    message: L10n.QuickAction.Error.unsupported
                 )
             )
         }
@@ -51,7 +51,7 @@ private extension QuickActionResolverService {
                 guard let address = sortedAddresses.first else {
                     return .just(
                         .unavailable(
-                            message: NSLocalizedString("No addresses were found", comment: "")
+                            message: L10n.QuickAction.FirstAddress.noAddresses
                         )
                     )
                 }
@@ -59,7 +59,7 @@ private extension QuickActionResolverService {
                 guard address.cctv > 0 else {
                     return .just(
                         .unavailable(
-                            message: NSLocalizedString("The first address has no cameras", comment: "")
+                            message: L10n.QuickAction.FirstAddress.noCameras
                         )
                     )
                 }
@@ -81,7 +81,7 @@ private extension QuickActionResolverService {
                     .map { response in
                         guard let response else {
                             return .unavailable(
-                                message: NSLocalizedString("No cameras were found", comment: "")
+                                message: L10n.QuickAction.FirstAddress.camerasNotFound
                             )
                         }
 
@@ -130,13 +130,13 @@ private extension QuickActionResolverService {
 
                 guard let address = sortedAddresses.first else {
                     return .unavailable(
-                        message: NSLocalizedString("No addresses were found", comment: "")
+                        message: L10n.QuickAction.FirstAddress.noAddresses
                     )
                 }
 
                 guard address.hasPlog else {
                     return .unavailable(
-                        message: NSLocalizedString("The first address has no events", comment: "")
+                        message: L10n.QuickAction.FirstAddress.noEvents
                     )
                 }
 
@@ -157,13 +157,13 @@ private extension QuickActionResolverService {
 
                 guard let address = sortedAddresses.first else {
                     return .unavailable(
-                        message: NSLocalizedString("No addresses were found", comment: "")
+                        message: L10n.QuickAction.FirstAddress.noAddresses
                     )
                 }
 
                 guard let flatId = address.flatId else {
                     return .unavailable(
-                        message: NSLocalizedString("The first address has no access settings", comment: "")
+                        message: L10n.QuickAction.FirstAddress.noAccessSettings
                     )
                 }
 

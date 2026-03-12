@@ -34,7 +34,9 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
     private var permanentAccessViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet private var stackViewTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var gateAccessTitleLabel: UILabel!
+    @IBOutlet private weak var permanentAccessTitleLabel: UILabel!
+    @IBOutlet private weak var addressAccessTitleLabel: UILabel!
     // MARK: - Properties
     
     var loader: JGProgressHUD?
@@ -55,7 +57,7 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         bind()
     }
     
@@ -78,14 +80,16 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
     }
     
     // MARK: - Configuration
-    
-    private func configureView() {
+    private func configureUI() {
+        gateAccessTitleLabel.text = L10n.Settings.AddressAccess.accessToTheBarrierGate
+        gateAccessAddButton.setTitle(L10n.Common.add, for: .normal)
+        permanentAccessTitleLabel.text = L10n.Settings.AddressAccess.permanentAccessTitle
+        addressLabel.text = L10n.Settings.AddressAccess.addressPlaceholder
+        addressAccessTitleLabel.text = L10n.Settings.AddressAccess.accessToAddress
         let permanentViewHeight = addressPermanentAccessView.heightAnchor.constraint(equalToConstant: 57)
         permanentViewHeight.isActive = true
         permanentAccessViewHeightConstraint = permanentViewHeight
-        
-        gateAccessAddButton.setTitleForAllStates(NSLocalizedString("Add", comment: ""))
-        
+        gateAccessAddButton.setTitleForAllStates(L10n.Common.add)
         gateAccessView.translatesAutoresizingMaskIntoConstraints = false
         addressPermanentAccessView.translatesAutoresizingMaskIntoConstraints = false
         

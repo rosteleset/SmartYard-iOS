@@ -21,7 +21,7 @@ final class CameraNumberCell: UICollectionViewCell {
 
      override init(frame: CGRect = .zero) {
           super.init(frame: frame)
-          setupUI()
+          configureUI()
      }
      
      required init?(coder: NSCoder) {
@@ -39,7 +39,7 @@ final class CameraNumberCell: UICollectionViewCell {
 }
 
 private extension CameraNumberCell {
-     func setupUI() {
+     func configureUI() {
           cameraNumberLabel.font = UIFont.SourceSansPro.semibold(size: 16)
 
           circleView.layerBorderWidth = 1

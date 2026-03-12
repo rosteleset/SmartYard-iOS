@@ -1,0 +1,614 @@
+/* 
+  Localizable.strings
+  SmartYard
+
+  Created by Александр Попов on 12.03.2026.
+  Copyright © 2023 LanTa. All rights reserved.
+*/
+
+/* MARK: - ADDRESS */
+
+"address.confirmation.subtitle" = "Ինչպե՞ս կլինի Ձեզ համար ավելի հարմար դա անել։";
+"address.confirmation.title" = "Հասցեի հաստատում";
+
+"address.confirmation.courier.activationHint" = "Դուք անմիջապես կստանաք Smart Intercom հավելվածի ամբողջ ֆունկցիոնալին հասանելիություն։";
+"address.confirmation.courier.envelopeHint" = "Մեկ շաբաթվա ընթացքում սուրհանդակը կբերի գաղտնի ծրար";
+"address.confirmation.courier.hintFormat" = "Սպասեք սուրհանդակին {value}-ում և լուսանկարեք նրա բերած QR կոդը։";
+"address.confirmation.courier.leaveARequest" = "Թողնել հայտ";
+"address.confirmation.courier.qrCodeHint" = "Այն կլինի ծրարի ներսում";
+"address.confirmation.courier.requestButton" = "Հիանալի։ Թողեք հայտ";
+"address.confirmation.courier.scanTheQrCode" = "Սքանավորեք QR կոդը";
+"address.confirmation.courier.use" = "Օգտագործել։";
+
+"address.confirmation.delivery.courierChangeMessage" = "Առաքման եղանակը փոխվել է։ Պատրաստեք փաթեթը սուրհանդակի համար։";
+"address.confirmation.delivery.courierOption" = "Կանչել սուրհանդակ";
+"address.confirmation.delivery.courierShort" = "Սուրհանդակով";
+"address.confirmation.delivery.courierTitle" = "Սուրհանդակ";
+"address.confirmation.delivery.officeChangeMessage" = "Առաքման եղանակը փոխվել է։ Հաճախորդը կգա գրասենյակ։";
+"address.confirmation.delivery.officeOption" = "Ես ինքս կգամ գրասենյակ";
+"address.confirmation.delivery.officeShort" = "Գրասենյակում";
+"address.confirmation.delivery.pickupTitle" = "Ինքնուրույն ստացում";
+
+"address.confirmation.office.hint" = "Հայտն ընդունվել է։ Սպասեք օպերատորի զանգին մեկ աշխատանքային օրվա ընթացքում։";
+"address.confirmation.office.iLlDoSoButton" = "Այդպես էլ կանեմ";
+"address.confirmation.office.instructions" = "Այցելեք մեր մոտակա գրասենյակ այս բնակարանի կոմունալ վճարի անդորրագրով, և մենք անմիջապես կակտիվացնենք խելացի ինտերկոմի և տեսահսկման ծառայությունը։";
+
+"address.entry.checkAvailableServicesButton" = "Ստուգել հասանելի ծառայությունները";
+"address.entry.iHaveQrCodeButton" = "Ես ունեմ QR կոդ";
+"address.entry.title" = "Մուտքագրեք ձեր հասցեն";
+
+"address.form.apartment" = "Բնակարան";
+"address.form.apartmentValue" = "բնակարան";
+"address.form.building" = "Շենք";
+"address.form.city" = "Քաղաք";
+"address.form.street" = "Փողոց";
+
+"address.qrCode.loginRequiredMessage" = "Սկզբում մուտք գործեք հավելված, հետո նորից փորձեք ավելացնել հասցեն";
+
+"address.qrScan.pointYourCameraAtTheQrCode" = "Ուղղեք տեսախցիկը QR կոդի վրա";
+
+/* MARK: - APP */
+
+"app.update.action" = "Թարմացնել";
+"app.update.availableTitle" = "Հավելվածի նոր տարբերակ կա";
+"app.update.requiredMessage" = "Հավելվածը շարունակելու համար խնդրում ենք թարմացնել այն";
+"app.update.requiredTitle" = "Հավելվածի տարբերակը հնացած է";
+
+/* MARK: - AUTH */
+
+"auth.callVerification.callButton" = "Զանգել";
+"auth.callVerification.callInstructionPrefix" = "Կատարեք անվճար զանգ համարին";
+"auth.callVerification.callInstructionSuffix" = "որպեսզի կարողանանք հաստատել \nոր սա ձեր համարն է";
+"auth.callVerification.confirmPhoneTitle" = "Պետք է համոզվենք,\nոր +79025308094 համարը իսկապես Ձերն է։";
+"auth.callVerification.confirmPhoneTitleFormat" = "Պետք է համոզվենք,\nոր +%@ համարը իսկապես Ձերն է։";
+"auth.callVerification.editPhoneButton" = "Ուղղել հեռախոսահամարը";
+"auth.callVerification.phoneNumberPlaceholder" = "+7 (1234) 12-34-56";
+
+"auth.codeRateLimit.message" = "Դուք չափազանց հաճախ եք հարցում ուղարկում կոդի համար։ Խնդրում ենք փորձել ավելի ուշ";
+
+"auth.contractLogin.contractNumberPlaceholder" = "Պայմանագրի համար";
+"auth.contractLogin.createButton" = "Ստեղծել";
+"auth.contractLogin.forgotCredentialsButton" = "Ես ոչինչ չեմ հիշում";
+"auth.contractLogin.forgotPasswordButton" = "Մոռացել եմ գաղտնաբառը";
+"auth.contractLogin.hasOperatorAgreementTitle" = "Ունե՞ք օպերատորի հետ պայմանագիր։";
+"auth.contractLogin.iDonTHaveAContractButton" = "Ես պայմանագիր չունեմ";
+"auth.contractLogin.loginButton" = "Մուտք";
+"auth.contractLogin.passwordPlaceholder" = "Գաղտնաբառ";
+"auth.contractLogin.restoreByContractPrompt" = "Ստեղծե՞լ վերականգնման հայտ պայմանագրի համարով։";
+"auth.contractLogin.subtitle" = "Մուտքագրեք այս հասցեի հետ կապված պայմանագրի համարը և գաղտնաբառը և կառավարեք ծառայությունները այս հավելվածից։";
+
+"auth.flashCall.enterLastDigitsTitleFormat" = "Մուտքագրեք համարի վերջին 4 թվանշանը,\nորից զանգ կգա +%@ համարին";
+
+"auth.passwordRecovery.chooseMethodButton" = "Ստանալ հասանելի եղանակները";
+"auth.passwordRecovery.codeSentMessage" = "Նշված մուտքի գաղտնաբառը ուղարկվել է նշված";
+"auth.passwordRecovery.contractPlaceholder" = "Պայմանագրի համար";
+"auth.passwordRecovery.restoreAccess" = "Վերականգնել հասանելիությունը";
+"auth.passwordRecovery.sendCodeButton" = "Ստանալ հաստատման կոդ";
+"auth.passwordRecovery.subtitle" = "Խնդրում ենք մուտքագրել ձեր պայմանագրի համարը և նշել էլ. փոստը կամ հեռախոսահամարը, որը օգտագործել եք պայմանագիրը գրանցելիս";
+
+"auth.passwordRecovery.code.resendButton" = "Ուղարկել կրկին";
+"auth.passwordRecovery.code.resendHint" = "Դուք կարող եք կրկին ուղարկել կոդը";
+"auth.passwordRecovery.code.sentToPhoneTitle" = "Հաստատման կոդն ուղարկվել է +79025308094 համարին";
+"auth.passwordRecovery.code.timerValue" = "01:00";
+
+"auth.passwordRecovery.error.invalidContract" = "Մուտքագրվել է պայմանագրի սխալ համար";
+
+"auth.passwordRecovery.method.email" = "էլ. փոստ";
+"auth.passwordRecovery.method.maskedContactPlaceholder" = "Ուղարկել վերականգնման կոդ mi****@yandex.ru հասցեին";
+"auth.passwordRecovery.method.phone" = "հեռախոս";
+"auth.passwordRecovery.method.sendCodePrefix" = "Ուղարկել վերականգնման կոդը ";
+"auth.passwordRecovery.method.titlePrefix" = "Հաստատման կոդն ուղարկվել է ձեր ";
+
+"auth.phoneEntry.changeProviderButton" = "Վերադառնալ մատակարարի ընտրությանը";
+"auth.phoneEntry.providerName" = "Մատակարարի անուն";
+"auth.phoneEntry.title" = "Մուտքագրեք ձեր հեռախոսահամարը գրանցվելու համար";
+
+"auth.phoneEntry.error.confirmationNumberMissing" = "Հաստատման համարը բացակայում է";
+
+"auth.providerSelection.chooseAProvider" = "Ընտրեք մատակարար";
+"auth.providerSelection.searchPlaceholder" = " Մուտքագրեք ընկերության անունը";
+"auth.providerSelection.subtitle" = "Խնդրում ենք ընտրել ձեր ծառայությունների մատակարարին ցուցակից կամ օգտվել որոնումից։ ";
+
+"auth.providerSelection.error.loadFailed" = "Չհաջողվեց բեռնել մատակարարների ցանկը, խնդրում ենք փորձել ավելի ուշ։";
+
+"auth.providerSelection.method.maskedContactPlaceholder" = "Ուղարկել վերականգնման կոդ mi****@yandex.ru հասցեին";
+
+"auth.smsCode.resendHint" = "Դուք կարող եք կրկին ուղարկել կոդը";
+"auth.smsCode.sentToPhoneTitle" = "Մուտքագրեք +79025308094 համարին ուղարկված SMS կոդը";
+"auth.smsCode.sentToPhoneTitleFormat" = "Մուտքագրեք SMS-ից ստացված կոդը,\nորը ուղարկվել է +%@ համարին";
+"auth.smsCode.timerValue" = "01:00";
+
+"auth.userName.howCanICallYou" = "Ինչպե՞ս կարող եմ Ձեզ դիմել։";
+
+/* MARK: - CAMERA */
+
+"camera.archive.title" = "Արխիվ";
+
+"camera.archive.export.linkCopiedMessage" = "Տեսանյութի հղումը պատճենվել է սեղմատախտակին";
+"camera.archive.export.processingMessage" = "Գործընթացի ավարտից հետո դուք հաղորդագրություն կստանաք չատում։\nՏեսանյութի երկարությունից կախված՝ ներբեռնումը կարող է տևել մի քանի րոպեից մինչև մի քանի ժամ։";
+"camera.archive.export.processingTitle" = "Տեսանյութը մշակման մեջ է";
+"camera.archive.export.successTitle" = "Շնորհակալություն";
+
+"camera.archivePlayer.downloadAndGetLinkButton" = "Ներբեռնել և ստանալ հղում";
+"camera.archivePlayer.halfSpeedButton" = "0.5x";
+"camera.archivePlayer.oneAndHalfSpeedButton" = "1.5x";
+"camera.archivePlayer.selectFragmentButton" = "Ընտրել հատված";
+"camera.archivePlayer.videoDated" = "Տեսանյութ՝";
+
+"camera.city.incidentsTitle" = "Դեպքեր";
+"camera.city.mapTitle" = "Քարտեզ";
+"camera.city.publicCamerasTitle" = "Հանրային տեսախցիկներ";
+"camera.city.requestRecordButton" = "Պահանջել ձայնագրություն";
+
+"camera.city.detail.addressPlaceholder" = "Tambov, Sovetskaya St., 16";
+"camera.city.detail.title" = "Տեսախցիկ ";
+
+"camera.online.title" = "Առցանց";
+
+"camera.recordRequest.commentPlaceholder" = "Մեկնաբանություն";
+"camera.recordRequest.dateLabel" = "Ձայնագրության ամսաթիվ";
+"camera.recordRequest.datePlaceholder" = "Ձայնագրության ամսաթիվ՝ 5.09.2020";
+"camera.recordRequest.durationHint" = "Դուք կարող եք պահանջել առավելագույնը 1 ժամ տևողությամբ հատված։ Մեր ծառայությունը թույլ է տալիս պահպանել տեսագրությունները ոչ ավելի, քան 10 օր, դրանից հետո տեսանյութը անվերադարձ ջնջվում է արխիվից։";
+"camera.recordRequest.durationLabel" = "Տևողություն";
+"camera.recordRequest.durationPlaceholder" = "Տևողություն՝ 10 ր";
+"camera.recordRequest.processingHint" = "Ձեր հարցման մշակումը կարող է տևել մինչև 1 աշխատանքային օր";
+"camera.recordRequest.sendRequestButton" = "Ուղարկել հարցում";
+"camera.recordRequest.submittedMessage" = "Մենք կկապվենք ձեզ հետ 24 ժամվա ընթացքում";
+"camera.recordRequest.timeHoursPlaceholder" = "Ժամ՝ ժժ";
+"camera.recordRequest.timeLabel" = "Ժամ";
+"camera.recordRequest.timeMinutesPlaceholder" = "Ժամ՝ րր";
+
+"camera.selection.title" = "Ընտրեք տեսախցիկ";
+
+/* MARK: - CHAT */
+
+"chat.error.unableToOpenPage" = "Չհաջողվեց բացել չատի էջը։";
+
+/* MARK: - COMMON */
+
+"common.add" = "Ավելացնել";
+"common.all" = "Բոլորը";
+"common.allow" = "Թույլատրել";
+"common.back" = "Հետ";
+"common.cancel" = "Չեղարկել";
+"common.delete" = "Ջնջել";
+"common.deny" = "Մերժել";
+"common.disable" = "Անջատել";
+"common.done" = "Պատրաստ է";
+"common.enable" = "Միացնել";
+"common.error" = "Սխալ";
+"common.ignore" = "Անտեսել";
+"common.next" = "Հաջորդը";
+"common.no" = "Ոչ";
+"common.ok" = "OK";
+"common.open" = "Բացել";
+"common.opened" = "Բացվել է";
+"common.reset" = "Վերակայել";
+"common.resetDone" = "Վերակայվեց";
+"common.save" = "Պահպանել";
+"common.search" = "Որոնում";
+"common.settings" = "Կարգավորումներ";
+"common.yes" = "Այո";
+
+"common.confirmation.title" = "Համոզվա՞ծ եք։";
+
+"common.time.hoursShort" = "ժ";
+"common.time.minutes" = "րոպե";
+"common.time.minutesShort" = "ր";
+"common.time.secondsShort" = "վրկ";
+
+"common.weekday.short.fri" = "Ուրբ";
+"common.weekday.short.mon" = "Երկ";
+"common.weekday.short.sat" = "Շբթ";
+"common.weekday.short.sun" = "Կիր";
+"common.weekday.short.thu" = "Հնգ";
+"common.weekday.short.tue" = "Երք";
+"common.weekday.short.wed" = "Չրք";
+
+/* MARK: - ERROR */
+
+"error.address.houseIdMissing" = "Տան ID-ն չի գտնվել։ Հարցումը հնարավոր չէ կատարել";
+
+"error.app.restoreStateFailed" = "Չհաջողվեց վերականգնել հավելվածի վիճակը";
+
+"error.auth.accessTokenMissing" = "Access token-ը չի գտնվել։ Հարցումը հնարավոր չէ կատարել";
+"error.auth.clientIdMissing" = "Client id-ն չի գտնվել։ Հարցումը հնարավոր չէ կատարել";
+"error.auth.contractNumberNotFound" = "Պայմանագրի համարը չի գտնվել։ Հարցումը հնարավոր չէ կատարել";
+"error.auth.currentUserPhoneMissing" = "Ընթացիկ օգտատիրոջ հեռախոսահամարը չի գտնվել";
+"error.auth.userAlreadyLoggedIn" = "Օգտատերն արդեն մուտք է գործել";
+
+"error.camera.setupFailed" = "Չհաջողվեց կարգավորել տեսախցիկը";
+
+"error.common.unknown" = "Անհայտ սխալ";
+
+"error.internal.selfDestroyed" = "self-ը հեռացվել է";
+
+"error.network.baseModelParsingFailed" = "Չհաջողվեց ներկայացնել սերվերի պատասխանը որպես base model";
+"error.network.dataFieldMappingFailed" = "Սխալ Data դաշտի mapping-ի ժամանակ, կամ այն բացակայում է 204-ից տարբեր կոդի դեպքում";
+"error.network.internetRequiredToChangeUser" = "Օգտատիրոջը փոխելու համար անհրաժեշտ է ինտերնետ կապ";
+"error.network.noConnection" = "Կապ չկա";
+
+"error.notifications.appDisabled" = "Push ծանուցումները անջատված են հավելվածի կարգավորումներում";
+"error.notifications.fcmTokenMissing" = "FCM token-ը բացակայում է";
+"error.notifications.instanceIdMissing" = "InstanceID-ը չի սկզբնավորվել";
+"error.notifications.systemDisabled" = "Push ծանուցումները համակարգային մակարդակում անջատված են այս հավելվածի համար";
+
+"error.permissions.cameraDenied" = "Տեսախցիկի հասանելիություն չկա";
+"error.permissions.contactsDenied" = "Կոնտակտների հասանելիություն չկա";
+
+"error.request.executionFailed" = "Հարցումը կատարելիս տեղի ունեցավ %@ սխալ";
+
+/* MARK: - FACE RECOGNITION */
+
+"faceRecognition.addFace.addThisFace" = "Ավելացնե՞լ այս դեմքը։";
+
+"faceRecognition.deleteFace.deleteThisFace" = "Ջնջե՞լ այս դեմքը։";
+
+/* MARK: - HISTORY */
+
+"history.title" = "Իրադարձությունների մատյան";
+
+"history.detail.emptyStateMessage" = "Թվում է՝ մատյանում դեռ համապատասխան իրադարձություններ չկան։\n\nՀամոզվեք, որ բնակարանի սեփականատերը միացրել է իրադարձությունների գրանցումը։\nԱյնուհետև փորձեք բացել մուտքը ձեր բանալիով և սպասեք 1 րոպե, մինչև համակարգում հայտնվի առնվազն մեկ իրադարձություն ձեր լուսանկարով։ \nԱյնուհետև նորից փորձեք բացել այս բաժինը։\n\nP.S. Հիշեցնում ենք, որ մենք միշտ պատրաստ ենք օգնել չատում կամ այս հավելվածի մենյուից տեխնիկական աջակցություն զանգահարելով։";
+"history.detail.title" = "Իրադարձություններ";
+
+"history.event.answeredCall" = "Պատասխանված զանգ";
+"history.event.gateOpeningByNumberplate" = "Դարպասի բացում համարանիշով";
+"history.event.gateOpeningOnCall" = "Դարպասի բացում զանգով";
+"history.event.guestAllowedHint" = "Եթե ընտրեք «Թույլատրել», մենք այս իրադարձությունից կավելացնենք լուսանկար՝ այցելուի դեմքի հետագա ճանաչման համար։\nՀամակարգում գրանցված բոլոր դեմքերը կարող եք գտնել Address Settings -> Access Control -> Face Keyless Entry բաժնում։";
+"history.event.guestDeniedHint" = "Եթե ընտրեք «Մերժել», մենք կջնջենք ձեր գրանցված դեմքը, որի վրա մեր ալգորիթմները սխալ են արձագանքել։\nՀամակարգում գրանցված բոլոր դեմքերը կարող եք գտնել Address Settings -> Access Control -> Face Keyless Entry բաժնում։";
+"history.event.imageMissing" = "Պատկերը բացակայում է";
+"history.event.missedCall" = "Բաց թողնված զանգ";
+"history.event.openingFromApp" = "Բացում հավելվածից";
+"history.event.openingWithCode" = "Բացում կոդով";
+"history.event.openingWithFaceID" = "Բացում Face-ID-ով";
+"history.event.openingWithKey" = "Բացում բանալիով";
+"history.event.unknown" = "Անհայտ իրադարձություն";
+
+"history.filter.allApartments" = "Բոլոր բն.";
+"history.filter.allButton" = "Բոլորը";
+"history.filter.allInApartment" = "Բնակարան, բոլորը";
+"history.filter.allOption" = "բոլորը";
+"history.filter.apptAllButton" = "Բն., բոլորը";
+"history.filter.faceID" = "Face-ID";
+"history.filter.intercom" = "Ինտերկոմ";
+"history.filter.key" = "Բանալի";
+"history.filter.openingByApp" = "Բացում հավելվածով";
+"history.filter.openingByCode" = "Բացում կոդով";
+"history.filter.openingOnCall" = "Բացում զանգով";
+
+"history.videoEventInfo.description" = "Վերջին իրադարձությունների համար ցուցադրվում է կարճ տեսահոլովակ։ Մյուսների համար ցուցադրվում է իրադարձության պահին պահպանված կադր։";
+"history.videoEventInfo.forwardGestureHint" = "տեսանյութի աջ մասում կրկնակի հպում — առաջ անցնել 10 վայրկյան";
+"history.videoEventInfo.gesturesTitle" = "Կարող եք նաև օգտագործել ժեստեր.";
+"history.videoEventInfo.rewindGestureHint" = "տեսանյութի ձախ մասում կրկնակի հպում — հետ տանել 10 վայրկյան";
+"history.videoEventInfo.swipeGestureHint" = "ձախ կամ աջ սահեցնել — ոլորել իրադարձությունների հոսքը";
+"history.videoEventInfo.title" = "Հուշում";
+
+/* MARK: - HOME */
+
+"home.addressCard.cameras.cameras" = "Տեսախցիկներ";
+"home.addressCard.cameras.countValue" = "3";
+
+"home.addressCard.events.countValue" = "3";
+"home.addressCard.events.events" = "Իրադարձություններ";
+
+"home.addresses.title" = "Իմ հասցեները";
+
+"home.addressesEmpty.listIsEmpty" = "Ցանկը դատարկ է :(";
+"home.addressesEmpty.offlineTitle" = "Թվում է՝ դեռ տվյալներ չկան կամ դրանք չեն պահպանվել։";
+"home.addressesEmpty.onlineTitle" = "Հասցե ավելացնելու համար սեղմեք էկրանի վերևում գտնվող \"+\" կոճակը։\nԵթե ավելացված հասցեն չի երևում, խնդրում ենք սպասել մի քանի րոպե։ Ցանկը կթարմացվի ավտոմատ։";
+"home.addressesEmpty.toAddAnAddressTapAtTheTop" = "Հասցե ավելացնելու համար հպեք էկրանի վերևում գտնվող \"+\" կոճակին։ Եթե ավելացված հասցեն չի երևում, խնդրում ենք սպասել մի քանի րոպե։ Ցանկը կթարմացվի ավտոմատ։";
+
+/* MARK: - INTERCOM */
+
+"intercom.incoming.addressPlaceholder" = "Tambov, Sovetskaya St. 20, Apt. 52";
+"intercom.incoming.answerAction" = "Պատասխանել";
+"intercom.incoming.callCompletedStatus" = "Զանգն ավարտված է";
+"intercom.incoming.connectingStatus" = "Միանում է...";
+"intercom.incoming.conversationStatus" = "Զրույց";
+"intercom.incoming.declineAction" = "Մերժել";
+"intercom.incoming.ignoreAction" = "Անտեսել";
+"intercom.incoming.microphoneMissingMessage" = "Որպեսզի դա երևա ձեր հաջորդ զանգերում, խնդրում ենք կարգավորումներում թույլատրել միկրոֆոնի հասանելիությունը";
+"intercom.incoming.microphoneMissingTitle" = "Այս զանգի ընթացքում ելքային ձայն չի լինի։";
+"intercom.incoming.notificationTitle" = "Մուտքային զանգ";
+"intercom.incoming.openedStatus" = "Բացվեց";
+"intercom.incoming.peepholeAction" = "Աչքիկ";
+"intercom.incoming.peepholeOnStatus" = "Աչքիկը միացված է";
+"intercom.incoming.previewAction" = "Նախադիտում";
+"intercom.incoming.speakerAction" = "Բարձրախոս";
+"intercom.incoming.title" = "Զանգ ինտերկոմին";
+"intercom.incoming.videoAction" = "Տեսանյութ";
+
+/* MARK: - MENU */
+
+"menu.main.menu" = "Մենյու";
+
+"menu.support.callToTechSupport" = "Զանգել տեխնիկական աջակցությանը";
+
+/* MARK: - NETWORK */
+
+"network.vpn.detectedWarning" = "VPN է հայտնաբերվել։ Հավելվածը կարող է անկայուն աշխատել։";
+
+/* MARK: - OFFLINE */
+
+"offline.alert.noConnectionTitle" = "Կապ չկա։";
+"offline.alert.switchMode" = "Սեղմեք «OK»՝ առցանց ռեժիմ վերադառնալու համար։\nՍեղմեք «Cancel»՝ օֆլայն ռեժիմում մնալու համար։";
+
+"offline.hint.swipeToExit" = "Դուք այժմ օֆլայն ռեժիմում եք։ Դրանից դուրս գալու համար սահեցրեք էկրանի վերևից ներքև։";
+
+"offline.home.title" = "Իմ հասցեները";
+
+"offline.message.connectionLost" = "Թվում է՝ կապը կորել է կամ սերվերում խնդիրներ կան։";
+"offline.message.connectionRestored" = "Ուրա՜, կապը վերականգնվեց։";
+"offline.message.serverUnavailable" = "Դուք հիմա չեք կարող դուրս գալ օֆլայն ռեժիմից — սերվերը հասանելի չէ։ Խնդրում ենք փորձել ավելի ուշ։";
+
+/* MARK: - ONBOARDING */
+
+"onboarding.coolLetSGetStartedButton" = "Հիանալի, սկսենք։";
+"onboarding.skipButton" = "Բաց թողնել";
+
+"onboarding.awareness.title" = "Եղեք տեղյակ տան մոտ տեղի ունեցող ամեն ինչից";
+
+"onboarding.control.title" = "Ամեն ինչ վերահսկողության տակ է";
+
+"onboarding.intercom.subtitle" = "Կառավարեք ձեր ինտերկոմը, դարպասը կամ արգելափակոցը սմարթֆոնից";
+
+"onboarding.services.subtitle" = "Կառավարեք ծառայությունները և վճարեք դրանց համար հավելվածով";
+
+"onboarding.slide.videoSurveillance" = "Տեսահսկում";
+
+"onboarding.slide.awareness.subtitle" = "Եղեք տեղյակ ձեր տան շուրջ տեղի ունեցող ամեն ինչից";
+
+"onboarding.smartYard.title" = "Խելացի բակ";
+
+/* MARK: - PAYMENTS */
+
+"payments.addressSelection.selectAddress" = "Ընտրեք հասցե";
+
+"payments.error.unableToOpenPage" = "Չհաջողվեց բացել վճարման էջը։";
+
+"payments.topUp.amount" = "Գումար՝";
+"payments.topUp.amountPlaceholder" = "Գումար";
+"payments.topUp.contractNumberPlaceholder" = "№68992";
+"payments.topUp.depositTitle" = "Համալրում";
+"payments.topUp.errorTitle" = "Վճարումը ձախողվել է";
+"payments.topUp.payButton" = "Վճարել";
+"payments.topUp.paymentByBankCardButton" = "Վճարում բանկային քարտով";
+"payments.topUp.recommendedAmountPlaceholder" = "Առաջարկվողը՝ 480 ռուբլի";
+"payments.topUp.recommendedLabel" = "Առաջարկվող";
+"payments.topUp.successMessage" = "Ձեր հաշվեկշիռը համալրվել է";
+"payments.topUp.successMessageShort" = "Ձեր հաշվեկշիռը համալրված է";
+"payments.topUp.successTitle" = "Պատրաստ է։";
+"payments.topUp.topUpBalance" = "Համալրել հաշվեկշիռը";
+
+/* MARK: - PERMISSIONS */
+
+"permissions.camera.message" = "Այս հնարավորությունն օգտագործելու համար անցեք կարգավորումներ և թույլատրեք տեսախցիկի հասանելիությունը";
+"permissions.camera.title" = "Չհաջողվեց մուտք գործել տեսախցիկ";
+
+"permissions.microphone.title" = "Միկրոֆոնի հասանելիություն չկա";
+
+/* MARK: - PROFILE */
+
+"profile.firstName" = "Անուն";
+"profile.patronymic" = "Հայրանուն";
+
+/* MARK: - QUICK ACTION */
+
+"quickAction.error.unsupported" = "Չաջակցվող արագ գործողություն";
+
+"quickAction.firstAddress.accessTitle" = "Առաջին հասցեի հասանելիություն";
+"quickAction.firstAddress.camerasNotFound" = "Տեսախցիկներ չեն գտնվել";
+"quickAction.firstAddress.camerasTitle" = "Առաջին հասցեի տեսախցիկներ";
+"quickAction.firstAddress.eventsTitle" = "Առաջին հասցեի իրադարձություններ";
+"quickAction.firstAddress.noAccessSettings" = "Առաջին հասցեի համար հասանելիության կարգավորումներ չկան";
+"quickAction.firstAddress.noAddresses" = "Հասցեներ չեն գտնվել";
+"quickAction.firstAddress.noCameras" = "Առաջին հասցեում տեսախցիկներ չկան";
+"quickAction.firstAddress.noEvents" = "Առաջին հասցեում իրադարձություններ չկան";
+
+/* MARK: - REQUEST */
+
+"request.common.submittedTitle" = "Հայտն ուղարկվել է";
+
+/* MARK: - SERVICES */
+
+"services.activationRequest.oops" = "Ոպս :(";
+"services.activationRequest.requestButton" = "Թողնել հայտ";
+"services.activationRequest.subtitle" = "Ձեր հասցեն ճշգրտման կարիք ունի։ Սպասեք մասնագետի զանգին։\n\nՈ՞ր ծառայությունն եք ցանկանում միացնել։";
+
+"services.available.loadingTitle" = "Ստեղծվում է առաջադրանք";
+"services.available.title" = "Հասանելի ծառայություններ";
+
+"services.available.card.smartIntercom" = "Խելացի ինտերկոմ";
+
+"services.available.error.noServiceSelected" = "Ոչ մի ծառայություն չի ընտրվել";
+
+"services.available.smartIntercom.subtitle" = "Արգելափակոցների, դարպասների և մուտքերի համար";
+
+"services.catalog.cableTV" = "Կաբելային հեռուստատեսություն";
+"services.catalog.internet" = "Ինտերնետ";
+"services.catalog.mobilePhone" = "Բջջային հեռախոս";
+"services.catalog.smartIntercom" = "Խելացի ինտերկոմ";
+"services.catalog.videoSurveillance" = "Տեսահսկում";
+"services.catalog.wiredPhone" = "Լարային հեռախոս";
+
+"services.request.createButton" = "Ստեղծել հայտ";
+"services.request.loadingTitle" = "Ստեղծվում է հայտ";
+"services.request.mainUserInfoFormat" = "Ամբողջական անուն՝ %@\nՀեռախոս՝ %@\nՕգտատիրոջ մուտքագրած հասցե՝ %@";
+"services.request.unknownContractNumber" = "Պայմանագրի համարը անհայտ է";
+
+"services.status.activated.changePlanButton" = "Փոխել սակագինը";
+"services.status.activated.changePlanHint" = "Եթե ցանկանում եք փոխել սակագինը, խնդրում ենք թողնել հայտ";
+"services.status.activated.serviceActivated" = "Ծառայությունը ակտիվացված է";
+"services.status.activated.titleFormat" = "\"%@\" ծառայությունը միացված է";
+
+"services.status.notActivated.requestButton" = "Թողնել հայտ";
+"services.status.notActivated.subtitle" = "Եթե ցանկանում եք ակտիվացնել ծառայությունը, թողեք հայտ";
+"services.status.notActivated.title" = "%@ ծառայությունը միացված չէ";
+
+"services.status.soonAvailable.addressInstructionPlaceholder" = "Սպասեք սուրհանդակին Tambov, Sovetskaya, 80, 16 հասցեում և լուսանկարեք նրա բերած QR կոդը։";
+"services.status.soonAvailable.title" = "Շատ շուտով ամեն ինչ կաշխատի։";
+
+"services.status.unavailable.message" = "Այս պահին ծառայությունը ձեր հասցեի համար հասանելի չէ։ Այն ակտիվացնելու համար պետք է հավաքենք ձեր շենքից մի քանի հայտ։ Նախ թողեք հայտ։";
+"services.status.unavailable.requestButton" = "Թողնել հայտ";
+"services.status.unavailable.title" = "%@ ծառայությունը դեռ հասանելի չէ";
+
+/* MARK: - SESSION */
+
+"session.conflict.message" = "Դուք մուտք եք գործել մեկ այլ սարքում";
+"session.conflict.title" = "Ուշադրություն";
+
+/* MARK: - SETTINGS */
+
+"settings.address.addressSettings" = "Հասցեի կարգավորումներ";
+"settings.address.deleteAddressButton" = "Ջնջել հասցեն";
+"settings.address.hideEventLogTitle" = "Թաքցնել իրադարձությունների մատյանը\nբնակարանի մյուս օգտատերերից";
+"settings.address.intercom" = "Ինտերկոմ";
+"settings.address.intercomEnabled" = "Ինտերկոմը միացված է";
+"settings.address.keepAnEventLog" = "Պահել իրադարձությունների մատյանը";
+"settings.address.label" = "Պիտակ";
+"settings.address.noteLabel" = "Նշում";
+"settings.address.receiveCalls" = "Ստանալ զանգեր";
+"settings.address.receivePaperBills" = "Ստանալ թղթային հաշիվներ";
+"settings.address.recognizeFaces" = "Ճանաչել դեմքերը";
+"settings.address.recognizePlates" = "Ճանաչել համարանիշերը";
+"settings.address.whiteRabbitMode" = "\"White Rabbit\" ռեժիմ";
+
+"settings.address.whiteRabbitInfo.description" = "Գործառույթ, որը նախատեսված է դարպասը բացելու համար՝ բնակարան զանգահարելով, և մուտքի վահանակը բացելու համար՝ բնակարանի համարով՝ առանց բնակարան զանգահարելու։";
+"settings.address.whiteRabbitInfo.step1" = "Հյուրը մոտենում է դարպասին և մուտքագրում ցանկալի բնակարանի համարը;";
+"settings.address.whiteRabbitInfo.step2" = "Բնակարանի սեփականատերը պատասխանում է հյուրին և հավելվածում կամ անալոգային լսափողի վրա սեղմում է «Բացել» կոճակը;";
+"settings.address.whiteRabbitInfo.step3" = "Հյուրը մոտենում է ինտերկոմի վահանակին և մուտքագրում բնակարանի համարը։ Ինտերկոմը կբացվի առանց բնակարան զանգահարելու։";
+"settings.address.whiteRabbitInfo.stepsTitle" = "Աշխատում է այսպես.";
+"settings.address.whiteRabbitInfo.title" = "White Rabbit";
+"settings.address.whiteRabbitInfo.validityHint" = "Այս գործառույթը մնում է ակտիվ դարպասը բացելուց հետո 5 րոպե։";
+
+"settings.addressAccess.accessToAddress" = "Հասցեի հասանելիություն";
+"settings.addressAccess.accessToTheBarrierGate" = "Արգելափակոցի/դարպասի հասանելիություն";
+"settings.addressAccess.addressPlaceholder" = "Tambov, Sovetskaya St., 16, Bldg. 4";
+"settings.addressAccess.permanentAccessTitle" = "Մշտական հասանելիություն հասցեին";
+
+"settings.addressAccess.faceId.beta" = "բետա";
+"settings.addressAccess.faceId.disabledMessage" = "Դեմքի ճանաչումն անջատված է բնակարանի սեփականատիրոջ կողմից";
+"settings.addressAccess.faceId.registeredFaces" = "Գրանցված դեմքեր";
+"settings.addressAccess.faceId.setupButton" = "Կարգավորել";
+"settings.addressAccess.faceId.title" = "Մուտք դեմքով առանց բանալիի";
+
+"settings.addressAccess.gateDetails.addressPlaceholder" = "Tambov, Sovetskaya St., 16, Bldg. 4";
+"settings.addressAccess.gateDetails.carFilter" = "Մեքենայի համարով";
+"settings.addressAccess.gateDetails.expired" = "ժամկետանց";
+"settings.addressAccess.gateDetails.phoneFilter" = "Հեռախոսահամարով";
+"settings.addressAccess.gateDetails.timeRemainingFormat" = "մնացել է %@";
+"settings.addressAccess.gateDetails.title" = "Դարպասի/արգելափակոցի հասանելիություն";
+"settings.addressAccess.gateDetails.unlimited" = "անսահմանափակ";
+
+"settings.addressAccess.guestAccess.alertMessage" = "Յուրաքանչյուրի համար, ով ինտերկոմի վրա կհավաքի ձեր բնակարանի համարը, դուռը ավտոմատ կբացվի 60 րոպեով։ Այդ ժամանակից հետո ինտերկոմը ավտոմատ կվերադառնա ստանդարտ ռեժիմի։";
+"settings.addressAccess.guestAccess.alertTitle" = "Միացնե՞լ հյուրերի հասանելիությունը մեկ ժամով։";
+"settings.addressAccess.guestAccess.sentMessage" = "Հյուրի տվյալները հաջողությամբ ուղարկվել են։";
+
+"settings.addressAccess.newPerson.addContact" = "Ավելացնել կոնտակտ";
+
+"settings.addressAccess.removeAccess.message" = "Ցանկանու՞մ եք հեռացնել հասանելիությունը։";
+
+"settings.addressAccess.shortcuts.addCar" = "Ավելացնել մեքենա";
+"settings.addressAccess.shortcuts.addPerson" = "Ավելացնել մարդ";
+"settings.addressAccess.shortcuts.allCars" = "Բոլոր մեքենաները";
+"settings.addressAccess.shortcuts.allPeople" = "Բոլոր մարդիկ";
+
+"settings.addressAccess.temporaryAccess.codeTitle" = "Բացման կոդ";
+"settings.addressAccess.temporaryAccess.guestAccessTitle" = "Հյուրերի հասանելիություն մեկ ժամով";
+"settings.addressAccess.temporaryAccess.title" = "Ժամանակավոր հասանելիություն ինտերկոմին";
+
+"settings.addressAccess.waitingGuestInfo.message" = "Այս գործառույթը թույլ է տալիս ձեր հյուրերին բացել ինտերկոմը առանց ձեր մասնակցության․ բավական է ինտերկոմի կանչի վահանակում հավաքել ձեր բնակարանի համարը, և դարպասը կամ մուտքի դուռը անմիջապես կբացվի։";
+"settings.addressAccess.waitingGuestInfo.title" = "Հյուրերի հասանելիություն մեկ ժամով";
+"settings.addressAccess.waitingGuestInfo.validity" = "Գործում է ակտիվացումից հետո մեկ ժամ։";
+
+"settings.addressDeletion.other" = "Այլ";
+"settings.addressDeletion.pleaseStateTheReason" = "Խնդրում ենք նշել պատճառը";
+"settings.addressDeletion.terminateContractOption" = "Ես ուզում եմ դադարեցնել պայմանագիրը";
+"settings.addressDeletion.warningMessage" = "Հասցեն ջնջելու դեպքում դուք չեք կարողանա կառավարել այդ հասցեի ծառայությունները։";
+
+"settings.addressDeletion.reason.placeholder" = "Նշեք պատճառը";
+"settings.addressDeletion.reason.terminateContract" = "Ես ուզում եմ չեղարկել պայմանագիրը";
+"settings.addressDeletion.reason.unspecified" = "Հաճախորդը չի նշել պատճառ";
+
+"settings.common.calls" = "Զանգեր";
+"settings.common.deleteAccountButton" = "Ջնջել հաշիվը";
+"settings.common.logoutButton" = "Դուրս գալ";
+"settings.common.lowBalanceNotificationTitle" = "Ուղարկել ծանուցում, երբ հաշվեկշիռը մոտենում է զրոյին";
+"settings.common.notifications" = "Ծանուցումներ";
+"settings.common.notifyAboutInsufficientFunds" = "Տեղեկացնել անբավարար միջոցների մասին";
+"settings.common.profileNamePlaceholder" = "Ալեքսանդր Սերգեևիչ";
+"settings.common.profilePhonePlaceholder" = "+7 (964) 134 00 00";
+"settings.common.showCamerasOnTheMap" = "Ցույց տալ տեսախցիկները քարտեզի վրա";
+"settings.common.showNotifications" = "Ցույց տալ ծանուցումները";
+"settings.common.speakerphoneByDefault" = "Բարձրախոսը լռելյայն";
+"settings.common.theme" = "Թեմա";
+"settings.common.title" = "Ընդհանուր կարգավորումներ";
+"settings.common.useCallkit" = "Օգտագործել CallKit";
+
+"settings.common.addressOrder.description" = "Լռելյայն հասցեները ցուցադրվում են այբբենական կարգով։ Մուտքեր ունեցող հասցեները միշտ ցուցադրվում են առաջինը։ Դուք կարող եք կարգավորել հերթականությունը ձեռքով — պարզապես պահեք մատը հասցեի վերնագրի վրա, սպասեք 0.3–0.5 վայրկյան, մինչև հայտնվի «բարձրացված քարտի» էֆեկտը, հետո քաշեք այն վերև կամ ներքև։ Թողեք ցանկալի դիրքում — հերթականությունը կպահպանվի ավտոմատ։";
+"settings.common.addressOrder.resetDialogMessage" = "Վերակայե՞լ հասցեների հերթականությունը։";
+"settings.common.addressOrder.resetDialogTitle" = "Վերակայե՞լ հասցեների հերթականությունը։";
+"settings.common.addressOrder.resetHint" = "Լռելյայն հերթականությունը վերականգնելու համար օգտագործեք կարգավորումների «Վերակայել» կոճակը։";
+"settings.common.addressOrder.title" = "Հասցեների հերթականություն";
+
+"settings.common.appearance.dark" = "Մուգ";
+"settings.common.appearance.light" = "Բաց";
+"settings.common.appearance.sheetMessage" = "Խնդրում ենք ընտրել նախընտրելի ձևավորման թեման։";
+"settings.common.appearance.sheetTitle" = "Ընտրել տեսքը";
+"settings.common.appearance.system" = "Համակարգային";
+"settings.common.appearance.title" = "Արտաքին տեսք";
+
+"settings.common.callKitInfo.description" = "Երբ CallKit ռեժիմը միացված է, ձեր iPhone-ի զանգերը կցուցադրվեն որպես սովորական զանգեր։ Բայց այս ռեժիմում դուք չեք կարողանա «աչքիկով» տեսնել, թե ով է ձեր ինտերկոմի մոտ, առանց զանգին պատասխանելու։";
+"settings.common.callKitInfo.title" = "CallKit-ի գործառույթ";
+
+"settings.common.deleteAccount.message" = "Վստա՞հ եք, որ ցանկանում եք ջնջել ձեր հաշիվը։ Նախկինում ավելացված բոլոր հասցեները կջնջվեն";
+"settings.common.deleteAccount.title" = "Հաշվի ջնջում";
+
+"settings.common.logout.message" = "Վստա՞հ եք, որ ցանկանում եք դուրս գալ ձեր հաշվից։";
+"settings.common.logout.title" = "Հավելվածից դուրս գալ";
+
+"settings.faces.faceRegistration" = "Դեմքի գրանցում";
+"settings.faces.registeredFaces" = "Գրանցված դեմքեր";
+"settings.faces.registrationHint" = "Ձեր հյուրերի լուսանկարները պահվում են Իրադարձությունների պատմություն բաժնում։ \n\nՄարդ ընտրելու և գրանցելու համար անցեք նշված բաժին՝ սեղմելով Plus կոճակը։ \nԻրադարձությունների պատմությունում սեղմեք ցանկալի իրադարձության դիմացի տեղեկատվական պատկերակը և բացվող էկրանին ընտրեք անհրաժեշտ լուսանկարը։\n\n";
+
+"settings.main.addAddressButton" = "Ավելացնել հասցե";
+"settings.main.contractNumberTitle" = "Պայմանագրի համարը";
+"settings.main.openPersonalAccountWebButton" = "Բացել անձնական հաշվի վեբ տարբերակը";
+
+"settings.main.access.title" = "Հասանելիության կարգավորումներ";
+
+"settings.main.address.title" = "Հասցեի կարգավորումներ";
+
+"settings.main.addresses.title" = "Հասցեների կարգավորումներ";
+
+"settings.main.serviceAction.activateServiceTemplate" = "Բարև, ես կցանկանայի միացնել «%(X)» ծառայությունը «%(Y)» պայմանագրին";
+"settings.main.serviceAction.changeTariffTemplate" = "Բարև, ես կցանկանայի փոխել «%(X)» ծառայության սակագինը «%(Y)» պայմանագրի համար";
+"settings.main.serviceAction.talkAboutActivationTemplate" = "Բարև, «%(X)» ծառայությունը հասանելի չէ իմ հասցեում, բայց ես ցանկանում եմ օգտագործել այն «%(Y)» պայմանագրի համար";
+
+"settings.shareCar.platePlaceholder" = "M 565 XB 68";
+"settings.shareCar.shareAccess" = "Կիսվել հասանելիությամբ";
+"settings.shareCar.subtitle" = "Մուտքագրեք մեքենայի համարը, որին ցանկանում եք տրամադրել հասանելիություն։";
+
+"settings.sharePerson.name" = "Անուն";
+"settings.sharePerson.shareAccess" = "Կիսվել հասանելիությամբ";
+"settings.sharePerson.shareButton" = "Կիսվել";
+"settings.sharePerson.subtitle" = "Մուտքագրեք այն անձի հեռախոսահամարը, որին ցանկանում եք տրամադրել հասանելիություն, կամ ընտրեք նրան ձեր կոնտակտներից";
+
+/* MARK: - SUPPORT */
+
+"support.call.phoneAction" = "Կատարել հեռախոսազանգ";
+
+"support.callback.requestButton" = "Պատվիրել հետադարձ զանգ";
+"support.callback.successMessage" = "Մենք շուտով կզանգահարենք ձեզ";
+
+/* MARK: - TAB */
+
+"tab.addresses" = "Հասցեներ";
+"tab.chat" = "Չատ";
+"tab.menu" = "Մենյու";
+"tab.notifications" = "Ծանուցումներ";
+"tab.payments" = "Վճարում";
+
+/* MARK: - VALIDATION */
+
+"validation.phone.invalidFormat" = "Համարի սխալ ձևաչափ";

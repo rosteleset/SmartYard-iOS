@@ -50,7 +50,7 @@ final class IncomingCallLandscapeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureButtons()
+        configureUI()
         configureGradient()
         bind()
     }
@@ -90,7 +90,7 @@ final class IncomingCallLandscapeViewController: BaseViewController {
         gradientContainer.addSubview(linearGradientView)
     }
     
-    private func configureButtons() {
+    private func configureUI() {
         previewButton.setImage(UIImage(named: "PreviewUnselectedIconL"), for: .normal)
         previewButton.setImage(UIImage(named: "PreviewUnselectedIconL")?.darkened(), for: [.normal, .highlighted])
         previewButton.setImage(UIImage(named: "PreviewSelectedIcon"), for: .selected)
@@ -226,19 +226,19 @@ final class IncomingCallLandscapeViewController: BaseViewController {
         
         switch (state.callState, state.previewState) {
         case (.callReceived, .staticImage):
-            titleText = NSLocalizedString("Call to intercom", comment: "")
+            titleText = L10n.Intercom.Incoming.title
             
         case (.callReceived, .video):
-            titleText = NSLocalizedString("Peephole on", comment: "")
+            titleText = L10n.Intercom.Incoming.peepholeOnStatus
             
         case (.establishingConnection, _):
-            titleText = NSLocalizedString("Connecting...", comment: "")
+            titleText = L10n.Intercom.Incoming.connectingStatus
             
         case (.callActive, _):
-            titleText = NSLocalizedString("Conversation", comment: "")
+            titleText = L10n.Intercom.Incoming.conversationStatus
             
         case (.callFinished, _):
-            titleText = NSLocalizedString("Call completed", comment: "")
+            titleText = L10n.Intercom.Incoming.callCompletedStatus
         }
         
         titleLabel.text = titleText

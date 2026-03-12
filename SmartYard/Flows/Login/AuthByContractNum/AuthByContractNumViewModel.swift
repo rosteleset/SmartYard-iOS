@@ -55,7 +55,7 @@ final class AuthByContractNumViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )
@@ -92,15 +92,15 @@ final class AuthByContractNumViewModel: BaseViewModel {
         input.forgetEverythingTapped
             .drive(
                 onNext: { [weak self] in
-                    let okAction = UIAlertAction(title: NSLocalizedString("Create", comment: ""), style: .default) { _ in
+                    let okAction = UIAlertAction(title: L10n.Auth.ContractLogin.createButton, style: .default) { _ in
                         restoreContractDataSubject.onNext(())
                     }
                     
-                    let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel)
+                    let cancelAction = UIAlertAction(title: L10n.Common.cancel, style: .cancel)
                     
                     self?.router.trigger(
                         .dialog(
-                            title: NSLocalizedString("Create a request for restoration by contract number?", comment: ""),
+                            title: L10n.Auth.ContractLogin.restoreByContractPrompt,
                             message: nil,
                             actions: [okAction, cancelAction]
                         )

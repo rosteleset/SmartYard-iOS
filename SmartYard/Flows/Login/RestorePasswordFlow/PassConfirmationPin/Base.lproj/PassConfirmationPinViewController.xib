@@ -19,6 +19,7 @@
                 <outlet property="timerLabel" destination="58D-aL-5Mh" id="83U-ej-ubO"/>
                 <outlet property="titleMessageLabel" destination="aDl-zG-Nme" id="v1t-A4-FVh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="resendHintLabel" destination="P50-Bq-deW" id="5DO-Bx-3Il"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

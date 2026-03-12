@@ -72,7 +72,7 @@ final class GateAccessCell: UICollectionViewCell, HasDisposeBag {
             }
 
             let deleteAction = UIAction(
-                title: NSLocalizedString("Delete", comment: ""),
+                title: L10n.Common.delete,
                 image: UIImage(systemName: "trash"),
                 attributes: .destructive
             ) { [weak self] _ in

@@ -29,15 +29,15 @@ enum AppShortcutType: String {
     private var localizedTitle: String {
         switch self {
         case .firstAddressCameras:
-            return NSLocalizedString("First address cameras", comment: "")
+            return L10n.QuickAction.FirstAddress.camerasTitle
         case .firstAddressEvents:
-            return NSLocalizedString("First address events", comment: "")
+            return L10n.QuickAction.FirstAddress.eventsTitle
         case .firstAddressAccess:
-            return NSLocalizedString("First address access", comment: "")
+            return L10n.QuickAction.FirstAddress.accessTitle
         case .payments:
-            return NSLocalizedString("Pay", comment: "")
+            return L10n.Tab.payments
         case .settings:
-            return NSLocalizedString("Settings", comment: "")
+            return L10n.Common.settings
         }
     }
 

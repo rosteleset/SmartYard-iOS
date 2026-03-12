@@ -37,12 +37,13 @@ final class EditNameViewController: BaseViewController, LoaderPresentable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureView()
+        configureUI()
         configureRxKeyboard()
         bind()
     }
 
-    private func configureView() {
+    private func configureUI() {
+        saveButton.setTitle(L10n.Common.save, for: .normal)
         view.hideKeyboardWhenTapped = true
 
         let serverPattern = AccessService.shared.nameValidationPattern
@@ -56,13 +57,12 @@ final class EditNameViewController: BaseViewController, LoaderPresentable {
             $0?.addTarget(self, action: #selector(enableSaveButton), for: .editingChanged)
         }
 
-        nameTextField.setPlaceholder(string: NSLocalizedString("First Name", comment: ""), isRequiredField: true)
+        nameTextField.setPlaceholder(string: L10n.Profile.firstName, isRequiredField: true)
         nameTextField.delegate = self
         nameTextField.text = preloadedName?.name
         nameTextField.sendActions(for: .allEditingEvents)
         nameTextField.configure(with: validators.first)
-
-        middleNameTextField.setPlaceholder(string: NSLocalizedString("Patronymic", comment: ""))
+        middleNameTextField.setPlaceholder(string: L10n.Profile.patronymic)
         middleNameTextField.delegate = self
         middleNameTextField.text = preloadedName?.patronymic
         middleNameTextField.sendActions(for: .allEditingEvents)

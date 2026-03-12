@@ -25,7 +25,8 @@ final class NewAllowedPersonViewController: BaseViewController {
     
     @IBOutlet private weak var backgroundView: UIView!
     @IBOutlet private weak var mainContainerBottomConstraint: NSLayoutConstraint!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var phoneHintLabel: UILabel!
     private let contactPicker = CNContactPickerViewController()
     
     private let rawPhoneAddedTrigger = PublishSubject<String>()
@@ -46,12 +47,16 @@ final class NewAllowedPersonViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureView()
+        configureUI()
         configureRxKeyboard()
         bind()
     }
     
-    private func configureView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Settings.SharePerson.shareAccess
+        phoneHintLabel.text = L10n.Settings.SharePerson.subtitle
+        addAccessButton.setTitle(L10n.Settings.SharePerson.shareButton, for: .normal)
+        contactNameLabel.text = L10n.Settings.SharePerson.name
         view.hideKeyboardWhenTapped = true
         contactNameLabel.isHidden = true
         
@@ -228,7 +233,7 @@ extension NewAllowedPersonViewController: CNContactPickerDelegate {
             }
         
             let cancelAction = UIAlertAction(
-                title: NSLocalizedString("Cancel", comment: ""),
+                title: L10n.Common.cancel,
                 style: .cancel
             )
             alert.addAction(cancelAction)

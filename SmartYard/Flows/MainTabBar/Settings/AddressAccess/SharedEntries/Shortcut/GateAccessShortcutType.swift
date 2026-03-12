@@ -18,10 +18,10 @@ enum GateAccessShortcutType {
     
     var title: String {
         switch self {
-        case .allCars: return NSLocalizedString("All cars", comment: "")
-        case .allPersons: return NSLocalizedString("All people", comment: "")
-        case .addCar: return NSLocalizedString("Add car", comment: "")
-        case .addPerson: return  NSLocalizedString("Add person", comment: "")
+        case .allCars: return L10n.Settings.AddressAccess.Shortcuts.allCars
+        case .allPersons: return L10n.Settings.AddressAccess.Shortcuts.allPeople
+        case .addCar: return L10n.Settings.AddressAccess.Shortcuts.addCar
+        case .addPerson: return  L10n.Settings.AddressAccess.Shortcuts.addPerson
         }
     }
     

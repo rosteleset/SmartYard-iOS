@@ -63,8 +63,8 @@ final class LogoutHelper {
         }
         
         alertService.showDialog(
-            title: NSLocalizedString("Attention", comment: "") + "!",
-            message: NSLocalizedString("You have been authorized on another device", comment: ""),
+            title: L10n.Session.Conflict.title + "!",
+            message: L10n.Session.Conflict.message,
             actions: [okAction],
             priority: 1000
         )

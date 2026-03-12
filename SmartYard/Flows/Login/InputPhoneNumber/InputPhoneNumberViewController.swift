@@ -18,7 +18,7 @@ final class InputPhoneNumberViewController: BaseViewController, LoaderPresentabl
     @IBOutlet private weak var phoneTextView: PhoneTextField!
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var selectedProviderNameLabel: UILabel!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
     private var viewModel: InputPhoneNumberViewModel
     
     var loader: JGProgressHUD?
@@ -33,8 +33,15 @@ final class InputPhoneNumberViewController: BaseViewController, LoaderPresentabl
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureUI() {
+        titleLabel.text = L10n.Auth.PhoneEntry.title
+        backButton.setTitle(L10n.Auth.PhoneEntry.changeProviderButton, for: .normal)
+        selectedProviderNameLabel.text = L10n.Auth.PhoneEntry.providerName
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         
         view.hideKeyboardWhenTapped = true
         if !Constants.defaultBackendURL.isNilOrEmpty {

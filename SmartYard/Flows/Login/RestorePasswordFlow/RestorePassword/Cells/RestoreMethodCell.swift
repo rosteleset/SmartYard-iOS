@@ -19,8 +19,13 @@ final class RestoreMethodCell: UITableViewCell {
         }
     }
     
+    private func configureUI() {
+        titleLabel.text = L10n.Auth.PasswordRecovery.Method.maskedContactPlaceholder
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        configureUI()
         titleLabel.text = nil
     }
     

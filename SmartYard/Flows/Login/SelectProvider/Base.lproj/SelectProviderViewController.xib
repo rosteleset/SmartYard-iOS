@@ -27,6 +27,8 @@
                 <outlet property="selectProviderButton" destination="DzP-PA-sgU" id="dc4-e0-IRK"/>
                 <outlet property="tableView" destination="GCf-IS-es8" id="IqJ-Yw-jtC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="titleLabel" destination="rPl-Hf-egw" id="ctv-VR-5j6"/>
+                <outlet property="subtitleLabel" destination="rDV-lc-Q28" id="kOK-yZ-Ofe"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

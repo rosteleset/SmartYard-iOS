@@ -64,7 +64,7 @@ final class SettingsViewModel: BaseViewModel {
                 onNext: { [weak self] error in
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )
@@ -455,7 +455,7 @@ final class SettingsViewModel: BaseViewModel {
                     return nil
                 }
                 
-                return NSLocalizedString("Number of contract", comment: "") + ": \(contractName)"
+                return L10n.Settings.Main.contractNumberTitle + ": \(contractName)"
             }()
             
             let header: SettingsDataItem = .header(

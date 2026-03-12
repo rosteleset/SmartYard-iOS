@@ -5,236 +5,610 @@
   Created by Александр Васильев on 11.01.2023.
   Copyright © 2023 LanTa. All rights reserved.
 */
-"minutes" = "минути";
-"Open" = "Отвори";
-"Opened" = "Отворено";
-"Cancel" = "Отказ";
-"Settings" = "Настройки";
-"Ignore" = "Игнорирай";
-"Error" = "Грешка";
-"Back" = "Назад";
-"Smart intercom" = "Умен домофон";
-"Video surveillance" = "Видеонаблюдение";
-"Internet" = "Интернет";
-"Cable TV" = "Кабелна телевизия";
-"Wired Phone" = "Стационарен телефон";
-"Mobile Phone" = "Мобилен телефон";
-"Creating a task" = "Създаване на задача";
-"No service selected" = "Не е избрана услуга";
-"Via Courier" = "Чрез куриер";
-"In Office" = "В офис";
-"City" = "Град";
-"Street" = "Улица";
-"Building" = "Сграда";
-"Appartment" = "Апартамент";
-"To use this feature, go to settings and grant access to the camera" = "За да използвате тази функция, отидете в настройките и разрешете достъп до камерата";
-"Can't access camera" = "Не може да се достъпи до камерата"; "appartment" = "апартамент";
-"Addresses" = "Адреси";
-"Notifications" = "Известия";
-"Chat" = "Чат";
-"Pay" = "Плащане";
-"Menu" = "Меню";
-"First, log in to the application, and then try to add the address again" = "Първо, влезте в приложението, и след това опитайте отново да добавите адреса";
-"Incoming call" = "Входящо обаждане";
-"Call a courier" = "Извикай куриер";
-"I'll come to the office myself" = "Ще дойда в офиса сам";
-"To confirm the address, you need to bring a utility bill no older than three months to our nearest office." = "За да потвърдите адреса, трябва да донесете сметка за комунални услуги, не по-стара от три месеца, до нашия най-близък офис.";
-"Wait for the courier at {value} and take a photo of the QR code he brings." = "Изчакайте куриера на {value} и направете снимка на QR кода, който той донесе.";
-"Pickup" = "Приемане";
-"Courier" = "Куриер";
-"The delivery method has changed. The client will come to the office." = "Методът на доставка се промени. Клиентът ще дойде в офиса.";
-"The delivery method has changed. Prepare a package for the courier." = "Методът на доставка се промени. Подгответе пакет за куриера.";
-"To use this feature, go to settings and grant access to the camera" = "За да използвате тази функция, отидете в настройките и разрешете достъп до камерата";
-"First Name" = "Име";
-"Patronymic" = "Бащино име";
-"Service not available yet" = "Услугата все още не е налична"; "Creating a ticket" = "Създаване на билет";
-"Guest information has been successfully sent!" = "Информацията за госта е изпратена успешно!";
-"Yes" = "Да";
-"Are you sure?" = "Сигурни ли сте?";
-"Do you want to remove access?" = "Искате ли да премахнете достъпа?";
-"Enable" = "Активирай";
-"Disable" = "Деактивирай";
-"guestAccessAlertText" = "На домофона всеки, който въведе вашия временен код, автоматично ще отвори вратите за следващите 60 минути. След това домофонът автоматично ще се върне в обичайния режим на работа.";
-"Enable guest access for an hour?" = "Да активирам ли гостов достъп за един час?";
-"Wrong number format" = "Грешен формат на номера"; "Delete" = "Изтрий";
-"Service not connected" = "Услугата не е свързана"; "Everything's under control" = "Всичко е под контрол"; "Smart yard" = "Умен двор";
-"Be aware of everything that happens near the house" = "Бъдете информирани за всичко, което се случва около къщата";
-"Manage services and pay for them via the app" = "Управлявайте услугите и плащайте за тях чрез приложението";
-"Control your intercom, gate or barrier from your smartphone" = "Контролирайте вашия домофон, порта или бариерата от вашия смартфон";
-"I want to cancel my contract" = "Искам да анулирам договора си"; "Customer didn't provide a reason" = "Клиентът не е посочил причина";
-"Specify a reason" = "Посочете причина";
-"Exiting the application" = "Излизане от приложението";
-"Are you sure you want to log out of your account?" = "Сигурни ли сте, че искате да излезете от вашия акаунт?";
-"Account deleting" = "Изтриване на акаунт";
-"Are you sure you want to delete your account? All previously added addresses will be deleted" = "Сигурни ли сте, че искате да изтриете акаунта си? Всички добавени преди това адреси ще бъдат изтрити";
-"Number of contract" = "Номер на договор";
-"Address settings" = "Настройки на адреса";
-"Access setting" = "Настройка на достъп";
-"Open web version of personal account" = "Отворете уеб версията на личната сметка";
-"Attention" = "Внимание";
-"You have been authorized on another device" = "Вие сте упълномощени на друго устройство";
-"Call to intercom" = "Обаждане до домофон";
-"Peephole" = "Шпионка";
-"Peephole on" = "Шпионката е включена";
-"Connecting..." = "Свързване...";
-"Decline" = "Отказ";
-"Video" = "Видео";
-"Conversation" = "Разговор";
-"Call completed" = "Обаждането приключи";
-"There will be no outgoing audio on this call." = "По време на това обаждане няма да има изходящ аудио.";
-"To make it appear in your next calls, please grant access to the microphone in the settings" = "За да се появи при следващите ви обаждания, моля, разрешете достъп до микрофона в настройките";
-"No microphone access" = "Няма достъп до микрофона";
-"We need to make sure that the number is indeed yours." = "Трябва да се уверим, че номерът наистина е ваш.";
-"Confirmation code has been sent to your " = "Код за потвърждение е изпратен на вашата ";
-"Send recovery code to " = "Изпратете код за възстановяване до ";
-"email" = "електронна поща";
-"phone" = "телефон";
-"Failed to load provider list, please try again later." = "Неуспешно зареждане на списъка с доставчици, моля опитайте отново по-късно.";
-"Contract number" = "Номер на договор";
-"Password" = "Парола";
-"Create" = "Създай";
-"Create a request for restoration by contract number?" = "Да създам ли заявка за възстановяване по номер на договор?";
-"You are requesting a code too often. Please try again later" = "Искате код твърде често. Моля, опитайте отново по-късно";
-"Missing confirmation number" = "Липсва потвърдителен номер";
-"Enter code from SMS sent to number" = "Въведете кода от SMS, изпратен на номер";
-"Invalid contract number entered" = "Въведен е невалиден номер на договор"; "The password for the specified entry has been sent to the specified" = "Паролата за посочения запис е изпратена на посочения";
-"To use this feature, go to settings and grant access to the camera" = "За да използвате тази функция, отидете в настройките и разрешете достъп до камерата";
-"Can't access camera" = "Не може да се достъпи до камерата";
-"Update" = "Актуализирай";
-"A new version of the application is available" = "Налична е нова версия на приложението";
-"App version out of date" = "Версията на приложението е остаряла";
-"To continue using the app, please update it" = "За да продължите да използвате приложението, моля актуализирайте го";
-"sec" = "сек";
-"Archive" = "Архив";
-"Online" = "Онлайн";
-"Select Appearance" = "Изберете външен вид";
-"Please choose your preferred appearance theme." = "Моля, изберете предпочитана тема.";
-"System" = "Системен";
-"Light" = "Светъл";
-"Dark" = "Тъмен";
-"Thank you" = "Благодаря";
-"Video in progress" = "Видеото е в ход";
-"As soon as the process is over..." = "Щом процесът приключи...";
-"Link to video copied to clipboard" = "Връзката към видеото е копирана в клипборда"; "Video dated" = "Видео от дата";
-"Opening with a key" = "Отваряне с ключ";
-"Opening from the app" = "Отваряне от приложението";
-"Opening with Face-ID" = "Отваряне с Face-ID";
-"Opening with code" = "Отваряне с код";
-"Gate opening on call" = "Отваряне на порта при обаждане";
-"Gate opening by numberplate" = "Отваряне на портата по номер на регистрационния номер";
-"Unknown event" = "Неизвестно събитие";
-"Answered call" = "Отговорено обаждане";
-"Missed call" = "Пропуснато обаждане";
-"Image missing" = "Липсва изображение";
-"If you select Deny..." = "Ако изберете Откажи...";
-"If you select Allow..." = "Ако изберете Разреши...";
-"all" = "всички";
-"All" = "Всички";
-"Addresses" = "Адреси";
-"All apts" = "Всички апартаменти";
-"Appartment" = "Апартамент";
-"Appartment, all" = "Апартамент, всичко";
-"Events" = "Събития";
-"Intercom" = "Домофон";
-"Key" = "Ключ";
-"Face-ID" = "Face-ID";
-"Opening on call" = "Отваряне при обаждане";
-"Opening by app" = "Отваряне чрез приложение";
-"Opening by code" = "Отваряне с код";
-"Unable to open chat page." = "Не може да се отвори страницата на чата.";
-"Unable to open payment page." = "Не може да се отвори страницата за плащане."; "Deposit" = "Депозит";
-"Done" = "Завършено";
-"Your balance is topped up" = "Вашият баланс е зареден";
-"Payment has failed" = "Плащането не беше успешно";
-"Recommended" = "Препоръчително";
-"Note" = "Бележка";
-"Request submitted" = "Заявката е подадена";
-"We will call you shortly" = "Скоро ще ви се обадим";
-"Request a call back" = "Поискайте обратно обаждане";
-"Make a phone call" = "Направете телефонно обаждане";
-"Map" = "Карта";
-"We need to make sure\nthat the number +%@ is really yours." = "Трябва да се уверим,\nче номерът +%@ наистина е ваш.";
-"Enter the last 4 digits of the number\nfrom which the call will come to the number +%@" = "Въведете последните 4 цифри на номера,\nот който ще дойде обаждането до номер +%@.";
-"Enter the code from SMS\nsent to +%@" = "Въведете кода от SMS,\nизпратен на +%@.";
-"Full name: %@\Phone: %@\Address entered by user: %@" = "Пълно име: %@\Телефон: %@\Адрес, въведен от потребителя: %@";
-"Contract number unknown" = "Номерът на договора е неизвестен";
-"Hello, I would like to change the tariff for the service \"%(X)\" on the contract \"%(Y)\"" = "Здравейте, исках би да променя тарифата за услугата \"%(X)\" по договор \"%(Y)\"";
-"Hello, I would like to connect the service \"%(X)\" to the contract \"%(Y)\"" = "Здравейте, искам да свържа услугата \"%(X)\" с договор \"%(Y)\"";
-"Hello, the \"%(X)\" service is not available at my address, but I want to use it on the \"%(X)\" contract" = "Здравейте, услугата \"%(X)\" не е налична на моя адрес, но искам да я използвам по договор \"%(Y)\"";
-"Service \"%@\" is connected" = "Услугата \"%@\" е свързана"; "Create a request" = "Създайте заявка";
-"Request submitted" = "Заявката е подадена";
-"We will contact you within 24 hours" = "Ще се свържем с вас в рамките на 24 часа";
-"Public cams" = "Публични камери"; "Request a record" = "Заявете запис"; "Incidents" = "Инциденти";
-"Addresses settings" = "Настройки на адресите"; "Common settings" = "Общи настройки";
-// Errors
-"noConnectionError" = "Няма връзка";
-"An error occurred while executing the request" = "Възникна грешка при изпълнение на заявката: %@";
-"Access token not found. Request cannot be completed" = "Токенът за достъп не е намерен. Заявката не може да бъде изпълнена";
-"Client id not found. Request cannot be completed" = "Идентификаторът на клиента не е намерен. Заявката не може да бъде изпълнена";
-"User is already logged in" = "Потребителят вече е влязъл в системата";
-"House id not found. Request cannot be completed" = "Идентификаторът на къщата не е намерен. Заявката не може да бъде изпълнена";
-"Current user's phone number not found" = "Телефонният номер на текущия потребител не е намерен";
-"The contract number was not found. It is impossible to complete the request" = "Номерът на договора не беше намерен. Невъзможно е да се изпълни заявката"; "Unable to restore application state" = "Неуспешно възстановяване на състоянието на приложението";
-"Push notifications are disabled for the application at the system level" = "Известията са деактивирани за приложението на системно ниво";
-"Push notifications are disabled in the app settings" = "Известията са деактивирани в настройките на приложението";
-"Missing FCM token" = "Липсва FCM токен";
-"InstanceID not initialized" = "InstanceID не е инициализиран";
-"Internet connection required to change user" = "За смяна на потребителя е необходима интернет връзка";
-"No access to contacts" = "Няма достъп до контактите";
-"No camera access" = "Няма достъп до камерата";
-"No microphone access" = "Няма достъп до микрофона";
-"self destroyed" = "самоунищожил се";
-"Unknown error" = "Неизвестна грешка";
-"Failed to setup camera" = "Неуспешно настройване на камерата";
-"Failed to represent server response as base model" = "Неуспешно представяне на отговора от сървъра като основен модел";
-"Error mapping the Data field, or it is missing with a code other than 204" = "Грешка при картографиране на полето Данни, или липсва с код, различен от 204";
-"Date of record" = "Дата на записа";
-"Time" = "Час";
-"Duration" = "Продължителност";
-"h" = "ч";
-"m" = "м";
-"Allow" = "Познат";
-"Deny" = "Непознат";
-"Enable" = "Включи";
-"Disable" = "Изключи";
-"Reset" = "Нулиране";
-"Reset done" = "Нулирано";
-"Reset address order?" = "Да нулираме реда на адресите?";
-"This will restore the default sorting." = "Това ще върне стандартната подредба.";
-"By car number" = "По номер на колата";
-"By phone number" = "По телефонен номер";
-"All cars" = "Всички коли";
-"All people" = "Всички хора";
-"Add car" = "Добави автомобил";    
-"Add person" = "Добави контакт";
-"TimeLeftFormat" = "остават %@";
-"expired" = "изтече";
-"Add" = "Добавяне";
-"unlimited" = "неограничен";
-"Address confirmation" = "Потвърждаване на адреса";
-"How would it be more convenient for you to do this?" = "Как ще ви бъде по-удобно да го направите?";
-"Input your address" = "Въведете адрес";
-"Available services" = "Достъпни услуги";
-"Do you have an agreement with the operator?" = "Имате ли договор с оператора?";
-"Enter the number and password of the contract associated with this address and manage services from this application." = "Въведете номера и паролата на договора, асоцииран с този адрес, и управлявайте услугите от това приложение.";
-"Select camera" = "Изберете камера";
-"Events log" = "Дневник на събитията";
-"Common settings" = "Общи настройки";
-"Addresses settings" = "Настройки на адреси";
-"Request a record" = "Заявете запис";
-"Public cams" = "Градски камери";
-"Search" = "Търсене";
-"VPN detected. The application may work unstable." = "VPN анықталды. Қосымша тұрақсыз жұмыс істеуі мүмкін.";
-"List Empty Online List" = "За да добавите адрес, натиснете \"+\" в горната част на екрана. Ако добавеният адрес не се показва, моля, изчакайте няколко минути. Списъкът ще се обнови автоматично.";
-"List Empty Offline List" = "Изглежда, че няма данни или все още не са запазени.";
-"offline.alert.switch_mode" = "Натиснете \"OK\", за да се върнете в онлайн режим.\nНатиснете \"Отказ\", за да останете в офлайн режим.";
-"offline.alert.no_connection_title" = "Няма връзка!";
-"offline.message.connection_lost" = "Изглежда връзката е прекъсната или има проблеми със сървъра.";
-"offline.message.server_unavailable" = "В момента не можете да излезете от офлайн режим — сървърът е недостъпен. Опитайте отново по-късно.";
-"offline.hint.swipe_to_exit" = "В момента сте в офлайн режим. За да излезете от него, плъзнете надолу от горната част на екрана.";
-"offline.message.connection_restored" = "Ура! Връзката е възстановена!";
-"My addresses" = "Моите адреси";
-"First address cameras" = "Камери на първия адрес";
-"First address events" = "Събития на първия адрес";
-"First address access" = "Достъп за първия адрес";
-"Phone number copied to clipboard" = "Телефонният номер е копиран в клипборда";
+
+/* MARK: - ADDRESS */
+
+"address.confirmation.subtitle" = "Как ще ви бъде по-удобно да го направите?";
+"address.confirmation.title" = "Потвърждаване на адреса";
+
+"address.confirmation.courier.activationHint" = "Веднага ще получите достъп до целия функционал на приложението „Умният домофон“.";
+"address.confirmation.courier.envelopeHint" = "През седмицата куриерът ще достави таен плик";
+"address.confirmation.courier.hintFormat" = "Изчакайте куриера на {value} и направете снимка на QR кода, който той донесе.";
+"address.confirmation.courier.leaveARequest" = "Оставете заявка";
+"address.confirmation.courier.qrCodeHint" = "Той ще бъде вътре в плика";
+"address.confirmation.courier.requestButton" = "Страхотно! Оставете заявка";
+"address.confirmation.courier.scanTheQrCode" = "Сканирайте QR кода";
+"address.confirmation.courier.use" = "Използвайте!";
+
+"address.confirmation.delivery.courierChangeMessage" = "Методът на доставка се промени. Подгответе пакет за куриера.";
+"address.confirmation.delivery.courierOption" = "Извикай куриер";
+"address.confirmation.delivery.courierShort" = "Чрез куриер";
+"address.confirmation.delivery.courierTitle" = "Куриер";
+"address.confirmation.delivery.officeChangeMessage" = "Методът на доставка се промени. Клиентът ще дойде в офиса.";
+"address.confirmation.delivery.officeOption" = "Ще дойда в офиса сам";
+"address.confirmation.delivery.officeShort" = "В офис";
+"address.confirmation.delivery.pickupTitle" = "Приемане";
+
+"address.confirmation.office.hint" = "За да потвърдите адреса, трябва да донесете сметка за комунални услуги, не по-стара от три месеца, до нашия най-близък офис.";
+"address.confirmation.office.iLlDoSoButton" = "Така ще направя";
+"address.confirmation.office.instructions" = "Посетете нашия най-близък офис с разписка за комунални услуги за този апартамент и ние веднага ще активираме функцията на умния домофон и видеонаблюдението.";
+
+"address.entry.checkAvailableServicesButton" = "Проверете наличните услуги";
+"address.entry.iHaveQrCodeButton" = "Имам QR код";
+"address.entry.title" = "Въведете адрес";
+
+"address.form.apartment" = "Апартамент";
+"address.form.apartmentValue" = "апартамент";
+"address.form.building" = "Сграда";
+"address.form.city" = "Град";
+"address.form.street" = "Улица";
+
+"address.qrCode.loginRequiredMessage" = "Първо, влезте в приложението, и след това опитайте отново да добавите адреса";
+
+"address.qrScan.pointYourCameraAtTheQrCode" = "Насочете камерата към QR кода";
+
+/* MARK: - APP */
+
+"app.update.action" = "Актуализирай";
+"app.update.availableTitle" = "Налична е нова версия на приложението";
+"app.update.requiredMessage" = "За да продължите да използвате приложението, моля актуализирайте го";
+"app.update.requiredTitle" = "Версията на приложението е остаряла";
+
+/* MARK: - AUTH */
+
+"auth.callVerification.callButton" = "Обадете се";
+"auth.callVerification.callInstructionPrefix" = "Направете безплатен обаждане на номера";
+"auth.callVerification.callInstructionSuffix" = "за да можем да потвърдим, \nче това е вашият номер";
+"auth.callVerification.confirmPhoneTitle" = "Трябва да се уверим, \nче номерът +79025308094 наистина е ваш.";
+"auth.callVerification.confirmPhoneTitleFormat" = "Трябва да се уверим,\nче номерът +%@ наистина е ваш.";
+"auth.callVerification.editPhoneButton" = "Коригирайте телефонния номер";
+"auth.callVerification.phoneNumberPlaceholder" = "+7 (1234) 12-34-56";
+
+"auth.codeRateLimit.message" = "Искате код твърде често. Моля, опитайте отново по-късно";
+
+"auth.contractLogin.contractNumberPlaceholder" = "Номер на договор";
+"auth.contractLogin.createButton" = "Създай";
+"auth.contractLogin.forgotCredentialsButton" = "Не помня нищо";
+"auth.contractLogin.forgotPasswordButton" = "Не помня паролата";
+"auth.contractLogin.hasOperatorAgreementTitle" = "Имате ли договор с оператора?";
+"auth.contractLogin.iDonTHaveAContractButton" = "Нямам договор";
+"auth.contractLogin.loginButton" = "Вход";
+"auth.contractLogin.passwordPlaceholder" = "Парола";
+"auth.contractLogin.restoreByContractPrompt" = "Да създам ли заявка за възстановяване по номер на договор?";
+"auth.contractLogin.subtitle" = "Въведете номера и паролата на договора, асоцииран с този адрес, и управлявайте услугите от това приложение.";
+
+"auth.flashCall.enterLastDigitsTitleFormat" = "Въведете последните 4 цифри на номера,\nот който ще дойде обаждането до номер +%@.";
+
+"auth.passwordRecovery.chooseMethodButton" = "Получете достъпни методи";
+"auth.passwordRecovery.codeSentMessage" = "Паролата за посочения запис е изпратена на посочения";
+"auth.passwordRecovery.contractPlaceholder" = "Номер на договора";
+"auth.passwordRecovery.restoreAccess" = "Възстановете достъпа";
+"auth.passwordRecovery.sendCodeButton" = "Получете код за потвърждение";
+"auth.passwordRecovery.subtitle" = "Моля, въведете вашия номер на договора и посочете имейл или телефон, които сте използвали при регистрацията на договора";
+
+"auth.passwordRecovery.code.resendButton" = "Изпратете кода отново";
+"auth.passwordRecovery.code.resendHint" = "Можете да изпратите кода отново след";
+"auth.passwordRecovery.code.sentToPhoneTitle" = "Кодът за потвърждение е изпратен на телефон +79025308094";
+"auth.passwordRecovery.code.timerValue" = "01:00";
+
+"auth.passwordRecovery.error.invalidContract" = "Въведен е невалиден номер на договор";
+
+"auth.passwordRecovery.method.email" = "електронна поща";
+"auth.passwordRecovery.method.maskedContactPlaceholder" = "Изпратете кода за възстановяване на поща mi****@yandex.ru";
+"auth.passwordRecovery.method.phone" = "телефон";
+"auth.passwordRecovery.method.sendCodePrefix" = "Изпратете код за възстановяване до ";
+"auth.passwordRecovery.method.titlePrefix" = "Код за потвърждение е изпратен на вашата ";
+
+"auth.phoneEntry.changeProviderButton" = "Върнете се към избора на доставчик";
+"auth.phoneEntry.providerName" = "Име на доставчика";
+"auth.phoneEntry.title" = "Введите номер телефона  для регистрации";
+
+"auth.phoneEntry.error.confirmationNumberMissing" = "Липсва потвърдителен номер";
+
+"auth.providerSelection.chooseAProvider" = "Изберете доставчика";
+"auth.providerSelection.searchPlaceholder" = " въведете името на компанията";
+"auth.providerSelection.subtitle" = "Моля, изберете вашия доставчик на услуги от списъка или използвайте търсенето. ";
+
+"auth.providerSelection.error.loadFailed" = "Неуспешно зареждане на списъка с доставчици, моля опитайте отново по-късно.";
+
+"auth.providerSelection.method.maskedContactPlaceholder" = "Изпратете кода за възстановяване на поща mi****@yandex.ru";
+
+"auth.smsCode.resendHint" = "Можете да изпратите кода отново след";
+"auth.smsCode.sentToPhoneTitle" = "Въведете кода от SMS, изпратен на номер +79025308094";
+"auth.smsCode.sentToPhoneTitleFormat" = "Въведете кода от SMS,\nизпратен на +%@.";
+"auth.smsCode.timerValue" = "01:00";
+
+"auth.userName.howCanICallYou" = "Как да се обърнем към вас?";
+
+/* MARK: - CAMERA */
+
+"camera.archive.title" = "Архив";
+
+"camera.archive.export.linkCopiedMessage" = "Връзката към видеото е копирана в клипборда";
+"camera.archive.export.processingMessage" = "Щом процесът приключи...";
+"camera.archive.export.processingTitle" = "Видеото е в ход";
+"camera.archive.export.successTitle" = "Благодаря";
+
+"camera.archivePlayer.downloadAndGetLinkButton" = "Изтеглете и получете връзка";
+"camera.archivePlayer.halfSpeedButton" = "0.5x";
+"camera.archivePlayer.oneAndHalfSpeedButton" = "1.5x";
+"camera.archivePlayer.selectFragmentButton" = "Изберете фрагмент";
+"camera.archivePlayer.videoDated" = "Видео от";
+
+"camera.city.incidentsTitle" = "Инциденти";
+"camera.city.mapTitle" = "Карта";
+"camera.city.publicCamerasTitle" = "Градски камери";
+"camera.city.requestRecordButton" = "Заявете запис";
+
+"camera.city.detail.addressPlaceholder" = "г. Тамбов, ул. Советская, 16";
+"camera.city.detail.title" = "Камера ";
+
+"camera.online.title" = "Онлайн";
+
+"camera.recordRequest.commentPlaceholder" = "Коментар";
+"camera.recordRequest.dateLabel" = "Дата на записа";
+"camera.recordRequest.datePlaceholder" = "Дата на записа: 5.09.2020";
+"camera.recordRequest.durationHint" = "Можете да заявите фрагмент с продължителност не повече от 1 час. Нашата услуга позволява съхраняване на видеозаписи за не повече от 10 дни, след което видеото се изтрива безвъзвратно от архива.";
+"camera.recordRequest.durationLabel" = "Продължителност";
+"camera.recordRequest.durationPlaceholder" = "Продължителност: 10 мин";
+"camera.recordRequest.processingHint" = "Сұрау өңделу уақыты 1 жұмыс күніне дейін болуы мүмкін.";
+"camera.recordRequest.sendRequestButton" = "Изпратете заявка";
+"camera.recordRequest.submittedMessage" = "Ще се свържем с вас в рамките на 24 часа";
+"camera.recordRequest.timeHoursPlaceholder" = "Време: чч";
+"camera.recordRequest.timeLabel" = "Час";
+"camera.recordRequest.timeMinutesPlaceholder" = "Уақыт: мм";
+
+"camera.selection.title" = "Изберете камера";
+
+/* MARK: - CHAT */
+
+"chat.error.unableToOpenPage" = "Не може да се отвори страницата на чата.";
+
+/* MARK: - COMMON */
+
+"common.add" = "Добави";
+"common.all" = "Всички";
+"common.allow" = "Познат";
+"common.back" = "Назад";
+"common.cancel" = "Отказ";
+"common.delete" = "Изтрий";
+"common.deny" = "Непознат";
+"common.disable" = "Деактивирай";
+"common.done" = "Завършено";
+"common.enable" = "Активирай";
+"common.error" = "Грешка";
+"common.ignore" = "Игнорирай";
+"common.next" = "Напред";
+"common.no" = "Не";
+"common.ok" = "OK";
+"common.open" = "Отвори";
+"common.opened" = "Отворено";
+"common.reset" = "Нулиране";
+"common.resetDone" = "Нулирано";
+"common.save" = "Запази";
+"common.search" = "Търсене";
+"common.settings" = "Настройки";
+"common.yes" = "Да";
+
+"common.confirmation.title" = "Сигурни ли сте?";
+
+"common.time.hoursShort" = "ч";
+"common.time.minutes" = "минути";
+"common.time.minutesShort" = "м";
+"common.time.secondsShort" = "сек";
+
+"common.weekday.short.fri" = "пт";
+"common.weekday.short.mon" = "пн";
+"common.weekday.short.sat" = "сб";
+"common.weekday.short.sun" = "нд";
+"common.weekday.short.thu" = "чт";
+"common.weekday.short.tue" = "вт";
+"common.weekday.short.wed" = "ср";
+
+/* MARK: - ERROR */
+
+"error.address.houseIdMissing" = "Идентификаторът на къщата не е намерен. Заявката не може да бъде изпълнена";
+
+"error.app.restoreStateFailed" = "Неуспешно възстановяване на състоянието на приложението";
+
+"error.auth.accessTokenMissing" = "Токенът за достъп не е намерен. Заявката не може да бъде изпълнена";
+"error.auth.clientIdMissing" = "Идентификаторът на клиента не е намерен. Заявката не може да бъде изпълнена";
+"error.auth.contractNumberNotFound" = "Номерът на договора не беше намерен. Невъзможно е да се изпълни заявката";
+"error.auth.currentUserPhoneMissing" = "Телефонният номер на текущия потребител не е намерен";
+"error.auth.userAlreadyLoggedIn" = "Потребителят вече е влязъл в системата";
+
+"error.camera.setupFailed" = "Неуспешно настройване на камерата";
+
+"error.common.unknown" = "Неизвестна грешка";
+
+"error.internal.selfDestroyed" = "самоунищожил се";
+
+"error.network.baseModelParsingFailed" = "Неуспешно представяне на отговора от сървъра като основен модел";
+"error.network.dataFieldMappingFailed" = "Грешка при картографиране на полето Данни, или липсва с код, различен от 204";
+"error.network.internetRequiredToChangeUser" = "За смяна на потребителя е необходима интернет връзка";
+"error.network.noConnection" = "Няма връзка";
+
+"error.notifications.appDisabled" = "Известията са деактивирани в настройките на приложението";
+"error.notifications.fcmTokenMissing" = "Липсва FCM токен";
+"error.notifications.instanceIdMissing" = "InstanceID не е инициализиран";
+"error.notifications.systemDisabled" = "Известията са деактивирани за приложението на системно ниво";
+
+"error.permissions.cameraDenied" = "Няма достъп до камерата";
+"error.permissions.contactsDenied" = "Няма достъп до контактите";
+
+"error.request.executionFailed" = "Възникна грешка при изпълнение на заявката: %@";
+
+/* MARK: - FACE RECOGNITION */
+
+"faceRecognition.addFace.addThisFace" = "Да добавя ли това лице?";
+
+"faceRecognition.deleteFace.deleteThisFace" = "Да изтрия ли това лице?";
+
+/* MARK: - HISTORY */
+
+"history.title" = "Дневник на събитията";
+
+"history.detail.emptyStateMessage" = "Изглежда, че в дневника все още няма подходящи събития.\n\nУверете се, че собственикът на апартамента е активирал воденето на дневник на събитията.\nСлед това опитайте да отворите входната врата със своя ключ и изчакайте 1 минута, за да се появи поне едно събитие с вашата снимка в системата.\nСлед това опитайте отново да отворите този раздел.\n\nPS: Напомняме, че винаги сме готови да помогнем в чата или по телефона на техническата поддръжка чрез менюто на това приложение.";
+"history.detail.title" = "Събития";
+
+"history.event.answeredCall" = "Отговорено обаждане";
+"history.event.gateOpeningByNumberplate" = "Отваряне на портата по номер на регистрационния номер";
+"history.event.gateOpeningOnCall" = "Отваряне на порта при обаждане";
+"history.event.guestAllowedHint" = "Ако изберете Разреши...";
+"history.event.guestDeniedHint" = "Ако изберете Откажи...";
+"history.event.imageMissing" = "Липсва изображение";
+"history.event.missedCall" = "Пропуснато обаждане";
+"history.event.openingFromApp" = "Отваряне от приложението";
+"history.event.openingWithCode" = "Отваряне с код";
+"history.event.openingWithFaceID" = "Отваряне с Face-ID";
+"history.event.openingWithKey" = "Отваряне с ключ";
+"history.event.unknown" = "Неизвестно събитие";
+
+"history.filter.allApartments" = "Всички апартаменти";
+"history.filter.allButton" = "Всички";
+"history.filter.allInApartment" = "Апартамент, всичко";
+"history.filter.allOption" = "всички";
+"history.filter.apptAllButton" = "Апартамент, всичко";
+"history.filter.faceID" = "Face-ID";
+"history.filter.intercom" = "Домофон";
+"history.filter.key" = "Ключ";
+"history.filter.openingByApp" = "Отваряне чрез приложение";
+"history.filter.openingByCode" = "Отваряне с код";
+"history.filter.openingOnCall" = "Отваряне при обаждане";
+
+"history.videoEventInfo.description" = "За скорошните събития се показва кратък видеоклип. За останалите – запазен кадър в момента на събитието.";
+"history.videoEventInfo.forwardGestureHint" = "двойно докосване в дясната част на видеото – превъртане напред с 10 секунди";
+"history.videoEventInfo.gesturesTitle" = "Можете също да използвате жестове:";
+"history.videoEventInfo.rewindGestureHint" = "двойно докосване в лявата част на видеото – превъртане назад с 10 секунди";
+"history.videoEventInfo.swipeGestureHint" = "плъзване наляво или надясно – прелистване на събитията";
+"history.videoEventInfo.title" = "Съвет";
+
+/* MARK: - HOME */
+
+"home.addressCard.cameras.cameras" = "Видеокамери";
+"home.addressCard.cameras.countValue" = "3";
+
+"home.addressCard.events.countValue" = "3";
+"home.addressCard.events.events" = "Събития";
+
+"home.addresses.title" = "Моите адреси";
+
+"home.addressesEmpty.listIsEmpty" = "Списъкът все още е празен :(";
+"home.addressesEmpty.offlineTitle" = "Изглежда, че няма данни или все още не са запазени.";
+"home.addressesEmpty.onlineTitle" = "За да добавите адрес, натиснете \"+\" в горната част на екрана. Ако добавеният адрес не се показва, моля, изчакайте няколко минути. Списъкът ще се обнови автоматично.";
+"home.addressesEmpty.toAddAnAddressTapAtTheTop" = "Для добавления адреса нажмите на \"+\" в верхней части экрана.  Если добавленный адрес не отображается, пожалуйста, подождите несколько минут. Список обновится автоматически.";
+
+/* MARK: - INTERCOM */
+
+"intercom.incoming.addressPlaceholder" = "Тамбов, ул. Советская 20, кв. 52";
+"intercom.incoming.answerAction" = "Отговорете";
+"intercom.incoming.callCompletedStatus" = "Обаждането приключи";
+"intercom.incoming.connectingStatus" = "Свързване...";
+"intercom.incoming.conversationStatus" = "Разговор";
+"intercom.incoming.declineAction" = "Отказ";
+"intercom.incoming.ignoreAction" = "Игнорирайте";
+"intercom.incoming.microphoneMissingMessage" = "За да се появи при следващите ви обаждания, моля, разрешете достъп до микрофона в настройките";
+"intercom.incoming.microphoneMissingTitle" = "По време на това обаждане няма да има изходящ аудио.";
+"intercom.incoming.notificationTitle" = "Входящо обаждане";
+"intercom.incoming.openedStatus" = "Отворено";
+"intercom.incoming.peepholeAction" = "Шпионка";
+"intercom.incoming.peepholeOnStatus" = "Шпионката е включена";
+"intercom.incoming.previewAction" = "Шпионка";
+"intercom.incoming.speakerAction" = "Високоговорител";
+"intercom.incoming.title" = "Обаждане до домофон";
+"intercom.incoming.videoAction" = "Видео";
+
+/* MARK: - MENU */
+
+"menu.main.menu" = "Меню";
+
+"menu.support.callToTechSupport" = "Обаждане към техническа поддръжка";
+
+/* MARK: - NETWORK */
+
+"network.vpn.detectedWarning" = "VPN анықталды. Қосымша тұрақсыз жұмыс істеуі мүмкін.";
+
+/* MARK: - OFFLINE */
+
+"offline.alert.noConnectionTitle" = "Няма връзка!";
+"offline.alert.switchMode" = "Натиснете \"OK\", за да се върнете в онлайн режим.\nНатиснете \"Отказ\", за да останете в офлайн режим.";
+
+"offline.hint.swipeToExit" = "В момента сте в офлайн режим. За да излезете от него, плъзнете надолу от горната част на екрана.";
+
+"offline.home.title" = "Моите адреси";
+
+"offline.message.connectionLost" = "Изглежда връзката е прекъсната или има проблеми със сървъра.";
+"offline.message.connectionRestored" = "Ура! Връзката е възстановена!";
+"offline.message.serverUnavailable" = "В момента не можете да излезете от офлайн режим — сървърът е недостъпен. Опитайте отново по-късно.";
+
+/* MARK: - ONBOARDING */
+
+"onboarding.coolLetSGetStartedButton" = "Страхотно, нека започнем!";
+"onboarding.skipButton" = "Пропусни";
+
+"onboarding.awareness.title" = "Бъдете информирани за всичко, което се случва около къщата";
+
+"onboarding.control.title" = "Всичко е под контрол";
+
+"onboarding.intercom.subtitle" = "Контролирайте вашия домофон, порта или бариерата от вашия смартфон";
+
+"onboarding.services.subtitle" = "Управлявайте услугите и плащайте за тях чрез приложението";
+
+"onboarding.slide.videoSurveillance" = "Видеонаблюдение";
+
+"onboarding.slide.awareness.subtitle" = "Бъдете в курс на всичко, което се случва около дома";
+
+"onboarding.smartYard.title" = "Умен двор";
+
+/* MARK: - PAYMENTS */
+
+"payments.addressSelection.selectAddress" = "Изберете адрес";
+
+"payments.error.unableToOpenPage" = "Не може да се отвори страницата за плащане.";
+
+"payments.topUp.amount" = "Сума:";
+"payments.topUp.amountPlaceholder" = "Сума";
+"payments.topUp.contractNumberPlaceholder" = "№68992";
+"payments.topUp.depositTitle" = "Депозит";
+"payments.topUp.errorTitle" = "Плащането не беше успешно";
+"payments.topUp.payButton" = "Плати";
+"payments.topUp.paymentByBankCardButton" = "Плащане с банкова карта";
+"payments.topUp.recommendedAmountPlaceholder" = "Препоръчителна - 480 рубли";
+"payments.topUp.recommendedLabel" = "Препоръчително";
+"payments.topUp.successMessage" = "Вашият баланс е зареден";
+"payments.topUp.successMessageShort" = "Вашият баланс е зареден";
+"payments.topUp.successTitle" = "Готово!";
+"payments.topUp.topUpBalance" = "Заредете баланса";
+
+/* MARK: - PERMISSIONS */
+
+"permissions.camera.message" = "За да използвате тази функция, отидете в настройките и разрешете достъп до камерата";
+"permissions.camera.title" = "Не може да се достъпи до камерата";
+
+"permissions.microphone.title" = "Няма достъп до микрофона";
+
+/* MARK: - PROFILE */
+
+"profile.firstName" = "Име";
+"profile.patronymic" = "Бащино име";
+
+/* MARK: - QUICK ACTION */
+
+"quickAction.error.unsupported" = "Unsupported quick action";
+
+"quickAction.firstAddress.accessTitle" = "Достъп за първия адрес";
+"quickAction.firstAddress.camerasNotFound" = "No cameras were found";
+"quickAction.firstAddress.camerasTitle" = "Камери на първия адрес";
+"quickAction.firstAddress.eventsTitle" = "Събития на първия адрес";
+"quickAction.firstAddress.noAccessSettings" = "The first address has no access settings";
+"quickAction.firstAddress.noAddresses" = "No addresses were found";
+"quickAction.firstAddress.noCameras" = "The first address has no cameras";
+"quickAction.firstAddress.noEvents" = "The first address has no events";
+
+/* MARK: - REQUEST */
+
+"request.common.submittedTitle" = "Заявката е подадена";
+
+/* MARK: - SERVICES */
+
+"services.activationRequest.oops" = "Упс :(";
+"services.activationRequest.requestButton" = "Оставете заявка";
+"services.activationRequest.subtitle" = "Вашият адрес изисква уточнение. Изчакайте обаждане от специалист.\nКаква услуга бихте искали да активирате?";
+
+"services.available.loadingTitle" = "Създаване на задача";
+"services.available.title" = "Достъпни услуги";
+
+"services.available.card.smartIntercom" = "Умен домофон";
+
+"services.available.error.noServiceSelected" = "Не е избрана услуга";
+
+"services.available.smartIntercom.subtitle" = "За шлагбаума, портите и входа";
+
+"services.catalog.cableTV" = "Кабелна телевизия";
+"services.catalog.internet" = "Интернет";
+"services.catalog.mobilePhone" = "Мобилен телефон";
+"services.catalog.smartIntercom" = "Умен домофон";
+"services.catalog.videoSurveillance" = "Видеонаблюдение";
+"services.catalog.wiredPhone" = "Стационарен телефон";
+
+"services.request.createButton" = "Създайте заявка";
+"services.request.loadingTitle" = "Създаване на билет";
+"services.request.mainUserInfoFormat" = "Пълно име: %@\nТелефон: %@\nАдрес, въведен от потребителя: %@";
+"services.request.unknownContractNumber" = "Номерът на договора е неизвестен";
+
+"services.status.activated.changePlanButton" = "Променете тарифа";
+"services.status.activated.changePlanHint" = "Ако искате да смените тарифа, оставете заявка";
+"services.status.activated.serviceActivated" = "Услугата е активирана";
+"services.status.activated.titleFormat" = "Услугата \"%@\" е свързана";
+
+"services.status.notActivated.requestButton" = "Оставете заявка";
+"services.status.notActivated.subtitle" = "Ако искате да активирате услугата, оставете заявка";
+"services.status.notActivated.title" = "Услугата не е свързана";
+
+"services.status.soonAvailable.addressInstructionPlaceholder" = "Изчакайте куриера на адрес Тамбов, Советская, 80, 16 и снимайте QR кода, който той ще донесе.";
+"services.status.soonAvailable.title" = "Много скоро всичко ще заработи!";
+
+"services.status.unavailable.message" = "В момента услугата не е налична на вашия адрес. За нейното активиране е необходимо да се съберат няколко заявки от вашия дом. Оставете заявка първи!";
+"services.status.unavailable.requestButton" = "Оставете заявка";
+"services.status.unavailable.title" = "Услугата все още не е налична";
+
+/* MARK: - SESSION */
+
+"session.conflict.message" = "Вие сте упълномощени на друго устройство";
+"session.conflict.title" = "Внимание";
+
+/* MARK: - SETTINGS */
+
+"settings.address.addressSettings" = "Настройки на адреса";
+"settings.address.deleteAddressButton" = "Изтрийте адреса";
+"settings.address.hideEventLogTitle" = "Скрийте дневника на събитията\nот други потребители на апартамента";
+"settings.address.intercom" = "Домофон";
+"settings.address.intercomEnabled" = "Интеркомът е включен";
+"settings.address.keepAnEventLog" = "Водете дневник на събитията";
+"settings.address.label" = "Етикет";
+"settings.address.noteLabel" = "Бележка";
+"settings.address.receiveCalls" = "Приемайте обаждания";
+"settings.address.receivePaperBills" = "Получавайте хартиени сметки";
+"settings.address.recognizeFaces" = "Разпознавайте лица";
+"settings.address.recognizePlates" = "Разпознаване на номера";
+"settings.address.whiteRabbitMode" = "Режим \"Бял заек\"";
+
+"settings.address.whiteRabbitInfo.description" = "Функция, предназначена за отваряне на вратата чрез позвъняване в апартамента и за отваряне на входния панел по номер без позвъняване.";
+"settings.address.whiteRabbitInfo.step1" = "Гостът се приближава до вратата и набира желания номер на апартамент;";
+"settings.address.whiteRabbitInfo.step2" = "Собственикът на апартамента отговаря на госта и натиска бутона Отвори в приложението или на аналоговата слушалка;";
+"settings.address.whiteRabbitInfo.step3" = "Гостът се доближава до домофонния панел и набира номера на апартамента. Домофонът ще се отвори без да звъни в апартамента.";
+"settings.address.whiteRabbitInfo.stepsTitle" = "Работи по следния начин:";
+"settings.address.whiteRabbitInfo.title" = "Белият заек";
+"settings.address.whiteRabbitInfo.validityHint" = "Функцията остава активна 5 минути след отваряне на вратата.";
+
+"settings.addressAccess.accessToAddress" = "Достъп до адреса";
+"settings.addressAccess.accessToTheBarrierGate" = "Достъп до бариерата/вратата";
+"settings.addressAccess.addressPlaceholder" = "гр. Тамбов, ул. Советская, 16, бл. 4";
+"settings.addressAccess.permanentAccessTitle" = "Постоянен достъп до адреса";
+
+"settings.addressAccess.faceId.beta" = "бета";
+"settings.addressAccess.faceId.disabledMessage" = "Разпознаването на лица е изключено от собственика на апартамента";
+"settings.addressAccess.faceId.registeredFaces" = "Регистрирани лица";
+"settings.addressAccess.faceId.setupButton" = "Настройте";
+"settings.addressAccess.faceId.title" = "Вход с лице без ключ";
+
+"settings.addressAccess.gateDetails.addressPlaceholder" = "г. Тамбов, ул. Советская, 16, к. 4";
+"settings.addressAccess.gateDetails.carFilter" = "По номер на колата";
+"settings.addressAccess.gateDetails.expired" = "изтече";
+"settings.addressAccess.gateDetails.phoneFilter" = "По телефонен номер";
+"settings.addressAccess.gateDetails.timeRemainingFormat" = "остават %@";
+"settings.addressAccess.gateDetails.title" = "Достъп до бариера/врата";
+"settings.addressAccess.gateDetails.unlimited" = "неограничен";
+
+"settings.addressAccess.guestAccess.alertMessage" = "На домофона всеки, който въведе вашия временен код, автоматично ще отвори вратите за следващите 60 минути. След това домофонът автоматично ще се върне в обичайния режим на работа.";
+"settings.addressAccess.guestAccess.alertTitle" = "Да активирам ли гостов достъп за един час?";
+"settings.addressAccess.guestAccess.sentMessage" = "Информацията за госта е изпратена успешно!";
+
+"settings.addressAccess.newPerson.addContact" = "Добавете контакт";
+
+"settings.addressAccess.removeAccess.message" = "Искате ли да премахнете достъпа?";
+
+"settings.addressAccess.shortcuts.addCar" = "Добави автомобил";
+"settings.addressAccess.shortcuts.addPerson" = "Добави контакт";
+"settings.addressAccess.shortcuts.allCars" = "Всички коли";
+"settings.addressAccess.shortcuts.allPeople" = "Всички хора";
+
+"settings.addressAccess.temporaryAccess.codeTitle" = "Код за отваряне";
+"settings.addressAccess.temporaryAccess.guestAccessTitle" = "Гостов достъп за час";
+"settings.addressAccess.temporaryAccess.title" = "Временен достъп до домофона";
+
+"settings.addressAccess.waitingGuestInfo.message" = "Тази функция позволява на вашите гости да отворят домофона без ваше участие: достатъчно е да въведат номера на апартамента ви на панела за повикване и вратата или входната порта ще се отвори незабавно.";
+"settings.addressAccess.waitingGuestInfo.title" = "Гостови достъп за един час";
+"settings.addressAccess.waitingGuestInfo.validity" = "Валидност – един час от момента на активиране.";
+
+"settings.addressDeletion.other" = "Друго";
+"settings.addressDeletion.pleaseStateTheReason" = "Посочете причината";
+"settings.addressDeletion.terminateContractOption" = "Искам да разтрогна договора";
+"settings.addressDeletion.warningMessage" = "При изтриване на адреса няма да имате достъп до управлението на услугите за адреса";
+
+"settings.addressDeletion.reason.placeholder" = "Посочете причина";
+"settings.addressDeletion.reason.terminateContract" = "Искам да анулирам договора си";
+"settings.addressDeletion.reason.unspecified" = "Клиентът не е посочил причина";
+
+"settings.common.calls" = "Обаждания";
+"settings.common.deleteAccountButton" = "Изтриване на акаунт";
+"settings.common.logoutButton" = "Изход";
+"settings.common.lowBalanceNotificationTitle" = "Изпратете известие, когато балансът се приближи до нула";
+"settings.common.notifications" = "Известия";
+"settings.common.notifyAboutInsufficientFunds" = "Информирайте за недостиг на средства";
+"settings.common.profileNamePlaceholder" = "Александър Сергеевич";
+"settings.common.profilePhonePlaceholder" = "+7 (964) 134 00 00";
+"settings.common.showCamerasOnTheMap" = "Показване на картата";
+"settings.common.showNotifications" = "Показвайте известия";
+"settings.common.speakerphoneByDefault" = "Говорител по подразбиране";
+"settings.common.theme" = "Тема";
+"settings.common.title" = "Общи настройки";
+"settings.common.useCallkit" = "Използвайте CallKit";
+
+"settings.common.addressOrder.description" = "По подразбиране адресите се показват по азбучен ред. Адресите с наличен вход винаги се показват първи. Можете ръчно да настроите реда — просто задръжте пръста си върху заглавието на адреса, изчакайте 0.3–0.5 секунди да се появи ефектът на “повдигната карта”, след което плъзнете нагоре или надолу. Пуснете на желаното място — редът ще се запази автоматично.";
+"settings.common.addressOrder.resetDialogMessage" = "Това ще върне стандартната подредба.";
+"settings.common.addressOrder.resetDialogTitle" = "Да нулираме реда на адресите?";
+"settings.common.addressOrder.resetHint" = "За да възстановите първоначалния ред, използвайте бутона „Нулиране“ в настройките.";
+"settings.common.addressOrder.title" = "Ред на адресите";
+
+"settings.common.appearance.dark" = "Тъмен";
+"settings.common.appearance.light" = "Светъл";
+"settings.common.appearance.sheetMessage" = "Моля, изберете предпочитана тема.";
+"settings.common.appearance.sheetTitle" = "Изберете външен вид";
+"settings.common.appearance.system" = "Системен";
+"settings.common.appearance.title" = "Показване";
+
+"settings.common.callKitInfo.description" = "Когато е активиран режимът CallKit, обажданията към вашия iPhone ще изглеждат като обикновени. Но в този режим няма да можете да надникнете през \"шпионката\" и да видите кой е дошъл на домофона, без да вдигате слушалката.";
+"settings.common.callKitInfo.title" = "Функция CallKit";
+
+"settings.common.deleteAccount.message" = "Сигурни ли сте, че искате да изтриете акаунта си? Всички добавени преди това адреси ще бъдат изтрити";
+"settings.common.deleteAccount.title" = "Изтриване на акаунт";
+
+"settings.common.logout.message" = "Сигурни ли сте, че искате да излезете от вашия акаунт?";
+"settings.common.logout.title" = "Излизане от приложението";
+
+"settings.faces.faceRegistration" = "Регистрация на лице";
+"settings.faces.registeredFaces" = "Регистрирани лица";
+"settings.faces.registrationHint" = "Снимките на вашите гости се съхраняват в раздела История на събитията. \n\nЗа да изберете и регистрирате лице, преминете към посочения раздел, като кликнете върху Плюс. \nВ Историята на събитията кликнете върху иконата за информация срещу съответното събитие и на откриващия се екран изберете необходимата снимка.\n\n";
+
+"settings.main.addAddressButton" = "Добави адрес";
+"settings.main.contractNumberTitle" = "Номер на договор";
+"settings.main.openPersonalAccountWebButton" = "Отворете уеб версията на личната сметка";
+
+"settings.main.access.title" = "Настройка на достъп";
+
+"settings.main.address.title" = "Настройки на адреса";
+
+"settings.main.addresses.title" = "Настройки на адреси";
+
+"settings.main.serviceAction.activateServiceTemplate" = "Здравейте, искам да свържа услугата \"%(X)\" с договор \"%(Y)\"";
+"settings.main.serviceAction.changeTariffTemplate" = "Здравейте, исках би да променя тарифата за услугата \"%(X)\" по договор \"%(Y)\"";
+"settings.main.serviceAction.talkAboutActivationTemplate" = "Здравейте, услугата \"%(X)\" не е налична на моя адрес, но искам да я използвам по договор \"%(Y)\"";
+
+"settings.shareCar.platePlaceholder" = "М 565 ХВ 68";
+"settings.shareCar.shareAccess" = "Споделете достъп";
+"settings.shareCar.subtitle" = "Въведете номера на автомобила, на когото искате да предоставите достъп.";
+
+"settings.sharePerson.name" = "Име";
+"settings.sharePerson.shareAccess" = "Споделете достъп";
+"settings.sharePerson.shareButton" = "Сподели";
+"settings.sharePerson.subtitle" = "Въведете телефонния номер на човека, на когото искате да предоставите достъп, или го изберете от контактите";
+
+/* MARK: - SUPPORT */
+
+"support.call.phoneAction" = "Направете телефонно обаждане";
+
+"support.callback.requestButton" = "Поискайте обратно обаждане";
+"support.callback.successMessage" = "Скоро ще ви се обадим";
+
+/* MARK: - TAB */
+
+"tab.addresses" = "Адреси";
+"tab.chat" = "Чат";
+"tab.menu" = "Меню";
+"tab.notifications" = "Известия";
+"tab.payments" = "Плащане";
+
+/* MARK: - VALIDATION */
+
+"validation.phone.invalidFormat" = "Грешен формат на номера";

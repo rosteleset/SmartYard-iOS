@@ -35,14 +35,14 @@ final class AddressConfirmationViewController: BaseViewController, LoaderPresent
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        configureUI()
         bind()
     }
 
-    private func setupUI() {
+    private func configureUI() {
         headerView.setText(
-            NSLocalizedString("Address confirmation", comment: ""),
-            subtitle: NSLocalizedString("How would it be more convenient for you to do this?", comment: "")
+            L10n.Address.Confirmation.title,
+            subtitle: L10n.Address.Confirmation.subtitle
         )
     }
 

@@ -97,8 +97,8 @@ final class HomeOfflineViewModel: BaseViewModel {
             .drive { [router] _ in
                 router.trigger(
                     .dialog(
-                        title: NSLocalizedString("offline.alert.no_connection_title", comment: ""),
-                        message: NSLocalizedString("offline.message.server_unavailable", comment: ""),
+                        title: L10n.Offline.Alert.noConnectionTitle,
+                        message: L10n.Offline.Message.serverUnavailable,
                         actions: [UIAlertAction(title: "Ок", style: .default)]
                     )
                 )

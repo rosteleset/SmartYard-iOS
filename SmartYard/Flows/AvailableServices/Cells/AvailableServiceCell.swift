@@ -14,6 +14,16 @@ final class AvailableServiceCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
+    private func configureUI() {
+        titleLabel.text = L10n.Services.Available.Card.smartIntercom
+        descriptionLabel.text = L10n.Services.Available.SmartIntercom.subtitle
+    }
+
     private var currentState: SmartYardCheckBoxState = .uncheckedActive {
         didSet {
             titleLabel.textColor = currentState.titleTextColor

@@ -61,10 +61,10 @@ final class ServiceSoonAvailableViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] error in
                     if (error as NSError) == NSError.PermissionError.noCameraPermission {
-                        let msg = NSLocalizedString("To use this feature, go to settings and grant access to the camera", comment: "")
+                        let msg = L10n.Permissions.Camera.message
                         
                         self?.router.trigger(.appSettings(
-                            title: NSLocalizedString("Can't access camera", comment: ""),
+                            title: L10n.Permissions.Camera.title,
                             message: msg
                         ))
                         
@@ -73,7 +73,7 @@ final class ServiceSoonAvailableViewModel: BaseViewModel {
                     
                     self?.router.trigger(
                         .alert(
-                            title: NSLocalizedString("Error", comment: ""),
+                            title: L10n.Common.error,
                             message: error.localizedDescription
                         )
                     )

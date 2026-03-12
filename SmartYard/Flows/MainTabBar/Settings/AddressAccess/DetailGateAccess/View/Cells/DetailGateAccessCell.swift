@@ -46,7 +46,7 @@ final class DetailGateAccessCell: UICollectionViewCell, HasDisposeBag {
     func configure(with allowedCar: AllowedCar) {
         imageView.image = UIImage(named: "DefaultCarIcon")
         numberLabel.text = allowedCar.displayedNumber
-        remainingTimeLabel.text = NSLocalizedString("unlimited", comment: "")
+        remainingTimeLabel.text = L10n.Settings.AddressAccess.GateDetails.unlimited
         remainingTimeLabel.textColor = .SmartYard.gray
         setupMenu(for: .car)
     }
@@ -79,7 +79,7 @@ final class DetailGateAccessCell: UICollectionViewCell, HasDisposeBag {
             }
 
             let deleteAction = UIAction(
-                title: NSLocalizedString("Delete", comment: ""),
+                title: L10n.Common.delete,
                 image: UIImage(systemName: "trash"),
                 attributes: .destructive
             ) { [weak self] _ in

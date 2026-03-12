@@ -27,6 +27,7 @@
                 <outlet property="closeButton" destination="DfF-gC-Fg9" id="eM7-P5-Ile"/>
                 <outlet property="titleLabel" destination="YeC-Yi-BOi" id="7BZ-9h-81I"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="changePlanHintLabel" destination="pmt-1V-kNk" id="bhN-YT-glU"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

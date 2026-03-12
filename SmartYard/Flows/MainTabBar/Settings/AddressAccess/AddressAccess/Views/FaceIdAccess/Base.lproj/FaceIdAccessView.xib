@@ -139,6 +139,10 @@
                 <outlet property="containerView" destination="1Mm-Jf-7od" id="eGC-JB-fOl"/>
                 <outlet property="disabledView" destination="wJV-KM-4DF" id="wd6-5o-4AB"/>
                 <outlet property="manageFacesView" destination="8fX-Q2-pgv" id="xib-0F-a4K"/>
+                <outlet property="registeredFacesTitleLabel" destination="pz7-6N-TqU" id="jLB-tO-wfp"/>
+                <outlet property="disabledMessageLabel" destination="gy9-BF-Mh4" id="AaA-9U-5uC"/>
+                <outlet property="titleLabel" destination="X41-NV-dVv" id="nxs-8E-f8l"/>
+                <outlet property="betaLabel" destination="iZK-e1-rDt" id="Ygr-hJ-MSj"/>
             </connections>
             <point key="canvasLocation" x="234.05797101449278" y="-33.816964285714285"/>
         </view>

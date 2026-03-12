@@ -129,8 +129,18 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func configureUI() {
+        previewDateLabel.text = L10n.Camera.ArchivePlayer.videoDated
+        editDateLabel.text = L10n.Camera.ArchivePlayer.videoDated
+        previousSpeedButton.setTitle(L10n.Camera.ArchivePlayer.halfSpeedButton, for: .normal)
+        nextSpeedButton.setTitle(L10n.Camera.ArchivePlayer.oneAndHalfSpeedButton, for: .normal)
+        downloadButton.setTitle(L10n.Camera.ArchivePlayer.downloadAndGetLinkButton, for: .normal)
+        selectFragmentButton.setTitle(L10n.Camera.ArchivePlayer.selectFragmentButton, for: .normal)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         
         let minViewSize = view.systemLayoutSizeFitting(
             CGSize(width: UIScreen.main.bounds.width, height: 0),
@@ -714,7 +724,7 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "dd.MM.yy"
                 
-                return "\(NSLocalizedString("Video dated", comment: "")) \(dateFormatter.string(from: date))"
+                return "\(L10n.Camera.ArchivePlayer.videoDated) \(dateFormatter.string(from: date))"
             }
             .drive(previewDateLabel.rx.text)
             .disposed(by: disposeBag)
@@ -1281,7 +1291,7 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         dateFormatter.timeZone = Calendar.serverCalendar.timeZone
         dateFormatter.dateFormat = "dd.MM.yy"
         
-        editDateLabel.text = "\(NSLocalizedString("Video dated", comment: "")) \(dateFormatter.string(from: startDate))"
+        editDateLabel.text = "\(L10n.Camera.ArchivePlayer.videoDated) \(dateFormatter.string(from: startDate))"
         
         guard !isReceivingGesture else {
             return

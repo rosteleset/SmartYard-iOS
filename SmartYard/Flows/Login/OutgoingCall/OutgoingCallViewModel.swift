@@ -143,7 +143,7 @@ extension OutgoingCallViewModel {
                         
                         if nsError.code == 403 {
                             let okAction = UIAlertAction(
-                                title: NSLocalizedString("OK", comment: ""),
+                                title: L10n.Common.ok,
                                 style: .default,
                                 handler: { [weak self] _ in
                                     self?.router.trigger(.phoneNumber)
@@ -151,7 +151,7 @@ extension OutgoingCallViewModel {
                             )
                             
                             self.alertService.showDialog(
-                                title: NSLocalizedString("Error", comment: ""),
+                                title: L10n.Common.error,
                                 message: nsError.localizedDescription,
                                 preferredStyle: .alert,
                                 actions: [okAction],

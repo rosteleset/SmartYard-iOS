@@ -55,7 +55,7 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
+        configureUI()
     }
     
     // MARK: - Public Methods
@@ -108,7 +108,7 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
 
 extension LicencePlateKeyboardView {
     
-    private func setupUI() {
+    private func configureUI() {
         let targetsButtons = digitButtons + letterButtons + [deleteButton]
         targetsButtons.forEach {
             $0?.addTarget(

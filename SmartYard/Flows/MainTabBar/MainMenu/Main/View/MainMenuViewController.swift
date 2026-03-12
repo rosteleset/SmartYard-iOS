@@ -21,7 +21,7 @@ final class MainMenuViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var mainContainerView: UIView!
     @IBOutlet private weak var skeletonContainer: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
-    
+    @IBOutlet private weak var titleLabel: UILabel!
     init(viewModel: MainMenuViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -39,7 +39,7 @@ final class MainMenuViewController: BaseViewController, LoaderPresentable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureTableView()
+        configureUI()
         bind()
     }
     
@@ -103,7 +103,8 @@ final class MainMenuViewController: BaseViewController, LoaderPresentable {
             .disposed(by: disposeBag)
     }
     
-    private func configureTableView() {
+    private func configureUI() {
+        titleLabel.text = L10n.Menu.Main.menu
         collectionView.delegate = self
         collectionView.dataSource = self
         

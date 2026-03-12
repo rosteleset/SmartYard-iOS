@@ -127,6 +127,15 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="130.3125" y="127.5"/>
+            <connections>
+                <outlet property="titleLabel" destination="gJJ-d5-8aF" id="9ZM-JL-sCf"/>
+                <outlet property="descriptionLabel" destination="NwP-ob-Rnk" id="MZy-uK-psl"/>
+                <outlet property="validityHintLabel" destination="ahP-hS-7Ud" id="m0l-cN-QqE"/>
+                <outlet property="stepsTitleLabel" destination="r6e-0e-e0n" id="efR-Wi-4j7"/>
+                <outlet property="stepOneLabel" destination="JX1-P5-f2T" id="c1f-5S-71I"/>
+                <outlet property="stepTwoLabel" destination="VOo-Yj-6Gp" id="Rz1-TH-rHZ"/>
+                <outlet property="stepThreeLabel" destination="9Up-ke-t4m" id="p2n-5R-L08"/>
+            </connections>
         </view>
     </objects>
     <resources>

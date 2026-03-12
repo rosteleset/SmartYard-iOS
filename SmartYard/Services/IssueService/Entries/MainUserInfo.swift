@@ -18,7 +18,7 @@ struct MainUserInfo {
     
     func convertToString() -> String {
         let text = String.localizedStringWithFormat(
-            NSLocalizedString("Full name: %@\nPhone: %@\nAddress entered by user: %@", comment: ""),
+            L10n.Services.Request.mainUserInfoFormat,
             "\(fullName)",
             "\(phoneNumber)",
             "\(address)"
