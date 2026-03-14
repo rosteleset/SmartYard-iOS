@@ -47,10 +47,6 @@ extension RegisterPushTokenRequest {
             params["voipToken"] = voipToken
         }
         
-        if let voipToken = voipToken {
-            params["voipToken"] = voipToken
-        }
-        
         if let production = production {
             params["production"] = production ? "t" : "f"
         }
