@@ -13,11 +13,10 @@ enum AccessShortcutType {
     case allCars
     case allPersons
     
-    // TODO: - add localize
     var title: String {
         switch self {
-        case .allCars: return "Все автомобили"
-        case .allPersons: return "Все люди"
+        case .allCars: return L10n.Settings.AddressAccess.Shortcuts.allCars
+        case .allPersons: return L10n.Settings.AddressAccess.Shortcuts.allPeople
         }
     }
     
