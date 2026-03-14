@@ -161,8 +161,6 @@ extension Reactive where Base: ServiceFromOfficeView {
     
 }
 
-// TODO: - new commit
-
 extension ServiceFromOfficeView {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
