@@ -17,7 +17,7 @@ struct AppVersionRequest {
 extension AppVersionRequest {
     
     var requestParameters: [String: Any] {
-        let appVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ??
+        let appVersion = AppMetadata.buildVersion ??
         "App version extraction error"
         
         return [

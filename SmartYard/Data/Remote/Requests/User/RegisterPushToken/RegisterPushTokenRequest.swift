@@ -31,7 +31,7 @@ struct RegisterPushTokenRequest {
 extension RegisterPushTokenRequest {
     
     var requestParameters: [String: Any] {
-        let bundle = Bundle.main.bundleIdentifier ?? "Bundle Identifier extraction error"
+        let bundle = AppMetadata.bundleIdentifier ?? "Bundle Identifier extraction error"
         var params: [String: Any] = [
             "pushToken": pushToken,
             "type": type.rawValue,

@@ -38,7 +38,7 @@ final class CXProviderProxy: NSObject {
     
     static var providerConfiguration: CXProviderConfiguration = {
         let providerConfiguration = CXProviderConfiguration(
-            localizedName: Bundle.main.infoDictionary?["CFBundleName"] as? String ?? "SmartYard"
+            localizedName: AppMetadata.bundleName ?? "SmartYard"
         )
         
         providerConfiguration.supportsVideo = true

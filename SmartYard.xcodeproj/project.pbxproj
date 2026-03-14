@@ -655,6 +655,7 @@
 		9A0F5A2B2F75350000C0D001 /* PhoneDialing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A2A2F75350000C0D001 /* PhoneDialing.swift */; };
 		9A0F5A2D2F75350000C0D001 /* RequestSupportCallbackUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A2C2F75350000C0D001 /* RequestSupportCallbackUseCase.swift */; };
 		9A0F5A2F2F75350000C0D001 /* SupportCallActionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A2E2F75350000C0D001 /* SupportCallActionsPresenter.swift */; };
+		9A0F5A412F7608F300C0D001 /* AppMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A402F7608F300C0D001 /* AppMetadata.swift */; };
 		B0A1C2D3E4F50617283940A4 /* OnlineFullscreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283940A2 /* OnlineFullscreenViewController.swift */; };
 		B0A1C2D3E4F50617283940A5 /* OnlineFullscreenCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283940A3 /* OnlineFullscreenCameraCell.swift */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
@@ -1537,6 +1538,7 @@
 		9A0F5A2A2F75350000C0D001 /* PhoneDialing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneDialing.swift; sourceTree = "<group>"; };
 		9A0F5A2C2F75350000C0D001 /* RequestSupportCallbackUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSupportCallbackUseCase.swift; sourceTree = "<group>"; };
 		9A0F5A2E2F75350000C0D001 /* SupportCallActionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportCallActionsPresenter.swift; sourceTree = "<group>"; };
+		9A0F5A402F7608F300C0D001 /* AppMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetadata.swift; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283940A2 /* OnlineFullscreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineFullscreenViewController.swift; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283940A3 /* OnlineFullscreenCameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineFullscreenCameraCell.swift; sourceTree = "<group>"; };
 		E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2960,6 +2962,7 @@
 				8B7035682E885D2F0078DCE6 /* VPNBannerHelper.swift */,
 				8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */,
 				8BA1DB2F2DA56210009EBA0E /* DeviceUUID.swift */,
+				9A0F5A402F7608F300C0D001 /* AppMetadata.swift */,
 				8BF9A1D32F79E10000C0D001 /* L10n.swift */,
 				8BF9A1D42F79E10000C0D001 /* L10n+Generated.swift */,
 				FAD4E0732D31CF5E00B0130C /* Logger.swift */,

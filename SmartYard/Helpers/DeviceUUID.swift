@@ -13,7 +13,7 @@ final class DeviceUUID {
     
     private init() {}
     
-    private static let service: String = Bundle.main.bundleIdentifier ?? "default_service"
+    private static let service: String = AppMetadata.bundleIdentifier ?? "default_service"
     private static let account: String = "device_uuid"
     
     static var value: String {
