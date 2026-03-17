@@ -15,7 +15,7 @@ final class AddressOrderModalViewContent: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     private func configureUI() {
         backgroundColor = .SmartYard.grayBorder
@@ -41,7 +41,7 @@ final class CallKitModalViewContent: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     private func configureUI() {
         backgroundColor = .SmartYard.grayBorder
@@ -65,7 +65,7 @@ final class VideoEventModalViewContent: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     private func configureUI() {
         backgroundColor = .SmartYard.grayBorder
@@ -99,7 +99,7 @@ final class WaitingGuestModalViewContent: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     private func configureUI() {
         backgroundColor = .SmartYard.grayBorder
@@ -126,7 +126,7 @@ final class WhiteRabbitModalViewContent: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     private func configureUI() {
         backgroundColor = .SmartYard.grayBorder
@@ -166,7 +166,7 @@ private final class ModalBulletRowView: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { fatalError() }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     private func configureUI(text: String) {
         let label = UILabel.make(.modalBody, text: text)
