@@ -30,7 +30,6 @@
 		3A1BDF492634459C0075410B /* HistoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BDF472634459C0075410B /* HistoryCollectionViewCell.swift */; };
 		3A1BDF4A2634459C0075410B /* HistoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1BDF482634459C0075410B /* HistoryCollectionViewCell.xib */; };
 		3A1F213826DF8F4F005FDB82 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */; };
-		3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */; };
 		3A200B0927297B250022A0EC /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0827297B240022A0EC /* SimpleButton.swift */; };
 		3A200B0B27297EAC0022A0EC /* PeriodPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */; };
 		3A200B0D27297F950022A0EC /* SmartYardSharedDataUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */; };
@@ -374,10 +373,6 @@
 		8B4D95FE2F35EF9100A37232 /* PlayerThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D95FD2F35EF8C00A37232 /* PlayerThemeManager.swift */; };
 		8B5A08022EE9AC5F00E7EAAB /* OfflineDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5A08012EE9AC5B00E7EAAB /* OfflineDoor.swift */; };
 		8B5A08042EE9AC6900E7EAAB /* OfflineAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5A08032EE9AC6200E7EAAB /* OfflineAddress.swift */; };
-		8B6C1BD82DC2142500617CF8 /* WaitingGuestModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BD72DC2142500617CF8 /* WaitingGuestModalViewContent.xib */; };
-		8B6C1BE32DC21B3600617CF8 /* VideoEventModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BE22DC21B3600617CF8 /* VideoEventModalViewContent.xib */; };
-		8B6C1BEE2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */; };
-		8B6C1BF92DC21ED100617CF8 /* CallKitModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */; };
 		8B6C1C042DC2205E00617CF8 /* WhiteSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */; };
 		8B70309C2E87E18F0078DCE6 /* VPNDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */; };
 		8B7030F32E87ECC90078DCE6 /* SmartYardBannerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */; };
@@ -616,7 +611,6 @@
 		8BBEC5A72E279854003A33B6 /* LicensePlateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBEC5A52E279849003A33B6 /* LicensePlateFormatter.swift */; };
 		8BBEC5A82E279854003A33B6 /* LicensePlateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBEC5A52E279849003A33B6 /* LicensePlateFormatter.swift */; };
 		8BC048612DD20AB400F345C6 /* SmartYardActionModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC048602DD20AB400F345C6 /* SmartYardActionModeButton.swift */; };
-		8BC048B92DD639B100F345C6 /* AddressOrderModalViewContent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BC048B82DD639B100F345C6 /* AddressOrderModalViewContent.xib */; };
 		8BC766D92E311F160065546B /* DetailGateAccessAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC766D22E311F160065546B /* DetailGateAccessAddCell.swift */; };
 		8BC766DA2E311F160065546B /* DetailGateAccessAddCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BC766D82E311F160065546B /* DetailGateAccessAddCell.xib */; };
 		8BCECFE22DEF38E1000D7D6D /* SmartYardHighlightSegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCECFE12DEF38CF000D7D6D /* SmartYardHighlightSegmentedControlView.swift */; };
@@ -655,6 +649,7 @@
 		8BF6C6122F25520A008AA137 /* OnlinePageLayoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6C5ED2F25520A008AA137 /* OnlinePageLayoutBuilder.swift */; };
 		8BF6C6132F25520A008AA137 /* CameraNumberCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF6C5DA2F25520A008AA137 /* CameraNumberCellViewModel.swift */; };
 		8BF854D92E9009710074F080 /* SharedWebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF854D82E9009600074F080 /* SharedWebKit.swift */; };
+		8C6765E42F8AA7C500D1B3E9 /* ModalContentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6765E32F8AA7C500D1B3E9 /* ModalContentViews.swift */; };
 		9770CD7E9D04A0BA9C6BDF88 /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */; };
 		9A0F5A1B2F75218900C0D001 /* AppDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A1A2F75218900C0D001 /* AppDependencies.swift */; };
 		9A0F5A2B2F75350000C0D001 /* PhoneDialing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A2A2F75350000C0D001 /* PhoneDialing.swift */; };
@@ -860,7 +855,6 @@
 		3A1BDF472634459C0075410B /* HistoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		3A1BDF482634459C0075410B /* HistoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
-		3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ModalViewController.xib; sourceTree = "<group>"; };
 		3A200B0827297B240022A0EC /* SimpleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
 		3A200B0A27297EAC0022A0EC /* PeriodPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodPicker.swift; sourceTree = "<group>"; };
 		3A200B0C27297F950022A0EC /* SmartYardSharedDataUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSharedDataUtilities.swift; sourceTree = "<group>"; };
@@ -1241,10 +1235,6 @@
 		8B4D95FD2F35EF8C00A37232 /* PlayerThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerThemeManager.swift; sourceTree = "<group>"; };
 		8B5A08012EE9AC5B00E7EAAB /* OfflineDoor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineDoor.swift; sourceTree = "<group>"; };
 		8B5A08032EE9AC6200E7EAAB /* OfflineAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineAddress.swift; sourceTree = "<group>"; };
-		8B6C1BD62DC2142500617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WaitingGuestModalViewContent.xib; sourceTree = "<group>"; };
-		8B6C1BE12DC21B3600617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/VideoEventModalViewContent.xib; sourceTree = "<group>"; };
-		8B6C1BEC2DC21C2600617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WhiteRabbitModalViewContent.xib; sourceTree = "<group>"; };
-		8B6C1BF72DC21ED100617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CallKitModalViewContent.xib; sourceTree = "<group>"; };
 		8B6C1C022DC2205E00617CF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WhiteSectionHeaderView.xib; sourceTree = "<group>"; };
 		8B70309B2E87E18F0078DCE6 /* VPNDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNDetector.swift; sourceTree = "<group>"; };
 		8B7030F22E87ECC10078DCE6 /* SmartYardBannerColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardBannerColors.swift; sourceTree = "<group>"; };
@@ -1503,7 +1493,6 @@
 		8BA6EA612DFA223D00CDA2DA /* GateAccessSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GateAccessSectionModel.swift; sourceTree = "<group>"; };
 		8BBEC5A52E279849003A33B6 /* LicensePlateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateFormatter.swift; sourceTree = "<group>"; };
 		8BC048602DD20AB400F345C6 /* SmartYardActionModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardActionModeButton.swift; sourceTree = "<group>"; };
-		8BC048B32DD639B100F345C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressOrderModalViewContent.xib; sourceTree = "<group>"; };
 		8BC766D22E311F160065546B /* DetailGateAccessAddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGateAccessAddCell.swift; sourceTree = "<group>"; };
 		8BC766D32E311F160065546B /* SettingsAddAddressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingsAddAddressCell.xib; path = Base.lproj/DetailGateAccessAddCell.xib; sourceTree = "<group>"; };
 		8BCECFE12DEF38CF000D7D6D /* SmartYardHighlightSegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardHighlightSegmentedControlView.swift; sourceTree = "<group>"; };
@@ -1542,6 +1531,7 @@
 		8BF6C5F02F25520A008AA137 /* OnlineSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSectionModel.swift; sourceTree = "<group>"; };
 		8BF6C5F32F25520A008AA137 /* OnlinePageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePageState.swift; sourceTree = "<group>"; };
 		8BF854D82E9009600074F080 /* SharedWebKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedWebKit.swift; sourceTree = "<group>"; };
+		8C6765E32F8AA7C500D1B3E9 /* ModalContentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalContentViews.swift; sourceTree = "<group>"; };
 		8E65EC65DF6EAF2CB3A1B831 /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9632D77FAF39A6CB99673DCB /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
 		9A0F5A1A2F75218900C0D001 /* AppDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependencies.swift; sourceTree = "<group>"; };
@@ -1740,7 +1730,6 @@
 			children = (
 				3A1F213D26E09A96005FDB82 /* Views */,
 				3A1F213626DF8F4F005FDB82 /* ModalViewController.swift */,
-				3A1F213726DF8F4F005FDB82 /* ModalViewController.xib */,
 			);
 			path = ModalViewController;
 			sourceTree = "<group>";
@@ -1748,11 +1737,7 @@
 		3A1F213D26E09A96005FDB82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8B6C1BD72DC2142500617CF8 /* WaitingGuestModalViewContent.xib */,
-				8B6C1BE22DC21B3600617CF8 /* VideoEventModalViewContent.xib */,
-				8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */,
-				8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */,
-				8BC048B82DD639B100F345C6 /* AddressOrderModalViewContent.xib */,
+				8C6765E32F8AA7C500D1B3E9 /* ModalContentViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -5755,7 +5740,6 @@
 				8BDAC6FD2DFC678700469D59 /* GateAccessShortcutCell.xib in Resources */,
 				3A8FC7072B06623200F90D73 /* HistoryDetailViewController.xib in Resources */,
 				3A8FC67E2B065C7400F90D73 /* ServiceFromCourierView.xib in Resources */,
-				8BC048B92DD639B100F345C6 /* AddressOrderModalViewContent.xib in Resources */,
 				3AC5C625260A3249008D74DE /* HistoryTableViewCell.xib in Resources */,
 				3A8FC6B72B065FC200F90D73 /* RestoreMethodCell.xib in Resources */,
 				3A8FC6A12B065E8100F90D73 /* ProviderCell.xib in Resources */,
@@ -5769,12 +5753,10 @@
 				3A8FC7022B06621300F90D73 /* HistoryViewController.xib in Resources */,
 				8BC766DA2E311F160065546B /* DetailGateAccessAddCell.xib in Resources */,
 				E9618A342420ABC1003FF47D /* UnapprovedObjectCell.xib in Resources */,
-				8B6C1BEE2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib in Resources */,
 				84F840E023E07DA5008DBE50 /* LaunchScreen.storyboard in Resources */,
 				3A8FC7252B079FA100F90D73 /* EditNameViewController.xib in Resources */,
 				3A8FC76B2B09F89C00F90D73 /* OnboardingViewController.xib in Resources */,
 				3A8FC7162B079E7900F90D73 /* AddressAccessViewController.xib in Resources */,
-				8B6C1BF92DC21ED100617CF8 /* CallKitModalViewContent.xib in Resources */,
 				E9E4273023F5417000F5D593 /* ServicesActivationRequestСell.xib in Resources */,
 				3A8FC72F2B09E51200F90D73 /* SettingsViewController.xib in Resources */,
 				84963974248680C10086B6E9 /* VideoPeriodPickerCell.xib in Resources */,
@@ -5847,11 +5829,8 @@
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
 				3A114819296EC46C00AAD2D6 /* SelectProviderViewController.xib in Resources */,
-				8B6C1BD82DC2142500617CF8 /* WaitingGuestModalViewContent.xib in Resources */,
 				3A8FC6FD2B0661FB00F90D73 /* YardMapViewController.xib in Resources */,
-				3A1F213926DF8F4F005FDB82 /* ModalViewController.xib in Resources */,
 				3AC5C71126131D3D008D74DE /* HistoryLoadingTableViewCell.xib in Resources */,
-				8B6C1BE32DC21B3600617CF8 /* VideoEventModalViewContent.xib in Resources */,
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
 				3A114812296EC3A300AAD2D6 /* InputAddressViewController.xib in Resources */,
 				E9A4D48C23EC28760070A591 /* PinNumberField.xib in Resources */,
@@ -6261,6 +6240,7 @@
 				3A200B0B27297EAC0022A0EC /* PeriodPicker.swift in Sources */,
 				8B5A08022EE9AC5F00E7EAAB /* OfflineDoor.swift in Sources */,
 				3A1F213826DF8F4F005FDB82 /* ModalViewController.swift in Sources */,
+				8C6765E42F8AA7C500D1B3E9 /* ModalContentViews.swift in Sources */,
 				84950CFA23E431CB00F3C550 /* Animation+Fade.swift in Sources */,
 				8BC048612DD20AB400F345C6 /* SmartYardActionModeButton.swift in Sources */,
 				8B0A98B62E2FF0D00089C8C4 /* DetailGateAccessCell.swift in Sources */,
@@ -7350,38 +7330,6 @@
 			name = NewAllowedCarViewController.xib;
 			sourceTree = "<group>";
 		};
-		8B6C1BD72DC2142500617CF8 /* WaitingGuestModalViewContent.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8B6C1BD62DC2142500617CF8 /* Base */,
-			);
-			name = WaitingGuestModalViewContent.xib;
-			sourceTree = "<group>";
-		};
-		8B6C1BE22DC21B3600617CF8 /* VideoEventModalViewContent.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8B6C1BE12DC21B3600617CF8 /* Base */,
-			);
-			name = VideoEventModalViewContent.xib;
-			sourceTree = "<group>";
-		};
-		8B6C1BED2DC21C2600617CF8 /* WhiteRabbitModalViewContent.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8B6C1BEC2DC21C2600617CF8 /* Base */,
-			);
-			name = WhiteRabbitModalViewContent.xib;
-			sourceTree = "<group>";
-		};
-		8B6C1BF82DC21ED100617CF8 /* CallKitModalViewContent.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8B6C1BF72DC21ED100617CF8 /* Base */,
-			);
-			name = CallKitModalViewContent.xib;
-			sourceTree = "<group>";
-		};
 		8B6C1C032DC2205E00617CF8 /* WhiteSectionHeaderView.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -7396,14 +7344,6 @@
 				8B7148992EFACA150099703B /* Base */,
 			);
 			name = AddressesListEmptyStateCell.xib;
-			sourceTree = "<group>";
-		};
-		8BC048B82DD639B100F345C6 /* AddressOrderModalViewContent.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8BC048B32DD639B100F345C6 /* Base */,
-			);
-			name = AddressOrderModalViewContent.xib;
 			sourceTree = "<group>";
 		};
 		8BC766D82E311F160065546B /* DetailGateAccessAddCell.xib */ = {
