@@ -6197,6 +6197,7 @@
 				9A0F5A2B2F75350000C0D001 /* PhoneDialing.swift in Sources */,
 				9A0F5A2D2F75350000C0D001 /* RequestSupportCallbackUseCase.swift in Sources */,
 				9A0F5A2F2F75350000C0D001 /* SupportCallActionsPresenter.swift in Sources */,
+				9A0F5A412F7608F300C0D001 /* AppMetadata.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				3AEFB46A264C2C81000F37D0 /* AddFaceCell.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
