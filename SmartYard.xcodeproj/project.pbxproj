@@ -115,7 +115,7 @@
 		3A8FC7482B09ED7B00F90D73 /* RequestRecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC74A2B09ED7B00F90D73 /* RequestRecordViewController.xib */; };
 		3A8FC74D2B09F0F400F90D73 /* CityMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC74F2B09F0F400F90D73 /* CityMapViewController.xib */; };
 		3A8FC7522B09F11400F90D73 /* CityCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7542B09F11400F90D73 /* CityCameraViewController.xib */; };
-		3A8FC7572B09F19000F90D73 /* BottomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7592B09F19000F90D73 /* BottomCell.xib */; };
+
 		3A8FC75C2B09F1E300F90D73 /* MainMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC75E2B09F1E300F90D73 /* MainMenuViewController.xib */; };
 		3A8FC7612B09F21F00F90D73 /* ServicesActivationRequestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7632B09F21F00F90D73 /* ServicesActivationRequestViewController.xib */; };
 		3A8FC7662B09F7AF00F90D73 /* OnboardingBaseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7682B09F7AF00F90D73 /* OnboardingBaseView.xib */; };
@@ -943,7 +943,7 @@
 		3A8FC7492B09ED7B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RequestRecordViewController.xib; sourceTree = "<group>"; };
 		3A8FC74E2B09F0F400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CityMapViewController.xib; sourceTree = "<group>"; };
 		3A8FC7532B09F11400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CityCameraViewController.xib; sourceTree = "<group>"; };
-		3A8FC7582B09F19000F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/BottomCell.xib; sourceTree = "<group>"; };
+
 		3A8FC75D2B09F1E300F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenuViewController.xib; sourceTree = "<group>"; };
 		3A8FC7622B09F21F00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServicesActivationRequestViewController.xib; sourceTree = "<group>"; };
 		3A8FC7672B09F7AF00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OnboardingBaseView.xib; sourceTree = "<group>"; };
@@ -1925,7 +1925,6 @@
 			isa = PBXGroup;
 			children = (
 				3AB41E0025C0879200AEC8C3 /* BottomCell.swift */,
-				3A8FC7592B09F19000F90D73 /* BottomCell.xib */,
 			);
 			path = BottomItem;
 			sourceTree = "<group>";
@@ -5797,7 +5796,7 @@
 				3A8FC6DA2B06612200F90D73 /* AddressesListCameraCell.xib in Resources */,
 				3A40A4C72768CBE0004E53A7 /* NotificationsViewController.xib in Resources */,
 				3A8FC6832B065CEF00F90D73 /* ServiceFromOfficeView.xib in Resources */,
-				3A8FC7572B09F19000F90D73 /* BottomCell.xib in Resources */,
+
 				84F6493B247402DC000C0028 /* CustomDayCell.xib in Resources */,
 				8B075A332DF1E7F300114B5E /* GateAccessView.xib in Resources */,
 				3A5030612B0A7F5F00699A3B /* SettingsAddAddressCell.xib in Resources */,
@@ -7144,14 +7143,7 @@
 			name = CityCameraViewController.xib;
 			sourceTree = "<group>";
 		};
-		3A8FC7592B09F19000F90D73 /* BottomCell.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A8FC7582B09F19000F90D73 /* Base */,
-			);
-			name = BottomCell.xib;
-			sourceTree = "<group>";
-		};
+
 		3A8FC75E2B09F1E300F90D73 /* MainMenuViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

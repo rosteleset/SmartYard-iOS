@@ -109,7 +109,7 @@ final class MainMenuViewController: BaseViewController, LoaderPresentable {
         collectionView.dataSource = self
         
         collectionView.register(cellWithClass: MainMenuItem.self)
-        collectionView.register(nibWithCellClass: BottomCell.self)
+        collectionView.register(cellWithClass: BottomCell.self)
         
     }
 }
