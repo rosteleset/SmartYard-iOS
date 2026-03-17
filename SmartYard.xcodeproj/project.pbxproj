@@ -349,6 +349,11 @@
 		8B13F98D2E26DC2000D79571 /* LicensePlateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B13F98C2E26DC1F00D79571 /* LicensePlateFormat.swift */; };
 		8B1FDC4F2F1A64A0006ECD15 /* KFHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1FDC4E2F1A6494006ECD15 /* KFHelper.swift */; };
 		8B1FDC532F1A67CD006ECD15 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1FDC522F1A67C4006ECD15 /* UIImageView+Extensions.swift */; };
+		8B2062C22F698431007D2050 /* LabelConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2062C02F698431007D2050 /* LabelConfig.swift */; };
+		8B2062C32F698431007D2050 /* VSpacer+HSpacer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2062C12F698431007D2050 /* VSpacer+HSpacer.swift */; };
+		8B2062C72F69843E007D2050 /* UIView+SnapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2062C62F69843E007D2050 /* UIView+SnapKit.swift */; };
+		8B2062C82F69843E007D2050 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2062C52F69843E007D2050 /* UIStackView+Extensions.swift */; };
+		8B2062C92F69843E007D2050 /* UILabel+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2062C42F69843E007D2050 /* UILabel+Factory.swift */; };
 		8B23F9D22E84739500E57573 /* SmartYardSegmentControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B23F9D12E84738200E57573 /* SmartYardSegmentControlView.swift */; };
 		8B23F9D42E868CB100E57573 /* SmartYardSegmentControlViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B23F9D32E868CA600E57573 /* SmartYardSegmentControlViewProtocol.swift */; };
 		8B2ACD502E1EE60B0067438F /* LicencePlateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2ACD4F2E1EE6040067438F /* LicencePlateValidator.swift */; };
@@ -1211,6 +1216,11 @@
 		8B13F98C2E26DC1F00D79571 /* LicensePlateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensePlateFormat.swift; sourceTree = "<group>"; };
 		8B1FDC4E2F1A6494006ECD15 /* KFHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KFHelper.swift; sourceTree = "<group>"; };
 		8B1FDC522F1A67C4006ECD15 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
+		8B2062C02F698431007D2050 /* LabelConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelConfig.swift; sourceTree = "<group>"; };
+		8B2062C12F698431007D2050 /* VSpacer+HSpacer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VSpacer+HSpacer.swift"; sourceTree = "<group>"; };
+		8B2062C42F69843E007D2050 /* UILabel+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Factory.swift"; sourceTree = "<group>"; };
+		8B2062C52F69843E007D2050 /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
+		8B2062C62F69843E007D2050 /* UIView+SnapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SnapKit.swift"; sourceTree = "<group>"; };
 		8B23F9D12E84738200E57573 /* SmartYardSegmentControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentControlView.swift; sourceTree = "<group>"; };
 		8B23F9D32E868CA600E57573 /* SmartYardSegmentControlViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartYardSegmentControlViewProtocol.swift; sourceTree = "<group>"; };
 		8B2ACD4F2E1EE6040067438F /* LicencePlateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicencePlateValidator.swift; sourceTree = "<group>"; };
@@ -2167,6 +2177,8 @@
 		844AC3BF23EB17000066006D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8B2062C02F698431007D2050 /* LabelConfig.swift */,
+				8B2062C12F698431007D2050 /* VSpacer+HSpacer.swift */,
 				8B9D9E862E8D1FE400F383A7 /* CircleIconView */,
 				8B35B6C02E7EEB720081B28A /* SmartYardTextFields */,
 				8BF6BAB62E7991D300965949 /* HeaderView */,
@@ -2924,6 +2936,9 @@
 		84B9EC8623E0844500979C39 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8B2062C42F69843E007D2050 /* UILabel+Factory.swift */,
+				8B2062C52F69843E007D2050 /* UIStackView+Extensions.swift */,
+				8B2062C62F69843E007D2050 /* UIView+SnapKit.swift */,
 				8BF6C5C22F2453D0008AA137 /* UIScrollView+Rx.swift */,
 				8B1FDC522F1A67C4006ECD15 /* UIImageView+Extensions.swift */,
 				8B9658AC2E816C6D00C9F9DA /* NSRegularExpression+Extensions.swift */,
@@ -6325,6 +6340,9 @@
 				8B714E052EFACCAD0099703B /* GetAddressListRequest.swift in Sources */,
 				8B714E062EFACCAD0099703B /* StreamInfoRequest.swift in Sources */,
 				8B714E072EFACCAD0099703B /* AllCCTVRequest.swift in Sources */,
+				8B2062C72F69843E007D2050 /* UIView+SnapKit.swift in Sources */,
+				8B2062C82F69843E007D2050 /* UIStackView+Extensions.swift in Sources */,
+				8B2062C92F69843E007D2050 /* UILabel+Factory.swift in Sources */,
 				8B714E082EFACCAD0099703B /* CommentIssueRequest.swift in Sources */,
 				8B714E092EFACCAD0099703B /* GetPaymentsListResponseData.swift in Sources */,
 				8B714E0A2EFACCAD0099703B /* APITarget.swift in Sources */,
@@ -6514,6 +6532,8 @@
 				8B714E9C2EFACCAD0099703B /* APIWrapper+Inbox.swift in Sources */,
 				8B714E9D2EFACCAD0099703B /* GetServicesRequest.swift in Sources */,
 				8B714E9E2EFACCAD0099703B /* APIServiceModel.swift in Sources */,
+				8B2062C22F698431007D2050 /* LabelConfig.swift in Sources */,
+				8B2062C32F698431007D2050 /* VSpacer+HSpacer.swift in Sources */,
 				8B714E9F2EFACCAD0099703B /* NotificationResponseData.swift in Sources */,
 				8B714EA02EFACCAD0099703B /* RegisterQRRequest.swift in Sources */,
 				8B714EA12EFACCAD0099703B /* CallPayload.swift in Sources */,
