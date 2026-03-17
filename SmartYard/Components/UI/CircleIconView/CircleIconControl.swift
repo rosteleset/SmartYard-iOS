@@ -12,30 +12,32 @@ import RxSwift
 
 final class CircleIconControl: UIControl {
     private let imageView = UIImageView()
-    var style: CircleIconStyle? {
-        didSet {
-            setup()
-        }
-    }
+    private(set) var style: CircleIconStyle?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        commonInit()
+    }
+
+    convenience init(style: CircleIconStyle, frame: CGRect = .zero) {
+        self.init(frame: frame)
+        apply(style: style)
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) { super.init(coder: coder) }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
 
-    private func setup() {
-        guard let style else { return }
-        backgroundColor = style.circleColor
-        layer.borderColor = style.borderColor?.cgColor
-        layer.borderWidth = style.borderWidth
+    func apply(style: CircleIconStyle) {
+        self.style = style
+        setup(with: style)
+    }
 
-        imageView.image = style.image?.withRenderingMode(.alwaysOriginal)
-        imageView.tintColor = style.iconColor
+    private func commonInit() {
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-
         addSubview(imageView)
 
         NSLayoutConstraint.activate([
@@ -45,6 +47,15 @@ final class CircleIconControl: UIControl {
 
         isAccessibilityElement = true
         accessibilityTraits = .button
+    }
+
+    private func setup(with style: CircleIconStyle) {
+        backgroundColor = style.circleColor
+        layer.borderColor = style.borderColor?.cgColor
+        layer.borderWidth = style.borderWidth
+
+        imageView.image = style.image?.withRenderingMode(.alwaysOriginal)
+        imageView.tintColor = style.iconColor
     }
 
     override func layoutSubviews() {

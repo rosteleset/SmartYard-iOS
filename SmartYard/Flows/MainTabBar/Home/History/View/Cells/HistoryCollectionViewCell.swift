@@ -214,7 +214,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
             self.camera = nil
         }
 
-        questionMark.style = .Others.question
+        questionMark.apply(style: .Others.question)
         callStatusView.isHidden = true
         descriptionLabel.isHidden = false
         descriptionLabel.text = ""

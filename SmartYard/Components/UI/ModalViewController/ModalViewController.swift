@@ -46,11 +46,7 @@ final class ModalViewController: BaseViewController {
         return gesture
     }()
 
-    private let cancelButton: CircleIconControl = {
-        let button = CircleIconControl()
-        button.style = .Close.blue
-        return button
-    }()
+    private let cancelButton = CircleIconControl(style: .Close.blue)
 
     private let containerView: UIView = {
         let view = UIView()

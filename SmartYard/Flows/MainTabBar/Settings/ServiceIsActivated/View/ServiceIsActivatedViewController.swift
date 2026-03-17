@@ -42,7 +42,7 @@ final class ServiceIsActivatedViewController: BaseViewController, LoaderPresenta
         titleLabel.text = L10n.Services.Status.Activated.serviceActivated
         changePlanHintLabel.text = L10n.Services.Status.Activated.changePlanHint
         changePlanButton.setTitle(L10n.Services.Status.Activated.changePlanButton, for: .normal)
-        closeButton.style = .Close.blue
+        closeButton.apply(style: .Close.blue)
     }
     
     private func bind() {

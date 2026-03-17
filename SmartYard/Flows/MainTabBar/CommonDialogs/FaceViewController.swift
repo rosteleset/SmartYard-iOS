@@ -32,7 +32,7 @@ final class FaceViewController: BaseViewController {
         dismissGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(dismissGesture)
 
-        closeButton.style = .Close.blue
+        closeButton.apply(style: .Close.blue)
 
         Driver.merge(
             dismissGesture.rx.event.asDriver().mapToVoid(),

@@ -42,7 +42,7 @@ final class ServiceIsNotActivatedViewController: BaseViewController, LoaderPrese
         titleLabel.text = L10n.Services.Status.NotActivated.title
         subtitleLabel.text = L10n.Services.Status.NotActivated.subtitle
         sendRequestButton.setTitle(L10n.Services.Status.NotActivated.requestButton, for: .normal)
-        closeButton.style = .Close.blue
+        closeButton.apply(style: .Close.blue)
     }
 
     private func bind() {

@@ -73,8 +73,7 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
     }
     
     private func getCityCamImage() -> UIImage {
-        let camView = CircleIconControl(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        camView.style = .Others.cam
+        let camView = CircleIconControl(style: .Others.cam, frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         return camView.asImage()
     }
 

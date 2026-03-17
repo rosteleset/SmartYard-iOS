@@ -42,7 +42,7 @@ final class ServiceUnavailableViewController: BaseViewController, LoaderPresenta
         titleLabel.text = L10n.Services.Status.Unavailable.title
         messageLabel.text = L10n.Services.Status.Unavailable.message
         sendRequestButton.setTitle(L10n.Services.Status.Unavailable.requestButton, for: .normal)
-        closeButton.style = .Close.blue
+        closeButton.apply(style: .Close.blue)
     }
 
     private func bind() {

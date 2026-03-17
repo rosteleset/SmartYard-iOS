@@ -146,8 +146,8 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
 
-        callkitQuestionMark.style = .Others.question
-        addressOrderQuestionMark.style = .Others.question
+        callkitQuestionMark.apply(style: .Others.question)
+        addressOrderQuestionMark.apply(style: .Others.question)
         headerView.setText(L10n.Settings.Common.title)
         editNameButton.setImage(UIImage(named: "pencil"), for: .normal)
         editNameButton.setImage(UIImage(named: "pencil")?.darkened(), for: .highlighted)

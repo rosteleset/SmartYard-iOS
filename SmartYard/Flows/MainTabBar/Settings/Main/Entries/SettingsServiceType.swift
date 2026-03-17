@@ -55,8 +55,7 @@ enum SettingsServiceType: String {
     }
 
     private func getImage(with style: CircleIconStyle) -> UIImage {
-        let camView = CircleIconControl(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        camView.style = style
+        let camView = CircleIconControl(style: style, frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         return camView.asImage()
     }
 

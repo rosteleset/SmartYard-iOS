@@ -49,7 +49,7 @@ final class IntercomTemporaryAccessView: PMNibLinkableView, HasDisposeBag {
         configureUI()
         openButton.mode = AccessService.shared.guestAccessModeOnOnly ? .open : .enable
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
-        waitingGuestsQuestionMark.style = .Others.question
+        waitingGuestsQuestionMark.apply(style: .Others.question)
     }
     
 }

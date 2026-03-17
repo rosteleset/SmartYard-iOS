@@ -48,7 +48,7 @@ final class FaceCell: UICollectionViewCell, HasDisposeBag {
         imageButton.contentMode = .scaleAspectFit
         self.faceId = faceId
 
-        deleteButton.style = .Close.red
+        deleteButton.apply(style: .Close.red)
         deleteButton.isHidden = false
         
         deleteButtonTrigger
