@@ -21,6 +21,9 @@ final class CircleIconControl: UIControl {
 
     convenience init(style: CircleIconStyle, frame: CGRect = .zero) {
         self.init(frame: frame)
+        // Offscreen views (e.g. rendered into UIImage) don't inherit window style.
+        // Pin to app theme so dynamic colors resolve correctly.
+        overrideUserInterfaceStyle = ThemeManager.shared.currentTheme.value
         apply(style: style)
     }
 
@@ -50,12 +53,25 @@ final class CircleIconControl: UIControl {
     }
 
     private func setup(with style: CircleIconStyle) {
-        backgroundColor = style.circleColor
-        layer.borderColor = style.borderColor?.cgColor
+        backgroundColor = style.circleColor.resolvedColor(with: traitCollection)
+        layer.borderColor = style.borderColor?.resolvedColor(with: traitCollection).cgColor
         layer.borderWidth = style.borderWidth
 
         imageView.image = style.image?.withRenderingMode(.alwaysOriginal)
-        imageView.tintColor = style.iconColor
+        imageView.tintColor = style.iconColor.resolvedColor(with: traitCollection)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard
+            let previousTraitCollection,
+            previousTraitCollection.hasDifferentColorAppearance(comparedTo: traitCollection),
+            let style
+        else {
+            return
+        }
+
+        setup(with: style)
     }
 
     override func layoutSubviews() {
