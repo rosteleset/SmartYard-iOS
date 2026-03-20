@@ -34,6 +34,7 @@ final class CameraStreamProvider: PlayerResourceProviding {
         cleanupExpired()
 
         if let cached = cache[cameraId], cached.expiresAt > Date() {
+            touchCache(cameraId: cameraId)
             Logger.logDebug("fetch cacheHit id=\(cameraId)")
             completion(cached.resource)
             return
@@ -43,7 +44,8 @@ final class CameraStreamProvider: PlayerResourceProviding {
         requestResource(cameraId: cameraId) { [weak self] resource in
             guard let self else { completion(resource); return }
             if let resource {
-                cache[cameraId] = CacheEntry(resource: resource, expiresAt: Date().addingTimeInterval(self.ttl))
+                self.store(resource: resource, cameraId: cameraId)
+                self.warmupPlayback(resource: resource, cameraId: cameraId)
             }
             completion(resource)
         }
@@ -54,19 +56,20 @@ final class CameraStreamProvider: PlayerResourceProviding {
         cleanupExpired()
 
         if let cached = cache[cameraId], cached.expiresAt > Date() {
+            touchCache(cameraId: cameraId)
             prefetchHls(resource: cached.resource, cameraId: cameraId)
+            warmupPlayback(resource: cached.resource, cameraId: cameraId)
             return
         }
-        if inFlight[cameraId] != nil {
-            return
-        }
+        if inFlight[cameraId] != nil { return }
 
         Logger.logDebug("prefetch start id=\(cameraId)")
         requestResource(cameraId: cameraId) { [weak self] resource in
             guard let self else { return }
             guard let resource else { return }
-            self.cache[cameraId] = CacheEntry(resource: resource, expiresAt: Date().addingTimeInterval(self.ttl))
+            self.store(resource: resource, cameraId: cameraId)
             self.prefetchHls(resource: resource, cameraId: cameraId)
+            self.warmupPlayback(resource: resource, cameraId: cameraId)
         }
     }
 
@@ -122,10 +125,30 @@ private extension CameraStreamProvider {
         cache = cache.filter { $0.value.expiresAt > now }
     }
 
+    func store(resource: SYPlayerResource, cameraId: CameraID) {
+        cache[cameraId] = CacheEntry(
+            resource: resource,
+            expiresAt: Date().addingTimeInterval(ttl)
+        )
+    }
+
+    func touchCache(cameraId: CameraID) {
+        guard let cached = cache[cameraId] else { return }
+        store(resource: cached.resource, cameraId: cameraId)
+    }
+
     func prefetchHls(resource: SYPlayerResource, cameraId: CameraID) {
         let urls = resource.videos.map(\.url)
         guard !urls.isEmpty else { return }
         Logger.logDebug("prefetch hls id=\(cameraId) urls=\(urls.count)")
         SYPlayerConfig.shared.prefetch(urls: urls, maxCount: 3)
+    }
+
+    func warmupPlayback(resource: SYPlayerResource, cameraId: CameraID) {
+        guard resource.videoType == .online else { return }
+
+        let urls = resource.videos.map(\.url).filter { $0.pathExtension.lowercased() == "m3u8" }
+        guard !urls.isEmpty else { return }
+        urls.forEach { SYPlayerAssetWarmupStore.shared.warmup(url: $0) }
     }
 }
