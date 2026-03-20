@@ -650,12 +650,13 @@
                                                                                 <constraint firstAttribute="width" constant="24" id="oAQ-D5-B1z"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ks4-be-kpH" customClass="SmartYardActionModeButton" customModule="SmartYard" customModuleProvider="target">
+                                                                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ks4-be-kpH" customClass="SmartYardActionModeButton" customModule="SmartYard" customModuleProvider="target">
                                                                             <rect key="frame" x="274" y="9.5" width="84" height="36"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="width" constant="84" id="a9c-bH-Cte"/>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="84" id="a9c-bH-Cte"/>
                                                                                 <constraint firstAttribute="height" constant="36" id="rNL-yw-Ay6"/>
                                                                             </constraints>
+                                                                            <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
                                                                             <state key="normal" title="Сбросить"/>
                                                                         </button>
                                                                     </subviews>

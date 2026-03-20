@@ -57,6 +57,7 @@ final class SmartYardActionModeButton: UIButton {
     private func prepareUI() {
         layerCornerRadius = 8
         titleLabel?.font = UIFont.SourceSansPro.semibold(size: 14)
+        titleLabel?.adjustsFontSizeToFitWidth = true
 
         switch mode {
         case .open:

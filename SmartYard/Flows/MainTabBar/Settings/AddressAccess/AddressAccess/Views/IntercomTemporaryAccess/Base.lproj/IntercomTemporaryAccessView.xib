@@ -22,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="446" height="181"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Временный доступ к домофону" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfD-m2-Zi6">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Временный доступ к домофону" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfD-m2-Zi6">
                     <rect key="frame" x="0.0" y="0.0" width="446" height="20.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                     <color key="textColor" name="gray"/>
@@ -96,7 +96,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enN-rb-QVd" customClass="SmartYardActionModeButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="338" y="14" width="84" height="36"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="84" id="ElA-yk-vOa"/>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="84" id="ElA-yk-vOa"/>
                                         <constraint firstAttribute="height" constant="36" id="qNm-Hu-Ngg"/>
                                     </constraints>
                                     <state key="normal" title="Открыть"/>
@@ -104,9 +104,9 @@
                             </subviews>
                             <color key="backgroundColor" name="secondBackgroundColor"/>
                             <constraints>
-                                <constraint firstItem="0Ij-0C-KKs" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="enN-rb-QVd" secondAttribute="leading" constant="8" id="3vG-fu-FlR"/>
+                                <constraint firstItem="0Ij-0C-KKs" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="enN-rb-QVd" secondAttribute="leading" constant="-16" id="3vG-fu-FlR"/>
                                 <constraint firstItem="enN-rb-QVd" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="DcU-qJ-HVL"/>
-                                <constraint firstItem="0Ij-0C-KKs" firstAttribute="centerY" secondItem="VG3-rh-PSA" secondAttribute="centerY" id="pA2-Bv-Wbi"/>
+                                <constraint firstItem="0Ij-0C-KKs" firstAttribute="centerY" secondItem="7lW-Yj-xxP" secondAttribute="centerY" id="pA2-Bv-Wbi"/>
                                 <constraint firstItem="0Ij-0C-KKs" firstAttribute="leading" secondItem="7lW-Yj-xxP" secondAttribute="trailing" constant="16" id="sLY-Zz-Kcu"/>
                                 <constraint firstAttribute="height" constant="64" id="uVD-gl-ta1"/>
                                 <constraint firstItem="7lW-Yj-xxP" firstAttribute="leading" secondItem="VG3-rh-PSA" secondAttribute="leading" constant="24" id="xUN-fq-LEL"/>
