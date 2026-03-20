@@ -17,7 +17,7 @@ enum Constants {
     static let yandexApiKey = "YOU_NEED_TO_CHANGE_THIS"
     // Set your custom backend base URL here. ex: "https://your.domain/mobile" or set it nil for select it at the first time.
     static let defaultBackendURL: String? = nil // "https://sbca.lanta.me/mobile"
-    static let provListURL = "https://isdn.lanta.me/providers.json"
+    static let provListURL = "https://isdn.sesameware.com/providers.json"
     static let mapBoxPublicKey = "YOU_NEED_TO_CHANGE_THIS"
     static let sberbankAPILogin = "YOU_NEED_TO_CHANGE_THIS"
     static let sberbankAPIPassword = "YOU_NEED_TO_CHANGE_THIS"
