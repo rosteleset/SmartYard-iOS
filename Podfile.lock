@@ -167,7 +167,7 @@ PODS:
   - SearchTextField (1.2.4)
   - SHSPhoneComponent (2.32)
   - SkeletonView (1.30.4)
-  - SmartYardVideoPlayer (0.1.6):
+  - SmartYardVideoPlayer (0.1.7):
     - Kingfisher
     - KTVHTTPCache
     - lottie-ios
@@ -255,7 +255,7 @@ DEPENDENCIES:
   - SearchTextField
   - SHSPhoneComponent
   - SkeletonView
-  - SmartYardVideoPlayer (from `https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git`, tag `0.1.6`)
+  - SmartYardVideoPlayer (from `https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git`, tag `0.1.7`)
   - SSCustomTabbar (from `https://github.com/rosteleset/SSCustomTabbar.git`, branch `feature/add-animation-options`)
   - SwifterSwift (from `https://github.com/SwifterSwift/SwifterSwift.git`, branch `master`)
   - SwiftLint
@@ -331,7 +331,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/rosteleset/PopOverDatePicker.git
   SmartYardVideoPlayer:
     :git: https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git
-    :tag: 0.1.6
+    :tag: 0.1.7
   SSCustomTabbar:
     :branch: feature/add-animation-options
     :git: https://github.com/rosteleset/SSCustomTabbar.git
@@ -351,7 +351,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/rosteleset/PopOverDatePicker.git
   SmartYardVideoPlayer:
     :git: https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git
-    :tag: 0.1.6
+    :tag: 0.1.7
   SSCustomTabbar:
     :commit: 020adeb66030c710e636dc56bcbfec1ac2c907ed
     :git: https://github.com/rosteleset/SSCustomTabbar.git
