@@ -70,9 +70,11 @@ final class OnlineSelectionNavigator {
             if (didScrollTop || didScrollBottom), collectionView.window != nil {
                 didInitialScroll = true
             }
+            didInitialScroll = true
             selectBottomItem(collectionView, index: intent.index)
 
         case .mainCentered:
+            guard didInitialScroll else { return }
             let didScrollBottom = scrollBottomCarouselToPage(
                 collectionView,
                 index: intent.index,
@@ -99,6 +101,7 @@ final class OnlineSelectionNavigator {
             if (didScrollTop || didScrollBottom), collectionView.window != nil {
                 didInitialScroll = true
             }
+            didInitialScroll = true
             selectBottomItem(collectionView, index: intent.index)
         }
     }
@@ -106,6 +109,7 @@ final class OnlineSelectionNavigator {
     /// Вызывается из layout builder (visibleItemsInvalidationHandler).
     /// Возвращает `true`, если нужно форвардить centered index в VM.
     func shouldForwardTopCenteredIndex(_ index: Int) -> Bool {
+        guard didInitialScroll else { return false }
         guard isProgrammaticScroll else { return true }
 
         guard let targetIndex else {

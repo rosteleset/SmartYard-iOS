@@ -134,6 +134,8 @@ private extension OnlinePlaybackBinder {
         collectionView.layoutIfNeeded()
 
         let indexPath = IndexPath(item: index, section: 0)
+        guard collectionView.indexPathsForVisibleItems.contains(indexPath) else { return }
+
         guard let cell = collectionView.cellForItem(at: indexPath) as? CameraViewCell else {
             guard retryCount > 0 else {
                 Logger.logError("forceAttach cell not found id=\(selectedId) index=\(index)")
@@ -145,12 +147,9 @@ private extension OnlinePlaybackBinder {
             return
         }
 
-        let camera = cameras[index]
-
         lastForcedCameraId = selectedId
         lastForcedCameraCell = cell
 
-        playback.setSelectedCamera(id: selectedId, isMuted: camera.isMuted)
         playback.willDisplay(cameraId: selectedId, cell: cell)
     }
 }

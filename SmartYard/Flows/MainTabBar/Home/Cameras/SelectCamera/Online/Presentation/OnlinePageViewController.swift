@@ -22,6 +22,7 @@ final class OnlinePageViewController: BaseViewController {
     // MARK: - State (UI only)
 
     private var isTransitioningToFullscreen = false
+    private var hasAppearedOnce = false
 
     private let config = OnlinePageContext(
         cameras: BehaviorRelay<[CameraViewModel]>(value: []),
@@ -96,6 +97,10 @@ final class OnlinePageViewController: BaseViewController {
         super.viewDidAppear(animated)
         Logger.logDebug("viewDidAppear")
         events.viewDidAppear.accept(())
+        guard hasAppearedOnce else {
+            hasAppearedOnce = true
+            return
+        }
         playbackBinder?.restorePlayback()
         playbackBinder?.restoreCloseHandler()
     }
