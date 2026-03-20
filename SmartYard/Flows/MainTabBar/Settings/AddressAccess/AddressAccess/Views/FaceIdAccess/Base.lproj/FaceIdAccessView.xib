@@ -41,9 +41,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKZ-vB-e1c" customClass="SimpleButton" customModule="SmartYard" customModuleProvider="target">
-                                                    <rect key="frame" x="231" y="14" width="84" height="36"/>
+                                                    <rect key="frame" x="214.5" y="14" width="100.5" height="36"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="84" id="0cy-r2-cM0"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="84" id="0cy-r2-cM0"/>
                                                         <constraint firstAttribute="height" constant="36" id="Q8E-rf-ptP"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
