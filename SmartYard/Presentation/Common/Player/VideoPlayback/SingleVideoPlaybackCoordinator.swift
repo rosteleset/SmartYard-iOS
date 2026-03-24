@@ -36,6 +36,7 @@ final class SinglePlayerPlaybackCoordinator {
     func setSelected(id: PlayerItemID, isMuted: Bool) {
         selectedId = id
         selectedIsMuted = isMuted
+        requestId = UUID() // invalidate previous fetches, even if no visible cell yet
         tryStartPlaybackIfPossible()
     }
 
@@ -43,14 +44,10 @@ final class SinglePlayerPlaybackCoordinator {
         guard id == selectedId else { return }
 
         visibleSelectedCell = cell
-        playerController.attach(to: cell.playerContainerView, pauseBeforeDetach: false)
-        playerController.setMuted(selectedIsMuted)
-
         tryStartPlaybackIfPossible()
     }
 
-    func didEndDisplay(id: PlayerItemID, cell: PlayerAttachable) {
-        guard id == selectedId else { return }
+    func didEndDisplay(id _: PlayerItemID, cell: PlayerAttachable) {
         guard visibleSelectedCell === cell else { return }
 
         visibleSelectedCell = nil
@@ -79,10 +76,7 @@ final class SinglePlayerPlaybackCoordinator {
 
     private func tryStartPlaybackIfPossible() {
         guard let id = selectedId else { return }
-        guard let cell = visibleSelectedCell else { return }
-
-        playerController.attach(to: cell.playerContainerView, pauseBeforeDetach: false)
-        playerController.setMuted(selectedIsMuted)
+        guard visibleSelectedCell != nil else { return }
 
         let rid = UUID()
         requestId = rid
@@ -90,9 +84,16 @@ final class SinglePlayerPlaybackCoordinator {
         resourceProvider.fetch(id: id) { [weak self] resource in
             guard let self else { return }
             guard self.requestId == rid else { return }
+            guard self.selectedId == id else { return }
             guard let resource else { return }
 
             DispatchQueue.main.async {
+                guard self.requestId == rid else { return }
+                guard self.selectedId == id else { return }
+                guard let cell = self.visibleSelectedCell else { return }
+
+                self.playerController.attach(to: cell.playerContainerView, pauseBeforeDetach: false)
+                self.playerController.setMuted(self.selectedIsMuted)
                 self.playerController.set(resource: resource)
                 self.playerController.onAppear()
             }
