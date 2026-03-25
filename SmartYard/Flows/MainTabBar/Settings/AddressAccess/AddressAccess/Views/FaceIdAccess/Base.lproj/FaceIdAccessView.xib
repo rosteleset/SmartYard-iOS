@@ -55,7 +55,7 @@
                                             <color key="backgroundColor" name="secondBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="64" id="17r-Vp-g6p"/>
-                                                <constraint firstItem="cKZ-vB-e1c" firstAttribute="leading" secondItem="pz7-6N-TqU" secondAttribute="trailing" constant="24" id="5xN-th-Bra"/>
+                                                <constraint firstItem="cKZ-vB-e1c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pz7-6N-TqU" secondAttribute="trailing" constant="24" id="5xN-th-Bra"/>
                                                 <constraint firstItem="pz7-6N-TqU" firstAttribute="leading" secondItem="8fX-Q2-pgv" secondAttribute="leading" constant="24" id="Xyy-t8-Bgm"/>
                                                 <constraint firstAttribute="trailing" secondItem="cKZ-vB-e1c" secondAttribute="trailing" constant="24" id="c4g-A2-MPF"/>
                                                 <constraint firstItem="cKZ-vB-e1c" firstAttribute="centerY" secondItem="8fX-Q2-pgv" secondAttribute="centerY" id="kK8-9b-cz7"/>
