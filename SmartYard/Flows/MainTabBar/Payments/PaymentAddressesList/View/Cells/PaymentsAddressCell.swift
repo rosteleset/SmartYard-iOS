@@ -7,86 +7,63 @@
 //
 
 import UIKit
-import PinLayout
+import SnapKit
 
 final class PaymentsAddressCell: UICollectionViewCell {
-    
+
     private let titleLabel: UILabel = {
         let label = UILabel()
-        
         label.numberOfLines = 0
         label.font = UIFont.SourceSansPro.regular(size: 14)
         label.textColor = UIColor.SmartYard.semiBlack
-        
         return label
     }()
-    
-    private let mainContainer: UIView = {
-        let view = UIView()
-        
-        view.backgroundColor = .clear
-        
-        return view
-    }()
-    
+
+    private let mainContainer = UIView()
     private let arrowImageView = UIImageView()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
+
+    func configure(address: String?) {
+        contentView.removeSubviews()
+        mainContainer.removeSubviews()
+
         backgroundColor = UIColor.SmartYard.secondBackgroundColor
-        
-        let dimensions = type(of: self).preferredHeight(
-            for: bounds.width,
-            title: titleLabel.text
-        )
-        
-        mainContainer.pin.all(type(of: self).mainContainerMargins)
-        
-        arrowImageView.pin
-            .height(type(of: self).arrowHeight)
-            .width(type(of: self).arrowWidth)
-            .right()
-            .vCenter()
-        
+        mainContainer.backgroundColor = .clear
+
+        let margins = type(of: self).mainContainerMargins
+
+        pinSubview(mainContainer, with: .init(inset: margins))
+
+        arrowImageView.image = UIImage(named: "RightArrowIcon")
         arrowImageView.tintColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
-        
-        if dimensions.titleLabelHeight != 0 {
-            titleLabel.pin.top().left().bottom().width(dimensions.titleLabelWidth)
+
+        mainContainer.addSubview(arrowImageView) { make in
+            make.height.equalTo(type(of: self).arrowHeight)
+            make.width.equalTo(type(of: self).arrowWidth)
+            make.right.equalToSuperview()
+            make.centerY.equalToSuperview()
         }
-        
+
+        titleLabel.text = address
+
+        if !address.isNilOrEmpty {
+            mainContainer.addSubview(titleLabel) { make in
+                make.top.left.bottom.equalToSuperview()
+                make.right.equalTo(arrowImageView.snp.left).offset(-type(of: self).arrowSpacing)
+            }
+        }
+
         layer.cornerRadius = 12
         layer.borderWidth = 1
         addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
-    
-    func configure(address: String?) {
-        contentView.removeSubviews()
-        mainContainer.removeSubviews()
-        
-        addSubview(mainContainer)
-        
-        titleLabel.text = address
-        
-        if !address.isNilOrEmpty {
-            mainContainer.addSubview(titleLabel)
-        }
-        
-        arrowImageView.image = UIImage(named: "RightArrowIcon")
-        
-        mainContainer.addSubview(arrowImageView)
-    }
-    
 }
 
 extension PaymentsAddressCell {
     
     struct Dimensions {
-        
         let totalHeight: CGFloat
         let titleLabelHeight: CGFloat
         let titleLabelWidth: CGFloat
-        
     }
     
     static let minMainContainerHeight: CGFloat = 24
@@ -96,12 +73,9 @@ extension PaymentsAddressCell {
     static let arrowHeight: CGFloat = 13
     
     class func preferredTitleLabelHeight(for width: CGFloat, title: String?) -> CGFloat {
-        guard !title.isNilOrEmpty else {
-            return 0
-        }
-        
+        guard !title.isNilOrEmpty else { return 0 }
+
         let label = UILabel()
-        
         label.numberOfLines = 0
         label.font = UIFont.SourceSansPro.regular(size: 14)
         label.text = title
@@ -113,10 +87,8 @@ extension PaymentsAddressCell {
     
     class func preferredHeight(for width: CGFloat, title: String?) -> Dimensions {
         let titleLabelHeight = preferredTitleLabelHeight(for: width, title: title)
-        
         let mainContainerHeight = max(arrowHeight, titleLabelHeight, minMainContainerHeight)
         let totalHeight = mainContainerMargins * 2 + mainContainerHeight
-        
         let titleLabelWidth = width - mainContainerMargins * 2 - arrowWidth - arrowSpacing
         
         return Dimensions(

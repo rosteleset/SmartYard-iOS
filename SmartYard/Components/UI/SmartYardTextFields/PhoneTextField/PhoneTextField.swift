@@ -13,19 +13,16 @@ import RxSwift
 import RxCocoa
 
 final class PhoneTextField: PMNibLinkableView, HasDisposeBag {
-    
-    @IBOutlet private weak var containerView: UIView!
-    
     private(set) var text = ""
-    
+
+    @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var phoneField: PhoneField!
     @IBOutlet fileprivate weak var fakeTextField: UITextField!
-    
+
     private var numberViewsCollection: [NumberFieldView] {
         return phoneField.numberViewsCollection
     }
-    
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         phoneField.sizeToFit()

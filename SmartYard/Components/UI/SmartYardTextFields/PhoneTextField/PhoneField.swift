@@ -8,14 +8,14 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 final class PhoneField: UIView {
-    
-    private let prefixLabel = UILabel()
-    
     var numberViewsCollection = [NumberFieldView]()
     var gapBeforeDigit: [Bool]
-    
+
+    private let prefixLabel = UILabel()
+
     private static func setupGapBeforeDigit(_ from: String) -> [Bool] {
         var gapBefore: [Bool] = []
         var previousWasNotDigit = true
@@ -80,24 +80,25 @@ final class PhoneField: UIView {
         for _ in 0...AccessService.shared.phoneLengthWithoutPrefix - 1 {
             numberViewsCollection.append(PhoneField.createNumView())
         }
-        addSubview(prefixLabel)
-        numberViewsCollection.forEach { self.addSubview($0) }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        prefixLabel.pin.left(5).vCenter()
-        
+
+        addSubview(prefixLabel) { make in
+            make.left.equalToSuperview().offset(5)
+            make.centerY.equalToSuperview()
+            make.width.equalTo(prefixLabel.frame.width)
+            make.height.equalTo(34)
+        }
+
+        var previousView: UIView = prefixLabel
         numberViewsCollection.enumerated().forEach { num, view in
-            switch num {
-            case 0:
-                view.pin.after(of: prefixLabel, aligned: .center).marginLeft(12)
-            case let value where gapBeforeDigit[value]:
-                view.pin.after(of: numberViewsCollection[num - 1], aligned: .center).marginLeft(12)
-            default:
-                view.pin.after(of: numberViewsCollection[num - 1], aligned: .center).marginLeft(2)
+            let marginLeft: CGFloat = gapBeforeDigit[num] ? 12 : 2
+
+            addSubview(view) { make in
+                make.left.equalTo(previousView.snp.right).offset(marginLeft)
+                make.centerY.equalTo(prefixLabel)
+                make.width.equalTo(22)
+                make.height.equalTo(34)
             }
+            previousView = view
         }
     }
 }

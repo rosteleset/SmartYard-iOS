@@ -68,7 +68,6 @@
 		3A7CD54C28577955003CDDC7 /* ProviderCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD54B28577955003CDDC7 /* ProviderCellModel.swift */; };
 		3A7CD5552857B75A003CDDC7 /* ProviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */; };
 		3A8B94FA25D92E6F007CDD3C /* CityMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */; };
-		3A8B950B25D93098007CDD3C /* CityCamerasMapPointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */; };
 		3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B951525D9312D007CDD3C /* CityCameraObject.swift */; };
 		3A8B952A25D9336D007CDD3C /* CityCamsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B952925D9336D007CDD3C /* CityCamsCoordinator.swift */; };
 		3A8FC6712B065B5600F90D73 /* AddressesListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6732B065B5600F90D73 /* AddressesListViewController.xib */; };
@@ -896,7 +895,6 @@
 		3A7CD54B28577955003CDDC7 /* ProviderCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderCellModel.swift; sourceTree = "<group>"; };
 		3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderCell.swift; sourceTree = "<group>"; };
 		3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityMapViewController.swift; sourceTree = "<group>"; };
-		3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCamerasMapPointView.swift; sourceTree = "<group>"; };
 		3A8B951525D9312D007CDD3C /* CityCameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraObject.swift; sourceTree = "<group>"; };
 		3A8B952925D9336D007CDD3C /* CityCamsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCamsCoordinator.swift; sourceTree = "<group>"; };
 		3A8FC6742B065B7200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressesListViewController.xib; sourceTree = "<group>"; };
@@ -1896,14 +1894,6 @@
 			path = Entries;
 			sourceTree = "<group>";
 		};
-		3A8B952225D9314B007CDD3C /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				3A8B950A25D93097007CDD3C /* CityCamerasMapPointView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		3A9C5E26261B7835004FB962 /* Entries */ = {
 			isa = PBXGroup;
 			children = (
@@ -1944,7 +1934,6 @@
 			isa = PBXGroup;
 			children = (
 				3A8B951A25D93132007CDD3C /* Entries */,
-				3A8B952225D9314B007CDD3C /* Views */,
 				3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */,
 				3A8FC74F2B09F0F400F90D73 /* CityMapViewController.xib */,
 				3AB41E0925C200B900AEC8C3 /* CityMapViewModel.swift */,
@@ -6274,7 +6263,6 @@
 				3A6717362AE0094D00D6B9C7 /* CamerasListViewController.swift in Sources */,
 				848D1B8C23F29D9B00D6E368 /* AddressSettingsViewModel.swift in Sources */,
 				3AC5C61A2608F18B008D74DE /* HistoryViewModel.swift in Sources */,
-				3A8B950B25D93098007CDD3C /* CityCamerasMapPointView.swift in Sources */,
 				8B2ACD502E1EE60B0067438F /* LicencePlateValidator.swift in Sources */,
 				E9A4D49A23EC3E200070A591 /* BlueButton.swift in Sources */,
 				84F6494A24740E90000C0028 /* CamerasMapPointView.swift in Sources */,

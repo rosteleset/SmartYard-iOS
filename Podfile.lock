@@ -145,7 +145,6 @@ PODS:
     - SnapKit (~> 5.7.1)
   - OnlineChatSdk (0.0.2)
   - Parchment (4.1.0)
-  - PinLayout (1.10.6)
   - PMNibLinkableView (0.3.0)
   - PopOverDatePicker (1.1.0)
   - PromisesObjC (2.4.0)
@@ -245,7 +244,6 @@ DEPENDENCIES:
   - NotificationBannerSwift (from `https://github.com/chekmari/NotificationBanner.git`, branch `master`)
   - OnlineChatSdk (from `https://github.com/rosteleset/OnlineChatSdk-Swift.git`, branch `feature/build-fix`)
   - Parchment
-  - PinLayout
   - PMNibLinkableView
   - PopOverDatePicker (from `https://github.com/rosteleset/PopOverDatePicker.git`, branch `timezoneSupport`)
   - RxCocoa
@@ -256,6 +254,7 @@ DEPENDENCIES:
   - SHSPhoneComponent
   - SkeletonView
   - SmartYardVideoPlayer (from `https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git`, tag `0.1.7`)
+  - SnapKit (~> 5.7)
   - SSCustomTabbar (from `https://github.com/rosteleset/SSCustomTabbar.git`, branch `feature/add-animation-options`)
   - SwifterSwift (from `https://github.com/SwifterSwift/SwifterSwift.git`, branch `master`)
   - SwiftLint
@@ -298,7 +297,6 @@ SPEC REPOS:
     - Moya
     - nanopb
     - Parchment
-    - PinLayout
     - PMNibLinkableView
     - PromisesObjC
     - PromisesSwift
@@ -391,7 +389,6 @@ SPEC CHECKSUMS:
   NotificationBannerSwift: 2b1ead2d62887dd3be02188e03cc82cf6fc7edf5
   OnlineChatSdk: 421b17a804f22c193f81f02a891e7d91128c525b
   Parchment: fdea264f5de6d73b0b69a31c686fab762c78ed2f
-  PinLayout: e2fceb4cbfdf49f3569fc242a7dfa0da4fb9aa06
   PMNibLinkableView: 06ebf6128feb70c3ba589d6be232748c1b7b1767
   PopOverDatePicker: 352207019f4dd717f1fef6d9bb42997a252f243f
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47

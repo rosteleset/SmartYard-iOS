@@ -29,7 +29,7 @@ target 'SmartYard' do
   pod 'Cartography'
   pod 'PMNibLinkableView'
   pod 'TouchAreaInsets'
-  pod 'PinLayout'
+  pod 'SnapKit', '~> 5.7'
   pod 'SSCustomTabbar', :git => 'https://github.com/rosteleset/SSCustomTabbar.git', :branch => 'feature/add-animation-options'
   pod 'TPKeyboardAvoiding'
   pod 'JGProgressHUD'

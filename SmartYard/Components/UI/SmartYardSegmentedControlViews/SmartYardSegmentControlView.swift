@@ -9,7 +9,6 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import PinLayout
 
 final class SmartYardSegmentControlView: UIView, SmartYardSegmentControlViewProtocol {
 
