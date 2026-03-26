@@ -16,7 +16,6 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var hintInputPhoneLabel: UILabel!
-    @IBOutlet private weak var messageLabel: UILabel!
     @IBOutlet private weak var fixPhoneNumberButton: UIButton!
     @IBOutlet private weak var sendCodeAgainGroupView: UIView!
     @IBOutlet private weak var numberPhoneLabel: UILabel!
@@ -57,7 +56,6 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
         fixPhoneNumberButton.setTitle(L10n.Auth.CallVerification.editPhoneButton, for: .normal)
         makeCallButton.setTitle(L10n.Auth.CallVerification.callButton, for: .normal)
         callPrefixLabel.text = L10n.Auth.CallVerification.callInstructionPrefix
-        messageLabel.text = L10n.Auth.CallVerification.phoneNumberPlaceholder
         callSuffixLabel.text = L10n.Auth.CallVerification.callInstructionSuffix
         makeCallButton.isHidden = false
         numberPhoneLabel.isUserInteractionEnabled = true
@@ -86,7 +84,6 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
         
         output.confirmPhoneNumber
             .drive(with: self) { owner, confirmPhoneNumber in
-                owner.messageLabel.text = confirmPhoneNumber
                 owner.numberPhoneLabel.text = confirmPhoneNumber
             }
             .disposed(by: disposeBag)

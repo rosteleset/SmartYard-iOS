@@ -24,7 +24,6 @@
                 <outlet property="fixPhoneNumberButton" destination="c8f-g0-jL7" id="jes-j9-JSY"/>
                 <outlet property="hintInputPhoneLabel" destination="eDz-2O-KUv" id="FKe-SE-3LB"/>
                 <outlet property="makeCallButton" destination="8gN-95-GzJ" id="Fxu-BP-gEo"/>
-                <outlet property="messageLabel" destination="0yQ-Gl-18c" id="cle-gc-XMC"/>
                 <outlet property="numberPhoneLabel" destination="0yQ-Gl-18c" id="Nfr-uw-z9f"/>
                 <outlet property="sendCodeAgainGroupButtonConstraint" destination="zNY-39-FIO" id="zTP-ff-RxY"/>
                 <outlet property="sendCodeAgainGroupView" destination="8mg-56-oeR" id="O80-9X-MXi"/>
