@@ -48,9 +48,8 @@ final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        bind()
         configureUI()
+        bind()
     }
     
     private func configureUI() {
