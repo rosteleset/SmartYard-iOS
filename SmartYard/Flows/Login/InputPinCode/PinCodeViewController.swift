@@ -53,10 +53,9 @@ final class PinCodeViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        bind()
         configureUI()
         configureRxKeyboard()
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
