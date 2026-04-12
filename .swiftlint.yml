@@ -2,6 +2,7 @@ excluded:
   - Carthage
   - Pods
   - build
+  - .derivedData
 opt_in_rules:
   - array_init
   - attributes
