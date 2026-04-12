@@ -84,14 +84,15 @@ final class PinCodeViewModel: BaseViewModel {
             .flatMapLatest { [weak self] smsCode -> Driver<ConfirmCodeResponseData?> in
                 guard let self else { return .just(nil) }
 
-                return apiWrapper.confirmCode(
+                let confirmCodeRequest: Observable<ConfirmCodeResponseData?> = self.apiWrapper.confirmCode(
                     userPhone: AccessService.shared.phonePrefix + phoneNumber,
                     smsCode: smsCode
                 )
                 .trackActivity(activityTracker)
                 .trackError(errorTracker)
-                .catch { [weak self] error in
-                    guard let self else {  return .just(nil) }
+                .asObservable()
+                .catch { [weak self] error -> Observable<ConfirmCodeResponseData?> in
+                    guard let self else { return .just(nil) }
                     let nsError = error as NSError
 
                     if nsError.code == 403 {
