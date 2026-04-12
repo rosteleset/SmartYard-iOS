@@ -84,7 +84,7 @@ final class PinCodeViewModel: BaseViewModel {
             .flatMapLatest { [weak self] smsCode -> Driver<ConfirmCodeResponseData?> in
                 guard let self else { return .just(nil) }
 
-                let confirmCodeRequest: Observable<ConfirmCodeResponseData?> = self.apiWrapper.confirmCode(
+                return self.apiWrapper.confirmCode(
                     userPhone: AccessService.shared.phonePrefix + phoneNumber,
                     smsCode: smsCode
                 )
