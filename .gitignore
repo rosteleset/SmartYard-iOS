@@ -5,6 +5,7 @@
 ## Build generated
 build/
 DerivedData/
+.derivedData/
 ## AppCode
 *.idea
 ## Various settings
