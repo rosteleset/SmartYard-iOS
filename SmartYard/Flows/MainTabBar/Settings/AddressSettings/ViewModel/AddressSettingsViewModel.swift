@@ -80,7 +80,7 @@ final class AddressSettingsViewModel: BaseViewModel {
         
         let isCmsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areCallsEnabledSubject = BehaviorSubject<Bool>(value: false)
-        let isWhiteRabbitEnabledSubject = BehaviorSubject<Bool>(value: false)
+        let isWhiteRabbitEnabledSubject = BehaviorSubject<Bool?>(value: nil)
         let arePaperBillsEnabledSubject = BehaviorSubject<Bool>(value: false)
         let areLogsEnabledSubject = BehaviorSubject<Bool?>(value: nil)
         let areLogsVisibleOnlyForOwnerSubject = BehaviorSubject<Bool?>(value: nil)
@@ -125,6 +125,8 @@ final class AddressSettingsViewModel: BaseViewModel {
                 guard let self = self, self.hasDomophone else {
                     return .empty()
                 }
+
+                let isEnabled = isEnabled ?? false
                 
                 return self.apiWrapper
                     .setIntercomCMSState(flatId: self.flatId, isEnabled: !isEnabled)
@@ -146,6 +148,8 @@ final class AddressSettingsViewModel: BaseViewModel {
                 guard let self = self, self.hasDomophone else {
                     return .empty()
                 }
+
+                let isEnabled = isEnabled ?? false
                 
                 return self.apiWrapper
                     .setIntercomVoIPState(flatId: self.flatId, isEnabled: !isEnabled)
@@ -162,11 +166,13 @@ final class AddressSettingsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.whiteRabbitTrigger
-            .withLatestFrom(isWhiteRabbitEnabledSubject.asDriver(onErrorJustReturn: false))
+            .withLatestFrom(isWhiteRabbitEnabledSubject.asDriver(onErrorJustReturn: nil))
             .flatMapLatest { [weak self] isEnabled -> Driver<IntercomResponseData?> in
                 guard let self = self, self.hasDomophone else {
                     return .empty()
                 }
+
+                let isEnabled = isEnabled ?? false
                 
                 return self.apiWrapper
                     .setIntercomWhiteRabbitState(flatId: self.flatId, isEnabled: !isEnabled)
@@ -188,6 +194,8 @@ final class AddressSettingsViewModel: BaseViewModel {
                 guard let self = self, self.hasDomophone else {
                     return .empty()
                 }
+
+                let isEnabled = isEnabled ?? false
                 
                 return self.apiWrapper
                     .setIntercomPaperBillState(flatId: self.flatId, isEnabled: !isEnabled)
@@ -329,7 +337,7 @@ final class AddressSettingsViewModel: BaseViewModel {
             address: .just(address),
             isCmsEnabled: isCmsEnabledSubject.asDriver(onErrorJustReturn: false),
             areCallsEnabled: areCallsEnabledSubject.asDriver(onErrorJustReturn: false),
-            isWhiteRabbitEnabled: isWhiteRabbitEnabledSubject.asDriver(onErrorJustReturn: false),
+            isWhiteRabbitEnabled: isWhiteRabbitEnabledSubject.asDriver(onErrorJustReturn: nil),
             arePaperBillsEnabled: arePaperBillsEnabledSubject.asDriver(onErrorJustReturn: false),
             areLogsEnabled: areLogsEnabledSubject.asDriver(onErrorJustReturn: nil),
             areLogsVisibleOnlyForOwner: areLogsVisibleOnlyForOwnerSubject.asDriver(onErrorJustReturn: nil),
@@ -407,7 +415,7 @@ extension AddressSettingsViewModel {
         let address: Driver<String>
         let isCmsEnabled: Driver<Bool>
         let areCallsEnabled: Driver<Bool>
-        let isWhiteRabbitEnabled: Driver<Bool>
+        let isWhiteRabbitEnabled: Driver<Bool?>
         let arePaperBillsEnabled: Driver<Bool>
         let areLogsEnabled: Driver<Bool?>
         let areLogsVisibleOnlyForOwner: Driver<Bool?>

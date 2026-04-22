@@ -234,6 +234,11 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
         output.isWhiteRabbitEnabled
             .drive(
                 onNext: { [weak self] state in
+                    guard let state = state else {
+                        self?.whiteRabbitContainerView.isHidden = true
+                        return
+                    }
+                    self?.whiteRabbitContainerView.isHidden = false
                     self?.whiteRabbitSwitch.setOn(state, animated: true)
                 }
             )

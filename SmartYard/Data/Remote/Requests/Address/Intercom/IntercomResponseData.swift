@@ -15,7 +15,7 @@ struct IntercomResponseData: Decodable {
     let cms: Bool
     let voip: Bool
     let autoOpen: Date
-    let whiteRabbit: Bool
+    let whiteRabbit: Bool?
     let paperBill: Bool?
     let disablePlog: Bool?
     let hiddenPlog: Bool?
@@ -69,11 +69,11 @@ struct IntercomResponseData: Decodable {
         let autoOpenRawValue = try container.decode(String.self, forKey: .autoOpen)
         autoOpen = try autoOpenRawValue.dateFromAPIString.unwrapped(or: NSError.APIWrapperError.noDataError)
         
-        let whiteRabbitRawValue = try container.decode(String.self, forKey: .whiteRabbit)
+        let whiteRabbitRawValue = try? container.decode(String.self, forKey: .whiteRabbit)
         switch whiteRabbitRawValue {
         case "1", "2", "3", "5", "7", "10": whiteRabbit = true
         case "0": whiteRabbit = false
-        default: throw NSError.APIWrapperError.noDataError
+        default: whiteRabbit = nil
         }
         
         let paperBillRawValue = try? container.decode(String.self, forKey: .paperBill)
