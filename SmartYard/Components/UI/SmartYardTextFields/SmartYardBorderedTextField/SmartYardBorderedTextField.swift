@@ -88,6 +88,10 @@ class SmartYardBorderedTextField: UITextField {
         addTarget(self, action: #selector(onEditingDidEnd), for: .editingDidEnd)
     }
 
+    func updateValidationAppearance() {
+        updateBorder(valid: isValid)
+    }
+
     private func configureUI() {
         tintColor = UIColor.SmartYard.semiBlack
         layer.borderWidth = 1

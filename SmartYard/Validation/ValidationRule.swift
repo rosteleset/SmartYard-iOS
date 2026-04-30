@@ -19,7 +19,11 @@ enum ValidationRule {
         case .maxLength(let max): return text.count <= max
         case .regex(let regex):
             let range = NSRange(text.startIndex..<text.endIndex, in: text)
-            return regex.firstMatch(in: text, options: [], range: range) != nil
+            guard let match = regex.firstMatch(in: text, options: [], range: range) else {
+                return false
+            }
+
+            return match.range == range
         }
     }
 }

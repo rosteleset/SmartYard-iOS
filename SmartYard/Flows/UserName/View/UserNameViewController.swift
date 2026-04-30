@@ -76,11 +76,14 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         nameTextField.text = preloadedName?.name
         nameTextField.sendActions(for: .allEditingEvents)
         nameTextField.configure(with: validators.first)
-        middleNameTextField.setPlaceholder(string: L10n.Profile.patronymic)
+        nameTextField.updateValidationAppearance()
+
+        middleNameTextField.setPlaceholder(string: NSLocalizedString("Patronymic", comment: ""))
         middleNameTextField.delegate = self
         middleNameTextField.text = preloadedName?.patronymic
         middleNameTextField.sendActions(for: .allEditingEvents)
         middleNameTextField.configure(with: validators.patronymic)
+        middleNameTextField.updateValidationAppearance()
     }
     
     private func configureRxKeyboard() {
