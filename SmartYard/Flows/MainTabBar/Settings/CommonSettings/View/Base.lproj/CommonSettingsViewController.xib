@@ -54,6 +54,7 @@
                 <outlet property="notificationsHeader" destination="YXf-zN-Lm3" id="P2E-Ef-369"/>
                 <outlet property="notificationsHeaderArrowImageView" destination="kIZ-Qq-Puv" id="Z6X-TK-Edc"/>
                 <outlet property="phoneTextLabel" destination="Zey-yG-NRX" id="h71-ip-YAN"/>
+                <outlet property="scrollView" destination="gga-je-1mc" id="OSm-zR-0Rl"/>
                 <outlet property="showCamerasOnMapContainerView" destination="FUg-hI-JbN" id="pje-U9-f3O"/>
                 <outlet property="showCamerasOnMapSwitch" destination="ugu-Bn-1wd" id="D9h-eb-zi4"/>
                 <outlet property="speakerContainerView" destination="Mg6-Td-H8p" id="Msq-U8-Ok1"/>

@@ -17,6 +17,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var mainContainerView: UIView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     @IBOutlet private weak var nameContainerView: UIView!
     @IBOutlet private weak var nameTextLabel: UILabel!
@@ -123,6 +124,11 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         if balanceWarningSkeleton.sk.isSkeletonActive {
             balanceWarningSkeleton.showSkeletonAsynchronously(with: UIColor.SmartYard.backgroundColor)
         }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateScrollViewInsets()
     }
     
     private func configureUI() {
@@ -418,6 +424,22 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     private func configureViewVisibility(_ view: UIView, isVisible: Bool, height: CGFloat = 0) {
         view.isHidden = !isVisible
         view.heightAnchor.constraint(equalToConstant: isVisible ? height : 0).isActive = !isVisible
+    }
+    
+}
+
+private extension CommonSettingsViewController {
+
+    func updateScrollViewInsets() {
+        let bottomInset = view.safeAreaInsets.bottom + 16
+        
+        scrollView.contentInset.bottom = bottomInset
+        scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: bottomInset,
+            right: 0
+        )
     }
     
 }
