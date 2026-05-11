@@ -36,6 +36,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     private let viewModel: AddressesListViewModel
 
     private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
+    private let previewSelected = PublishSubject<AddressesListDataItemIdentity>()
     private let qrCodeTapped = PublishSubject<Void>()
     
     var loader: JGProgressHUD?
@@ -67,14 +68,18 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     // swiftlint:disable:next function_body_length
     private func bind() {
-        let itemSelected = collectionView.rx.itemSelected
-            .map { [weak self] indexPath in
-                self?.dataSource?[indexPath].identity
-            }
-            .ignoreNil()
+        let itemSelected = Driver.merge(
+            collectionView.rx.itemSelected
+                .map { [weak self] indexPath in
+                    self?.dataSource?[indexPath].identity
+                }
+                .ignoreNil()
+                .asDriverOnErrorJustComplete(),
+            previewSelected.asDriverOnErrorJustComplete()
+        )
         
         let input = AddressesListViewModel.Input(
-            itemSelected: itemSelected.asDriverOnErrorJustComplete(),
+            itemSelected: itemSelected,
             guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete(),
             refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver(),
             addAddressTrigger: addButton.rx.tap.asDriver(),
@@ -254,6 +259,9 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
         ].forEach {
             collectionView.register(nibWithCellClass: $0)
         }
+
+        collectionView.register(cellWithClass: AddressesListDoorPreviewCell.self)
+        collectionView.register(cellWithClass: AddressesListDoorPreviewPagerCell.self)
         
         collectionView.register(cellWithClass: AddressesHeaderCell.self)
         
@@ -327,6 +335,49 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
                     .bind(to: self.requestGuestAccess)
                     .disposed(by: cell.disposeBag)
                 
+                cell.bind(with: subject)
+
+                return cell
+
+            case let .doorPreviewPager(_, items):
+                let cell = collectionView.dequeueReusableCell(
+                    withClass: AddressesListDoorPreviewPagerCell.self,
+                    for: indexPath
+                )
+
+                cell.configure(items: items)
+
+                cell.openRequested
+                    .bind(to: self.requestGuestAccess)
+                    .disposed(by: cell.disposeBag)
+
+                cell.previewSelected
+                    .bind(to: self.previewSelected)
+                    .disposed(by: cell.disposeBag)
+
+                return cell
+
+            case let .doorPreview(_, title, subtitle, previewSource, hasCamera, isOpened):
+                let cell = collectionView.dequeueReusableCell(
+                    withClass: AddressesListDoorPreviewCell.self,
+                    for: indexPath
+                )
+
+                cell.configure(
+                    title: title,
+                    subtitle: subtitle,
+                    previewSource: previewSource,
+                    hasCamera: hasCamera,
+                    isOpened: isOpened
+                )
+
+                let subject = PublishSubject<Void>()
+
+                subject
+                    .map { item.identity }
+                    .bind(to: self.requestGuestAccess)
+                    .disposed(by: cell.disposeBag)
+
                 cell.bind(with: subject)
 
                 return cell
@@ -411,6 +462,12 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(
                 width: UIScreen.main.bounds.width - 32,
                 height: height
+            )
+
+        case .doorPreview, .doorPreviewPager:
+            return CGSize(
+                width: collectionView.width - 32,
+                height: 176
             )
 
         default:

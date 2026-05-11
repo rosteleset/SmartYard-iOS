@@ -9,6 +9,7 @@
 import XCoordinator
 import RxSwift
 import RxCocoa
+import SmartYardVideoPlayer
 
 enum HomeRoute: Route {
     
@@ -29,6 +30,11 @@ enum HomeRoute: Route {
     case qrCodeScan(delegate: QRCodeScanViewModelDelegate)
     case serviceSoonAvailable(issue: APIIssueConnect)
     case cameraContainer(address: String, cameras: [CameraObject], selectedCamera: CameraObject)
+    case onlineFullscreen(
+        cameras: [CameraObject],
+        selectedCamera: CameraObject,
+        accessAction: OnlineFullscreenAccessAction?
+    )
     case yardCamerasMap(houseId: String, address: String, cameras: [CameraObject]?)
     case yardCamerasList(houseId: String, address: String, tree: CamerasTree, path: [Int])
     case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
@@ -287,6 +293,27 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
             )
             
             return .push(vc)
+
+        case let .onlineFullscreen(cameras, selectedCamera, accessAction):
+            let provider = CameraStreamProvider(cameras: cameras, ttl: 120)
+            let playback = OnlinePlaybackCoordinator(provider: provider)
+            let cameraViewModels = makeOnlineCameraViewModels(from: cameras)
+
+            playback.updateCameraOrder(cameraViewModels.map(\.id))
+            playback.setMode(.fullscreen)
+
+            let vc = OnlineFullscreenViewController(
+                cameras: cameraViewModels,
+                initialCameraId: selectedCamera.id,
+                playback: playback,
+                accessAction: accessAction,
+                onDismiss: { _ in
+                    playback.stopHard()
+                }
+            )
+            vc.modalPresentationStyle = .fullScreen
+
+            return .present(vc)
             
         case let .playArchiveVideo(camera, date, availableRanges):
             let vm = PlayArchiveVideoViewModel(
@@ -345,4 +372,23 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
             .disposed(by: disposeBag)
     }
     
+}
+
+private extension HomeCoordinator {
+    func makeOnlineCameraViewModels(from cameras: [CameraObject]) -> [CameraViewModel] {
+        cameras.map { camera in
+            CameraViewModel(
+                id: camera.id,
+                number: camera.cameraNumber,
+                resource: SYPlayerResource(
+                    url: URL(string: camera.baseURLString)!,
+                    previewImage: URL(string: camera.previewURL),
+                    name: camera.name,
+                    videoType: .online,
+                    hasSound: camera.hasSound
+                ),
+                isMuted: !camera.hasSound
+            )
+        }
+    }
 }

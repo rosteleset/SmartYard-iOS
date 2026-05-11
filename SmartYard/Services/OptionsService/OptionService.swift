@@ -147,6 +147,7 @@ final class OptionsService: OptionsServicing, HasDisposeBag {
         accessService.guestAccessModeOnOnly = response.guestAccessOnOnly
         accessService.issuesVersion = response.issuesVersion ?? "1"
         accessService.cctvView = response.cctvView.rawValue
+        accessService.entrancesView = response.entrancesView.rawValue
 
         switch accessService.cctvView {
         case "list": accessService.showList = true

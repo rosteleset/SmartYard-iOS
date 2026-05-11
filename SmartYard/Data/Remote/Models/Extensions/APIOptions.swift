@@ -21,6 +21,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let guestAccessOnOnly: Bool
     let timeZone: String?
     let cctvView: CCTVViewType
+    let entrancesView: EntrancesViewType
     let activeTab: TabNames
     let issuesVersion: String?
     let validationPattern: NameValidationPattern?
@@ -37,6 +38,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case guestAccess
         case timeZone
         case cctvView
+        case entrancesView
         case activeTab
         case issuesVersion
         case validationNamePattern
@@ -107,6 +109,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         supportPhone = try? container.decode(String.self, forKey: .supportPhone)
         timeZone = try? container.decode(String.self, forKey: .timeZone)
         cctvView = (try? container.decode(CCTVViewType.self, forKey: .cctvView)) ?? .list
+        entrancesView = (try? container.decode(EntrancesViewType.self, forKey: .entrancesView)) ?? .list
         activeTab = (try? container.decode(TabNames.self, forKey: .activeTab)) ?? .addresses
         issuesVersion = try? container.decode(String.self, forKey: .issuesVersion)
     }
@@ -122,6 +125,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         guestAccessOnOnly = true
         timeZone = nil
         cctvView = .list
+        entrancesView = .list
         activeTab = .addresses
         issuesVersion = nil
         deliveryTabsConfig = nil
@@ -138,6 +142,11 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case list
         case tree
         case userDefined
+    }
+
+    enum EntrancesViewType: String, Decodable {
+        case list
+        case preview
     }
 
     enum TabNames: String, Decodable {

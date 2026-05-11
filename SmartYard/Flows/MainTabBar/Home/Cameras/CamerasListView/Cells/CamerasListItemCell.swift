@@ -59,8 +59,6 @@ final class CamerasListItemCell: UICollectionViewCell {
         backgroundColor = .SmartYard.secondBackgroundColor
         mainContainer.backgroundColor = .clear
 
-        addSubview(mainContainer)
-
         switch item {
         case .caption(label: let label):
             isHeader = false
@@ -92,13 +90,8 @@ final class CamerasListItemCell: UICollectionViewCell {
         }
 
         let margins = type(of: self).mainContainerMargins
-        mainContainer.snp.makeConstraints { make in
-            if isHeader {
-                make.edges.equalToSuperview().inset(margins)
-            } else {
-                make.edges.equalToSuperview()
-            }
-        }
+        let insets: UIEdgeInsets = isHeader ? .init(inset: margins) : .zero
+        pinSubview(mainContainer, with: insets)
 
         layer.cornerRadius = 12
         layer.borderWidth = isHeader ? 1 : 0

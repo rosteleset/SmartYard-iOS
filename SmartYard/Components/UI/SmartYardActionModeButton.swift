@@ -13,8 +13,18 @@ final class SmartYardActionModeButton: UIButton {
     enum ActionMode {
         case open, enable, reset
     }
+
+    enum VisualStyle {
+        case standard, overImage
+    }
     
     var mode: ActionMode = .open {
+        didSet {
+            prepareUI()
+        }
+    }
+
+    var visualStyle: VisualStyle = .standard {
         didSet {
             prepareUI()
         }
@@ -81,14 +91,32 @@ final class SmartYardActionModeButton: UIButton {
             setTitleColor(.SmartYard.blue.darken(by: 0.1), for: .highlighted)
         }
 
-        setTitleColor(.SmartYard.blue, for: .normal)
-        setTitleColor(.SmartYard.secondBackgroundColor, for: .selected)
-        setTitleColor(.SmartYard.secondBackgroundColor, for: .disabled)
+        switch visualStyle {
+        case .standard:
+            setTitleColor(.SmartYard.blue, for: .normal)
+            setTitleColor(.SmartYard.secondBackgroundColor, for: .selected)
+            setTitleColor(.SmartYard.secondBackgroundColor, for: .disabled)
+
+        case .overImage:
+            setTitleColor(.white, for: .normal)
+            setTitleColor(.white, for: .highlighted)
+            setTitleColor(.white, for: .selected)
+            setTitleColor(.white, for: .disabled)
+        }
 
         updateAppearance()
     }
     
     private func updateAppearance() {
+        switch visualStyle {
+        case .standard:
+            updateStandardAppearance()
+        case .overImage:
+            updateOverImageAppearance()
+        }
+    }
+
+    private func updateStandardAppearance() {
         switch state {
         case .normal:
             backgroundColor = .SmartYard.secondBackgroundColor
@@ -110,6 +138,33 @@ final class SmartYardActionModeButton: UIButton {
             layerBorderWidth = 0
             layerBorderColor = .clear
             
+        default:
+            break
+        }
+    }
+
+    private func updateOverImageAppearance() {
+        switch state {
+        case .normal:
+            backgroundColor = .clear
+            layerBorderWidth = 1
+            layerBorderColor = UIColor.white.withAlphaComponent(0.9)
+
+        case .highlighted:
+            backgroundColor = UIColor.white.withAlphaComponent(0.16)
+            layerBorderWidth = 1
+            layerBorderColor = UIColor.white.withAlphaComponent(0.9)
+
+        case .disabled:
+            backgroundColor = .SmartYard.darkGreen
+            layerBorderWidth = 0
+            layerBorderColor = .clear
+
+        case .selected:
+            backgroundColor = .SmartYard.darkGreen
+            layerBorderWidth = 0
+            layerBorderColor = .clear
+
         default:
             break
         }

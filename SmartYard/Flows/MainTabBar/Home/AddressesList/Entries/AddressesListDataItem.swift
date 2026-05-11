@@ -8,10 +8,40 @@
 
 import RxDataSources
 
+enum AddressesListDoorPreviewSource: Equatable {
+    case image(urlString: String)
+    case video(urlString: String)
+
+    var urlString: String {
+        switch self {
+        case .image(let urlString), .video(let urlString):
+            return urlString
+        }
+    }
+}
+
+struct AddressesListDoorPreviewItem: Equatable {
+    let identity: AddressesListDataItemIdentity
+    let title: String
+    let subtitle: String?
+    let previewSource: AddressesListDoorPreviewSource?
+    let hasCamera: Bool
+    let isOpened: Bool
+}
+
 enum AddressesListDataItem: IdentifiableType, Equatable {
     
     case header(identity: AddressesListDataItemIdentity, address: String, isExpanded: Bool)
     case object(identity: AddressesListDataItemIdentity, type: DomophoneObjectType, name: String, isOpened: Bool)
+    case doorPreviewPager(identity: AddressesListDataItemIdentity, items: [AddressesListDoorPreviewItem])
+    case doorPreview(
+        identity: AddressesListDataItemIdentity,
+        title: String,
+        subtitle: String?,
+        previewSource: AddressesListDoorPreviewSource?,
+        hasCamera: Bool,
+        isOpened: Bool
+    )
     case cameras(identity: AddressesListDataItemIdentity, numberOfCameras: Int)
     case history(identity: AddressesListDataItemIdentity, numberOfEvents: Int)
     case unapprovedAddresses(identity: AddressesListDataItemIdentity, address: String)
@@ -28,6 +58,10 @@ extension AddressesListDataItem {
         case .header(let identity, _, _):
             return identity
         case .object(let identity, _, _, _):
+            return identity
+        case .doorPreviewPager(let identity, _):
+            return identity
+        case .doorPreview(let identity, _, _, _, _, _):
             return identity
         case .cameras(let identity, _):
             return identity

@@ -8,6 +8,12 @@
 
 import UIKit
 import SwifterSwift
+import SnapKit
+
+struct OnlineFullscreenAccessAction {
+    let isOpened: Bool
+    let open: (@escaping (Bool) -> Void) -> Void
+}
 
 final class OnlineFullscreenViewController: BaseViewController {
 
@@ -15,6 +21,7 @@ final class OnlineFullscreenViewController: BaseViewController {
 
     private let cameras: [CameraViewModel]
     private let playback: OnlinePlaybackCoordinating
+    private let accessAction: OnlineFullscreenAccessAction?
     private let onDismiss: (CameraID) -> Void
 
     // MARK: - State
@@ -23,6 +30,8 @@ final class OnlineFullscreenViewController: BaseViewController {
     private var lastBoundsSize: CGSize = .zero
     private var didInitialScroll = false
     private var didNotifyDismiss = false
+    private var isOpeningAccess = false
+    private var resetOpenButtonWorkItem: DispatchWorkItem?
 
     // MARK: - UI
 
@@ -45,16 +54,20 @@ final class OnlineFullscreenViewController: BaseViewController {
         return cv
     }()
 
+    private let openButton = SmartYardActionModeButton()
+
     // MARK: - Init
 
     init(
         cameras: [CameraViewModel],
         initialCameraId: CameraID,
         playback: OnlinePlaybackCoordinating,
+        accessAction: OnlineFullscreenAccessAction? = nil,
         onDismiss: @escaping (CameraID) -> Void
     ) {
         self.cameras = cameras
         self.playback = playback
+        self.accessAction = accessAction
         self.onDismiss = onDismiss
         self.currentIndex = cameras.firstIndex(where: { $0.id == initialCameraId }) ?? 0
         super.init(nibName: nil, bundle: nil)
@@ -73,8 +86,9 @@ final class OnlineFullscreenViewController: BaseViewController {
         if cameras.isEmpty {
             Logger.logError("viewDidLoad empty cameras")
         }
-        view.backgroundColor = .black
-        view.addSubview(collectionView)
+
+        setupUI()
+        setupConstraints()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -87,7 +101,6 @@ final class OnlineFullscreenViewController: BaseViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.frame = view.bounds
         updateLayoutIfNeeded()
 
         if !didInitialScroll {
@@ -101,6 +114,7 @@ final class OnlineFullscreenViewController: BaseViewController {
         super.viewWillDisappear(animated)
         Logger.logDebug("viewWillDisappear beingDismissed=\(isBeingDismissed)")
         playback.setCloseHandler(nil)
+        resetOpenButtonWorkItem?.cancel()
 
         if isBeingDismissed {
             notifyDismiss()
@@ -182,6 +196,54 @@ extension OnlineFullscreenViewController: UIScrollViewDelegate {
 // MARK: - Private
 
 private extension OnlineFullscreenViewController {
+    func setupUI() {
+        view.backgroundColor = .black
+
+        openButton.mode = .open
+        openButton.visualStyle = .overImage
+        openButton.isOn = accessAction?.isOpened ?? false
+        openButton.addTarget(self, action: #selector(openButtonTapped), for: .touchUpInside)
+    }
+
+    func setupConstraints() {
+        view.pinSubview(collectionView)
+
+        guard accessAction != nil else { return }
+
+        view.addSubview(openButton) { make in
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(8)
+            make.width.equalTo(84)
+            make.height.equalTo(36)
+        }
+    }
+
+    @objc func openButtonTapped() {
+        guard !isOpeningAccess, let accessAction else { return }
+
+        isOpeningAccess = true
+        accessAction.open { [weak self] didOpen in
+            guard let self else { return }
+
+            isOpeningAccess = false
+            guard didOpen else { return }
+
+            openButton.isOn = true
+            scheduleOpenButtonReset()
+        }
+    }
+
+    func scheduleOpenButtonReset() {
+        resetOpenButtonWorkItem?.cancel()
+
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.openButton.isOn = false
+        }
+
+        resetOpenButtonWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: workItem)
+    }
+
     func updateLayoutIfNeeded() {
         let size = collectionView.bounds.size
         guard size != .zero else { return }

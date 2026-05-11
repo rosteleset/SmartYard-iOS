@@ -56,6 +56,7 @@ final class AddressesListViewModel: BaseViewModel {
     
     private let loadedApprovedAddressesData = BehaviorSubject<GetAddressListResponseData?>(value: nil)
     private let loadedUnapprovedAddressesData = BehaviorSubject<GetListConnectResponseData?>(value: nil)
+    private let loadedCamMapData = BehaviorSubject<CamMapCCTVResponseData>(value: [])
     
     // MARK: Словарь необходим для того, чтобы хранить состояния раскрытости секций
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
@@ -241,6 +242,33 @@ final class AddressesListViewModel: BaseViewModel {
                     reloadingFinishedSubject.onNext(())
                 }
             )
+
+        Driver
+            .merge(
+                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToVoid(),
+                NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToVoid(),
+                NotificationCenter.default.rx.notification(.addressNeedUpdate).asDriverOnErrorJustComplete().mapToVoid(),
+                NotificationCenter.default.rx.notification(.addressOrderReset).asDriverOnErrorJustComplete().mapToVoid(),
+                hasNetworkBecomeReachable,
+                input.refreshDataTrigger.asDriver(),
+                .just(())
+            )
+            .flatMapLatest { [weak self] _ -> Driver<CamMapCCTVResponseData> in
+                guard let self = self else {
+                    return .empty()
+                }
+
+                return self.apiWrapper
+                    .getCamMap()
+                    .asDriver(onErrorJustReturn: nil)
+                    .map { $0 ?? [] }
+            }
+            .drive(
+                onNext: { [weak self] camMap in
+                    self?.loadedCamMapData.onNext(camMap)
+                }
+            )
+            .disposed(by: disposeBag)
         
         Driver
             .merge(blockingRefresh, nonBlockingRefresh)
@@ -316,60 +344,14 @@ final class AddressesListViewModel: BaseViewModel {
         // MARK: Обработка нажатия на кнопку "Открыть"
         
         input.guestAccessRequested
-            .withLatestFrom(loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
-            .flatMapLatest { [weak self] args -> Driver<AddressesListDataItemIdentity?> in
-                let (identity, loadedData) = args
-                
-                guard let self = self,
-                    let unwrappedData = loadedData,
-                    case let .object(addressId, domophoneId, doorId, _) = identity,
-                    let matchingAddress = (
-                        unwrappedData.first { address in
-                            address.houseId == addressId
-                        }
-                    ),
-                    let matchingDoor = (
-                        matchingAddress.doors.first { door in
-                            door.domophoneId == domophoneId && door.doorId == doorId
-                        }
-                    ) else {
-                    return .empty()
-                }
-                
-                // Донейтим системе сведения об откывании дверей.
-                let object = SmartYardSharedObject(
-                    objectName: matchingDoor.name,
-                    objectAddress: matchingAddress.address,
-                    domophoneId: domophoneId,
-                    doorId: doorId,
-                    blockReason: matchingDoor.blocked,
-                    logoImageName: matchingDoor.type.iconImageName
-                )
-                
-                SmartYardSharedFunctions.donateInteraction(object)
-                
-                return self.apiWrapper
-                    .openDoor(domophoneId: domophoneId, doorId: doorId, blockReason: matchingDoor.blocked)
-                    .trackActivity(self.activityTracker)
-                    .trackError(self.errorTracker)
-                    .map { _ -> AddressesListDataItemIdentity? in identity }
-                    .asDriver(onErrorJustReturn: nil)
+            .flatMapLatest { [weak self] identity -> Driver<AddressesListDataItemIdentity?> in
+                guard let self else { return .empty() }
+                return self.openDoor(identity: identity).asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
-            .withLatestFrom(areObjectsGrantAccessed.asDriverOnErrorJustComplete()) { ($0, $1) }
-            .map { args -> (AddressesListDataItemIdentity, [AddressesListDataItemIdentity: Bool]) in
-                var (identity, dict) = args
-                
-                let newState = !dict[identity, default: false]
-                dict[identity] = newState
-                
-                return (identity, dict)
-            }
             .drive(
-                onNext: { [weak self] args in
-                    let (identity, newDict) = args
-                    self?.areObjectsGrantAccessed.onNext(newDict)
-                    self?.closeObjectAccessAfterTimeout(identity: identity)
+                onNext: { [weak self] identity in
+                    self?.updateObjectAccessState(identity: identity)
                 }
             )
             .disposed(by: disposeBag)
@@ -404,6 +386,51 @@ final class AddressesListViewModel: BaseViewModel {
                     }
                     
                     self.router.trigger(.serviceSoonAvailable(issue: issue))
+                }
+            )
+            .disposed(by: disposeBag)
+
+        input.itemSelected
+            .withLatestFrom(
+                Driver.combineLatest(
+                    loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil),
+                    loadedCamMapData.asDriver(onErrorJustReturn: []),
+                    areObjectsGrantAccessed.asDriverOnErrorJustComplete()
+                )
+            ) { ($0, $1.0, $1.1, $1.2) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (identity, loadedAddresses, camMap, objectAccessDict) = args
+
+                    guard
+                        let self = self,
+                        self.accessService.entrancesView == APIOptions.EntrancesViewType.preview.rawValue,
+                        let loadedAddresses,
+                        let resolvedDoor = self.resolveDoor(identity: identity, in: loadedAddresses),
+                        let camera = self.resolveCamera(for: resolvedDoor.door, camMap: camMap)
+                    else {
+                        return
+                    }
+
+                    let accessAction = OnlineFullscreenAccessAction(
+                        isOpened: objectAccessDict[identity, default: false],
+                        open: { [weak self] completion in
+                            guard let self else {
+                                completion(false)
+                                return
+                            }
+
+                            self.openDoorFromFullscreen(identity: identity, completion: completion)
+                        }
+                    )
+
+                    self.router.trigger(
+                        .onlineFullscreen(
+                            cameras: [camera],
+                            selectedCamera: camera,
+                            accessAction: accessAction
+                        )
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -614,12 +641,18 @@ final class AddressesListViewModel: BaseViewModel {
             .combineLatest(
                 loadedApprovedAddressesData.asDriver(onErrorJustReturn: nil),
                 loadedUnapprovedAddressesData.asDriver(onErrorJustReturn: nil),
+                loadedCamMapData.asDriver(onErrorJustReturn: []),
                 areSectionsExpanded.asDriverOnErrorJustComplete(),
                 areObjectsGrantAccessed.asDriverOnErrorJustComplete()
             )
             .map { [weak self] args -> [AddressesListSectionModel] in
-                let (loadedApprovedAddressesData, loadedUnapprovedAddressesData,
-                    expansionStateDict, objectAccessDict) = args
+                let (
+                    loadedApprovedAddressesData,
+                    loadedUnapprovedAddressesData,
+                    camMapData,
+                    expansionStateDict,
+                    objectAccessDict
+                ) = args
                 
                 guard let self = self,
                       let approvedAddresses = loadedApprovedAddressesData,
@@ -628,11 +661,15 @@ final class AddressesListViewModel: BaseViewModel {
                     return []
                 }
                 
+                let shouldShowEntrancePreviews = accessService.entrancesView == APIOptions.EntrancesViewType.preview.rawValue
+
                 return self.createSections(
                     approvedAddressesData: approvedAddresses,
                     unapprovedAddressesData: unapprovedAddresses,
+                    camMapData: camMapData,
                     expansionStateDict: expansionStateDict,
-                    objectAccessDict: objectAccessDict
+                    objectAccessDict: objectAccessDict,
+                    shouldShowEntrancePreviews: shouldShowEntrancePreviews
                 )
             }
         
@@ -648,6 +685,67 @@ final class AddressesListViewModel: BaseViewModel {
 }
 
 extension AddressesListViewModel {
+
+    private func openDoor(identity: AddressesListDataItemIdentity) -> Observable<AddressesListDataItemIdentity?> {
+        guard let loadedData = try? loadedApprovedAddressesData.value(),
+              let resolvedDoor = resolveDoor(identity: identity, in: loadedData)
+        else {
+            return .just(nil)
+        }
+
+        let matchingAddress = resolvedDoor.address
+        let matchingDoor = resolvedDoor.door
+
+        let object = SmartYardSharedObject(
+            objectName: matchingDoor.name,
+            objectAddress: matchingAddress.address,
+            domophoneId: matchingDoor.domophoneId,
+            doorId: matchingDoor.doorId,
+            blockReason: matchingDoor.blocked,
+            logoImageName: matchingDoor.type.iconImageName
+        )
+
+        SmartYardSharedFunctions.donateInteraction(object)
+
+        return apiWrapper
+            .openDoor(
+                domophoneId: matchingDoor.domophoneId,
+                doorId: matchingDoor.doorId,
+                blockReason: matchingDoor.blocked
+            )
+            .trackActivity(activityTracker)
+            .trackError(errorTracker)
+            .map { _ -> AddressesListDataItemIdentity? in identity }
+    }
+
+    private func openDoorFromFullscreen(
+        identity: AddressesListDataItemIdentity,
+        completion: @escaping (Bool) -> Void
+    ) {
+        openDoor(identity: identity)
+            .map { $0 != nil }
+            .asDriver(onErrorJustReturn: false)
+            .drive(with: self) { owner, didOpen in
+                if didOpen {
+                    owner.updateObjectAccessState(identity: identity)
+                }
+
+                completion(didOpen)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func updateObjectAccessState(identity: AddressesListDataItemIdentity) {
+        guard let data = try? areObjectsGrantAccessed.value() else {
+            return
+        }
+
+        var newDict = data
+        newDict[identity] = !newDict[identity, default: false]
+
+        areObjectsGrantAccessed.onNext(newDict)
+        closeObjectAccessAfterTimeout(identity: identity)
+    }
     
     private func closeObjectAccessAfterTimeout(identity: AddressesListDataItemIdentity) {
         Timer.scheduledTimer(
@@ -676,94 +774,6 @@ extension AddressesListViewModel {
         }
         
         areSectionsExpanded.onNext(mutableDict)
-    }
-    
-    // swiftlint:disable:next function_body_length
-    private func createSections(
-        approvedAddressesData: GetAddressListResponseData,
-        unapprovedAddressesData: GetListConnectResponseData,
-        expansionStateDict: [String: Bool],
-        objectAccessDict: [AddressesListDataItemIdentity: Bool]
-    ) -> [AddressesListSectionModel] {
-        // swiftlint:disable:next closure_body_length
-        var sectionModels = approvedAddressesData.map { address -> AddressesListSectionModel in
-            let addressId = address.houseId
-            let isSectionExpanded = expansionStateDict[addressId, default: false]
-            
-            let header: AddressesListDataItem = .header(
-                identity: .header(addressId: addressId),
-                address: address.address,
-                isExpanded: isSectionExpanded
-            )
-            
-            let objects: [AddressesListDataItem] = {
-                guard isSectionExpanded else {
-                    return []
-                }
-                
-                let doors = address.doors.map { door -> AddressesListDataItem in
-                    let identity = AddressesListDataItemIdentity.object(
-                        addressId: addressId,
-                        domophoneId: door.domophoneId,
-                        doorId: door.doorId,
-                        entrance: door.entrance
-                    )
-                    
-                    return AddressesListDataItem.object(
-                        identity: identity,
-                        type: door.type,
-                        name: door.name,
-                        isOpened: objectAccessDict[identity, default: false]
-                    )
-                }
-                
-                let cameras: AddressesListDataItem? = {
-                    guard address.cctv != 0 else {
-                        return nil
-                    }
-                    
-                    return .cameras(identity: .cameras(addressId: addressId), numberOfCameras: address.cctv)
-                }()
-                
-                let history: AddressesListDataItem? = {
-                    if address.hasPlog == false {
-                        return nil
-                    }
-                    return .history(identity: .history(addressId: addressId), numberOfEvents: 0)
-                }()
-                
-                return doors + [cameras].compactMap { $0 } + [history].compactMap { $0 }
-            }()
-            
-            let section = AddressesListSectionModel(
-                identity: addressId,
-                items: [header] + objects
-            )
-            
-            return section
-        }
-        
-        let unapprovedAddressItems = unapprovedAddressesData.compactMap { issueInfo -> AddressesListDataItem? in
-            guard let address = issueInfo.address else {
-                return nil
-            }
-            
-            return .unapprovedAddresses(
-                identity: .unapprovedObject(issueId: issueInfo.key, address: address),
-                address: address
-            )
-        }
-        
-        unapprovedAddressItems.forEach {
-            sectionModels.append(AddressesListSectionModel(identity: String($0.identity.hashValue), items: [$0]))
-        }
-        
-        if sectionModels.isEmpty {
-            let emptyStateSection = AddressesListSectionModel(identity: "EmptyStateSection", items: [.emptyState])
-            sectionModels.append(emptyStateSection)
-        }
-        
-        return sectionModels
     }
     
     private func handleAppVersionCheckResult(_ result: APIAppVersionCheckResult) {

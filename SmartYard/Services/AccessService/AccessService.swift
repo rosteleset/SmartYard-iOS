@@ -33,6 +33,7 @@ private let phonePatternKey = "phonePatternKey"
 private let guestAccessModeKey = "guestAccessKey"
 private let timeZoneKey = "timeZoneKey"
 private let cctvViewKey = "cctvViewKey"
+private let entrancesViewKey = "entrancesViewKey"
 private let showListKey = "showListKey"
 private let activeTabKey = "activeTabKey"
 private let issuesVersionKey = "issuesVersionKey"
@@ -316,6 +317,15 @@ final class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: cctvViewKey)
+        }
+    }
+
+    var entrancesView: String {
+        get {
+            UserDefaults.standard.value(forKey: entrancesViewKey) as? String ?? APIOptions.EntrancesViewType.list.rawValue
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: entrancesViewKey)
         }
     }
     
