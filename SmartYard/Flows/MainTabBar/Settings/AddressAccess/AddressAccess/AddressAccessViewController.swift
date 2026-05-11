@@ -193,11 +193,14 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
             }
             .disposed(by: disposeBag)
         
-        output.hasGates
+        Driver
+            .combineLatest(output.hasGates, output.isLPRSEnabled)
+            .map { hasGates, isLPRSEnabled in
+                hasGates || isLPRSEnabled
+            }
             .distinctUntilChanged()
-                
-            .drive { [weak self] state in
-                self?.gateAccessContainer.isHidden = !state
+            .drive { [weak self] isAvailable in
+                self?.gateAccessContainer.isHidden = !isAvailable
                 UIView.animate(withDuration: 0.25) {
                     self?.view.layoutIfNeeded()
                 }
