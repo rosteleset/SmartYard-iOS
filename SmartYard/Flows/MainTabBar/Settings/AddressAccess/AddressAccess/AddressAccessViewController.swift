@@ -186,10 +186,6 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .distinctUntilChanged()
             .drive { [weak self] code in
                 self?.intercomAccessView.intercomCode = code
-                
-                UIView.animate(withDuration: 0.25) {
-                    self?.view.layoutIfNeeded()
-                }
             }
             .disposed(by: disposeBag)
         
@@ -201,9 +197,6 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .distinctUntilChanged()
             .drive { [weak self] isAvailable in
                 self?.gateAccessContainer.isHidden = !isAvailable
-                UIView.animate(withDuration: 0.25) {
-                    self?.view.layoutIfNeeded()
-                }
             }
             .disposed(by: disposeBag)
         
@@ -217,10 +210,6 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
         output.isLPRSEnabled
             .drive { [weak self] state in
                 self?.gateAccessView.segmentControl(isHidden: !state)
-
-                UIView.animate(withDuration: 0.25) {
-                    self?.view.layoutIfNeeded()
-                }
             }
             .disposed(by: disposeBag)
         
@@ -249,10 +238,6 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
             .distinctUntilChanged()
             .drive { [weak self] isOwner in
                 self?.addressPermanentAccessContainer.isHidden = !isOwner
-                
-                UIView.animate(withDuration: 0.25) {
-                    self?.view.layoutIfNeeded()
-                }
             }
             .disposed(by: disposeBag)
         
