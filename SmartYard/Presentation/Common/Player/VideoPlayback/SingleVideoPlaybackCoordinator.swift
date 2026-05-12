@@ -72,6 +72,10 @@ final class SinglePlayerPlaybackCoordinator {
         playerController.setMode(mode)
     }
 
+    func toggleControlsVisibility() {
+        playerController.toggleControlsVisibility()
+    }
+
     // MARK: - Private
 
     private func tryStartPlaybackIfPossible() {
@@ -92,11 +96,24 @@ final class SinglePlayerPlaybackCoordinator {
                 guard self.selectedId == id else { return }
                 guard let cell = self.visibleSelectedCell else { return }
 
-                self.playerController.attach(to: cell.playerContainerView, pauseBeforeDetach: false)
+                self.attachPlayer(to: cell)
                 self.playerController.setMuted(self.selectedIsMuted)
                 self.playerController.set(resource: resource)
                 self.playerController.onAppear()
             }
         }
+    }
+
+    private func attachPlayer(to cell: PlayerAttachable) {
+        guard let controlsAttachable = cell as? PlayerControlsAttachable else {
+            playerController.attach(to: cell.playerContainerView, pauseBeforeDetach: false)
+            return
+        }
+
+        playerController.attach(
+            videoTo: cell.playerContainerView,
+            controlsTo: controlsAttachable.playerControlsContainerView,
+            pauseBeforeDetach: false
+        )
     }
 }

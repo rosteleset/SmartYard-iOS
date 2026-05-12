@@ -31,6 +31,7 @@ final class OnlineFullscreenViewController: BaseViewController {
     private var didInitialScroll = false
     private var didNotifyDismiss = false
     private var isOpeningAccess = false
+    private var isPagingHandoffActive = false
     private var resetOpenButtonWorkItem: DispatchWorkItem?
 
     // MARK: - UI
@@ -142,6 +143,12 @@ extension OnlineFullscreenViewController: UICollectionViewDataSource {
             for: indexPath
         )
         cell.setPagingPanGesture(collectionView.panGestureRecognizer)
+        cell.onPagingHandoffStateChanged = { [weak self] isActive in
+            self?.setPagingHandoffActive(isActive)
+        }
+        cell.onContentTap = { [weak self] in
+            self?.playback.toggleControlsVisibility()
+        }
         return cell
     }
 }
@@ -156,6 +163,14 @@ extension OnlineFullscreenViewController: UICollectionViewDelegate {
     ) {
         guard let cell = cell as? OnlineFullscreenCameraCell else { return }
         guard cameras.indices.contains(indexPath.item) else { return }
+        guard !isPagingHandoffActive else {
+            return
+        }
+
+        if indexPath.item != currentIndex {
+            cell.resetZoomAndCenter()
+        }
+
         let camera = cameras[indexPath.item]
         playback.willDisplay(cameraId: camera.id, cell: cell)
     }
@@ -167,6 +182,9 @@ extension OnlineFullscreenViewController: UICollectionViewDelegate {
     ) {
         guard let cell = cell as? OnlineFullscreenCameraCell else { return }
         guard cameras.indices.contains(indexPath.item) else { return }
+        guard !isPagingHandoffActive else {
+            return
+        }
 
         cell.resetZoom()
 
@@ -179,16 +197,19 @@ extension OnlineFullscreenViewController: UICollectionViewDelegate {
 
 extension OnlineFullscreenViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard !isPagingHandoffActive else { return }
         updateCurrentIndexIfNeeded()
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard !isPagingHandoffActive else { return }
         if !decelerate {
             updateCurrentIndexIfNeeded()
         }
     }
 
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        guard !isPagingHandoffActive else { return }
         updateCurrentIndexIfNeeded(force: true)
     }
 }
@@ -257,7 +278,6 @@ private extension OnlineFullscreenViewController {
             let offsetX = CGFloat(currentIndex) * size.width
             collectionView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: false)
             collectionView.layoutIfNeeded()
-            updateSelection(index: currentIndex, force: true)
         }
     }
 
@@ -285,6 +305,7 @@ private extension OnlineFullscreenViewController {
 
         let indexPath = IndexPath(item: index, section: 0)
         if let cell = collectionView.cellForItem(at: indexPath) as? OnlineFullscreenCameraCell {
+            cell.resetZoomAndCenter()
             playback.willDisplay(cameraId: camera.id, cell: cell)
         }
     }
@@ -302,5 +323,13 @@ private extension OnlineFullscreenViewController {
         if let cell = collectionView.cellForItem(at: indexPath) as? OnlineFullscreenCameraCell {
             playback.didEndDisplay(cameraId: cameraId, cell: cell)
         }
+    }
+
+    func setPagingHandoffActive(_ isActive: Bool) {
+        guard isPagingHandoffActive != isActive else { return }
+        isPagingHandoffActive = isActive
+
+        guard !isActive else { return }
+        updateCurrentIndexIfNeeded()
     }
 }

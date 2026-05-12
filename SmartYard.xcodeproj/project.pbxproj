@@ -666,6 +666,8 @@
 		9A0F5A412F7A100000C0D001 /* AddressesListDoorPreviewPagerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A402F7A100000C0D001 /* AddressesListDoorPreviewPagerCell.swift */; };
 		B0A1C2D3E4F50617283940A4 /* OnlineFullscreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283940A2 /* OnlineFullscreenViewController.swift */; };
 		B0A1C2D3E4F50617283940A5 /* OnlineFullscreenCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283940A3 /* OnlineFullscreenCameraCell.swift */; };
+		B0A1C2D3E4F50617283941A7 /* EdgeHandoffZoomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283941A6 /* EdgeHandoffZoomScrollView.swift */; };
+		B0A1C2D3E4F50617283941A9 /* PlayerControlsOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283941A8 /* PlayerControlsOverlayView.swift */; };
 		B0A1C2D3E4F50617283940A6 /* HasDisposeBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B73E1242EFD6EE9009E724C /* HasDisposeBag.swift */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
@@ -1557,6 +1559,8 @@
 		9A0F5A402F7A100000C0D001 /* AddressesListDoorPreviewPagerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListDoorPreviewPagerCell.swift; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283940A2 /* OnlineFullscreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineFullscreenViewController.swift; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283940A3 /* OnlineFullscreenCameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineFullscreenCameraCell.swift; sourceTree = "<group>"; };
+		B0A1C2D3E4F50617283941A6 /* EdgeHandoffZoomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeHandoffZoomScrollView.swift; sourceTree = "<group>"; };
+		B0A1C2D3E4F50617283941A8 /* PlayerControlsOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsOverlayView.swift; sourceTree = "<group>"; };
 		E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55C74937714AE9E4DD06B3B /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
 		E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntercomTemporaryAccessView.swift; sourceTree = "<group>"; };
@@ -5038,6 +5042,8 @@
 			children = (
 				B0A1C2D3E4F50617283940A2 /* OnlineFullscreenViewController.swift */,
 				B0A1C2D3E4F50617283940A3 /* OnlineFullscreenCameraCell.swift */,
+				B0A1C2D3E4F50617283941A6 /* EdgeHandoffZoomScrollView.swift */,
+				B0A1C2D3E4F50617283941A8 /* PlayerControlsOverlayView.swift */,
 			);
 			path = Fullscreen;
 			sourceTree = "<group>";
@@ -6037,13 +6043,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SmartYard/Pods-SmartYard-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -6464,6 +6466,8 @@
 				8BF6C5FD2F25520A008AA137 /* OnlinePageViewController.swift in Sources */,
 				B0A1C2D3E4F50617283940A4 /* OnlineFullscreenViewController.swift in Sources */,
 				B0A1C2D3E4F50617283940A5 /* OnlineFullscreenCameraCell.swift in Sources */,
+				B0A1C2D3E4F50617283941A7 /* EdgeHandoffZoomScrollView.swift in Sources */,
+				B0A1C2D3E4F50617283941A9 /* PlayerControlsOverlayView.swift in Sources */,
 				8BF6C5FE2F25520A008AA137 /* OnlineSelectionUpdate.swift in Sources */,
 				8BF6C5FF2F25520A008AA137 /* CameraNumberCarouselLayout.swift in Sources */,
 				8BF6C6002F25520A008AA137 /* CameraSectionController.swift in Sources */,

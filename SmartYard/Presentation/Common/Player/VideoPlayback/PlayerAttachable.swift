@@ -11,3 +11,7 @@ import UIKit
 protocol PlayerAttachable: AnyObject {
     var playerContainerView: UIView { get }
 }
+
+protocol PlayerControlsAttachable: AnyObject {
+    var playerControlsContainerView: UIView { get }
+}

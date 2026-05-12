@@ -15,6 +15,7 @@ protocol OnlinePlaybackCoordinating: AnyObject {
     func prefetch(id: CameraID)
     func cancelPrefetch(id: CameraID)
     func setMode(_ mode: SYPlayerUIMode)
+    func toggleControlsVisibility()
     func willDisplay(cameraId: CameraID, cell: PlayerAttachable)
     func didEndDisplay(cameraId: CameraID, cell: PlayerAttachable)
     func stopHard()
@@ -91,5 +92,9 @@ extension OnlinePlaybackCoordinator: OnlinePlaybackCoordinating {
 
     func setMode(_ mode: SYPlayerUIMode) {
         engine.setMode(mode)
+    }
+
+    func toggleControlsVisibility() {
+        engine.toggleControlsVisibility()
     }
 }

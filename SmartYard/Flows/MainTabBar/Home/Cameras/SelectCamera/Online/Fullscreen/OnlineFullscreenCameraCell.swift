@@ -8,12 +8,20 @@
 
 import UIKit
 
-final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable {
+final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable, PlayerControlsAttachable {
     let playerContainerView = UIView()
+    let playerControlsContainerView: UIView = PlayerControlsOverlayView()
 
-    private let zoomScrollView = UIScrollView()
+    private let zoomScrollView = EdgeHandoffZoomScrollView()
     private let minZoomScale: CGFloat = 1.0
     private let maxZoomScale: CGFloat = 5.0
+    private var lastLayoutBoundsSize: CGSize = .zero
+
+    var onPagingHandoffStateChanged: ((Bool) -> Void)? {
+        get { zoomScrollView.onPagingHandoffStateChanged }
+        set { zoomScrollView.onPagingHandoffStateChanged = newValue }
+    }
+    var onContentTap: (() -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,27 +34,39 @@ final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable {
     }
 
     override func layoutSubviews() {
+        let previousBounds = zoomScrollView.bounds
+        let previousContentSize = zoomScrollView.contentSize
+        let previousContentOffset = zoomScrollView.contentOffset
+
         super.layoutSubviews()
-        applyCenteringInsets()
+        updateZoomLayout(
+            previousBounds: previousBounds,
+            previousContentSize: previousContentSize,
+            previousContentOffset: previousContentOffset
+        )
     }
 
     func resetZoom() {
-        guard zoomScrollView.zoomScale != minZoomScale else {
-            applyCenteringInsets()
-            return
-        }
+        resetZoomAndCenter()
+    }
 
+    func resetZoomAndCenter() {
         zoomScrollView.setZoomScale(minZoomScale, animated: false)
-        applyCenteringInsets()
+        resetZoomContentToBounds()
+        resetContentOffsetToCenter()
     }
 
     func setPagingPanGesture(_ panGesture: UIPanGestureRecognizer) {
-        zoomScrollView.panGestureRecognizer.require(toFail: panGesture)
+        zoomScrollView.pagingScrollView = panGesture.view as? UIScrollView
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func handleContentTap() {
+        onContentTap?()
     }
 }
 
@@ -57,20 +77,51 @@ private extension OnlineFullscreenCameraCell {
 
         zoomScrollView.backgroundColor = .black
         zoomScrollView.minimumZoomScale = minZoomScale
+        zoomScrollView.minimumContentZoomScale = minZoomScale
         zoomScrollView.maximumZoomScale = maxZoomScale
+        zoomScrollView.bounces = false
         zoomScrollView.bouncesZoom = false
         zoomScrollView.showsHorizontalScrollIndicator = false
         zoomScrollView.showsVerticalScrollIndicator = false
         zoomScrollView.delegate = self
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleContentTap))
+        tapGesture.cancelsTouchesInView = false
+        zoomScrollView.addGestureRecognizer(tapGesture)
 
         playerContainerView.backgroundColor = .black
+        playerControlsContainerView.backgroundColor = .clear
         contentView.addSubview(zoomScrollView)
+        contentView.addSubview(playerControlsContainerView)
         zoomScrollView.addSubview(playerContainerView)
 
         zoomScrollView.frame = contentView.bounds
         zoomScrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        playerControlsContainerView.frame = contentView.bounds
+        playerControlsContainerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         playerContainerView.frame = zoomScrollView.bounds
         playerContainerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+
+    func resetZoomContentToBounds() {
+        let bounds = contentView.bounds
+        guard bounds.size != .zero else { return }
+
+        zoomScrollView.frame = bounds
+        playerControlsContainerView.frame = bounds
+        playerContainerView.transform = .identity
+        playerContainerView.frame = CGRect(origin: .zero, size: bounds.size)
+        zoomScrollView.contentSize = bounds.size
+        lastLayoutBoundsSize = bounds.size
+        applyCenteringInsets()
+    }
+
+    func resetContentOffsetToCenter() {
+        zoomScrollView.contentOffset = clampedContentOffset(
+            CGPoint(
+                x: -zoomScrollView.contentInset.left,
+                y: -zoomScrollView.contentInset.top
+            )
+        )
     }
 
     func applyCenteringInsets() {
@@ -83,6 +134,93 @@ private extension OnlineFullscreenCameraCell {
             left: horizontalInset,
             bottom: verticalInset,
             right: horizontalInset
+        )
+    }
+
+    func updateZoomLayout(
+        previousBounds: CGRect,
+        previousContentSize: CGSize,
+        previousContentOffset: CGPoint
+    ) {
+        let bounds = contentView.bounds
+        guard bounds.size != .zero else { return }
+
+        zoomScrollView.frame = bounds
+        playerControlsContainerView.frame = bounds
+
+        guard bounds.size != lastLayoutBoundsSize else {
+            applyCenteringInsets()
+            return
+        }
+
+        let previousZoomScale = zoomScrollView.zoomScale
+        let normalizedCenter = normalizedVisibleCenter(
+            bounds: previousBounds,
+            contentSize: previousContentSize,
+            contentOffset: previousContentOffset
+        )
+
+        lastLayoutBoundsSize = bounds.size
+        zoomScrollView.setZoomScale(minZoomScale, animated: false)
+        playerContainerView.transform = .identity
+        playerContainerView.frame = CGRect(origin: .zero, size: bounds.size)
+        zoomScrollView.contentSize = bounds.size
+
+        let restoredZoomScale = min(max(previousZoomScale, minZoomScale), maxZoomScale)
+        zoomScrollView.setZoomScale(restoredZoomScale, animated: false)
+        applyCenteringInsets()
+        restoreContentOffset(normalizedCenter: normalizedCenter)
+    }
+
+    func normalizedVisibleCenter(
+        bounds: CGRect,
+        contentSize: CGSize,
+        contentOffset: CGPoint
+    ) -> CGPoint {
+        guard bounds.size != .zero, contentSize != .zero else {
+            return CGPoint(x: 0.5, y: 0.5)
+        }
+
+        let visibleCenter = CGPoint(
+            x: contentOffset.x + bounds.width / 2,
+            y: contentOffset.y + bounds.height / 2
+        )
+
+        return CGPoint(
+            x: min(1, max(0, visibleCenter.x / contentSize.width)),
+            y: min(1, max(0, visibleCenter.y / contentSize.height))
+        )
+    }
+
+    func restoreContentOffset(normalizedCenter: CGPoint) {
+        let targetCenter = CGPoint(
+            x: zoomScrollView.contentSize.width * normalizedCenter.x,
+            y: zoomScrollView.contentSize.height * normalizedCenter.y
+        )
+        let targetOffset = CGPoint(
+            x: targetCenter.x - zoomScrollView.bounds.width / 2,
+            y: targetCenter.y - zoomScrollView.bounds.height / 2
+        )
+
+        zoomScrollView.contentOffset = clampedContentOffset(targetOffset)
+    }
+
+    func clampedContentOffset(_ offset: CGPoint) -> CGPoint {
+        let inset = zoomScrollView.contentInset
+        let minX = -inset.left
+        let maxX = max(
+            minX,
+            zoomScrollView.contentSize.width - zoomScrollView.bounds.width + inset.right
+        )
+        let minY = -inset.top
+        let maxY = max(
+            minY,
+            zoomScrollView.contentSize.height - zoomScrollView.bounds.height + inset.bottom
+        )
+
+        return CGPoint(
+            x: min(maxX, max(minX, offset.x)),
+            y: min(maxY, max(minY, offset.y))
         )
     }
 }
