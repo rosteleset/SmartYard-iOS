@@ -193,6 +193,8 @@ final class CamerasListViewModel: BaseViewModel {
                         let currentTree = CamerasListViewModel.loadTree(by: self.path, from: self.tree)
                         let cameras = CamerasListViewModel.convertAPIToCameraObject(source: currentTree?.cameras ?? [])
 
+                        self.logCameraSelected(source: "list")
+
                         self.router.trigger(
                             .cameraContainer(
                                 address: self.address,
@@ -201,6 +203,7 @@ final class CamerasListViewModel: BaseViewModel {
                             )
                         )
                     case .mapView(let label, _, let cameras):
+                        self.logCamerasListOpened(source: "camera_group")
                         self.router.trigger(
                             .yardCamerasMap(
                                 houseId: self.houseId,
@@ -229,6 +232,23 @@ final class CamerasListViewModel: BaseViewModel {
         )
     }
     
+}
+
+private extension CamerasListViewModel {
+
+    func logCameraSelected(source: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.cameraSelected(
+                screen: "cameras_list",
+                source: source,
+                cameraType: AnalyticsValue.unknown
+            )
+        )
+    }
+
+    func logCamerasListOpened(source: String) {
+        AppAnalytics.log(AppAnalyticsEvent.camerasListOpened(source: source))
+    }
 }
 extension CamerasListViewModel {
     

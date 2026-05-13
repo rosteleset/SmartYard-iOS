@@ -56,6 +56,8 @@ final class PayContractViewModel: BaseViewModel {
                     guard let self = self else {
                         return
                     }
+
+                    self.logPaymentStartTapped(recommendedSum: recommendedSum)
                     
                     self.router.trigger(
                         .paymentPopup(
@@ -87,6 +89,19 @@ final class PayContractViewModel: BaseViewModel {
         )
     }
     
+}
+
+private extension PayContractViewModel {
+
+    func logPaymentStartTapped(recommendedSum: Double?) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.paymentStartTapped(
+                paymentType: AnalyticsValue.unknown,
+                amountRange: AnalyticsValue.amountRange(from: recommendedSum),
+                source: "contract"
+            )
+        )
+    }
 }
 
 extension PayContractViewModel {

@@ -95,6 +95,9 @@ final class OnlineFullscreenViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Logger.logDebug("viewDidAppear")
+        if view.bounds.width > view.bounds.height {
+            logCameraLandscapeEnabled()
+        }
         playback.setCloseHandler { [weak self] in
             self?.dismiss(animated: true)
         }
@@ -317,6 +320,7 @@ private extension OnlineFullscreenViewController {
         guard cameras.indices.contains(currentIndex) else { return }
         let cameraId = cameras[currentIndex].id
         Logger.logDebug("notifyDismiss id=\(cameraId)")
+        logCameraFullscreenClosed()
         onDismiss(cameraId)
 
         let indexPath = IndexPath(item: currentIndex, section: 0)
@@ -331,5 +335,24 @@ private extension OnlineFullscreenViewController {
 
         guard !isActive else { return }
         updateCurrentIndexIfNeeded()
+    }
+
+    func logCameraLandscapeEnabled() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.cameraLandscapeEnabled(
+                source: "fullscreen",
+                cameraType: AnalyticsValue.unknown
+            )
+        )
+    }
+
+    func logCameraFullscreenClosed() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.cameraFullscreenClosed(
+                source: "fullscreen",
+                cameraType: AnalyticsValue.unknown,
+                streamType: "live"
+            )
+        )
     }
 }

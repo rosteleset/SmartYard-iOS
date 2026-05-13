@@ -19,6 +19,7 @@ protocol AppDependencies {
     var pushNotificationService: PushNotificationService { get }
     var alertService: AlertService { get }
     var telemetryService: AppTelemetryServicing { get }
+    var analyticsTracker: AnalyticsTracking { get }
     var logoutHelper: LogoutHelper { get }
 
     var debugNetwork: DebugNetworkController { get }
@@ -43,6 +44,7 @@ final class DefaultAppDependencies: AppDependencies {
     let pushNotificationService: PushNotificationService
     let alertService: AlertService
     let telemetryService: AppTelemetryServicing
+    let analyticsTracker: AnalyticsTracking
     let logoutHelper: LogoutHelper
 
     let debugNetwork: DebugNetworkController
@@ -59,6 +61,7 @@ final class DefaultAppDependencies: AppDependencies {
         permissionService: PermissionService = PermissionService(),
         alertService: AlertService = AlertService(),
         telemetryService: AppTelemetryServicing = AppTelemetryService.shared,
+        analyticsTracker: AnalyticsTracking = FirebaseAnalyticsTracker.shared,
         debugNetwork: DebugNetworkController = DebugNetworkController(),
         linphoneService: LinphoneService = LinphoneService(),
         providerProxy: CXProviderProxy = CXProviderProxy()
@@ -86,6 +89,8 @@ final class DefaultAppDependencies: AppDependencies {
             issueService: issueService
         )
         self.pushNotificationService = PushNotificationService(apiWrapper: apiWrapper)
+        self.analyticsTracker = analyticsTracker
+        AppAnalytics.tracker = analyticsTracker
         self.logoutHelper = LogoutHelper(
             pushNotificationService: pushNotificationService,
             accessService: accessService,

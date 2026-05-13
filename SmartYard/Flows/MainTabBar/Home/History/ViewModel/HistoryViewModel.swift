@@ -487,6 +487,7 @@ final class HistoryViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] item in
                     guard let viewModel = self else { return }
+                    viewModel.logEventDetailsOpened(item.value)
 
                     viewModel.router.trigger(
                         .detail(
@@ -683,5 +684,51 @@ extension HistoryViewModel {
                 return .regular
             }
         }()
+    }
+
+    private func analyticsEventType(from event: APIPlog.EventType) -> String {
+        switch event {
+        case .unanswered, .answered, .call:
+            return "call"
+        case .rfid:
+            return "rfid_access"
+        case .app, .passcode:
+            return "door_opened"
+        case .face:
+            return "face_access"
+        case .plate:
+            return "motion"
+        case .unknown:
+            return AnalyticsValue.unknown
+        }
+    }
+
+    private func logEventDetailsOpened(_ event: APIPlog) {
+        let eventType = analyticsEventType(from: event.event)
+        let hasMedia = event.previewURL != nil || event.previewImage != nil
+
+        AppAnalytics.log(
+            AppAnalyticsEvent.eventDetailsOpened(
+                eventType: eventType,
+                source: "events_list",
+                hasMedia: hasMedia
+            )
+        )
+
+        if event.cameraId != nil {
+            AppAnalytics.log(
+                AppAnalyticsEvent.eventVideoOpened(
+                    eventType: eventType,
+                    source: "events_list"
+                )
+            )
+        } else if hasMedia {
+            AppAnalytics.log(
+                AppAnalyticsEvent.eventImageOpened(
+                    eventType: eventType,
+                    source: "events_list"
+                )
+            )
+        }
     }
 }

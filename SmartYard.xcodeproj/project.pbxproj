@@ -664,6 +664,10 @@
 		9A0F5A3F2F7A000000C0D001 /* AddressesListViewModel+Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A3E2F7A000000C0D001 /* AddressesListViewModel+Sections.swift */; };
 		9A0F5A412F7608F300C0D001 /* AppMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A402F7608F300C0D001 /* AppMetadata.swift */; };
 		9A0F5A412F7A100000C0D001 /* AddressesListDoorPreviewPagerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A402F7A100000C0D001 /* AddressesListDoorPreviewPagerCell.swift */; };
+		9A0F5A552F8B000000C0D001 /* AnalyticsTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A512F8B000000C0D001 /* AnalyticsTracking.swift */; };
+		9A0F5A562F8B000000C0D001 /* AppAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A522F8B000000C0D001 /* AppAnalyticsEvent.swift */; };
+		9A0F5A572F8B000000C0D001 /* AnalyticsScreenTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A532F8B000000C0D001 /* AnalyticsScreenTracking.swift */; };
+		9A0F5A582F8B000000C0D001 /* AnalyticsScreenTracking+Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0F5A542F8B000000C0D001 /* AnalyticsScreenTracking+Screens.swift */; };
 		B0A1C2D3E4F50617283940A4 /* OnlineFullscreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283940A2 /* OnlineFullscreenViewController.swift */; };
 		B0A1C2D3E4F50617283940A5 /* OnlineFullscreenCameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283940A3 /* OnlineFullscreenCameraCell.swift */; };
 		B0A1C2D3E4F50617283941A7 /* EdgeHandoffZoomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283941A6 /* EdgeHandoffZoomScrollView.swift */; };
@@ -1557,6 +1561,10 @@
 		9A0F5A3E2F7A000000C0D001 /* AddressesListViewModel+Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddressesListViewModel+Sections.swift"; sourceTree = "<group>"; };
 		9A0F5A402F7608F300C0D001 /* AppMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetadata.swift; sourceTree = "<group>"; };
 		9A0F5A402F7A100000C0D001 /* AddressesListDoorPreviewPagerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListDoorPreviewPagerCell.swift; sourceTree = "<group>"; };
+		9A0F5A512F8B000000C0D001 /* AnalyticsTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsTracking.swift; sourceTree = "<group>"; };
+		9A0F5A522F8B000000C0D001 /* AppAnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAnalyticsEvent.swift; sourceTree = "<group>"; };
+		9A0F5A532F8B000000C0D001 /* AnalyticsScreenTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsScreenTracking.swift; sourceTree = "<group>"; };
+		9A0F5A542F8B000000C0D001 /* AnalyticsScreenTracking+Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsScreenTracking+Screens.swift"; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283940A2 /* OnlineFullscreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineFullscreenViewController.swift; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283940A3 /* OnlineFullscreenCameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineFullscreenCameraCell.swift; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283941A6 /* EdgeHandoffZoomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeHandoffZoomScrollView.swift; sourceTree = "<group>"; };
@@ -4665,6 +4673,7 @@
 				8B3ADCEE2F519517002FFED1 /* QuickActions */,
 				8B714DC02EFACCAD0099703B /* AccessService */,
 				8B714DC22EFACCAD0099703B /* AlertService */,
+				9A0F5A502F8B000000C0D001 /* Analytics */,
 				8B714DC62EFACCAD0099703B /* DVRServices */,
 				8B714DCB2EFACCAD0099703B /* IssueService */,
 				8B714DD12EFACCAD0099703B /* LinphoneService */,
@@ -4679,6 +4688,17 @@
 				9A0F5A2E2F75350000C0D001 /* SupportCallActionsPresenter.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		9A0F5A502F8B000000C0D001 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				9A0F5A512F8B000000C0D001 /* AnalyticsTracking.swift */,
+				9A0F5A522F8B000000C0D001 /* AppAnalyticsEvent.swift */,
+				9A0F5A532F8B000000C0D001 /* AnalyticsScreenTracking.swift */,
+				9A0F5A542F8B000000C0D001 /* AnalyticsScreenTracking+Screens.swift */,
+			);
+			path = Analytics;
 			sourceTree = "<group>";
 		};
 		8B73E0FF2EFD607B009E724C /* Presentation */ = {
@@ -6426,6 +6446,10 @@
 				8B714E252EFACCAD0099703B /* GetExtensionResponseData.swift in Sources */,
 				8B714E262EFACCAD0099703B /* OptionService.swift in Sources */,
 				9A0F5A0D2F751A5E00C0D001 /* AppTelemetryService.swift in Sources */,
+				9A0F5A552F8B000000C0D001 /* AnalyticsTracking.swift in Sources */,
+				9A0F5A562F8B000000C0D001 /* AppAnalyticsEvent.swift in Sources */,
+				9A0F5A572F8B000000C0D001 /* AnalyticsScreenTracking.swift in Sources */,
+				9A0F5A582F8B000000C0D001 /* AnalyticsScreenTracking+Screens.swift in Sources */,
 				8B714E272EFACCAD0099703B /* LogoutHelper.swift in Sources */,
 				8B714E282EFACCAD0099703B /* RecDownloadRequest.swift in Sources */,
 				8B714E292EFACCAD0099703B /* InboxRequest.swift in Sources */,

@@ -71,6 +71,7 @@ extension OnlinePlaybackCoordinator: OnlinePlaybackCoordinating {
         selectedIsMuted = isMuted
         Logger.logDebug("setSelectedCamera id=\(id) muted=\(isMuted)")
         engine.setSelected(id: id, isMuted: isMuted)
+        logCameraStreamStarted()
         prefetchNeighbors(for: id)
     }
 
@@ -96,5 +97,16 @@ extension OnlinePlaybackCoordinator: OnlinePlaybackCoordinating {
 
     func toggleControlsVisibility() {
         engine.toggleControlsVisibility()
+    }
+
+    private func logCameraStreamStarted() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.cameraStreamStarted(
+                screen: "camera_details",
+                source: "live_stream",
+                cameraType: AnalyticsValue.unknown,
+                streamType: "live"
+            )
+        )
     }
 }

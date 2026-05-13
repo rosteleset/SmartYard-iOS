@@ -232,6 +232,8 @@ extension ServiceSoonAvailableViewModel {
 extension ServiceSoonAvailableViewModel: QRCodeScanViewModelDelegate {
     
     func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
+        let qrType = AnalyticsValue.qrType(from: code)
+
         router.rx
             .trigger(.back)
             .asDriverOnErrorJustComplete()
@@ -242,6 +244,14 @@ extension ServiceSoonAvailableViewModel: QRCodeScanViewModelDelegate {
                 
                 return self.apiWrapper
                     .registerQR(qr: code)
+                    .do(
+                        onSuccess: { [weak self] _ in
+                            self?.logQRAccessGrantSuccess(qrType: qrType)
+                        },
+                        onError: { [weak self] error in
+                            self?.logQRAccessGrantFailed(qrType: qrType, error: error)
+                        }
+                    )
                     .trackActivity(self.activityTracker)
                     .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
@@ -254,4 +264,26 @@ extension ServiceSoonAvailableViewModel: QRCodeScanViewModelDelegate {
             .disposed(by: disposeBag)
     }
     
+}
+
+private extension ServiceSoonAvailableViewModel {
+
+    func logQRAccessGrantSuccess(qrType: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrAccessGrantSuccess(
+                qrType: qrType,
+                source: "service_activation"
+            )
+        )
+    }
+
+    func logQRAccessGrantFailed(qrType: String, error: Error) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrAccessGrantFailed(
+                qrType: qrType,
+                source: "service_activation",
+                errorCode: AnalyticsError.code(from: error)
+            )
+        )
+    }
 }

@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let mainWindow: UIWindow
     private let appCoordinator: AppCoordinator
     private let telemetryService: AppTelemetryServicing
+    private let appFirstOpenedKey = "analytics.app_first_opened_logged"
     private lazy var quickActionsService = QuickActionsService()
 
     override init() {
@@ -41,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = SharedWebKit.warmWebView
 
         configureFirebase(for: application)
+        logAppOpened()
 
         configureImageCache()
 
@@ -87,6 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        logLifecycleEvent(AppAnalyticsEvent.appBecameActive)
+
         appCoordinator.syncBadgeNumber()
         appCoordinator.markAllMessagesAsDelivered()
 
@@ -100,6 +104,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillResignActive(_ application: UIApplication) {
         quickActionsService.updateShortcutItems(for: application)
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        logLifecycleEvent(AppAnalyticsEvent.appEnteredBackground)
     }
 
     func application(
@@ -205,6 +213,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @objc private func handleUserLoggedOut() {
         quickActionsService.updateShortcutItems(for: UIApplication.shared)
     }
+
+    private func logAppOpened() {
+        logLifecycleEvent(AppAnalyticsEvent.appOpened)
+
+        guard !UserDefaults.standard.bool(forKey: appFirstOpenedKey) else {
+            return
+        }
+
+        logLifecycleEvent(AppAnalyticsEvent.appFirstOpened)
+        UserDefaults.standard.set(true, forKey: appFirstOpenedKey)
+    }
+
+    private func logLifecycleEvent(
+        _ eventFactory: (String, String, String) -> AnalyticsEvent
+    ) {
+        AppAnalytics.log(
+            eventFactory(
+                AnalyticsAppMetadata.appVersion,
+                AnalyticsAppMetadata.buildNumber,
+                AnalyticsAppMetadata.environment
+            )
+        )
+    }
 }
 
 // MARK: Push Notifications
@@ -226,7 +257,10 @@ extension AppDelegate: MessagingDelegate {
         Messaging.messaging().delegate = self
         
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
+        logPushPermissionRequested()
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { granted, error in
+            self.logPushPermissionResult(granted: granted, error: error)
+        }
         
         application.registerForRemoteNotifications()
         
@@ -270,6 +304,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         let userInfo = notification.request.content.userInfo
+        let pushType = pushType(from: userInfo)
+        logPushReceived(pushType: pushType)
         
         Logger.logDebug("PUSH NOTIFICATIONS / User Info: \(userInfo.jsonString() ?? "\(userInfo)")")
         
@@ -336,6 +372,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if action == .paySuccess {
             NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+            logPaymentPushSuccess()
+        }
+
+        if action == .payError {
+            logPaymentPushFailed()
         }
         
         completionHandler([.alert, .badge, .sound])
@@ -350,6 +391,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         let userInfo = response.notification.request.content.userInfo
+        let pushType = pushType(from: userInfo)
+
+        switch response.actionIdentifier {
+        case UNNotificationDefaultActionIdentifier:
+            logPushOpened(pushType: pushType)
+        case UNNotificationDismissActionIdentifier:
+            break
+        default:
+            logPushActionTapped(pushType: pushType)
+        }
         
         // MARK: если в push-сообщении есть адрес backend-сервера, то обновляем его.
         if let backendURL = userInfo["baseUrl"] as? String {
@@ -396,6 +447,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         guard let rawAction = userInfo["action"] as? String,
             let action = MessageType(rawValue: rawAction) else {
             reportDebugInfo(userInfo)
+            logPushOpenFailed(pushType: pushType, errorCode: "unknown_push_action")
             completionHandler()
             return
         }
@@ -422,6 +474,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         if action == .paySuccess {
             NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+            logPaymentPushSuccess()
+        }
+
+        if action == .payError {
+            logPaymentPushFailed()
         }
         
         completionHandler()
@@ -432,6 +489,90 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfoAsString = String(describing: userInfo) // на случай, если не получится представить в виде JSON
         telemetryService.log("UserInfo=\(userInfo.jsonString() ?? userInfoAsString)")
         telemetryService.record(error: NSError.APIWrapperError.baseResponseMappingError)
+    }
+
+    private func pushType(from userInfo: [AnyHashable: Any]) -> String {
+        if CallPayload(pushNotificationPayload: userInfo, useCallKit: false) != nil {
+            return "call"
+        }
+
+        guard let rawAction = userInfo["action"] as? String,
+            let action = MessageType(rawValue: rawAction) else {
+            return AnalyticsValue.unknown
+        }
+
+        switch action {
+        case .inbox, .videoReady:
+            return "event"
+        case .paySuccess, .payError:
+            return "payment"
+        case .chat, .newAddress:
+            return "service"
+        }
+    }
+
+    private func logPushPermissionRequested() {
+        AppAnalytics.log(AppAnalyticsEvent.pushPermissionRequested(source: "app_launch"))
+    }
+
+    private func logPushPermissionResult(granted: Bool, error: Error?) {
+        AppAnalytics.log(
+            granted
+                ? AppAnalyticsEvent.pushPermissionGranted(source: "app_launch")
+                : AppAnalyticsEvent.pushPermissionDenied(source: "app_launch")
+        )
+
+        if let error = error {
+            AppAnalytics.logError(
+                scenario: "push_permission",
+                screen: "app",
+                errorCode: AnalyticsError.code(from: error),
+                safeMessage: AnalyticsError.safeMessage(from: error)
+            )
+        }
+    }
+
+    private func logPushReceived(pushType: String) {
+        AppAnalytics.log(AppAnalyticsEvent.pushReceived(pushType: pushType, source: "foreground"))
+    }
+
+    private func logPushOpened(pushType: String) {
+        AppAnalytics.log(AppAnalyticsEvent.pushOpened(pushType: pushType, source: "notification"))
+    }
+
+    private func logPushActionTapped(pushType: String) {
+        AppAnalytics.log(AppAnalyticsEvent.pushActionTapped(pushType: pushType, source: "notification"))
+    }
+
+    private func logPushOpenFailed(pushType: String, errorCode: String?) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.pushOpenFailed(
+                pushType: pushType,
+                source: "notification",
+                errorCode: errorCode
+            )
+        )
+    }
+
+    private func logPaymentPushSuccess() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.paymentSuccess(
+                paymentType: "external",
+                amountRange: nil,
+                source: "push"
+            )
+        )
+    }
+
+    private func logPaymentPushFailed() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.paymentFailed(
+                paymentType: "external",
+                amountRange: nil,
+                source: "push",
+                errorCode: "payment_push_error"
+            )
+        )
     }
     
 }

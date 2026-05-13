@@ -35,6 +35,12 @@ final class ErrorTracker: SharedSequenceConvertibleType {
     
     func onError(_ error: Error) {
         telemetryService.record(error: error)
+        AppAnalytics.logError(
+            scenario: "rx_error",
+            screen: "unknown",
+            errorCode: AnalyticsError.code(from: error),
+            safeMessage: AnalyticsError.safeMessage(from: error)
+        )
         _subject.onNext(error)
     }
     

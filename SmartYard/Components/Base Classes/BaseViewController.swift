@@ -11,4 +11,10 @@ import UIKit
 class BaseViewController: UIViewController, HasDisposeBag {
 
     override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        (self as? AnalyticsScreenTrackable)?.trackAnalyticsScreenOpened()
+    }
 }

@@ -11,12 +11,16 @@ import RxCocoa
 import XCoordinator
 import SmartYardSharedDataFramework
 
+// swiftlint:disable file_length
 // swiftlint:disable:next type_body_length
 final class AddressesListViewModel: BaseViewModel {
     
     // MARK: Я в курсе, что это хреновая идея
     // Но это самый простой способ хранить значение переменной для одной сессии (до перезапуска)
     static var shouldForceTransitionForCurrentSession = true
+
+    // MARK: Temporary test override for entrance preview cells.
+    private let shouldForceEntrancePreviewsForTesting = true
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
@@ -326,6 +330,7 @@ final class AddressesListViewModel: BaseViewModel {
                     }
 
                     self?.cacheOfflineAccess(uniqueApprovedAddresses)
+                    self?.logAddressListOpened(addressesCount: uniqueApprovedAddresses.count)
 
                     let sortedAddresses = self?.applySavedOrder(to: uniqueApprovedAddresses)
 
@@ -404,7 +409,7 @@ final class AddressesListViewModel: BaseViewModel {
 
                     guard
                         let self = self,
-                        self.accessService.entrancesView == APIOptions.EntrancesViewType.preview.rawValue,
+                        self.shouldShowEntrancePreviews,
                         let loadedAddresses,
                         let resolvedDoor = self.resolveDoor(identity: identity, in: loadedAddresses),
                         let camera = self.resolveCamera(for: resolvedDoor.door, camMap: camMap)
@@ -455,6 +460,8 @@ final class AddressesListViewModel: BaseViewModel {
                         let uHouseId = matchingAddress?.houseId, let uAddress = matchingAddress?.address else {
                         return
                     }
+
+                    self.logAddressCameraSelected()
                     
                     // проверяем какой тип отображения камер получен от сервера.
                     // возможно три варианта:
@@ -583,11 +590,13 @@ final class AddressesListViewModel: BaseViewModel {
             // MARK: Вынес в блок do, чтобы не делать сайд-эффектов в map
             
             .do(
-                onNext: { args in
+                onNext: { [weak self] args in
                     let (updatedSectionInfo, _) = args
                     let (addressId, newState) = updatedSectionInfo
                     
                     let identity = AddressesListDataItemIdentity.header(addressId: addressId)
+
+                    self?.logAddressSelected(isExpanded: newState)
                     
                     updateKindSubject.onNext(
                         newState ?
@@ -661,15 +670,13 @@ final class AddressesListViewModel: BaseViewModel {
                     return []
                 }
                 
-                let shouldShowEntrancePreviews = accessService.entrancesView == APIOptions.EntrancesViewType.preview.rawValue
-
                 return self.createSections(
                     approvedAddressesData: approvedAddresses,
                     unapprovedAddressesData: unapprovedAddresses,
                     camMapData: camMapData,
                     expansionStateDict: expansionStateDict,
                     objectAccessDict: objectAccessDict,
-                    shouldShowEntrancePreviews: shouldShowEntrancePreviews
+                    shouldShowEntrancePreviews: self.shouldShowEntrancePreviews
                 )
             }
         
@@ -686,15 +693,148 @@ final class AddressesListViewModel: BaseViewModel {
 
 extension AddressesListViewModel {
 
+    private var approvedAddressesAnalyticsCount: Int? {
+        guard let addresses = try? loadedApprovedAddressesData.value() else {
+            return nil
+        }
+
+        return addresses.count
+    }
+
+    private func logAddressListOpened(addressesCount: Int) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.addressListOpened(
+                addressesCount: addressesCount,
+                hasMultipleAddresses: addressesCount > 1,
+                source: "addresses_refresh"
+            )
+        )
+    }
+
+    private func logAddressCameraSelected() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.cameraSelected(
+                screen: "addresses",
+                source: "address_card",
+                cameraType: AnalyticsValue.unknown
+            )
+        )
+    }
+
+    private func logAddressSelected(isExpanded: Bool) {
+        let addressesCount = approvedAddressesAnalyticsCount
+        AppAnalytics.log(
+            AppAnalyticsEvent.addressSelected(
+                addressesCount: addressesCount,
+                hasMultipleAddresses: addressesCount.map { $0 > 1 },
+                source: "address_header"
+            )
+        )
+        AppAnalytics.log(
+            AppAnalyticsEvent.addressSwitchSuccess(
+                addressesCount: addressesCount,
+                hasMultipleAddresses: addressesCount.map { $0 > 1 },
+                source: isExpanded ? "address_header_expand" : "address_header_collapse"
+            )
+        )
+    }
+
+    private func logDoorOpenTapped(
+        screen: String,
+        source: String,
+        accessType: String
+    ) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.doorOpenTapped(
+                screen: screen,
+                source: source,
+                accessType: accessType
+            )
+        )
+    }
+
+    private func logDoorOpenSuccess(
+        screen: String,
+        source: String,
+        accessType: String
+    ) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.doorOpenSuccess(
+                screen: screen,
+                source: source,
+                accessType: accessType
+            )
+        )
+    }
+
+    private func logDoorOpenFailed(
+        screen: String,
+        source: String,
+        accessType: String,
+        errorCode: String?
+    ) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.doorOpenFailed(
+                screen: screen,
+                source: source,
+                accessType: accessType,
+                errorCode: errorCode
+            )
+        )
+    }
+
+    private func logQRAccessGrantSuccess(qrType: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrAccessGrantSuccess(
+                qrType: qrType,
+                source: "qr_scanner"
+            )
+        )
+    }
+
+    private func logQRAccessGrantFailed(qrType: String, error: Error) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrAccessGrantFailed(
+                qrType: qrType,
+                source: "qr_scanner",
+                errorCode: AnalyticsError.code(from: error)
+            )
+        )
+    }
+
+    private var shouldShowEntrancePreviews: Bool {
+        shouldForceEntrancePreviewsForTesting ||
+            accessService.entrancesView == APIOptions.EntrancesViewType.preview.rawValue
+    }
+
     private func openDoor(identity: AddressesListDataItemIdentity) -> Observable<AddressesListDataItemIdentity?> {
+        openDoor(identity: identity, source: "addresses")
+    }
+
+    // swiftlint:disable:next function_body_length
+    private func openDoor(
+        identity: AddressesListDataItemIdentity,
+        source: String
+    ) -> Observable<AddressesListDataItemIdentity?> {
+        let screen = source == "fullscreen" ? "camera_details" : "addresses"
+
         guard let loadedData = try? loadedApprovedAddressesData.value(),
               let resolvedDoor = resolveDoor(identity: identity, in: loadedData)
         else {
+            logDoorOpenFailed(
+                screen: screen,
+                source: source,
+                accessType: AnalyticsValue.unknown,
+                errorCode: "door_not_found"
+            )
             return .just(nil)
         }
 
         let matchingAddress = resolvedDoor.address
         let matchingDoor = resolvedDoor.door
+        let accessType = analyticsAccessType(for: matchingDoor.type)
+
+        logDoorOpenTapped(screen: screen, source: source, accessType: accessType)
 
         let object = SmartYardSharedObject(
             objectName: matchingDoor.name,
@@ -714,6 +854,23 @@ extension AddressesListViewModel {
                 blockReason: matchingDoor.blocked
             )
             .trackActivity(activityTracker)
+            .do(
+                onNext: { [weak self] _ in
+                    self?.logDoorOpenSuccess(
+                        screen: screen,
+                        source: source,
+                        accessType: accessType
+                    )
+                },
+                onError: { [weak self] error in
+                    self?.logDoorOpenFailed(
+                        screen: screen,
+                        source: source,
+                        accessType: accessType,
+                        errorCode: AnalyticsError.code(from: error)
+                    )
+                }
+            )
             .trackError(errorTracker)
             .map { _ -> AddressesListDataItemIdentity? in identity }
     }
@@ -722,7 +879,7 @@ extension AddressesListViewModel {
         identity: AddressesListDataItemIdentity,
         completion: @escaping (Bool) -> Void
     ) {
-        openDoor(identity: identity)
+        openDoor(identity: identity, source: "fullscreen")
             .map { $0 != nil }
             .asDriver(onErrorJustReturn: false)
             .drive(with: self) { owner, didOpen in
@@ -733,6 +890,17 @@ extension AddressesListViewModel {
                 completion(didOpen)
             }
             .disposed(by: disposeBag)
+    }
+
+    private func analyticsAccessType(for type: DomophoneObjectType) -> String {
+        switch type {
+        case .entrance, .wicket:
+            return "intercom"
+        case .gate:
+            return "gate"
+        case .barrier:
+            return "barrier"
+        }
     }
 
     private func updateObjectAccessState(identity: AddressesListDataItemIdentity) {
@@ -842,6 +1010,8 @@ extension AddressesListViewModel {
 extension AddressesListViewModel: QRCodeScanViewModelDelegate {
     
     func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
+        let qrType = AnalyticsValue.qrType(from: code)
+
         router.rx
             .trigger(.back)
             .asDriverOnErrorJustComplete()
@@ -852,6 +1022,14 @@ extension AddressesListViewModel: QRCodeScanViewModelDelegate {
                 
                 return self.apiWrapper
                     .registerQR(qr: code)
+                    .do(
+                        onSuccess: { [weak self] _ in
+                            self?.logQRAccessGrantSuccess(qrType: qrType)
+                        },
+                        onError: { [weak self] error in
+                            self?.logQRAccessGrantFailed(qrType: qrType, error: error)
+                        }
+                    )
                     .trackActivity(self.activityTracker)
                     .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
@@ -890,15 +1068,15 @@ extension AddressesListViewModel {
             return defaultSorted(addresses)
         }
         
-        return addresses.sorted { a, b in
-            let i1 = savedOrder.firstIndex(of: a.houseId) ?? Int.max
-            let i2 = savedOrder.firstIndex(of: b.houseId) ?? Int.max
-            if i1 != i2 {
-                return i1 < i2
+        return addresses.sorted { lhs, rhs in
+            let lhsIndex = savedOrder.firstIndex(of: lhs.houseId) ?? Int.max
+            let rhsIndex = savedOrder.firstIndex(of: rhs.houseId) ?? Int.max
+            if lhsIndex != rhsIndex {
+                return lhsIndex < rhsIndex
             }
             
-            // Если оба отсутствуют в saved (i1 = i2 = Int.max), сортируем по алфавиту
-            return a.address.localizedCaseInsensitiveCompare(b.address) == .orderedAscending
+            // Если оба отсутствуют в saved, сортируем по алфавиту
+            return lhs.address.localizedCaseInsensitiveCompare(rhs.address) == .orderedAscending
         }
     }
     

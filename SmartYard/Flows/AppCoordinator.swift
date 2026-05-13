@@ -310,11 +310,14 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             return .none()
             
         case .registerQRCode(code: let code):
+            let qrType = AnalyticsValue.qrType(from: code)
+            logQRCodeScannedFromDeeplink(qrType: qrType)
             
             switch accessService.appState {
             case .main:
                 break
             default:
+                logQRCodeGrantFailedFromDeeplink(qrType: qrType, errorCode: "login_required")
                 self.trigger(.alert(
                     title: L10n.Address.QRCode.loginRequiredMessage,
                     message: nil
@@ -327,6 +330,17 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             
             self.apiWrapper
                 .registerQR(qr: code)
+                .do(
+                    onSuccess: { [weak self] _ in
+                        self?.logQRCodeGrantSuccessFromDeeplink(qrType: qrType)
+                    },
+                    onError: { [weak self] error in
+                        self?.logQRCodeGrantFailedFromDeeplink(
+                            qrType: qrType,
+                            errorCode: AnalyticsError.code(from: error)
+                        )
+                    }
+                )
                 .trackActivity(activityTracker)
                 .trackError(errorTracker)
                 .asDriverOnErrorJustComplete()
@@ -825,6 +839,29 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
                 }
             )
             .disposed(by: disposeBag)
+    }
+
+    private func logQRCodeScannedFromDeeplink(qrType: String) {
+        AppAnalytics.log(AppAnalyticsEvent.qrScanSuccess(qrType: qrType, source: "deeplink"))
+    }
+
+    private func logQRCodeGrantSuccessFromDeeplink(qrType: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrAccessGrantSuccess(
+                qrType: qrType,
+                source: "deeplink"
+            )
+        )
+    }
+
+    private func logQRCodeGrantFailedFromDeeplink(qrType: String, errorCode: String?) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrAccessGrantFailed(
+                qrType: qrType,
+                source: "deeplink",
+                errorCode: errorCode
+            )
+        )
     }
 
 #if DEBUG

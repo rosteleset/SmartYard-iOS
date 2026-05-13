@@ -174,6 +174,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute>, HasDisposeBag {
 
 private extension MainMenuCoordinator {
     func openSupportActions() {
+        logSupportOpened()
         supportCallActionsPresenter.present(
             from: viewController
         ) { [weak self] action in
@@ -181,8 +182,10 @@ private extension MainMenuCoordinator {
 
             switch action {
             case .requestCallback:
+                logSupportActionTapped("request_callback")
                 requestSupportCallback()
             case .phoneCall:
+                logSupportActionTapped("phone_call")
                 phoneDialer.call(accessService.supportPhone)
             }
         }
@@ -192,16 +195,23 @@ private extension MainMenuCoordinator {
         requestSupportCallbackUseCase.execute()
             .observe(on: MainScheduler.instance)
             .subscribe(
-                onSuccess: { [weak self] in
-                    self?.trigger(
+                with: self,
+                onSuccess: { owner, _ in
+                    owner.trigger(
                         .alert(
                             title: L10n.Request.Common.submittedTitle,
                             message: L10n.Support.Callback.successMessage
                         )
                     )
                 },
-                onFailure: { [weak self] error in
-                    self?.trigger(
+                onFailure: { owner, error in
+                    AppAnalytics.logError(
+                        scenario: "support_callback",
+                        screen: "support",
+                        errorCode: AnalyticsError.code(from: error),
+                        safeMessage: AnalyticsError.safeMessage(from: error)
+                    )
+                    owner.trigger(
                         .alert(
                             title: L10n.Common.error,
                             message: error.localizedDescription
@@ -210,5 +220,23 @@ private extension MainMenuCoordinator {
                 }
             )
             .disposed(by: disposeBag)
+    }
+
+    func logSupportOpened() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.screenOpened(
+                screen: "support",
+                source: "main_menu"
+            )
+        )
+    }
+
+    func logSupportActionTapped(_ button: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.buttonTapped(
+                screen: "support",
+                button: button
+            )
+        )
     }
 }

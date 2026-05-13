@@ -269,6 +269,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     }
     
     @IBAction private func tapEvents(_ sender: UIView) {
+        logEventFilterOpened(filterType: "event_type")
         
         showEventsFilterPopover(
             from: eventsFilterButton.imageView!,
@@ -276,7 +277,10 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
             onSelect: { name, _ in
                 self.eventsFilterButton.setTitle(name, for: .normal)
                 self.eventsFilterButton.sizeToFit()
-                self.eventsFilter.accept(EventsFilter.allCases.first(where: { $0.name == name }) ?? .all)
+                let selectedFilter = EventsFilter.allCases.first(where: { $0.name == name }) ?? .all
+                self.logEventFilterApplied(filterType: "event_type")
+                self.logEventTypeSelected(selectedFilter)
+                self.eventsFilter.accept(selectedFilter)
                 
                 self.topToolbarPositon.constant = 0
                 
@@ -285,6 +289,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     }
     
     @IBAction private func tapAppartments(_ sender: UIView) {
+        logEventFilterOpened(filterType: "apartment")
         let flatLabels = [L10n.History.Filter.allApartments] +
             viewModel.flatNumbers.map { L10n.Address.Form.apartment + " " + String($0) }
         let itemsId = [""] + viewModel.flatIds.map { String($0) }
@@ -314,6 +319,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
                     )
                 }
                 self.appartmentFilterButton.sizeToFit()
+                self.logEventFilterApplied(filterType: "apartment")
                 self.apptsFilterString.accept(itemsId[selectedRow])
                 self.topToolbarPositon.constant = 0
                 
@@ -330,12 +336,14 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     
     @IBAction private func tapCalendar(_ sender: Any) {
         self.lockToolbar = true
+        logEventFilterOpened(filterType: "date")
         
         showCalendarPopover(
             from: calendarButton.imageView!,
             minDate: allAvailableDates.last ?? Date(),
             maxDate: Date(),
             onSelect: { date in
+                self.logEventFilterApplied(filterType: "date")
                 // предварительно нам надо понять: вообще на какой день мы собираемся отматывать,
                 // даже если предположить, что у нас вообще были бы загружены все данные
                 guard let scrollOnDay = self.allAvailableDates.first(where: { $0 <= date }) else {
@@ -528,6 +536,48 @@ extension HistoryViewController {
         super.traitCollectionDidChange(previousTraitCollection)
 
         toolbar.view.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
+    }
+
+    private func analyticsEventType(from filter: EventsFilter) -> String {
+        switch filter {
+        case .all:
+            return "all"
+        case .domophones, .phoneCall:
+            return "call"
+        case .keys:
+            return "rfid_access"
+        case .faces:
+            return "face_access"
+        case .application, .code:
+            return "door_opened"
+        }
+    }
+
+    private func logEventFilterOpened(filterType: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.eventFilterOpened(
+                filterType: filterType,
+                source: "events_toolbar"
+            )
+        )
+    }
+
+    private func logEventFilterApplied(filterType: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.eventFilterApplied(
+                filterType: filterType,
+                source: "events_toolbar"
+            )
+        )
+    }
+
+    private func logEventTypeSelected(_ filter: EventsFilter) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.eventTypeSelected(
+                eventType: analyticsEventType(from: filter),
+                source: "events_toolbar"
+            )
+        )
     }
     
 }

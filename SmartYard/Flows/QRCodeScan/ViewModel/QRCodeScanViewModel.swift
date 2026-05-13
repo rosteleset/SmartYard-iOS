@@ -88,6 +88,7 @@ final class QRCodeScanViewModel: BaseViewModel {
                     }
                     
                     AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                    self.logQRScanSuccess(code: code)
                     
                     self.delegate?.qrCodeScanViewModel(self, didExtractCode: code)
                 }
@@ -131,6 +132,18 @@ final class QRCodeScanViewModel: BaseViewModel {
         return readableObject.stringValue
     }
     
+}
+
+private extension QRCodeScanViewModel {
+
+    func logQRScanSuccess(code: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrScanSuccess(
+                qrType: AnalyticsValue.qrType(from: code),
+                source: "camera"
+            )
+        )
+    }
 }
 
 extension QRCodeScanViewModel {

@@ -68,6 +68,8 @@ class YardMapViewModel: BaseViewModel {
                         let selectedCamera = (cameras.first { $0.cameraNumber == cameraNum }) else {
                         return
                     }
+
+                    self.logCameraSelected()
                     
                     self.router.trigger(
                         .cameraContainer(
@@ -126,6 +128,19 @@ class YardMapViewModel: BaseViewModel {
         )
     }
     
+}
+
+private extension YardMapViewModel {
+
+    func logCameraSelected() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.cameraSelected(
+                screen: "cameras_list",
+                source: "map",
+                cameraType: AnalyticsValue.unknown
+            )
+        )
+    }
 }
 
 extension YardMapViewModel {

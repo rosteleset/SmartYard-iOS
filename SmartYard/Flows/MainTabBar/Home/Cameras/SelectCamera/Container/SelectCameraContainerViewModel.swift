@@ -71,6 +71,7 @@ final class SelectCameraContainerViewModel: BaseViewModel {
             .ignoreNil()
             .drive { [weak self] id in
                 guard let self, let camera = camerasById[id] else { return }
+                logCameraStreamStartRequested(source: "camera_selector", streamType: "live")
                 updateAvailableDates(camera: camera)
             }
             .disposed(by: disposeBag)
@@ -90,6 +91,7 @@ final class SelectCameraContainerViewModel: BaseViewModel {
                     let ranges
                 else { return }
 
+                logCameraStreamStartRequested(source: "archive_date", streamType: "archive")
                 router.trigger(
                     .playArchiveVideo(
                         camera: camera,
@@ -120,6 +122,20 @@ final class SelectCameraContainerViewModel: BaseViewModel {
             }
 
         rangesDisposable.disposable = disposable
+    }
+}
+
+private extension SelectCameraContainerViewModel {
+
+    func logCameraStreamStartRequested(source: String, streamType: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.cameraStreamStartRequested(
+                screen: "camera_details",
+                source: source,
+                cameraType: AnalyticsValue.unknown,
+                streamType: streamType
+            )
+        )
     }
 }
 

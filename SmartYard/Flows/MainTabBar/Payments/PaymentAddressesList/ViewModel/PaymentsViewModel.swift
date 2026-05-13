@@ -35,6 +35,7 @@ class PaymentsViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] args in
                     let (indexPath, items) = args
+                    self?.logPaymentStartTapped(source: "payments_list")
                     self?.router.trigger(
                         .contractPay(
                             index: indexPath.row,
@@ -98,6 +99,7 @@ class PaymentsViewModel: BaseViewModel {
                 onNext: { [weak self] data in
                     self?.items.onNext(data)
                     if data.count == 1 {
+                        self?.logPaymentStartTapped(source: "single_contract_auto_open")
                         self?.router.trigger(
                             .contractPay(
                                 index: 0,
@@ -130,6 +132,19 @@ class PaymentsViewModel: BaseViewModel {
         )
     }
     
+}
+
+private extension PaymentsViewModel {
+
+    func logPaymentStartTapped(source: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.paymentStartTapped(
+                paymentType: AnalyticsValue.unknown,
+                amountRange: nil,
+                source: source
+            )
+        )
+    }
 }
 
 extension PaymentsViewModel {

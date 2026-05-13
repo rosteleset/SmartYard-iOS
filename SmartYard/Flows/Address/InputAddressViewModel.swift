@@ -396,6 +396,8 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
     // Если ошибка и выскочит, то она презентнется нормально, поскольку мы уже ушли с того экрана
     
     func qrCodeScanViewModel(_ viewModel: QRCodeScanViewModel, didExtractCode code: String) {
+        let qrType = AnalyticsValue.qrType(from: code)
+
         router.rx
             .trigger(.back)
             .asDriverOnErrorJustComplete()
@@ -406,6 +408,14 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
                 
                 return self.apiWrapper
                     .registerQR(qr: code)
+                    .do(
+                        onSuccess: { [weak self] _ in
+                            self?.logQRAccessGrantSuccess(qrType: qrType)
+                        },
+                        onError: { [weak self] error in
+                            self?.logQRAccessGrantFailed(qrType: qrType, error: error)
+                        }
+                    )
                     .trackActivity(self.activityTracker)
                     .trackError(self.errorTracker)
                     .asDriver(onErrorJustReturn: nil)
@@ -424,4 +434,26 @@ extension InputAddressViewModel: QRCodeScanViewModelDelegate {
             .disposed(by: disposeBag)
     }
     
+}
+
+private extension InputAddressViewModel {
+
+    func logQRAccessGrantSuccess(qrType: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrAccessGrantSuccess(
+                qrType: qrType,
+                source: "address_input"
+            )
+        )
+    }
+
+    func logQRAccessGrantFailed(qrType: String, error: Error) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrAccessGrantFailed(
+                qrType: qrType,
+                source: "address_input",
+                errorCode: AnalyticsError.code(from: error)
+            )
+        )
+    }
 }

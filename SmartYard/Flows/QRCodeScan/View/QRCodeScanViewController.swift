@@ -48,6 +48,7 @@ final class QRCodeScanViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         captureSession?.startRunning()
+        logQRScanStarted()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,6 +70,7 @@ final class QRCodeScanViewController: BaseViewController {
     private func configureUI() {
         qrCodeHintLabel.text = L10n.Address.QRScan.pointYourCameraAtTheQrCode
         guard configureCaptureSession() else {
+            logQRScanCameraSetupFailed()
             cameraFailureTrigger.onNext(())
             return
         }
@@ -203,6 +205,23 @@ final class QRCodeScanViewController: BaseViewController {
         }
     }
     
+}
+
+private extension QRCodeScanViewController {
+
+    func logQRScanStarted() {
+        AppAnalytics.log(AppAnalyticsEvent.qrScanStarted(source: "camera"))
+    }
+
+    func logQRScanCameraSetupFailed() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.qrScanFailed(
+                qrType: AnalyticsValue.unknown,
+                source: "camera",
+                errorCode: "camera_setup_failed"
+            )
+        )
+    }
 }
 
 extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {

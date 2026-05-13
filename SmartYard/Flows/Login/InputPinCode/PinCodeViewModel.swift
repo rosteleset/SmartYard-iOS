@@ -46,6 +46,7 @@ final class PinCodeViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
+                    self?.logAuthCodeConfirmationFailed(error)
                     let nsError = error as NSError
                     
                     switch nsError.code {
@@ -115,42 +116,14 @@ final class PinCodeViewModel: BaseViewModel {
 
                     return .just(nil)
                 }
-                
-                return self.apiWrapper.confirmCode(userPhone: AccessService.shared.phonePrefix + self.phoneNumber, smsCode: smsCode)
-                    .trackActivity(activityTracker)
-                    .trackError(errorTracker)
-                    .catch { [weak self] error in
-                        guard let self = self else {
-                            return .just(nil)
-                        }
-                        let nsError = error as NSError
-                        
-                        if nsError.code == 403 {
-                            let okAction = UIAlertAction(
-                                title: NSLocalizedString("OK", comment: ""),
-                                style: .default,
-                                handler: { [weak self] _ in
-                                    self?.router.trigger(.phoneNumber)
-                                }
-                            )
-                            
-                            self.alertService.showDialog(
-                                title: NSLocalizedString("Error", comment: ""),
-                                message: nsError.localizedDescription,
-                                preferredStyle: .alert,
-                                actions: [okAction],
-                                priority: 250
-                            )
-                        }
-                        
-                        return .just(nil)
-                    }
-                    .asDriver(onErrorJustReturn: nil)
+                .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
             .do(
                 onNext: { [weak self] data in
                     guard let self else { return }
+
+                    logAuthConfirmed()
 
                     accessService.authorizeSession(
                         token: data.accessToken,
@@ -194,17 +167,30 @@ final class PinCodeViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.sendCodeAgainButtonTapped
-            .flatMapLatest { [weak self] _ -> Driver<RequestCodeResponseData?> in
-                guard let self = self else {
-                    return .empty()
+            .do(
+                onNext: { [weak self] in
+                    self?.logAuthCodeRequested(source: "pin_code_resend")
                 }
-                
+            )
+            .flatMapLatest { [weak self] _ -> Driver<RequestCodeResponseData?> in
+                guard let self else { return .empty() }
+
                 return self.apiWrapper.requestCode(userPhone: AccessService.shared.phonePrefix + self.phoneNumber)
+                    .do(
+                        onError: { [weak self] error in
+                            self?.logAuthCodeRequestFailed(error, source: "pin_code_resend")
+                        }
+                    )
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
+            .do(
+                onNext: { [weak self] _ in
+                    self?.logAuthCodeRequestSuccess(source: "pin_code_resend")
+                }
+            )
             .drive()
             .disposed(by: disposeBag)
         
@@ -216,6 +202,42 @@ final class PinCodeViewModel: BaseViewModel {
         )
     }
     
+}
+
+private extension PinCodeViewModel {
+
+    func logAuthConfirmed() {
+        AppAnalytics.log(AppAnalyticsEvent.authCodeConfirmed(source: "pin_code"))
+        AppAnalytics.log(AppAnalyticsEvent.authSuccess(source: "pin_code"))
+    }
+
+    func logAuthCodeRequested(source: String) {
+        AppAnalytics.log(AppAnalyticsEvent.authCodeRequested(source: source))
+    }
+
+    func logAuthCodeRequestSuccess(source: String) {
+        AppAnalytics.log(AppAnalyticsEvent.authCodeRequestSuccess(source: source))
+    }
+
+    func logAuthCodeRequestFailed(_ error: Error, source: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.authCodeRequestFailed(
+                source: source,
+                errorCode: AnalyticsError.code(from: error),
+                safeMessage: AnalyticsError.safeMessage(from: error)
+            )
+        )
+    }
+
+    func logAuthCodeConfirmationFailed(_ error: Error) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.authCodeConfirmationFailed(
+                source: "pin_code",
+                errorCode: AnalyticsError.code(from: error),
+                safeMessage: AnalyticsError.safeMessage(from: error)
+            )
+        )
+    }
 }
 
 extension PinCodeViewModel {

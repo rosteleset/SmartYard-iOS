@@ -143,8 +143,12 @@ final class CommonSettingsViewModel: BaseViewModel {
             }
             .ignoreNil()
             .drive(
-                onNext: { state in
+                onNext: { [weak self] state in
                     enableNotificationsSubject.onNext(state.enable)
+                    self?.logNotificationSettingChanged(
+                        "push_notifications",
+                        isEnabled: state.enable
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -167,8 +171,12 @@ final class CommonSettingsViewModel: BaseViewModel {
             }
             .ignoreNil()
             .drive(
-                onNext: { state in
+                onNext: { [weak self] state in
                     enableAccountBalanceWarningSubject.onNext(state.money)
+                    self?.logNotificationSettingChanged(
+                        "balance_warning",
+                        isEnabled: state.money
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -198,6 +206,11 @@ final class CommonSettingsViewModel: BaseViewModel {
             .drive(
                 onNext: { [weak self] newState in
                     self?.accessService.prefersVoipForCalls = newState
+                    self?.logSettingToggled(
+                        "callkit",
+                        isEnabled: newState,
+                        screen: "notifications_settings"
+                    )
                     
                     enableCallkitSubject.onNext(newState)
                     
@@ -223,6 +236,11 @@ final class CommonSettingsViewModel: BaseViewModel {
                     let newState = !isActive
                     
                     self?.accessService.prefersSpeakerForCalls = newState
+                    self?.logSettingToggled(
+                        "speaker_by_default",
+                        isEnabled: newState,
+                        screen: "notifications_settings"
+                    )
                     
                     enableSpeakerByDefaultSubject.onNext(newState)
                 }
@@ -243,6 +261,11 @@ final class CommonSettingsViewModel: BaseViewModel {
                     let newState = !state
 
                     self?.accessService.showList = newState
+                    self?.logSettingToggled(
+                        "show_cameras_on_map",
+                        isEnabled: newState,
+                        screen: "settings"
+                    )
                     showCamerasOnMapSubject.onNext(newState)
                 }
             )
@@ -292,6 +315,7 @@ final class CommonSettingsViewModel: BaseViewModel {
         input.logoutTrigger
             .drive(
                 onNext: { [weak self] in
+                    self?.logLogoutTapped()
                     let noAction = UIAlertAction(title: L10n.Common.no, style: .cancel, handler: nil)
                     
                     let yesAction = UIAlertAction(title: L10n.Common.yes, style: .destructive) { [weak self] _ in
@@ -306,12 +330,13 @@ final class CommonSettingsViewModel: BaseViewModel {
                             .trackError(errorTracker)
                             .asDriver(onErrorJustReturn: nil)
                             .ignoreNil()
-                            .drive(
-                                onNext: { [weak self] in
-                                    SmartYardSharedDataUtilities.clearSharedData()
-                                    self?.accessService.logout()
-                                }
-                            )
+                                .drive(
+                                    onNext: { [weak self] in
+                                        SmartYardSharedDataUtilities.clearSharedData()
+                                        self?.logAuthLogout(source: "settings")
+                                        self?.accessService.logout()
+                                    }
+                                )
                             .disposed(by: self.disposeBag)
                     }
                     
@@ -340,6 +365,7 @@ final class CommonSettingsViewModel: BaseViewModel {
                     ) { _ in
                         ThemeManager.shared.setTheme(.unspecified)
                         appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.system)
+                        self?.logThemeChanged("system")
                     }
                     
                     let lightAction = UIAlertAction(
@@ -348,6 +374,7 @@ final class CommonSettingsViewModel: BaseViewModel {
                     ) { _ in
                         ThemeManager.shared.setTheme(.light)
                         appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.light)
+                        self?.logThemeChanged("light")
                     }
                     
                     let darkAction = UIAlertAction(
@@ -356,6 +383,7 @@ final class CommonSettingsViewModel: BaseViewModel {
                     ) { _ in
                         ThemeManager.shared.setTheme(.dark)
                         appereanceButtonTextSubject.onNext(L10n.Settings.Common.Appearance.dark)
+                        self?.logThemeChanged("dark")
                     }
                     
                     let cancelAction = UIAlertAction(title: L10n.Common.cancel, style: .destructive)
@@ -377,6 +405,7 @@ final class CommonSettingsViewModel: BaseViewModel {
         input.deleteAccountTrigger
             .drive(
                 onNext: { [weak self] in
+                    self?.logAccountDeleteTapped()
                     let noAction = UIAlertAction(title: L10n.Common.no, style: .cancel, handler: nil)
                     
                     let yesAction = UIAlertAction(title: L10n.Common.yes, style: .destructive) { [weak self] _ in
@@ -394,6 +423,7 @@ final class CommonSettingsViewModel: BaseViewModel {
                                         .drive(
                                             onNext: { [weak self] in
                                                 SmartYardSharedDataUtilities.clearSharedData()
+                                                self?.logAuthLogout(source: "account_delete")
                                                 self?.accessService.logout()
                                             }
                                         )
@@ -449,6 +479,7 @@ final class CommonSettingsViewModel: BaseViewModel {
                         style: .default
                     ) { _ in
                         resetConfirmed.accept(())
+                        self?.logAddressOrderReset()
                         NotificationCenter.default.post(name: .addressOrderReset, object: nil)
                     }
                     
@@ -483,6 +514,64 @@ final class CommonSettingsViewModel: BaseViewModel {
         )
     }
     
+}
+
+private extension CommonSettingsViewModel {
+
+    func logNotificationSettingChanged(_ settingName: String, isEnabled: Bool) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.notificationSettingChanged(
+                settingName: settingName,
+                newValue: AnalyticsValue.bool(isEnabled),
+                screen: "notifications_settings"
+            )
+        )
+    }
+
+    func logSettingToggled(
+        _ settingName: String,
+        isEnabled: Bool,
+        screen: String
+    ) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.settingToggled(
+                settingName: settingName,
+                newValue: AnalyticsValue.bool(isEnabled),
+                screen: screen
+            )
+        )
+    }
+
+    func logThemeChanged(_ value: String) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.themeChanged(
+                newValue: value,
+                screen: "settings"
+            )
+        )
+    }
+
+    func logLogoutTapped() {
+        AppAnalytics.log(AppAnalyticsEvent.logoutTapped(screen: "settings"))
+    }
+
+    func logAuthLogout(source: String) {
+        AppAnalytics.log(AppAnalyticsEvent.authLogout(source: source))
+    }
+
+    func logAccountDeleteTapped() {
+        AppAnalytics.log(AppAnalyticsEvent.accountDeleteTapped(screen: "settings"))
+    }
+
+    func logAddressOrderReset() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.settingToggled(
+                settingName: "address_order_reset",
+                newValue: "true",
+                screen: "settings"
+            )
+        )
+    }
 }
 
 extension CommonSettingsViewModel {

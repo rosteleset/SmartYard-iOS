@@ -291,6 +291,7 @@ private extension OnlinePageViewController {
         }
 
         Logger.logDebug("presentFullscreen start id=\(cameraId)")
+        logCameraFullscreenOpened()
 
         isTransitioningToFullscreen = true
 
@@ -318,5 +319,15 @@ private extension OnlinePageViewController {
         present(vc, animated: true) { [weak self] in
             self?.isTransitioningToFullscreen = false
         }
+    }
+
+    func logCameraFullscreenOpened() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.cameraFullscreenOpened(
+                source: "camera_details",
+                cameraType: AnalyticsValue.unknown,
+                streamType: "live"
+            )
+        )
     }
 }

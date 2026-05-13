@@ -52,6 +52,8 @@ final class OutgoingCallViewModel: BaseViewModel {
                     guard let self = self else {
                         return
                     }
+
+                    self.logMakeOutgoingCallTapped()
                     
                     if let phoneCallURL = URL(string: "tel://" + self.confirmPhone) {
                         let application = UIApplication.shared
@@ -139,6 +141,7 @@ extension OutgoingCallViewModel {
                         guard let self = self else {
                             return .just(nil)
                         }
+                        self.logAuthCodeConfirmationFailed(error)
                         let nsError = error as NSError
                         
                         if nsError.code == 403 {
@@ -170,6 +173,7 @@ extension OutgoingCallViewModel {
                     activityTracker.onNext(true)
                     // Есть ответ.
                     timer.dispose()
+                    self.logAuthSuccess()
 
                     accessService.authorizeSession(
                         token: data.accessToken,
@@ -197,5 +201,32 @@ extension OutgoingCallViewModel {
             .disposed(by: disposeBag)
         
         pollingInProgress.onNext(false)
+    }
+}
+
+private extension OutgoingCallViewModel {
+
+    func logMakeOutgoingCallTapped() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.buttonTapped(
+                screen: "auth",
+                button: "make_outgoing_call"
+            )
+        )
+    }
+
+    func logAuthCodeConfirmationFailed(_ error: Error) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.authCodeConfirmationFailed(
+                source: "outgoing_call",
+                errorCode: AnalyticsError.code(from: error),
+                safeMessage: AnalyticsError.safeMessage(from: error)
+            )
+        )
+    }
+
+    func logAuthSuccess() {
+        AppAnalytics.log(AppAnalyticsEvent.authCodeConfirmed(source: "outgoing_call"))
+        AppAnalytics.log(AppAnalyticsEvent.authSuccess(source: "outgoing_call"))
     }
 }

@@ -34,6 +34,7 @@ final class InputPhoneNumberViewModel: BaseViewModel {
         errorTracker.asDriver()
             .drive(
                 onNext: { [weak self] error in
+                    self?.logAuthCodeRequestFailed(error)
                     let nsError = error as NSError
                     
                     switch nsError.code {
@@ -64,8 +65,9 @@ final class InputPhoneNumberViewModel: BaseViewModel {
             .distinctUntilChanged()
             .filter { $0.count == AccessService.shared.phoneLengthWithoutPrefix }
             .do(
-                onNext: { phone in
+                onNext: { [weak self] phone in
                     tempPhoneSubject.onNext(phone)
+                    self?.logPhoneEnteredAndCodeRequested()
                 }
             )
             .flatMapLatest { [weak self] phone -> Driver<RequestCodeResponseData?> in
@@ -82,6 +84,8 @@ final class InputPhoneNumberViewModel: BaseViewModel {
             .withLatestFrom(tempPhone.ignoreNil()) { ($0, $1) }
             .do(
                 onNext: { [weak self] response, phoneNumber in
+                    self?.logAuthCodeRequestSuccess()
+
                     switch response {
                     case .outgoingCall(let confirmNumbers):
                         guard let confirmNumber = confirmNumbers.first else {
@@ -169,6 +173,28 @@ final class InputPhoneNumberViewModel: BaseViewModel {
         )
     }
     
+}
+
+private extension InputPhoneNumberViewModel {
+
+    func logPhoneEnteredAndCodeRequested() {
+        AppAnalytics.log(AppAnalyticsEvent.authPhoneEntered(source: "phone_entry"))
+        AppAnalytics.log(AppAnalyticsEvent.authCodeRequested(source: "phone_entry"))
+    }
+
+    func logAuthCodeRequestSuccess() {
+        AppAnalytics.log(AppAnalyticsEvent.authCodeRequestSuccess(source: "phone_entry"))
+    }
+
+    func logAuthCodeRequestFailed(_ error: Error) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.authCodeRequestFailed(
+                source: "phone_entry",
+                errorCode: AnalyticsError.code(from: error),
+                safeMessage: AnalyticsError.safeMessage(from: error)
+            )
+        )
+    }
 }
 
 extension InputPhoneNumberViewModel {

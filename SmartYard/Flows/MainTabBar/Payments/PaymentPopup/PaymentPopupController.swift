@@ -34,6 +34,8 @@ final class PaymentPopupController: BaseViewController {
     private let viewModel: PaymentPopupViewModel
 
     private var payCompletion: ((PKPaymentAuthorizationResult) -> Void)?
+    private var currentApplePayAmountRange: String?
+    private var hasApplePayResult = false
     
     private let payTrigger = PublishSubject<(Data?, String)>()
     private let cardTrigger = PublishSubject<NSDecimalNumber>()
@@ -95,6 +97,13 @@ final class PaymentPopupController: BaseViewController {
                     guard amount != NSDecimalNumber.notANumber else {
                         return
                     }
+
+                    self.currentApplePayAmountRange = AnalyticsValue.amountRange(from: amount)
+                    self.hasApplePayResult = false
+                    self.logPaymentStarted(
+                        paymentType: "apple_pay",
+                        amountRange: self.currentApplePayAmountRange
+                    )
                     
                     request.paymentSummaryItems = [
                         PKPaymentSummaryItem(
@@ -132,6 +141,9 @@ final class PaymentPopupController: BaseViewController {
                     guard amount != NSDecimalNumber.notANumber else {
                         return
                     }
+
+                    let amountRange = AnalyticsValue.amountRange(from: amount)
+                    self.logPaymentStarted(paymentType: "bank_card", amountRange: amountRange)
                     
                     self.cardTrigger.onNext(amount)
                 }
@@ -151,6 +163,8 @@ final class PaymentPopupController: BaseViewController {
                     guard let self = self, let uPayCompletion = self.payCompletion else {
                         return
                     }
+                    self.hasApplePayResult = true
+                    self.logApplePayResult(isSuccess)
                     
                     self.sumTextField.isHidden = true
                     self.successView.isHidden = false
@@ -169,6 +183,7 @@ final class PaymentPopupController: BaseViewController {
                     
                     let status: PKPaymentAuthorizationStatus = isSuccess ? .success : .failure
                     uPayCompletion(PKPaymentAuthorizationResult(status: status, errors: []))
+                    self.payCompletion = nil
                 }
             )
             .disposed(by: disposeBag)
@@ -392,7 +407,59 @@ extension PaymentPopupController: PKPaymentAuthorizationViewControllerDelegate {
     }
  
     func paymentAuthorizationViewControllerDidFinish(_ controller: PKPaymentAuthorizationViewController) {
+        if !hasApplePayResult {
+            logApplePayCancelled()
+        }
+        currentApplePayAmountRange = nil
+        hasApplePayResult = false
         controller.dismiss(animated: true, completion: nil)
     }
  
+}
+
+private extension PaymentPopupController {
+
+    func logPaymentStarted(paymentType: String, amountRange: String?) {
+        AppAnalytics.log(
+            AppAnalyticsEvent.paymentMethodSelected(
+                paymentType: paymentType,
+                amountRange: amountRange,
+                source: "payment_popup"
+            )
+        )
+        AppAnalytics.log(
+            AppAnalyticsEvent.paymentStarted(
+                paymentType: paymentType,
+                amountRange: amountRange,
+                source: "payment_popup"
+            )
+        )
+    }
+
+    func logApplePayResult(_ isSuccess: Bool) {
+        AppAnalytics.log(
+            isSuccess
+                ? AppAnalyticsEvent.paymentSuccess(
+                    paymentType: "apple_pay",
+                    amountRange: currentApplePayAmountRange,
+                    source: "payment_popup"
+                )
+                : AppAnalyticsEvent.paymentFailed(
+                    paymentType: "apple_pay",
+                    amountRange: currentApplePayAmountRange,
+                    source: "payment_popup",
+                    errorCode: "apple_pay_process_failed"
+                )
+        )
+    }
+
+    func logApplePayCancelled() {
+        AppAnalytics.log(
+            AppAnalyticsEvent.paymentCancelled(
+                paymentType: "apple_pay",
+                amountRange: currentApplePayAmountRange,
+                source: "payment_popup"
+            )
+        )
+    }
 }
