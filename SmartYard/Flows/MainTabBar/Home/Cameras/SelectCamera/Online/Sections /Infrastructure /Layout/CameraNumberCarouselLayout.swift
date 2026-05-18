@@ -72,7 +72,7 @@ struct CameraNumberCarouselLayout {
 
         let section = NSCollectionLayoutSection(group: pageGroup)
         section.interGroupSpacing = 16
-        section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.orthogonalScrollingBehavior = .groupPaging
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 0,
             leading: metrics.sideInset,

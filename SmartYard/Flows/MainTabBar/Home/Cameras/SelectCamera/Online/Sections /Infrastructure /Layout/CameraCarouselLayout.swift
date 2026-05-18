@@ -36,7 +36,7 @@ struct CameraCarouselLayout {
         let sideInset = containerWidth * ((1.0 - Self.groupWidth) / 2.0)
 
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.orthogonalScrollingBehavior = .groupPaging
         section.interGroupSpacing = 16
         section.contentInsets = .init(
             top: Self.topInset,
