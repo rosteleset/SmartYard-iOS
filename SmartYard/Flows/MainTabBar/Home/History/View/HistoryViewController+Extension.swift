@@ -11,13 +11,17 @@ import UIKit
 import PopOverDatePicker
 
 extension HistoryViewController {
-    private func showPopup(_ controller: UIViewController, sourceView: UIView) {
+    private func showPopup(
+        _ controller: UIViewController,
+        sourceView: UIView,
+        permittedArrowDirections: UIPopoverArrowDirection = [.down, .up]
+    ) {
         guard let presentationController = AlwaysPresentAsPopover.configurePresentation(forController: controller) else {
             return
         }
         presentationController.sourceView = sourceView
         presentationController.sourceRect = sourceView.bounds
-        presentationController.permittedArrowDirections = [.down, .up]
+        presentationController.permittedArrowDirections = permittedArrowDirections
         self.present(controller, animated: true)
     }
     
@@ -42,7 +46,7 @@ extension HistoryViewController {
         )
         
         controller.preferredContentSize = CGSize(width: Int(self.view.width) - 32, height: items.count * 45)
-        showPopup(controller, sourceView: sourceView)
+        showPopup(controller, sourceView: sourceView, permittedArrowDirections: .up)
     }
     
     public func showCalendarPopover(

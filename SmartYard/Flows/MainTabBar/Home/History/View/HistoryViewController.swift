@@ -14,18 +14,26 @@ import RxDataSources
 
 final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePresentationControllerDelegate {
     
+    private enum Constants {
+        static let toolbarHeight: CGFloat = 62
+        static let toolbarHiddenOffset = -toolbarHeight
+        static let filterPanelCornerRadius: CGFloat = 24
+        static let calendarButtonSize: CGFloat = 36
+    }
 
     @IBOutlet private weak var headerView: HeaderView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var tableView: UITableViewWithHandler!
-    @IBOutlet private weak var toolbar: UIToolbar!
+    @IBOutlet private weak var toolbar: UIView!
     @IBOutlet private weak var topToolbarPositon: NSLayoutConstraint!
     
     @IBOutlet private weak var eventsFilterButton: UIButton!
     @IBOutlet private weak var calendarButton: UIButton!
     @IBOutlet private weak var appartmentFilterButton: UIButton!
-    @IBOutlet private weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var scrollUpButton: UIButton!
+    @IBOutlet private weak var filterPanelView: UIView!
+    @IBOutlet private weak var filterPanelEffectView: UIVisualEffectView!
+    @IBOutlet private weak var filterPanelOverlayView: UIView!
     
     private var refreshControl = UIRefreshControl()
 
@@ -96,14 +104,12 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     }
     
     fileprivate func setupShadows() {
-        toolbar.barStyle = .default
-        toolbar.view.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
-        toolbar.view.layer.shadowPath = UIBezierPath(rect: toolbar.view.bounds).cgPath
-        toolbar.view.layer.shadowRadius = 32
-        toolbar.view.layer.shadowOffset = CGSize(width: 0, height: 4)
-        toolbar.view.layer.shadowOpacity = 1
-        toolbar.view.layer.shadowColor = UIColor(red: 0.268, green: 0.338, blue: 0.421, alpha: 0.18).cgColor
-        
+        filterPanelView.layer.shadowRadius = 20
+        filterPanelView.layer.shadowOffset = CGSize(width: 0, height: 8)
+        filterPanelView.layer.shadowOpacity = 0.1
+        filterPanelView.layer.shadowColor = UIColor.black.cgColor
+        filterPanelView.layer.masksToBounds = false
+
         scrollUpButton.view.layer.shadowPath = UIBezierPath(roundedRect: scrollUpButton.view.bounds, cornerRadius: 24).cgPath
         scrollUpButton.view.layer.shadowRadius = 24
         scrollUpButton.view.layer.shadowOffset = CGSize(width: 0, height: 4)
@@ -114,7 +120,8 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     
     private func configureUI() {
         eventsFilterButton.setTitle(L10n.History.Filter.allButton, for: .normal)
-        appartmentFilterButton.setTitle(L10n.History.Filter.apptAllButton, for: .normal)
+        configureFilterPanel()
+        updateApartmentFilterTitle(L10n.History.Filter.allApartments)
     }
 
     override func viewDidLoad() {
@@ -124,6 +131,14 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         setupShadows()
         setupTableView()
         bind()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        filterPanelView.layer.shadowPath = UIBezierPath(
+            roundedRect: filterPanelView.bounds,
+            cornerRadius: Constants.filterPanelCornerRadius
+        ).cgPath
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,6 +181,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
             .drive(
                 onNext: { [weak self] isLoading in
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                    self?.updateFilterPanelLoadingState(isLoading)
                 }
             )
             .disposed(by: disposeBag)
@@ -203,15 +219,8 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         
         availableDays.asDriverOnErrorJustComplete()
             .drive {
-                if self.viewModel.flatIds.count > 1 {
-                    self.appartmentFilterButton.isHidden = false
-                } else {
-                    self.appartmentFilterButton.isHidden = true
-
-                    if #available(iOS 26.0, *) {
-                        self.toolbar.items?[2].isHidden = true
-                    }
-                }
+                self.appartmentFilterButton.isEnabled = self.viewModel.flatIds.isEmpty == false
+                self.appartmentFilterButton.alpha = self.appartmentFilterButton.isEnabled ? 1 : 0.6
                 
                 // со всех квартир собираем все дни, убираем дубли, сортируем от поздних к ранним
                 self.daysQueue = $0.flatMap { $0.value }
@@ -276,7 +285,6 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
             items: EventsFilter.allCasesString,
             onSelect: { name, _ in
                 self.eventsFilterButton.setTitle(name, for: .normal)
-                self.eventsFilterButton.sizeToFit()
                 let selectedFilter = EventsFilter.allCases.first(where: { $0.name == name }) ?? .all
                 self.logEventFilterApplied(filterType: "event_type")
                 self.logEventTypeSelected(selectedFilter)
@@ -307,18 +315,12 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
             selectedRow: selectedRow,
             onSelect: { _, selectedRow in
                 if selectedRow == 0 {
-                    self.appartmentFilterButton.setTitle(
-                        L10n.History.Filter.allInApartment,
-                        for: .normal
-                    )
+                    self.updateApartmentFilterTitle(L10n.History.Filter.allApartments)
                 } else {
-                    self.appartmentFilterButton.setTitle(
-                        L10n.Address.Form.apartment
-                        + ", \(self.viewModel.flatNumbers[selectedRow - 1])",
-                        for: .normal
-                    )
+                    let title = L10n.Address.Form.apartment
+                        + " \(self.viewModel.flatNumbers[selectedRow - 1])"
+                    self.updateApartmentFilterTitle(title)
                 }
-                self.appartmentFilterButton.sizeToFit()
                 self.logEventFilterApplied(filterType: "apartment")
                 self.apptsFilterString.accept(itemsId[selectedRow])
                 self.topToolbarPositon.constant = 0
@@ -487,7 +489,7 @@ extension HistoryViewController: UITableViewDelegate {
         // ниже - магия работы с тулбаром "туда-сюда" при скроле
         if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
             // Scrolled to bottom
-            topToolbarPositon.constant = -44
+            topToolbarPositon.constant = Constants.toolbarHiddenOffset
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0,
@@ -512,9 +514,10 @@ extension HistoryViewController: UITableViewDelegate {
                 }
             )
         } else
-        if (scrollView.contentOffset.y > self.lastContentOffset) && topToolbarPositon.constant != -44.0 {
+        if (scrollView.contentOffset.y > self.lastContentOffset)
+            && topToolbarPositon.constant != Constants.toolbarHiddenOffset {
             // Scrolling down
-            topToolbarPositon.constant = -44
+            topToolbarPositon.constant = Constants.toolbarHiddenOffset
             UIView.animate(
                 withDuration: 0.5,
                 delay: 0,
@@ -535,7 +538,7 @@ extension HistoryViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
-        toolbar.view.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
+        updateFilterPanelColors()
     }
 
     private func analyticsEventType(from filter: EventsFilter) -> String {
@@ -580,4 +583,148 @@ extension HistoryViewController {
         )
     }
     
+}
+
+private extension HistoryViewController {
+    func configureFilterPanel() {
+        toolbar.backgroundColor = .SmartYard.backgroundColor
+        toolbar.layer.borderWidth = 0
+        toolbar.layer.borderColor = UIColor.clear.cgColor
+        toolbar.clipsToBounds = false
+
+        configureFilterPanelChrome()
+        configureEventsFilterButton()
+        configureApartmentFilterButton()
+        configureCalendarButton()
+
+        updateFilterPanelColors()
+    }
+
+    func configureFilterPanelChrome() {
+        filterPanelView.backgroundColor = .clear
+        filterPanelView.layer.cornerRadius = Constants.filterPanelCornerRadius
+        filterPanelView.layer.borderWidth = 0
+
+        filterPanelEffectView.layer.cornerRadius = Constants.filterPanelCornerRadius
+        filterPanelEffectView.clipsToBounds = true
+        filterPanelEffectView.isUserInteractionEnabled = false
+
+        filterPanelOverlayView.layer.cornerRadius = Constants.filterPanelCornerRadius
+        filterPanelOverlayView.clipsToBounds = true
+        filterPanelOverlayView.isUserInteractionEnabled = false
+    }
+
+    func configureEventsFilterButton() {
+        eventsFilterButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        eventsFilterButton.titleLabel?.lineBreakMode = .byTruncatingTail
+        eventsFilterButton.titleLabel?.numberOfLines = 1
+        eventsFilterButton.contentHorizontalAlignment = .leading
+        eventsFilterButton.semanticContentAttribute = .forceRightToLeft
+        eventsFilterButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
+        eventsFilterButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 0, right: -4)
+        eventsFilterButton.setTitleColor(.SmartYard.blue, for: .normal)
+        eventsFilterButton.setTitleColor(.SmartYard.blue.withAlphaComponent(0.75), for: .highlighted)
+        eventsFilterButton.setImage(
+            UIImage(named: "ArrowDown")?.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
+        eventsFilterButton.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        eventsFilterButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        eventsFilterButton.addTarget(
+            self,
+            action: #selector(filterPanelButtonTouchDown(_:)),
+            for: [.touchDown, .touchDragEnter]
+        )
+        eventsFilterButton.addTarget(
+            self,
+            action: #selector(filterPanelButtonTouchUp(_:)),
+            for: [.touchUpInside, .touchUpOutside, .touchCancel, .touchDragExit]
+        )
+    }
+
+    func configureApartmentFilterButton() {
+        appartmentFilterButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        appartmentFilterButton.titleLabel?.lineBreakMode = .byTruncatingTail
+        appartmentFilterButton.titleLabel?.numberOfLines = 1
+        appartmentFilterButton.contentHorizontalAlignment = .leading
+        appartmentFilterButton.semanticContentAttribute = .forceRightToLeft
+        appartmentFilterButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
+        appartmentFilterButton.imageEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 0, right: -4)
+        appartmentFilterButton.setTitleColor(.SmartYard.blue, for: .normal)
+        appartmentFilterButton.setTitleColor(.SmartYard.blue.withAlphaComponent(0.75), for: .highlighted)
+        appartmentFilterButton.setImage(
+            UIImage(named: "ArrowDown")?.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
+        appartmentFilterButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        appartmentFilterButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        appartmentFilterButton.addTarget(
+            self,
+            action: #selector(filterPanelButtonTouchDown(_:)),
+            for: [.touchDown, .touchDragEnter]
+        )
+        appartmentFilterButton.addTarget(
+            self,
+            action: #selector(filterPanelButtonTouchUp(_:)),
+            for: [.touchUpInside, .touchUpOutside, .touchCancel, .touchDragExit]
+        )
+    }
+
+    func configureCalendarButton() {
+        calendarButton.layer.cornerRadius = Constants.calendarButtonSize / 2
+        calendarButton.clipsToBounds = true
+        calendarButton.tintColor = .SmartYard.blue
+        calendarButton.setImage(
+            UIImage(named: "calendar")?.withRenderingMode(.alwaysTemplate),
+            for: .normal
+        )
+        calendarButton.imageView?.contentMode = .scaleAspectFit
+        calendarButton.setContentHuggingPriority(.required, for: .horizontal)
+        calendarButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+        calendarButton.addTarget(
+            self,
+            action: #selector(filterPanelButtonTouchDown(_:)),
+            for: [.touchDown, .touchDragEnter]
+        )
+        calendarButton.addTarget(
+            self,
+            action: #selector(filterPanelButtonTouchUp(_:)),
+            for: [.touchUpInside, .touchUpOutside, .touchCancel, .touchDragExit]
+        )
+    }
+
+    func updateApartmentFilterTitle(_ title: String) {
+        appartmentFilterButton.setTitle(title, for: .normal)
+        appartmentFilterButton.accessibilityLabel = title
+    }
+
+    func updateFilterPanelLoadingState(_ isLoading: Bool) {
+        filterPanelView.alpha = isLoading ? 0.6 : 1
+        filterPanelView.isUserInteractionEnabled = isLoading == false
+    }
+
+    func updateFilterPanelColors() {
+        let isDark = traitCollection.userInterfaceStyle == .dark
+        filterPanelOverlayView.backgroundColor = isDark
+            ? UIColor.SmartYard.secondBackgroundColor.withAlphaComponent(0.92)
+            : UIColor.SmartYard.secondBackgroundColor.withAlphaComponent(0.96)
+        filterPanelView.layer.borderColor = UIColor.clear.cgColor
+        calendarButton.backgroundColor = isDark
+            ? UIColor.SmartYard.backgroundColor.withAlphaComponent(0.45)
+            : UIColor.SmartYard.backgroundColor.withAlphaComponent(0.65)
+    }
+
+    @objc func filterPanelButtonTouchDown(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.14, delay: 0, options: [.allowUserInteraction]) {
+            sender.alpha = 0.8
+            sender.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+        }
+    }
+
+    @objc func filterPanelButtonTouchUp(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.16, delay: 0, options: [.allowUserInteraction]) {
+            sender.alpha = 1
+            sender.transform = .identity
+        }
+    }
 }

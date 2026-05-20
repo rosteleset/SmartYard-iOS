@@ -15,6 +15,9 @@
                 <outlet property="calendarButton" destination="rbP-8e-a35" id="zHC-AD-7nV"/>
                 <outlet property="eventsFilterButton" destination="n17-MI-9sr" id="zeD-EH-KxQ"/>
                 <outlet property="fakeNavBar" destination="3Mx-NN-sqX" id="JRw-hq-Koo"/>
+                <outlet property="filterPanelEffectView" destination="rGH-9C-zLj" id="HbL-fP-spD"/>
+                <outlet property="filterPanelOverlayView" destination="8Wy-rf-eMx" id="cGb-FR-0wS"/>
+                <outlet property="filterPanelView" destination="WnV-wf-Gm4" id="X3m-nu-cQG"/>
                 <outlet property="headerView" destination="v6e-8v-Miu" id="Mi3-BX-zxR"/>
                 <outlet property="scrollUpButton" destination="MJm-xB-jU9" id="nyZ-aQ-8Ni"/>
                 <outlet property="tableView" destination="znB-hB-uvQ" id="pOM-Ou-YSY"/>
@@ -42,64 +45,112 @@
                     <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znB-hB-uvQ" customClass="UITableViewWithHandler" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="48" width="375" height="511"/>
+                            <rect key="frame" x="0.0" y="66" width="375" height="493"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </tableView>
-                        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="r6b-X1-Ta6">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                        <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="r6b-X1-Ta6" userLabel="Toolbar Container">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WnV-wf-Gm4" userLabel="Filter Panel">
+                                    <rect key="frame" x="16" y="8" width="343" height="48"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rGH-9C-zLj" userLabel="Filter Blur">
+                                            <rect key="frame" x="0.0" y="0.0" width="327" height="48"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="G6u-RF-1aZ">
+                                                <rect key="frame" x="0.0" y="0.0" width="327" height="48"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </view>
+                                            <blurEffect style="systemUltraThinMaterial"/>
+                                        </visualEffectView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Wy-rf-eMx" userLabel="Filter Overlay">
+                                            <rect key="frame" x="0.0" y="0.0" width="327" height="48"/>
+                                            <color key="backgroundColor" name="secondBackgroundColor"/>
+                                        </view>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="HdQ-pF-CZk" userLabel="Filter Content">
+                                            <rect key="frame" x="10" y="0.0" width="327" height="48"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="250" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n17-MI-9sr" userLabel="Event Filter Button">
+                                                    <rect key="frame" x="0.0" y="14.5" width="31" height="19"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
+                                                    <inset key="imageEdgeInsets" minX="4" minY="2" maxX="-4" maxY="0.0"/>
+                                                    <state key="normal" title="Все" image="ArrowDown">
+                                                        <color key="titleColor" name="blue"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="tapEvents:" destination="-1" eventType="touchUpInside" id="fgu-JH-5Ie"/>
+                                                    </connections>
+                                                </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u7y-4O-CdN" userLabel="Filter Separator">
+                                                    <rect key="frame" x="37" y="15" width="1" height="18"/>
+                                                    <color key="backgroundColor" name="grayBorder"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="T3m-nd-aqc"/>
+                                                        <constraint firstAttribute="width" constant="1" id="g4D-k3-IrQ"/>
+                                                    </constraints>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="250" horizontalCompressionResistancePriority="750" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPa-0r-0rp" userLabel="Apartment Filter Button">
+                                                    <rect key="frame" x="44" y="14.5" width="77" height="19"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="4" maxY="0.0"/>
+                                                    <inset key="imageEdgeInsets" minX="4" minY="2" maxX="-4" maxY="0.0"/>
+                                                    <state key="normal" title="Все квартиры" image="ArrowDown">
+                                                        <color key="titleColor" name="blue"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="tapAppartments:" destination="-1" eventType="touchUpInside" id="0At-1s-4hv"/>
+                                                    </connections>
+                                                </button>
+                                                <view contentMode="scaleToFill" horizontalHuggingPriority="1" horizontalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="9Uf-Rk-XGc" userLabel="Filter Spacer">
+                                                    <rect key="frame" x="127" y="24" width="138" height="0.0"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rbP-8e-a35" userLabel="Calendar Button">
+                                                    <rect key="frame" x="271" y="6" width="36" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="36" id="KEn-uT-20v"/>
+                                                        <constraint firstAttribute="width" constant="36" id="jIo-Iz-QgB"/>
+                                                    </constraints>
+                                                    <state key="normal" image="calendar"/>
+                                                    <connections>
+                                                        <action selector="tapCalendar:" destination="-1" eventType="touchUpInside" id="5Rc-V5-YMB"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <edgeInsets key="layoutMargins" top="0.0" left="10" bottom="0.0" right="6"/>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="rGH-9C-zLj" firstAttribute="top" secondItem="WnV-wf-Gm4" secondAttribute="top" id="0du-m4-gsP"/>
+                                        <constraint firstAttribute="height" constant="48" id="0eP-G9-zGu"/>
+                                        <constraint firstAttribute="trailing" secondItem="8Wy-rf-eMx" secondAttribute="trailing" id="1zk-c9-B9n"/>
+                                        <constraint firstAttribute="trailing" secondItem="rGH-9C-zLj" secondAttribute="trailing" id="Bb6-qI-EYx"/>
+                                        <constraint firstItem="HdQ-pF-CZk" firstAttribute="top" secondItem="WnV-wf-Gm4" secondAttribute="top" id="HWK-ng-aTq"/>
+                                        <constraint firstItem="8Wy-rf-eMx" firstAttribute="leading" secondItem="WnV-wf-Gm4" secondAttribute="leading" id="Laq-SU-nbM"/>
+                                        <constraint firstItem="8Wy-rf-eMx" firstAttribute="top" secondItem="WnV-wf-Gm4" secondAttribute="top" id="Sck-r4-EHD"/>
+                                        <constraint firstAttribute="bottom" secondItem="8Wy-rf-eMx" secondAttribute="bottom" id="UBu-m9-dUb"/>
+                                        <constraint firstItem="rGH-9C-zLj" firstAttribute="leading" secondItem="WnV-wf-Gm4" secondAttribute="leading" id="X5M-uE-Eon"/>
+                                        <constraint firstAttribute="bottom" secondItem="rGH-9C-zLj" secondAttribute="bottom" id="aJx-aK-iZn"/>
+                                        <constraint firstAttribute="trailing" secondItem="HdQ-pF-CZk" secondAttribute="trailing" constant="6" id="eda-6A-oY7"/>
+                                        <constraint firstAttribute="bottom" secondItem="HdQ-pF-CZk" secondAttribute="bottom" id="hId-RJ-OW5"/>
+                                        <constraint firstItem="HdQ-pF-CZk" firstAttribute="leading" secondItem="WnV-wf-Gm4" secondAttribute="leading" constant="10" id="yDd-zs-dgj"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
                             <color key="backgroundColor" name="backgroundColor"/>
-                            <items>
-                                <barButtonItem style="plain" id="Zik-K1-oUl" userLabel="Event ">
-                                    <inset key="largeContentSizeImageInsets" minX="-1" minY="0.0" maxX="-1" maxY="0.0"/>
-                                    <button key="customView" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n17-MI-9sr">
-                                        <rect key="frame" x="22.500000000000004" y="15.500000000000004" width="35" height="16.999999999999996"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="-2" maxY="0.0"/>
-                                        <inset key="imageEdgeInsets" minX="2" minY="3" maxX="-2" maxY="0.0"/>
-                                        <state key="normal" title="Все" image="ArrowDown">
-                                            <color key="titleColor" name="blue"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="tapEvents:" destination="-1" eventType="touchUpInside" id="fgu-JH-5Ie"/>
-                                        </connections>
-                                    </button>
-                                </barButtonItem>
-                                <barButtonItem style="plain" systemItem="flexibleSpace" id="1DN-ly-fHA"/>
-                                <barButtonItem style="plain" id="WEy-ew-G3s" userLabel="Appartment">
-                                    <button key="customView" opaque="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="headTruncation" id="QPa-0r-0rp">
-                                        <rect key="frame" x="134" y="15.500000000000004" width="107" height="16.999999999999996"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <inset key="imageEdgeInsets" minX="2" minY="3" maxX="-2" maxY="0.0"/>
-                                        <state key="normal" title="Квартира, все" image="ArrowDown">
-                                            <color key="titleColor" name="blue"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="tapAppartments:" destination="-1" eventType="touchUpInside" id="0At-1s-4hv"/>
-                                        </connections>
-                                    </button>
-                                </barButtonItem>
-                                <barButtonItem systemItem="flexibleSpace" id="KR2-cZ-IZC"/>
-                                <barButtonItem image="calendar" width="20" style="plain" id="oTP-pV-nAC" userLabel="Calendar">
-                                    <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rbP-8e-a35">
-                                        <rect key="frame" x="325" y="13" width="20" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <state key="normal" image="calendar"/>
-                                        <connections>
-                                            <action selector="tapCalendar:" destination="-1" eventType="touchUpInside" id="5Rc-V5-YMB"/>
-                                        </connections>
-                                    </button>
-                                </barButtonItem>
-                            </items>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layerBorderWidth">
-                                    <real key="value" value="1"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </toolbar>
+                            <constraints>
+                                <constraint firstItem="WnV-wf-Gm4" firstAttribute="centerX" secondItem="r6b-X1-Ta6" secondAttribute="centerX" id="2c8-tH-uAI"/>
+                                <constraint firstItem="WnV-wf-Gm4" firstAttribute="top" secondItem="r6b-X1-Ta6" secondAttribute="top" constant="8" id="7UW-pE-g5d"/>
+                                <constraint firstAttribute="height" constant="66" id="H3D-uD-1Se"/>
+                                <constraint firstItem="WnV-wf-Gm4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r6b-X1-Ta6" secondAttribute="leading" constant="16" id="Yv5-SW-5GI"/>
+                                <constraint firstItem="WnV-wf-Gm4" firstAttribute="width" secondItem="r6b-X1-Ta6" secondAttribute="width" priority="750" constant="-32" id="awc-NM-2Ki"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WnV-wf-Gm4" secondAttribute="trailing" constant="16" id="gMy-VT-4RL"/>
+                                <constraint firstItem="WnV-wf-Gm4" firstAttribute="width" relation="lessThanOrEqual" constant="420" id="qFx-F0-67M"/>
+                            </constraints>
+                        </view>
                         <button hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJm-xB-jU9" userLabel="ScrollUpButton">
                             <rect key="frame" x="163.5" y="418" width="48" height="48"/>
                             <color key="backgroundColor" name="backgroundColor"/>
