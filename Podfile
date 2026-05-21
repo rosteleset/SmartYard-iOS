@@ -88,6 +88,11 @@ post_install do |installer|
             if config.name == 'Release'
                 config.build_settings['SWIFT_COMPILATION_MODE'] = 'wholemodule'
             end
+
+            if target.name == 'linphone-sdk'
+                config.build_settings['OTHER_LDFLAGS[sdk=iphonesimulator*]'] =
+                    '-framework "bctoolbox" -framework "belle-sip" -framework "linphone"'
+            end
         end
     end
 end

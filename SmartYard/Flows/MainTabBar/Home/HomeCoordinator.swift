@@ -39,6 +39,8 @@ enum HomeRoute: Route {
     case yardCamerasList(houseId: String, address: String, tree: CamerasTree, path: [Int])
     case playArchiveVideo(camera: CameraObject, date: Date, availableRanges: [APIArchiveRange])
     case history(houseId: String, address: String)
+    case storyWebPopup(url: URL)
+    case storyWebView(url: URL)
 }
 
 final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
@@ -343,6 +345,32 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
                 address: address
             )
             
+            addChild(coordinator)
+            return .none()
+
+        case .storyWebPopup(let url):
+            let coordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
+                popupUrl: url,
+                version: 2
+            )
+
+            addChild(coordinator)
+            return .none()
+
+        case .storyWebView(let url):
+            let coordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
+                url: url,
+                backButtonLabel: L10n.Common.back,
+                push: true,
+                version: 2
+            )
+
             addChild(coordinator)
             return .none()
         }

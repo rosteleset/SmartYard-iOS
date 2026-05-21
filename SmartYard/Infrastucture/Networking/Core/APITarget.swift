@@ -14,6 +14,7 @@ enum APITarget {
     case openDoor(request: OpenDoorRequest)
     case resetCode(request: ResetCodeRequest)
     case getAddressList(request: GetAddressListRequest)
+    case getStories(request: GetStoriesRequest)
     case intercom(request: IntercomRequest)
     case getSettingsList(request: GetSettingsListRequest)
     case access(request: AccessRequest)
@@ -113,6 +114,7 @@ extension APITarget: TargetType {
         case .resetCode: return "address/resetCode"
         case .getSettingsList: return "address/getSettingsList"
         case .getAddressList: return "address/getAddressList"
+        case .getStories: return "mobile/address/getStories"
         case .access: return "address/access"
         case .resend: return "address/resend"
         case .offices: return "address/offices"
@@ -208,6 +210,7 @@ extension APITarget: TargetType {
             case .resetCode(let request): return (request.accessToken, false)
             case .getSettingsList(let request): return (request.accessToken, request.forceRefresh)
             case .getAddressList(let request): return (request.accessToken, request.forceRefresh)
+            case .getStories(let request): return (request.accessToken, request.forceRefresh)
             case .access(let request): return (request.accessToken, false)
             case .resend(let request): return (request.accessToken, false)
             case .offices(let request): return (request.accessToken, false)
@@ -308,6 +311,7 @@ extension APITarget: TargetType {
         case .resetCode(let request): return request.requestParameters
         case .getSettingsList(let request): return request.requestParameters
         case .getAddressList(let request): return request.requestParameters
+        case .getStories(let request): return request.requestParameters
         case .access(let request): return request.requestParameters
         case .resend(let request): return request.requestParameters
         case .offices(let request): return request.requestParameters

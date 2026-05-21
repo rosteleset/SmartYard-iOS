@@ -18,9 +18,6 @@ final class AddressesListViewModel: BaseViewModel {
     // MARK: Я в курсе, что это хреновая идея
     // Но это самый простой способ хранить значение переменной для одной сессии (до перезапуска)
     static var shouldForceTransitionForCurrentSession = true
-
-    // MARK: Temporary test override for entrance preview cells.
-    private let shouldForceEntrancePreviewsForTesting = true
     
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
@@ -76,6 +73,46 @@ final class AddressesListViewModel: BaseViewModel {
             .distinctUntilChanged()
             .filter { $0 == .online }
             .mapToVoid()
+
+        let stories = Driver
+            .merge(
+                .just(false),
+                input.refreshDataTrigger.asDriver().mapToTrue(),
+                hasNetworkBecomeReachable.mapToFalse()
+            )
+            .flatMapLatest { [weak self] forceRefresh -> Driver<[StoryItem]> in
+                guard let self = self else {
+                    return .just([])
+                }
+
+                return self.apiWrapper
+                    .getStories(forceRefresh: forceRefresh)
+                    .map { response in
+                        response?.map { StoryItem(apiStory: $0) } ?? []
+                    }
+                    .asDriver(onErrorJustReturn: [])
+            }
+        let storyCellModels = stories.map { stories in
+            stories.map { StoryItemCellModel(storyItem: $0) }
+        }
+        input.storySelected
+            .withLatestFrom(stories) { selectedIndex, stories -> StoryItem? in
+                stories.indices.contains(selectedIndex) ? stories[selectedIndex] : nil
+            }
+            .ignoreNil()
+            .drive(with: self) { owner, story in
+                guard let url = URL(string: story.url) else {
+                    return
+                }
+
+                switch story.presentMethod {
+                case .webPopupController:
+                    owner.router.trigger(.storyWebPopup(url: url))
+                case .webViewController:
+                    owner.router.trigger(.storyWebView(url: url))
+                }
+            }
+            .disposed(by: disposeBag)
 
         errorTracker.asDriver()
             .catchAuthorizationError { [weak self] in
@@ -682,6 +719,7 @@ final class AddressesListViewModel: BaseViewModel {
         
         return Output(
             sectionModels: sectionModels,
+            storyCellModels: storyCellModels,
             updateKind: updateKind,
             isLoading: activityTracker.asDriver(),
             reloadingFinished: reloadingFinished,
@@ -803,8 +841,7 @@ extension AddressesListViewModel {
     }
 
     private var shouldShowEntrancePreviews: Bool {
-        shouldForceEntrancePreviewsForTesting ||
-            accessService.entrancesView == APIOptions.EntrancesViewType.preview.rawValue
+        accessService.entrancesView == APIOptions.EntrancesViewType.preview.rawValue
     }
 
     private func openDoor(identity: AddressesListDataItemIdentity) -> Observable<AddressesListDataItemIdentity?> {
@@ -991,6 +1028,7 @@ extension AddressesListViewModel {
     
     struct Input {
         let itemSelected: Driver<AddressesListDataItemIdentity>
+        let storySelected: Driver<Int>
         let guestAccessRequested: Driver<AddressesListDataItemIdentity>
         let refreshDataTrigger: Driver<Void>
         let addAddressTrigger: Driver<Void>
@@ -999,6 +1037,7 @@ extension AddressesListViewModel {
     
     struct Output {
         let sectionModels: Driver<[AddressesListSectionModel]>
+        let storyCellModels: Driver<[StoryItemCellModel]>
         let updateKind: Driver<AddressesListSectionUpdateKind>
         let isLoading: Driver<Bool>
         let reloadingFinished: Driver<Void>

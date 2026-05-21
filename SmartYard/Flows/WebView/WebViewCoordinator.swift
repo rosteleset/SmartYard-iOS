@@ -20,8 +20,7 @@ enum WebViewRoute: Route {
     case webViewPopup(url: URL)
 }
 
-final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeBag {
-    
+final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeBag {    
     
     private let apiWrapper: APIWrapper
     private let networkStateProvider: NetworkStateProviding
@@ -49,6 +48,22 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
+    init(
+        rootVC: UINavigationController,
+        apiWrapper: APIWrapper,
+        networkStateProvider: NetworkStateProviding,
+        popupUrl: URL,
+        version: Int
+    ) {
+        self.apiWrapper = apiWrapper
+        self.networkStateProvider = networkStateProvider
+        self.version = version
+        self.backButtonLabel = L10n.Common.back
+        super.init(rootViewController: rootVC, initialRoute: nil)
+        trigger(.webViewPopup(url: popupUrl))
+        rootViewController.setNavigationBarHidden(true, animated: false)
+    }
+
     init(
         rootVC: UINavigationController,
         apiWrapper: APIWrapper,
@@ -155,4 +170,3 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
         }
     }
 }
-

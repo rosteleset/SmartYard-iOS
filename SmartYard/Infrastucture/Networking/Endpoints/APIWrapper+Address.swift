@@ -276,6 +276,25 @@ extension APIWrapper {
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
+
+    func getStories(forceRefresh: Bool = false) -> Single<GetStoriesResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+
+        let request = GetStoriesRequest(
+            accessToken: accessToken,
+            forceRefresh: forceRefresh
+        )
+        Logger.logDebug("Request data: \(String(describing: request))")
+
+        return provider.rx
+            .request(.getStories(request: request))
+            .convertNoConnectionError()
+            .trackBackend(backend, internet)
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
     
     func grantAccess(
         flatId: String,

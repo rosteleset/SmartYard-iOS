@@ -12,6 +12,24 @@ import RxCocoa
 import RxDataSources
 import JGProgressHUD
 import SkeletonView
+import SnapKit
+import SwifterSwift
+
+private enum StoriesLayout {
+    static let headerTopOffset: CGFloat = 8
+    static let topOffset: CGFloat = 18
+    static let height: CGFloat = 120
+    static let bottomOffset: CGFloat = 18
+    static let itemWidth: CGFloat = 88
+    static let lineSpacing: CGFloat = 12
+    static let horizontalInset: CGFloat = 16
+    static let addButtonTrailingOffset: CGFloat = 16
+    static let addButtonSize: CGFloat = 44
+
+    static var mainContainerTopOffset: CGFloat {
+        topOffset + height + bottomOffset
+    }
+}
 
 final class AddressesListViewController: BaseViewController, LoaderPresentable {
     
@@ -21,7 +39,17 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var skeletonContainer: UIView!
     
+    private let storiesFlowLayout = UICollectionViewFlowLayout()
+    private lazy var storiesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: storiesFlowLayout)
+    private var storiesHeightConstraint: Constraint?
+    private weak var mainContainerTopConstraint: NSLayoutConstraint?
+    private weak var headerTopConstraint: NSLayoutConstraint?
+    private weak var addButtonTrailingConstraint: NSLayoutConstraint?
+    private var addButtonSizeConstraints: [NSLayoutConstraint] = []
+    private var defaultOffsets = (headerTop: CGFloat(0), mainTop: CGFloat(0), addTrailing: CGFloat(0), addSize: CGFloat(0))
+
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>?
+    private var storiesDataSource: RxCollectionViewSectionedReloadDataSource<SectionModel<String, StoryItemCellModel>>?
     private var refreshControl = UIRefreshControl()
     
     // MARK: Это костыль для того, чтобы понять, сколько на самом деле ячеек внутри секции
@@ -55,6 +83,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         configureUI()
         configureCollectionView()
+        configureStoriesDataSource()
         bind()
     }
     
@@ -80,6 +109,9 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
         
         let input = AddressesListViewModel.Input(
             itemSelected: itemSelected,
+            storySelected: storiesCollectionView.rx.itemSelected
+                .map(\.item)
+                .asDriverOnErrorJustComplete(),
             guestAccessRequested: requestGuestAccess.asDriverOnErrorJustComplete(),
             refreshDataTrigger: refreshControl.rx.controlEvent(.valueChanged).asDriver(),
             addAddressTrigger: addButton.rx.tap.asDriver(),
@@ -107,7 +139,13 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
             )
             .drive(collectionView.rx.items(dataSource: dataSource!))
             .disposed(by: disposeBag)
-        
+
+        output.storyCellModels
+            .do(onNext: { [weak self] models in self?.updateStoriesVisibility(hasStories: !models.isEmpty) })
+            .map { [SectionModel(model: "stories", items: $0)] }
+            .drive(storiesCollectionView.rx.items(dataSource: storiesDataSource!))
+            .disposed(by: disposeBag)
+
         output.reloadingFinished
             .drive(
                 onNext: { [weak self] in
@@ -235,12 +273,12 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     private func configureUI() {
         headerView.text = L10n.Home.Addresses.title
+        configureStoriesCollectionView()
         
         mainContainerView.layerCornerRadius = 24
         mainContainerView.layer.maskedCorners = .topCorners
 
-        addButton.imageForNormal = UIImage(named: "AddButtonIcon")
-        addButton.imageForHighlighted = UIImage(named: "AddButtonIcon")?.darkened()
+        configureAddButton()
     }
     
     private func configureCollectionView() {
@@ -294,7 +332,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
         
         self.dataSource = dataSource
     }
-    
+
     // swiftlint:disable:next function_body_length
     private func configureCell(
         collectionView: UICollectionView,
@@ -435,6 +473,86 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
 
 }
 
+private extension AddressesListViewController {
+
+    func configureAddButton() {
+        if #available(iOS 15.0, *) {
+            addButton.configuration = nil
+        }
+        addButton.imageForNormal = UIImage(named: "AddButtonIcon")
+        addButton.imageForHighlighted = UIImage(named: "AddButtonIcon")?.darkened()
+    }
+
+    func configureStoriesCollectionView() {
+        storiesFlowLayout.scrollDirection = .horizontal
+        storiesFlowLayout.minimumLineSpacing = StoriesLayout.lineSpacing
+        storiesFlowLayout.minimumInteritemSpacing = 0
+
+        storiesCollectionView.backgroundColor = .clear
+        storiesCollectionView.showsHorizontalScrollIndicator = false
+        storiesCollectionView.showsVerticalScrollIndicator = false
+        storiesCollectionView.decelerationRate = .fast
+        storiesCollectionView.isHidden = true
+        storiesCollectionView.register(cellWithClass: StoryItemCell.self)
+
+        view.addSubview(storiesCollectionView) { make in
+            make.top.equalTo(headerView.snp.bottom).offset(StoriesLayout.topOffset)
+            make.leading.trailing.equalToSuperview()
+            storiesHeightConstraint = make.height.equalTo(0).constraint
+        }
+
+        mainContainerTopConstraint = view.constraints
+            .first { constraint in
+                constraint.firstItem === mainContainerView
+                    && constraint.firstAttribute == .top
+                    && constraint.secondItem === headerView
+                    && constraint.secondAttribute == .bottom
+            }
+        headerTopConstraint = view.constraints
+            .first { $0.firstItem === headerView && $0.firstAttribute == .top }
+        addButtonTrailingConstraint = view.constraints
+            .first { $0.secondItem === addButton && $0.secondAttribute == .trailing }
+        addButtonSizeConstraints = addButton.constraints.filter { [.width, .height].contains($0.firstAttribute) }
+        defaultOffsets = (
+            headerTopConstraint?.constant ?? 0,
+            mainContainerTopConstraint?.constant ?? 0,
+            addButtonTrailingConstraint?.constant ?? 0,
+            addButtonSizeConstraints.first?.constant ?? 0
+        )
+
+        storiesCollectionView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+    }
+
+    func configureStoriesDataSource() {
+        storiesDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String, StoryItemCellModel>>(
+            configureCell: { _, collectionView, indexPath, model in
+                let cell = collectionView.dequeueReusableCell(withClass: StoryItemCell.self, for: indexPath)
+                cell.configure(with: model)
+                return cell
+            }
+        )
+    }
+
+    func updateStoriesVisibility(hasStories: Bool) {
+        storiesCollectionView.isHidden = !hasStories
+        storiesHeightConstraint?.update(offset: hasStories ? StoriesLayout.height : 0)
+        headerTopConstraint?.constant = hasStories ? StoriesLayout.headerTopOffset : defaultOffsets.headerTop
+        mainContainerTopConstraint?.constant = hasStories
+            ? StoriesLayout.mainContainerTopOffset
+            : defaultOffsets.mainTop
+        addButtonTrailingConstraint?.constant = hasStories ? StoriesLayout.addButtonTrailingOffset : defaultOffsets.addTrailing
+        addButtonSizeConstraints.forEach { $0.constant = hasStories ? StoriesLayout.addButtonSize : defaultOffsets.addSize }
+        storiesCollectionView.collectionViewLayout.invalidateLayout()
+
+        UIView.performWithoutAnimation {
+            view.layoutIfNeeded()
+        }
+    }
+
+}
+
 extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(
@@ -442,6 +560,10 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
+        if collectionView == storiesCollectionView {
+            return CGSize(width: StoriesLayout.itemWidth, height: collectionView.bounds.height)
+        }
+
         guard let item = dataSource?[indexPath] else { return .zero }
 
         switch item {
@@ -483,6 +605,10 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
+        if collectionView == storiesCollectionView {
+            return StoriesLayout.lineSpacing
+        }
+
         return 0
     }
     
@@ -499,6 +625,15 @@ extension AddressesListViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
+        if collectionView == storiesCollectionView {
+            return UIEdgeInsets(
+                top: 0,
+                left: StoriesLayout.horizontalInset,
+                bottom: 0,
+                right: StoriesLayout.horizontalInset
+            )
+        }
+
         let topInset: CGFloat = {
             switch section {
             case 0: return 16
