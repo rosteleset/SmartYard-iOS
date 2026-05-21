@@ -248,6 +248,7 @@
 
 "history.title" = "Events log";
 
+"history.emptyStateMessage" = "No events yet";
 "history.detail.emptyStateMessage" = "It looks like there are no suitable events in the log yet.\n\nMake sure that the owner of the apartment has enabled event logging.\nThen, try to open the entrance with your key and wait 1 minute for at least one event with your photo to appear in the system. \nThen try again to open this section again.\n\nPS: We remind you that we are always ready to help in chat or by calling technical support through the menu of this application.";
 "history.detail.title" = "Events";
 

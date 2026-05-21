@@ -45,13 +45,13 @@
                     <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znB-hB-uvQ" customClass="UITableViewWithHandler" customModule="SmartYard" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="66" width="375" height="493"/>
+                            <rect key="frame" x="0.0" y="64" width="375" height="495"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </tableView>
                         <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="r6b-X1-Ta6" userLabel="Toolbar Container">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WnV-wf-Gm4" userLabel="Filter Panel">
                                     <rect key="frame" x="16" y="8" width="343" height="48"/>
@@ -144,7 +144,7 @@
                             <constraints>
                                 <constraint firstItem="WnV-wf-Gm4" firstAttribute="centerX" secondItem="r6b-X1-Ta6" secondAttribute="centerX" id="2c8-tH-uAI"/>
                                 <constraint firstItem="WnV-wf-Gm4" firstAttribute="top" secondItem="r6b-X1-Ta6" secondAttribute="top" constant="8" id="7UW-pE-g5d"/>
-                                <constraint firstAttribute="height" constant="66" id="H3D-uD-1Se"/>
+                                <constraint firstAttribute="height" constant="64" id="H3D-uD-1Se"/>
                                 <constraint firstItem="WnV-wf-Gm4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r6b-X1-Ta6" secondAttribute="leading" constant="16" id="Yv5-SW-5GI"/>
                                 <constraint firstItem="WnV-wf-Gm4" firstAttribute="width" secondItem="r6b-X1-Ta6" secondAttribute="width" priority="750" constant="-32" id="awc-NM-2Ki"/>
                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WnV-wf-Gm4" secondAttribute="trailing" constant="16" id="gMy-VT-4RL"/>

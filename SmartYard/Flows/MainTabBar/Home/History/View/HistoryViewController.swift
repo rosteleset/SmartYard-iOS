@@ -15,9 +15,9 @@ import RxDataSources
 final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdaptivePresentationControllerDelegate {
     
     private enum Constants {
-        static let toolbarHeight: CGFloat = 62
+        static let toolbarHeight: CGFloat = 64
         static let toolbarHiddenOffset = -toolbarHeight
-        static let filterPanelCornerRadius: CGFloat = 24
+        static let filterPanelCornerRadius: CGFloat = 12
         static let calendarButtonSize: CGFloat = 36
     }
 
@@ -36,6 +36,10 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     @IBOutlet private weak var filterPanelOverlayView: UIView!
     
     private var refreshControl = UIRefreshControl()
+    private lazy var emptyStateView = makeEmptyStateView()
+    private var isHistoryLoading = false
+    private var hasLoadedAvailableDays = false
+    private var currentSectionModels: [HistorySectionModel] = []
 
     let daysRadiusToLoad = 6
     var lastContentOffset: CGFloat = 0.0
@@ -87,6 +91,12 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         tableView.register(nibWithCellClass: HistoryLoadingTableViewCell.self)
         
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+        tableView.backgroundView = emptyStateView
        
         dataSource = RxTableViewSectionedAnimatedDataSource<HistorySectionModel>(
             configureCell: { [weak self] dataSource, tableView, indexPath, _  in
@@ -104,10 +114,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
     }
     
     fileprivate func setupShadows() {
-        filterPanelView.layer.shadowRadius = 20
-        filterPanelView.layer.shadowOffset = CGSize(width: 0, height: 8)
-        filterPanelView.layer.shadowOpacity = 0.1
-        filterPanelView.layer.shadowColor = UIColor.black.cgColor
+        filterPanelView.layer.shadowOpacity = 0
         filterPanelView.layer.masksToBounds = false
 
         scrollUpButton.view.layer.shadowPath = UIBezierPath(roundedRect: scrollUpButton.view.bounds, cornerRadius: 24).cgPath
@@ -166,11 +173,13 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         output.sections // отсюда притетает свежий [HistorySectionModels] для DataSource таблицы
             .do(
                 onNext: { sectionModels in
+                    self.currentSectionModels = sectionModels
                     self.days = sectionModels.map({ $0.day })
                     self.refreshControl.endRefreshing()
                     if self.days.count >= min(1, self.allAvailableDates.count) {
                         self.updateLoader(isEnabled: false, detailText: nil)
                     }
+                    self.updateEmptyState()
                 }
             )
             .drive(tableView.rx.items(dataSource: dataSource!))
@@ -180,8 +189,10 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
             .debounce(.milliseconds(25))
             .drive(
                 onNext: { [weak self] isLoading in
+                    self?.isHistoryLoading = isLoading
                     self?.updateLoader(isEnabled: isLoading, detailText: nil)
                     self?.updateFilterPanelLoadingState(isLoading)
+                    self?.updateEmptyState()
                 }
             )
             .disposed(by: disposeBag)
@@ -219,6 +230,10 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         
         availableDays.asDriverOnErrorJustComplete()
             .drive {
+                let selectedFlatIdsCount = self.selectedFlatIdsCount
+                self.hasLoadedAvailableDays = selectedFlatIdsCount > 0
+                    && $0.count >= selectedFlatIdsCount
+
                 self.appartmentFilterButton.isEnabled = self.viewModel.flatIds.isEmpty == false
                 self.appartmentFilterButton.alpha = self.appartmentFilterButton.isEnabled ? 1 : 0.6
                 
@@ -230,6 +245,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
                 
                 // сохраняем список всех имеющихся дат на будущее - пригодятся.
                 self.allAvailableDates = self.daysQueue
+                self.updateEmptyState()
                 
                 // загружаем самый первый день
                 guard let firstDay = self.daysQueue.first else {
@@ -288,6 +304,8 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
                 let selectedFilter = EventsFilter.allCases.first(where: { $0.name == name }) ?? .all
                 self.logEventFilterApplied(filterType: "event_type")
                 self.logEventTypeSelected(selectedFilter)
+                self.hasLoadedAvailableDays = false
+                self.updateEmptyState()
                 self.eventsFilter.accept(selectedFilter)
                 
                 self.topToolbarPositon.constant = 0
@@ -322,6 +340,8 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
                     self.updateApartmentFilterTitle(title)
                 }
                 self.logEventFilterApplied(filterType: "apartment")
+                self.hasLoadedAvailableDays = false
+                self.updateEmptyState()
                 self.apptsFilterString.accept(itemsId[selectedRow])
                 self.topToolbarPositon.constant = 0
                 
@@ -443,15 +463,15 @@ extension HistoryViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 6.0
+        return section == 0 ? CGFloat.leastNormalMagnitude : 6.0
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude // это "ноль"
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-                
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 6))
+        let height = section == 0 ? CGFloat.leastNormalMagnitude : 6.0
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: height))
         
         headerView.backgroundColor = .clear
         return headerView
@@ -538,6 +558,7 @@ extension HistoryViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
+        filterPanelView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
         updateFilterPanelColors()
     }
 
@@ -586,6 +607,43 @@ extension HistoryViewController {
 }
 
 private extension HistoryViewController {
+    func makeEmptyStateView() -> UIView {
+        let containerView = UIView(frame: tableView.bounds)
+        containerView.backgroundColor = .clear
+        containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        containerView.isHidden = true
+
+        let titleLabel = UILabel.make(
+            .bodySemibold,
+            text: NSLocalizedString("history.emptyStateMessage", comment: "")
+        )
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = .SmartYard.gray
+        titleLabel.textAlignment = .center
+
+        containerView.addSubview(titleLabel)
+
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 32),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -32),
+            titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: -32)
+        ])
+
+        return containerView
+    }
+
+    func updateEmptyState() {
+        emptyStateView.isHidden = isHistoryLoading
+            || hasLoadedAvailableDays == false
+            || allAvailableDates.isEmpty == false
+            || currentSectionModels.isEmpty == false
+    }
+
+    var selectedFlatIdsCount: Int {
+        let selectedFlatIds = apptsFilter.value
+        return selectedFlatIds.isEmpty ? viewModel.flatIds.count : selectedFlatIds.count
+    }
+
     func configureFilterPanel() {
         toolbar.backgroundColor = .SmartYard.backgroundColor
         toolbar.layer.borderWidth = 0
@@ -603,7 +661,8 @@ private extension HistoryViewController {
     func configureFilterPanelChrome() {
         filterPanelView.backgroundColor = .clear
         filterPanelView.layer.cornerRadius = Constants.filterPanelCornerRadius
-        filterPanelView.layer.borderWidth = 0
+        filterPanelView.layer.borderWidth = 1
+        filterPanelView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
 
         filterPanelEffectView.layer.cornerRadius = Constants.filterPanelCornerRadius
         filterPanelEffectView.clipsToBounds = true
@@ -708,7 +767,6 @@ private extension HistoryViewController {
         filterPanelOverlayView.backgroundColor = isDark
             ? UIColor.SmartYard.secondBackgroundColor.withAlphaComponent(0.92)
             : UIColor.SmartYard.secondBackgroundColor.withAlphaComponent(0.96)
-        filterPanelView.layer.borderColor = UIColor.clear.cgColor
         calendarButton.backgroundColor = isDark
             ? UIColor.SmartYard.backgroundColor.withAlphaComponent(0.45)
             : UIColor.SmartYard.backgroundColor.withAlphaComponent(0.65)

@@ -248,6 +248,7 @@
 
 "history.title" = "Hodisalar jurnali";
 
+"history.emptyStateMessage" = "Hozircha voqealar yo'q";
 "history.detail.emptyStateMessage" = "Ko'rinib turibdiki, hozircha jurnalda mos keladigan voqealar yo'q.\n\nKvartira egasi voqealar jurnalini yuritishni yoqgani haqida ishonch hosil qiling.\nKeyin, pod'ezdni o'z kalitingiz bilan ochib, tizimda kamida bitta sizning rasmingiz bilan voqea paydo bo'lishi uchun 1 daqiqa kutib turing.\nShundan so'ng, bu bo'limni qayta ochishga harakat qilib ko'ring.\n\nPS: Eslatib o'tamiz, biz har doim chat orqali yoki ushbu ilovaning menyusi orqali texnik yordam telefoni orqali yordam berishga tayyormiz.";
 "history.detail.title" = "Voqealar";
 
