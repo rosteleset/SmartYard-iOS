@@ -9,6 +9,12 @@
 import Foundation
 import CoreLocation
 
+enum AppConfiguration {
+    case debug
+    case testFlight
+    case appStore
+}
+
 enum Constants {
     
     static let pinLength = 4
@@ -27,4 +33,25 @@ enum Constants {
     static let personalDataProcessingAgreementURL: String? = nil
     static let privacyPolicyURL: String? = nil
     static let userAgreementURL: String? = nil
+    
+    private static let isTestFlight = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+    
+    static var isDebug: Bool {
+        #if DEBUG
+        return true
+        #else
+        return false
+        #endif
+    }
+    
+    static var appConfiguration: AppConfiguration {
+        if isDebug {
+            return .debug
+        } else if isTestFlight {
+            return .testFlight
+        } else {
+            return .appStore
+        }
+    }
+    
 }
