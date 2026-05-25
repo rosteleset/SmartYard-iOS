@@ -100,8 +100,17 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
             return false
         }
 
-        guard let backendPort = backendURL.port else { return true }
-        return requestURL.port == backendPort
+        return effectivePort(for: requestURL) == effectivePort(for: backendURL)
+    }
+
+    private static func effectivePort(for url: URL) -> Int? {
+        if let port = url.port { return port }
+
+        switch url.scheme?.lowercased() {
+        case "http": return 80
+        case "https": return 443
+        default: return nil
+        }
     }
 
     private static func isBackendNetworkError(_ error: Error) -> Bool {

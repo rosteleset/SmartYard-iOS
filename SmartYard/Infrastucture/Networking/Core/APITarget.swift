@@ -114,7 +114,7 @@ extension APITarget: TargetType {
         case .resetCode: return "address/resetCode"
         case .getSettingsList: return "address/getSettingsList"
         case .getAddressList: return "address/getAddressList"
-        case .getStories: return "mobile/address/getStories"
+        case .getStories: return "address/getStories"
         case .access: return "address/access"
         case .resend: return "address/resend"
         case .offices: return "address/offices"

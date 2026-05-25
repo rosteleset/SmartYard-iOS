@@ -45,6 +45,7 @@ final class BackendMonitor: BackendMonitoring {
 
     private var consecutiveFailures: Int = 0
     private var consecutiveSuccesses: Int = 0
+    private var isHealthCheckInFlight: Bool = false
 
     private var lastReason: String = ""
 
@@ -122,7 +123,7 @@ final class BackendMonitor: BackendMonitoring {
             guard self.consecutiveFailures >= threshold else { return }
 
             Logger.logDebug("BackendMonitor: failures=\(self.consecutiveFailures) threshold=\(threshold) everAvailable=\(self.hasEverBeenAvailableInSession)")
-            self.setStatus(.unavailable, reason: "network failures reached threshold")
+            self.probeHealthBeforeDeclaringUnavailable(reason: "network failures reached threshold")
         }
     }
 
@@ -131,6 +132,7 @@ final class BackendMonitor: BackendMonitoring {
     private func resetCounters() {
         consecutiveFailures = 0
         consecutiveSuccesses = 0
+        isHealthCheckInFlight = false
         hasEverBeenAvailableInSession = false
     }
 
@@ -148,5 +150,57 @@ final class BackendMonitor: BackendMonitoring {
         guard oldValue != newValue else { return }
         statusSubject.onNext(newValue)
         Logger.logDebug("emit status=\(newValue) reason=\(reason)")
+    }
+
+    private func probeHealthBeforeDeclaringUnavailable(reason: String) {
+        guard !isHealthCheckInFlight else {
+            Logger.logDebug("BackendMonitor: health probe already in flight")
+            return
+        }
+
+        guard let healthURL else {
+            setStatus(.unavailable, reason: reason)
+            return
+        }
+
+        isHealthCheckInFlight = true
+
+        var request = URLRequest(url: healthURL, timeoutInterval: 3)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = Data("{}".utf8)
+
+        Logger.logDebug("BackendMonitor: health probe start url=\(healthURL.absoluteString)")
+
+        URLSession.shared.dataTask(with: request) { [weak self] _, response, error in
+            guard let self else { return }
+
+            self.queue.async {
+                self.isHealthCheckInFlight = false
+
+                guard self.isEnabled else {
+                    Logger.logDebug("BackendMonitor: health probe ignored (disabled)")
+                    return
+                }
+
+                if let httpResponse = response as? HTTPURLResponse,
+                   200...499 ~= httpResponse.statusCode {
+                    self.consecutiveFailures = 0
+                    self.consecutiveSuccesses += 1
+                    self.hasEverBeenAvailableInSession = true
+                    Logger.logDebug("BackendMonitor: health probe reachable status=\(httpResponse.statusCode)")
+
+                    if self.currentStatus != .available,
+                       self.consecutiveSuccesses >= self.config.successesToDeclareAvailable {
+                        self.setStatus(.available, reason: "health probe reachable")
+                    }
+                    return
+                }
+
+                let errorDescription = error.map { ($0 as NSError).localizedDescription } ?? "status unavailable"
+                Logger.logDebug("BackendMonitor: health probe failed \(errorDescription)")
+                self.setStatus(.unavailable, reason: reason)
+            }
+        }.resume()
     }
 }
