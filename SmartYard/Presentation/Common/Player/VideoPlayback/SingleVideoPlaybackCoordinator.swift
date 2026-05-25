@@ -72,6 +72,25 @@ final class SinglePlayerPlaybackCoordinator {
         playerController.setMode(mode)
     }
 
+    func setRightAccessoryItems(_ items: [SYPlayerControlAccessoryItem]) {
+        playerController.setRightAccessoryItems(items)
+    }
+
+    func updateRightAccessoryItem(
+        id: String,
+        _ update: (inout SYPlayerControlAccessoryItem) -> Void
+    ) {
+        playerController.updateRightAccessoryItem(id: id, update)
+    }
+
+    func removeAllRightAccessoryItems() {
+        playerController.removeAllRightAccessoryItems()
+    }
+
+    func setControlsAutoHideEnabled(_ isEnabled: Bool) {
+        playerController.setControlsAutoHideEnabled(isEnabled)
+    }
+
     func toggleControlsVisibility() {
         playerController.toggleControlsVisibility()
     }

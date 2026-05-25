@@ -15,6 +15,13 @@ protocol OnlinePlaybackCoordinating: AnyObject {
     func prefetch(id: CameraID)
     func cancelPrefetch(id: CameraID)
     func setMode(_ mode: SYPlayerUIMode)
+    func setRightAccessoryItems(_ items: [SYPlayerControlAccessoryItem])
+    func updateRightAccessoryItem(
+        id: String,
+        _ update: (inout SYPlayerControlAccessoryItem) -> Void
+    )
+    func removeAllRightAccessoryItems()
+    func setControlsAutoHideEnabled(_ isEnabled: Bool)
     func toggleControlsVisibility()
     func willDisplay(cameraId: CameraID, cell: PlayerAttachable)
     func didEndDisplay(cameraId: CameraID, cell: PlayerAttachable)
@@ -93,6 +100,25 @@ extension OnlinePlaybackCoordinator: OnlinePlaybackCoordinating {
 
     func setMode(_ mode: SYPlayerUIMode) {
         engine.setMode(mode)
+    }
+
+    func setRightAccessoryItems(_ items: [SYPlayerControlAccessoryItem]) {
+        engine.setRightAccessoryItems(items)
+    }
+
+    func updateRightAccessoryItem(
+        id: String,
+        _ update: (inout SYPlayerControlAccessoryItem) -> Void
+    ) {
+        engine.updateRightAccessoryItem(id: id, update)
+    }
+
+    func removeAllRightAccessoryItems() {
+        engine.removeAllRightAccessoryItems()
+    }
+
+    func setControlsAutoHideEnabled(_ isEnabled: Bool) {
+        engine.setControlsAutoHideEnabled(isEnabled)
     }
 
     func toggleControlsVisibility() {

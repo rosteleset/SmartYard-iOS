@@ -9,6 +9,7 @@
 import UIKit
 import SwifterSwift
 import SnapKit
+import SmartYardVideoPlayer
 
 struct OnlineFullscreenAccessAction {
     let isOpened: Bool
@@ -32,7 +33,14 @@ final class OnlineFullscreenViewController: BaseViewController {
     private var didNotifyDismiss = false
     private var isOpeningAccess = false
     private var isPagingHandoffActive = false
-    private var resetOpenButtonWorkItem: DispatchWorkItem?
+    private var resetAccessButtonWorkItem: DispatchWorkItem?
+
+    // MARK: - Constants
+
+    private enum AccessButton {
+        static let id = "fullscreen.openAccess"
+        static let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 24, weight: .semibold)
+    }
 
     // MARK: - UI
 
@@ -54,8 +62,6 @@ final class OnlineFullscreenViewController: BaseViewController {
         cv.register(cellWithClass: OnlineFullscreenCameraCell.self)
         return cv
     }()
-
-    private let openButton = SmartYardActionModeButton()
 
     // MARK: - Init
 
@@ -118,7 +124,9 @@ final class OnlineFullscreenViewController: BaseViewController {
         super.viewWillDisappear(animated)
         Logger.logDebug("viewWillDisappear beingDismissed=\(isBeingDismissed)")
         playback.setCloseHandler(nil)
-        resetOpenButtonWorkItem?.cancel()
+        playback.setControlsAutoHideEnabled(true)
+        playback.removeAllRightAccessoryItems()
+        resetAccessButtonWorkItem?.cancel()
 
         if isBeingDismissed {
             notifyDismiss()
@@ -222,49 +230,105 @@ extension OnlineFullscreenViewController: UIScrollViewDelegate {
 private extension OnlineFullscreenViewController {
     func setupUI() {
         view.backgroundColor = .black
-
-        openButton.mode = .open
-        openButton.visualStyle = .overImage
-        openButton.isOn = accessAction?.isOpened ?? false
-        openButton.addTarget(self, action: #selector(openButtonTapped), for: .touchUpInside)
+        configureAccessButton()
     }
 
     func setupConstraints() {
         view.pinSubview(collectionView)
-
-        guard accessAction != nil else { return }
-
-        view.addSubview(openButton) { make in
-            make.leading.equalToSuperview().inset(16)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(8)
-            make.width.equalTo(84)
-            make.height.equalTo(36)
-        }
     }
 
-    @objc func openButtonTapped() {
+    func configureAccessButton() {
+        guard let accessAction else {
+            playback.setControlsAutoHideEnabled(true)
+            playback.removeAllRightAccessoryItems()
+            return
+        }
+
+        playback.setControlsAutoHideEnabled(false)
+        playback.setRightAccessoryItems([
+            accessButtonItem(isOpened: accessAction.isOpened, isEnabled: !accessAction.isOpened)
+        ])
+    }
+
+    func accessButtonItem(isOpened: Bool, isEnabled: Bool) -> SYPlayerControlAccessoryItem {
+        SYPlayerControlAccessoryItem(
+            id: AccessButton.id,
+            image: accessButtonIcon(isOpened: false),
+            selectedImage: accessButtonIcon(isOpened: true),
+            disabledImage: accessButtonIcon(isOpened: isOpened),
+            isEnabled: isEnabled,
+            isSelected: isOpened,
+            accessibilityLabel: isOpened ? L10n.Common.opened : L10n.Common.`open`,
+            appearance: accessButtonAppearance(isOpened: isOpened),
+            action: { [weak self] in
+                self?.openButtonTapped()
+            }
+        )
+    }
+
+    func accessButtonIcon(isOpened: Bool) -> UIImage? {
+        let symbolName = isOpened ? "lock.open.fill" : "lock.fill"
+        return UIImage(systemName: symbolName, withConfiguration: AccessButton.iconConfiguration)?
+            .withRenderingMode(.alwaysTemplate)
+    }
+
+    func accessButtonAppearance(isOpened: Bool) -> SYPlayerControlAccessoryAppearance {
+        SYPlayerControlAccessoryAppearance(
+            tintColor: .white,
+            selectedTintColor: .white,
+            disabledTintColor: .white,
+            backgroundColor: .clear,
+            selectedBackgroundColor: .clear,
+            disabledBackgroundColor: .clear,
+            borderColor: .clear,
+            selectedBorderColor: .clear,
+            disabledBorderColor: .clear,
+            borderWidth: 0,
+            cornerRadius: 8
+        )
+    }
+
+    func openButtonTapped() {
         guard !isOpeningAccess, let accessAction else { return }
 
         isOpeningAccess = true
+        updateAccessButton(isOpened: false, isEnabled: false)
         accessAction.open { [weak self] didOpen in
-            guard let self else { return }
+            DispatchQueue.main.async {
+                guard let self else { return }
 
-            isOpeningAccess = false
-            guard didOpen else { return }
+                self.isOpeningAccess = false
+                guard didOpen else {
+                    self.updateAccessButton(isOpened: false, isEnabled: true)
+                    return
+                }
 
-            openButton.isOn = true
-            scheduleOpenButtonReset()
+                self.updateAccessButton(isOpened: true, isEnabled: false)
+                self.scheduleAccessButtonReset()
+            }
         }
     }
 
-    func scheduleOpenButtonReset() {
-        resetOpenButtonWorkItem?.cancel()
+    func updateAccessButton(isOpened: Bool, isEnabled: Bool) {
+        playback.updateRightAccessoryItem(id: AccessButton.id) { item in
+            item.image = self.accessButtonIcon(isOpened: false)
+            item.selectedImage = self.accessButtonIcon(isOpened: true)
+            item.disabledImage = self.accessButtonIcon(isOpened: isOpened)
+            item.isEnabled = isEnabled
+            item.isSelected = isOpened
+            item.accessibilityLabel = isOpened ? L10n.Common.opened : L10n.Common.`open`
+            item.appearance = self.accessButtonAppearance(isOpened: isOpened)
+        }
+    }
+
+    func scheduleAccessButtonReset() {
+        resetAccessButtonWorkItem?.cancel()
 
         let workItem = DispatchWorkItem { [weak self] in
-            self?.openButton.isOn = false
+            self?.updateAccessButton(isOpened: false, isEnabled: true)
         }
 
-        resetOpenButtonWorkItem = workItem
+        resetAccessButtonWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: workItem)
     }
 
