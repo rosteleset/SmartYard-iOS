@@ -17,8 +17,10 @@ final class SinglePlayerPlaybackCoordinator {
 
     private var selectedId: PlayerItemID?
     private var selectedIsMuted: Bool = true
+    private var loadedResourceId: PlayerItemID?
 
     private weak var visibleSelectedCell: PlayerAttachable?
+    private var visibleSelectedCellId: PlayerItemID?
 
     // защита от гонок fetch’ей
     private var requestId = UUID()
@@ -34,9 +36,23 @@ final class SinglePlayerPlaybackCoordinator {
     // MARK: - Inputs
 
     func setSelected(id: PlayerItemID, isMuted: Bool) {
+        let didChangeSelection = selectedId != id
         selectedId = id
         selectedIsMuted = isMuted
         requestId = UUID() // invalidate previous fetches, even if no visible cell yet
+
+        if didChangeSelection {
+            visibleSelectedCell = nil
+            visibleSelectedCellId = nil
+            loadedResourceId = nil
+            playerController.onDisappear()
+            playerController.detach(pause: false)
+        }
+
+        if !didChangeSelection {
+            playerController.setMuted(isMuted)
+        }
+
         tryStartPlaybackIfPossible()
     }
 
@@ -44,13 +60,16 @@ final class SinglePlayerPlaybackCoordinator {
         guard id == selectedId else { return }
 
         visibleSelectedCell = cell
+        visibleSelectedCellId = id
         tryStartPlaybackIfPossible()
     }
 
-    func didEndDisplay(id _: PlayerItemID, cell: PlayerAttachable) {
+    func didEndDisplay(id: PlayerItemID, cell: PlayerAttachable) {
         guard visibleSelectedCell === cell else { return }
+        guard visibleSelectedCellId == id else { return }
 
         visibleSelectedCell = nil
+        visibleSelectedCellId = nil
         requestId = UUID() // “отменяем” in-flight
 
         playerController.onDisappear()
@@ -59,7 +78,9 @@ final class SinglePlayerPlaybackCoordinator {
 
     func stopHard() {
         visibleSelectedCell = nil
+        visibleSelectedCellId = nil
         selectedId = nil
+        loadedResourceId = nil
         requestId = UUID()
         playerController.stopHard()
     }
@@ -99,7 +120,14 @@ final class SinglePlayerPlaybackCoordinator {
 
     private func tryStartPlaybackIfPossible() {
         guard let id = selectedId else { return }
-        guard visibleSelectedCell != nil else { return }
+        guard let cell = visibleSelectedCell else { return }
+
+        if loadedResourceId == id {
+            attachPlayer(to: cell)
+            playerController.setMuted(selectedIsMuted)
+            playerController.onAppear()
+            return
+        }
 
         let rid = UUID()
         requestId = rid
@@ -118,6 +146,7 @@ final class SinglePlayerPlaybackCoordinator {
                 self.attachPlayer(to: cell)
                 self.playerController.setMuted(self.selectedIsMuted)
                 self.playerController.set(resource: resource)
+                self.loadedResourceId = id
                 self.playerController.onAppear()
             }
         }
@@ -135,4 +164,5 @@ final class SinglePlayerPlaybackCoordinator {
             pauseBeforeDetach: false
         )
     }
+
 }

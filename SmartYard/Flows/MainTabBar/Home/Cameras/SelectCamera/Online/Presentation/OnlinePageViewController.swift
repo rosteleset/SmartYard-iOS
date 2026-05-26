@@ -90,6 +90,7 @@ final class OnlinePageViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Logger.logDebug("viewWillAppear")
+        configureInlinePlaybackControls()
         events.viewWillAppear.accept(())
     }
 
@@ -138,6 +139,7 @@ final class OnlinePageViewController: BaseViewController {
         // Playback coordinator
         let playback = OnlinePlaybackCoordinator(provider: streamProvider)
         playbackCoordinator = playback
+        configureInlinePlaybackControls()
 
         // Section controllers
         let sectionProvider = OnlineSectionControllersProvider(
@@ -307,6 +309,7 @@ private extension OnlinePageViewController {
 
                 // меняем режим на обычный
                 self.playbackCoordinator?.setMode(.default)
+                self.configureInlinePlaybackControls()
 
                 // чуть поможем attach-у (на всякий)
                 self.playbackBinder?.restoreAfterFullscreen(selectedId: selectedId, retryCount: 3)
@@ -329,5 +332,13 @@ private extension OnlinePageViewController {
                 streamType: "live"
             )
         )
+    }
+}
+
+// MARK: - Playback Controls
+
+private extension OnlinePageViewController {
+    func configureInlinePlaybackControls() {
+        playbackCoordinator?.setControlsAutoHideEnabled(false)
     }
 }
