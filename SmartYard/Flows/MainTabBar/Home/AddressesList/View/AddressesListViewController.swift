@@ -31,6 +31,7 @@ private enum StoriesLayout {
     }
 }
 
+// swiftlint:disable:next type_body_length
 final class AddressesListViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var headerView: UILabel!
@@ -66,6 +67,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
     private let requestGuestAccess = PublishSubject<AddressesListDataItemIdentity>()
     private let previewSelected = PublishSubject<AddressesListDataItemIdentity>()
     private let qrCodeTapped = PublishSubject<Void>()
+    private var selectedDoorPreviewIdentityByAddressId: [String: AddressesListDataItemIdentity] = [:]
     
     var loader: JGProgressHUD?
     
@@ -153,6 +155,8 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+
+        bindSelectedDoorPreviewIdentity(output)
         
         // MARK: Скроллим таблицу при сворачивании / разворачивании секций для лучшего UX
         
@@ -270,7 +274,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
             collectionView.scrollToItem(at: indexPath, at: .bottom, animated: false)
         }
     }
-    
+
     private func configureUI() {
         headerView.text = L10n.Home.Addresses.title
         configureStoriesCollectionView()
@@ -377,19 +381,28 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
 
                 return cell
 
-            case let .doorPreviewPager(_, items):
+            case let .doorPreviewPager(identity, items):
                 let cell = collectionView.dequeueReusableCell(
                     withClass: AddressesListDoorPreviewPagerCell.self,
                     for: indexPath
                 )
 
-                cell.configure(items: items)
+                cell.configure(
+                    items: items,
+                    selectedIdentity: self.selectedDoorPreviewIdentity(for: identity)
+                )
 
                 cell.openRequested
+                    .do(onNext: { [weak self] identity in
+                        self?.rememberDoorPreviewIdentity(identity)
+                    })
                     .bind(to: self.requestGuestAccess)
                     .disposed(by: cell.disposeBag)
 
                 cell.previewSelected
+                    .do(onNext: { [weak self] identity in
+                        self?.rememberDoorPreviewIdentity(identity)
+                    })
                     .bind(to: self.previewSelected)
                     .disposed(by: cell.disposeBag)
 
@@ -551,6 +564,41 @@ private extension AddressesListViewController {
         }
     }
 
+}
+
+private extension AddressesListViewController {
+    func bindSelectedDoorPreviewIdentity(_ output: AddressesListViewModel.Output) {
+        output.selectedDoorPreviewIdentity
+            .drive(with: self) { owner, identity in
+                owner.rememberDoorPreviewIdentity(identity)
+                owner.selectVisibleDoorPreview(identity: identity)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    func rememberDoorPreviewIdentity(_ identity: AddressesListDataItemIdentity) {
+        guard case let .object(addressId, _, _, _) = identity else {
+            return
+        }
+
+        selectedDoorPreviewIdentityByAddressId[addressId] = identity
+    }
+
+    func selectedDoorPreviewIdentity(
+        for identity: AddressesListDataItemIdentity
+    ) -> AddressesListDataItemIdentity? {
+        guard case let .doorPreviewPager(addressId) = identity else {
+            return nil
+        }
+
+        return selectedDoorPreviewIdentityByAddressId[addressId]
+    }
+
+    func selectVisibleDoorPreview(identity: AddressesListDataItemIdentity) {
+        collectionView.visibleCells
+            .compactMap { $0 as? AddressesListDoorPreviewPagerCell }
+            .forEach { $0.select(identity: identity, animated: false) }
+    }
 }
 
 extension AddressesListViewController: UICollectionViewDelegateFlowLayout {

@@ -63,6 +63,7 @@ final class AddressesListViewModel: BaseViewModel {
     private let areSectionsExpanded = BehaviorSubject<[String: Bool]>(value: [:])
     // MARK: Словарь необходим для того, чтобы хранить состояния предоставленного доступа к объекту
     private let areObjectsGrantAccessed = BehaviorSubject<[AddressesListDataItemIdentity: Bool]>(value: [:])
+    private let selectedDoorPreviewIdentitySubject = PublishSubject<AddressesListDataItemIdentity>()
     
     private let appVersionCheckResult = BehaviorSubject<APIAppVersionCheckResult?>(value: nil)
     
@@ -454,23 +455,49 @@ final class AddressesListViewModel: BaseViewModel {
                         return
                     }
 
-                    let accessAction = OnlineFullscreenAccessAction(
-                        isOpened: objectAccessDict[identity, default: false],
-                        open: { [weak self] completion in
-                            guard let self else {
-                                completion(false)
-                                return
-                            }
-
-                            self.openDoorFromFullscreen(identity: identity, completion: completion)
+                    let previewEntries = resolvedDoor.address.doors.compactMap { door -> (
+                        identity: AddressesListDataItemIdentity,
+                        camera: CameraObject
+                    )? in
+                        let identity = self.makeDoorIdentity(addressId: resolvedDoor.address.houseId, door: door)
+                        guard let camera = self.resolveCamera(for: door, camMap: camMap) else {
+                            return nil
                         }
-                    )
+
+                        return (identity, camera)
+                    }
+
+                    var identityByCameraId: [CameraID: AddressesListDataItemIdentity] = [:]
+                    var accessActions: [CameraID: OnlineFullscreenAccessAction] = [:]
+                    previewEntries.forEach { entry in
+                        identityByCameraId[entry.camera.id] = entry.identity
+                        accessActions[entry.camera.id] = OnlineFullscreenAccessAction(
+                            isOpened: objectAccessDict[entry.identity, default: false],
+                            open: { [weak self] completion in
+                                guard let self else {
+                                    completion(false)
+                                    return
+                                }
+
+                                self.openDoorFromFullscreen(identity: entry.identity, completion: completion)
+                            }
+                        )
+                    }
+
+                    let cameras = previewEntries.map(\.camera)
 
                     self.router.trigger(
                         .onlineFullscreen(
-                            cameras: [camera],
+                            cameras: cameras,
                             selectedCamera: camera,
-                            accessAction: accessAction
+                            accessActions: accessActions,
+                            onDismiss: { [weak self] cameraId in
+                                guard let identity = identityByCameraId[cameraId] else {
+                                    return
+                                }
+
+                                self?.selectedDoorPreviewIdentitySubject.onNext(identity)
+                            }
                         )
                     )
                 }
@@ -723,7 +750,8 @@ final class AddressesListViewModel: BaseViewModel {
             updateKind: updateKind,
             isLoading: activityTracker.asDriver(),
             reloadingFinished: reloadingFinished,
-            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver()
+            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver(),
+            selectedDoorPreviewIdentity: selectedDoorPreviewIdentitySubject.asDriverOnErrorJustComplete()
         )
     }
     
@@ -1042,6 +1070,7 @@ extension AddressesListViewModel {
         let isLoading: Driver<Bool>
         let reloadingFinished: Driver<Void>
         let shouldBlockInteraction: Driver<Bool>
+        let selectedDoorPreviewIdentity: Driver<AddressesListDataItemIdentity>
     }
     
 }

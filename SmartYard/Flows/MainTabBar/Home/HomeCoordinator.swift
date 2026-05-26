@@ -33,7 +33,8 @@ enum HomeRoute: Route {
     case onlineFullscreen(
         cameras: [CameraObject],
         selectedCamera: CameraObject,
-        accessAction: OnlineFullscreenAccessAction?
+        accessActions: [CameraID: OnlineFullscreenAccessAction],
+        onDismiss: ((CameraID) -> Void)?
     )
     case yardCamerasMap(houseId: String, address: String, cameras: [CameraObject]?)
     case yardCamerasList(houseId: String, address: String, tree: CamerasTree, path: [Int])
@@ -296,7 +297,7 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
             
             return .push(vc)
 
-        case let .onlineFullscreen(cameras, selectedCamera, accessAction):
+        case let .onlineFullscreen(cameras, selectedCamera, accessActions, onDismiss):
             let provider = CameraStreamProvider(cameras: cameras, ttl: 120)
             let playback = OnlinePlaybackCoordinator(provider: provider)
             let cameraViewModels = makeOnlineCameraViewModels(from: cameras)
@@ -308,8 +309,9 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
                 cameras: cameraViewModels,
                 initialCameraId: selectedCamera.id,
                 playback: playback,
-                accessAction: accessAction,
-                onDismiss: { _ in
+                accessActions: accessActions,
+                onDismiss: { cameraId in
+                    onDismiss?(cameraId)
                     playback.stopHard()
                 }
             )

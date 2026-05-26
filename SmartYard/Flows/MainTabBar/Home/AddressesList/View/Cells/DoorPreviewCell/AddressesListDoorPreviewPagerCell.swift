@@ -56,8 +56,11 @@ final class AddressesListDoorPreviewPagerCell: CustomBorderCollectionViewCell, H
         resetDisposeBag()
     }
 
-    func configure(items: [AddressesListDoorPreviewItem]) {
-        let currentPage = page(for: currentItemIdentity, in: items)
+    func configure(
+        items: [AddressesListDoorPreviewItem],
+        selectedIdentity: AddressesListDataItemIdentity?
+    ) {
+        let currentPage = page(for: selectedIdentity ?? currentItemIdentity, in: items)
 
         self.items = items
 
@@ -68,6 +71,18 @@ final class AddressesListDoorPreviewPagerCell: CustomBorderCollectionViewCell, H
         collectionView.layoutIfNeeded()
         setCurrentPage(currentPage)
         scrollToCurrentPage(animated: false)
+    }
+
+    func select(identity: AddressesListDataItemIdentity, animated: Bool) {
+        let selectedPage = page(for: identity, in: items)
+        guard items.indices.contains(selectedPage),
+              items[selectedPage].identity == identity
+        else {
+            return
+        }
+
+        setCurrentPage(selectedPage)
+        scrollToCurrentPage(animated: animated)
     }
 }
 

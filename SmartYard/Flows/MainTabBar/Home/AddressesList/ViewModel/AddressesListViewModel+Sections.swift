@@ -34,17 +34,8 @@ extension AddressesListViewModel {
                     return []
                 }
 
-                let makeDoorIdentity = { (door: APIDoor) -> AddressesListDataItemIdentity in
-                    AddressesListDataItemIdentity.object(
-                        addressId: addressId,
-                        domophoneId: door.domophoneId,
-                        doorId: door.doorId,
-                        entrance: door.entrance
-                    )
-                }
-
                 let doorItems = address.doors.map { door -> AddressesListDataItem in
-                    let identity = makeDoorIdentity(door)
+                    let identity = makeDoorIdentity(addressId: addressId, door: door)
 
                     return .object(
                         identity: identity,
@@ -55,7 +46,7 @@ extension AddressesListViewModel {
                 }
 
                 let doorPreviewItems = address.doors.map { door -> AddressesListDoorPreviewItem in
-                    let identity = makeDoorIdentity(door)
+                    let identity = makeDoorIdentity(addressId: addressId, door: door)
 
                     let camera = resolveCamera(for: door, camMap: camMapData)
 
@@ -143,6 +134,15 @@ extension AddressesListViewModel {
         }
 
         return (address, door)
+    }
+
+    func makeDoorIdentity(addressId: String, door: APIDoor) -> AddressesListDataItemIdentity {
+        AddressesListDataItemIdentity.object(
+            addressId: addressId,
+            domophoneId: door.domophoneId,
+            doorId: door.doorId,
+            entrance: door.entrance
+        )
     }
 
     func resolveCamera(

@@ -22,7 +22,7 @@ final class OnlineFullscreenViewController: BaseViewController {
 
     private let cameras: [CameraViewModel]
     private let playback: OnlinePlaybackCoordinating
-    private let accessAction: OnlineFullscreenAccessAction?
+    private let accessActions: [CameraID: OnlineFullscreenAccessAction]
     private let onDismiss: (CameraID) -> Void
 
     // MARK: - State
@@ -33,6 +33,7 @@ final class OnlineFullscreenViewController: BaseViewController {
     private var didNotifyDismiss = false
     private var isOpeningAccess = false
     private var isPagingHandoffActive = false
+    private var accessOpenedStateByCameraId: [CameraID: Bool]
     private var resetAccessButtonWorkItem: DispatchWorkItem?
 
     // MARK: - Constants
@@ -69,14 +70,15 @@ final class OnlineFullscreenViewController: BaseViewController {
         cameras: [CameraViewModel],
         initialCameraId: CameraID,
         playback: OnlinePlaybackCoordinating,
-        accessAction: OnlineFullscreenAccessAction? = nil,
+        accessActions: [CameraID: OnlineFullscreenAccessAction] = [:],
         onDismiss: @escaping (CameraID) -> Void
     ) {
         self.cameras = cameras
         self.playback = playback
-        self.accessAction = accessAction
+        self.accessActions = accessActions
         self.onDismiss = onDismiss
         self.currentIndex = cameras.firstIndex(where: { $0.id == initialCameraId }) ?? 0
+        self.accessOpenedStateByCameraId = accessActions.mapValues(\.isOpened)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -238,7 +240,7 @@ private extension OnlineFullscreenViewController {
     }
 
     func configureAccessButton() {
-        guard let accessAction else {
+        guard let accessAction = accessAction(for: currentIndex) else {
             playback.setControlsAutoHideEnabled(true)
             playback.removeAllRightAccessoryItems()
             return
@@ -246,7 +248,10 @@ private extension OnlineFullscreenViewController {
 
         playback.setControlsAutoHideEnabled(false)
         playback.setRightAccessoryItems([
-            accessButtonItem(isOpened: accessAction.isOpened, isEnabled: !accessAction.isOpened)
+            accessButtonItem(
+                isOpened: accessOpenedState(for: currentIndex),
+                isEnabled: !accessOpenedState(for: currentIndex)
+            )
         ])
     }
 
@@ -289,27 +294,37 @@ private extension OnlineFullscreenViewController {
     }
 
     func openButtonTapped() {
-        guard !isOpeningAccess, let accessAction else { return }
+        guard !isOpeningAccess,
+              let cameraId = currentCameraId,
+              let accessAction = accessAction(for: currentIndex)
+        else {
+            return
+        }
 
         isOpeningAccess = true
-        updateAccessButton(isOpened: false, isEnabled: false)
+        updateAccessButton(cameraId: cameraId, isOpened: false, isEnabled: false)
         accessAction.open { [weak self] didOpen in
             DispatchQueue.main.async {
                 guard let self else { return }
 
                 self.isOpeningAccess = false
                 guard didOpen else {
-                    self.updateAccessButton(isOpened: false, isEnabled: true)
+                    self.updateAccessButton(cameraId: cameraId, isOpened: false, isEnabled: true)
                     return
                 }
 
-                self.updateAccessButton(isOpened: true, isEnabled: false)
-                self.scheduleAccessButtonReset()
+                self.accessOpenedStateByCameraId[cameraId] = true
+                self.updateAccessButton(cameraId: cameraId, isOpened: true, isEnabled: false)
+                self.scheduleAccessButtonReset(cameraId: cameraId)
             }
         }
     }
 
-    func updateAccessButton(isOpened: Bool, isEnabled: Bool) {
+    func updateAccessButton(cameraId: CameraID, isOpened: Bool, isEnabled: Bool) {
+        guard currentCameraId == cameraId else {
+            return
+        }
+
         playback.updateRightAccessoryItem(id: AccessButton.id) { item in
             item.image = self.accessButtonIcon(isOpened: false)
             item.selectedImage = self.accessButtonIcon(isOpened: true)
@@ -321,11 +336,12 @@ private extension OnlineFullscreenViewController {
         }
     }
 
-    func scheduleAccessButtonReset() {
+    func scheduleAccessButtonReset(cameraId: CameraID) {
         resetAccessButtonWorkItem?.cancel()
 
         let workItem = DispatchWorkItem { [weak self] in
-            self?.updateAccessButton(isOpened: false, isEnabled: true)
+            self?.accessOpenedStateByCameraId[cameraId] = false
+            self?.updateAccessButton(cameraId: cameraId, isOpened: false, isEnabled: true)
         }
 
         resetAccessButtonWorkItem = workItem
@@ -369,6 +385,7 @@ private extension OnlineFullscreenViewController {
         let camera = cameras[index]
         Logger.logDebug("updateSelection id=\(camera.id) index=\(index)")
         playback.setSelectedCamera(id: camera.id, isMuted: camera.isMuted)
+        configureAccessButton()
 
         let indexPath = IndexPath(item: index, section: 0)
         if let cell = collectionView.cellForItem(at: indexPath) as? OnlineFullscreenCameraCell {
@@ -399,6 +416,31 @@ private extension OnlineFullscreenViewController {
 
         guard !isActive else { return }
         updateCurrentIndexIfNeeded()
+    }
+
+    func accessAction(for index: Int) -> OnlineFullscreenAccessAction? {
+        guard cameras.indices.contains(index) else {
+            return nil
+        }
+
+        return accessActions[cameras[index].id]
+    }
+
+    var currentCameraId: CameraID? {
+        guard cameras.indices.contains(currentIndex) else {
+            return nil
+        }
+
+        return cameras[currentIndex].id
+    }
+
+    func accessOpenedState(for index: Int) -> Bool {
+        guard cameras.indices.contains(index) else {
+            return false
+        }
+
+        let cameraId = cameras[index].id
+        return accessOpenedStateByCameraId[cameraId] ?? accessActions[cameraId]?.isOpened ?? false
     }
 
     func logCameraLandscapeEnabled() {
