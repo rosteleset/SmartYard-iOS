@@ -108,8 +108,14 @@ private extension CameraStreamProvider {
                 return
             }
 
+            var videos: [SYPlayerResourceVideo] = []
+            if let whepURL = camera.whepURL {
+                videos.append(SYPlayerResourceVideo(whepEndpointURL: whepURL))
+            }
+            videos.append(SYPlayerResourceVideo(url: url))
+
             let resource = SYPlayerResource(
-                url: url,
+                videos: videos,
                 previewImage: URL(string: camera.previewURL),
                 name: camera.name,
                 videoType: .online,

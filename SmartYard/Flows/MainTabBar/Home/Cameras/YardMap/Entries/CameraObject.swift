@@ -33,6 +33,20 @@ struct CameraObject: Equatable {
             return "empty"
         }
     }
+
+    var whepURL: URL? {
+        guard serverType == .flussonic else {
+            return nil
+        }
+
+        if let url = URL(string: baseURLString),
+           url.pathComponents.contains(where: { $0.lowercased() == "whep" }) {
+            return url
+        }
+
+        let base = baseURLString.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        return URL(string: "\(base)/whep/")
+    }
     
     var previewURL: String {
         switch self.serverType {
