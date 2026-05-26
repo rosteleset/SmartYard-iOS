@@ -801,7 +801,6 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
 
         networkEnv.backend.updateHealthURL(url)
         networkEnv.backend.setEnabled(true)
-        networkEnv.backend.reportMaybeAvailable()
     }
 
     private func makeHealthURL() -> URL? {

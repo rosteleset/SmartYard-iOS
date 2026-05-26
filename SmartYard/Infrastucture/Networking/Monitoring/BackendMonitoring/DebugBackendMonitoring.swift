@@ -44,5 +44,6 @@ final class DebugBackendMonitoring: BackendMonitoring {
     func setEnabled(_ enabled: Bool) { base.setEnabled(enabled) }
     func updateHealthURL(_ url: URL?) { base.updateHealthURL(url) }
     func reportUnavailable() { base.reportUnavailable() }
+    func reportUnavailable(requestURL: URL?) { base.reportUnavailable(requestURL: requestURL) }
     func reportMaybeAvailable() { base.reportMaybeAvailable() }
 }

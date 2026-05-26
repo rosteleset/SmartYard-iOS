@@ -45,19 +45,12 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
 
                 // Помечаем backend "упал" только если это сетевой фейл
                 // и запрос был к backend-хосту.
-                if Self.isBackendRequestError(error) {
-                    backend.reportUnavailable()
+                if let requestURL = Self.extractRequestURL(from: error),
+                   Self.isBackendRequestURL(requestURL),
+                   Self.isBackendNetworkError(error) {
+                    backend.reportUnavailable(requestURL: requestURL)
                 }
             })
-    }
-
-    private static func isBackendRequestError(_ error: Error) -> Bool {
-        guard let requestURL = extractRequestURL(from: error),
-              isBackendRequestURL(requestURL) else {
-            return false
-        }
-
-        return isBackendNetworkError(error)
     }
 
     private static func extractRequestURL(from error: Error) -> URL? {

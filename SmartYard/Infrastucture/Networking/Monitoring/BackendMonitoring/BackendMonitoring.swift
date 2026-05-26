@@ -15,8 +15,9 @@ protocol BackendMonitoring {
     func setEnabled(_ enabled: Bool)
     func updateHealthURL(_ url: URL?)
 
-    func reportUnavailable()          // ретраер/слой сети сигналит: «наш API недоступен»
-    func reportMaybeAvailable()       // сигнал: «похоже, оживает», триггерим /health-проверку
+    func reportUnavailable()                  // ретраер/слой сети сигналит: «наш API недоступен»
+    func reportUnavailable(requestURL: URL?)  // то же самое, но с endpoint-ом, который упал
+    func reportMaybeAvailable()               // сигнал: «похоже, оживает», триггерим /health-проверку
 }
 
 enum BackendStatus: Equatable { case available, unavailable, unknown }

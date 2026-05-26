@@ -26,6 +26,10 @@ final class BackendMonitor: BackendMonitoring {
         /// Сколько подряд успешных ответов нужно, чтобы вернуть available из unavailable.
         /// Обычно достаточно 1.
         var successesToDeclareAvailable: Int = 1
+
+        /// После того как backend уже был доступен, не объявляем весь backend недоступным
+        /// только из-за одного проблемного endpoint-а.
+        var distinctFailurePathsToProbeAfterEverAvailable: Int = 2
     }
 
     // MARK: - Public
@@ -45,6 +49,7 @@ final class BackendMonitor: BackendMonitoring {
 
     private var consecutiveFailures: Int = 0
     private var consecutiveSuccesses: Int = 0
+    private var consecutiveFailurePaths = Set<String>()
     private var isHealthCheckInFlight: Bool = false
 
     private var lastReason: String = ""
@@ -93,6 +98,7 @@ final class BackendMonitor: BackendMonitoring {
 
             self.consecutiveSuccesses += 1
             self.consecutiveFailures = 0
+            self.consecutiveFailurePaths.removeAll()
             self.hasEverBeenAvailableInSession = true
 
             Logger.logDebug("reportMaybeAvailable() success=\(self.consecutiveSuccesses)")
@@ -107,6 +113,11 @@ final class BackendMonitor: BackendMonitoring {
 
     /// Вызывать на сетевых ошибках (timeout / cannotConnect / dns / connectionLost и т.д.)
     func reportUnavailable() {
+        reportUnavailable(requestURL: nil)
+    }
+
+    /// Вызывать на сетевых ошибках (timeout / cannotConnect / dns / connectionLost и т.д.)
+    func reportUnavailable(requestURL: URL?) {
         queue.async {
             guard self.isEnabled else {
                 Logger.logDebug("reportUnavailable() ignored (disabled)")
@@ -115,6 +126,7 @@ final class BackendMonitor: BackendMonitoring {
 
             self.consecutiveFailures += 1
             self.consecutiveSuccesses = 0
+            self.consecutiveFailurePaths.insert(self.failurePath(for: requestURL))
 
             let threshold = self.hasEverBeenAvailableInSession
             ? self.config.failuresToDeclareUnavailableAfterEverAvailable
@@ -122,7 +134,15 @@ final class BackendMonitor: BackendMonitoring {
 
             guard self.consecutiveFailures >= threshold else { return }
 
-            Logger.logDebug("BackendMonitor: failures=\(self.consecutiveFailures) threshold=\(threshold) everAvailable=\(self.hasEverBeenAvailableInSession)")
+            if self.hasEverBeenAvailableInSession,
+               self.consecutiveFailurePaths.count < self.config.distinctFailurePathsToProbeAfterEverAvailable {
+                Logger.logDebug(
+                    "BackendMonitor: keep available, failures=\(self.consecutiveFailures) paths=\(self.consecutiveFailurePaths.count)"
+                )
+                return
+            }
+
+            Logger.logDebug("BackendMonitor: failures=\(self.consecutiveFailures) threshold=\(threshold) paths=\(self.consecutiveFailurePaths.count) everAvailable=\(self.hasEverBeenAvailableInSession)")
             self.probeHealthBeforeDeclaringUnavailable(reason: "network failures reached threshold")
         }
     }
@@ -132,8 +152,14 @@ final class BackendMonitor: BackendMonitoring {
     private func resetCounters() {
         consecutiveFailures = 0
         consecutiveSuccesses = 0
+        consecutiveFailurePaths.removeAll()
         isHealthCheckInFlight = false
         hasEverBeenAvailableInSession = false
+    }
+
+    private func failurePath(for url: URL?) -> String {
+        guard let url else { return "<unknown>" }
+        return url.path.isEmpty ? "/" : url.path
     }
 
     private func setStatus(_ newStatus: BackendStatus, reason: String) {
@@ -165,9 +191,12 @@ final class BackendMonitor: BackendMonitoring {
 
         isHealthCheckInFlight = true
 
-        var request = URLRequest(url: healthURL, timeoutInterval: 3)
+        var request = URLRequest(url: healthURL, timeoutInterval: 8)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let accessToken = AccessService.shared.accessToken {
+            request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        }
         request.httpBody = Data("{}".utf8)
 
         Logger.logDebug("BackendMonitor: health probe start url=\(healthURL.absoluteString)")
