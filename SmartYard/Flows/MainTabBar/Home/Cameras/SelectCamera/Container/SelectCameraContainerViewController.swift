@@ -28,6 +28,8 @@ final class SelectCameraContainerViewController: BaseViewController {
     private let selectDateTrigger = PublishSubject<Date>()
     private let selectCameraIdTrigger = PublishSubject<CameraID>()
 
+    private var isArchivePageEnabled = false
+
     // Stored "truth"
     private let selectedCameraIdRelay = BehaviorRelay<CameraID?>(value: nil)
     private let camerasByIdRelay = BehaviorRelay<[CameraID: CameraObject]>(value: [:])
@@ -79,6 +81,8 @@ final class SelectCameraContainerViewController: BaseViewController {
         pagingController.menuItemSize = .sizeToFit(minWidth: 100, height: 70)
         pagingController.collectionView.isScrollEnabled = false
         pagingController.contentInteraction = .none
+        pagingController.delegate = self
+        pagingController.register(SelectCameraPagingTitleCell.self, for: PagingIndexItem.self)
 
         onlinePage.delegate = self
         archivePage.delegate = self
@@ -134,11 +138,80 @@ final class SelectCameraContainerViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        output.isArchiveAvailable
+            .drive(with: self) { owner, isAvailable in
+                owner.setArchivePageEnabled(isAvailable)
+            }
+            .disposed(by: disposeBag)
+
         output.areRangesBeingLoaded
             .drive(with: self) { owner, isLoading in
                 owner.archivePage.updateLoader(isEnabled: isLoading, detailText: nil)
             }
             .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - Archive Availability
+private extension SelectCameraContainerViewController {
+    func setArchivePageEnabled(_ isEnabled: Bool) {
+        isArchivePageEnabled = isEnabled
+        SelectCameraPagingTitleCell.isArchiveEnabled = isEnabled
+        pagingController?.collectionView.reloadData()
+    }
+}
+
+// MARK: - PagingViewControllerDelegate
+extension SelectCameraContainerViewController: PagingViewControllerDelegate {
+    func pagingViewController(
+        _ pagingViewController: PagingViewController,
+        didSelectItem pagingItem: PagingItem
+    ) {
+        guard let item = pagingItem as? PagingIndexItem,
+              item.index == 1,
+              !isArchivePageEnabled else { return }
+
+        pagingViewController.select(index: 0, animated: true)
+    }
+
+    func pagingViewController(
+        _ pagingViewController: PagingViewController,
+        didScrollToItem pagingItem: PagingItem,
+        startingViewController: UIViewController?,
+        destinationViewController: UIViewController,
+        transitionSuccessful: Bool
+    ) {
+        guard transitionSuccessful, destinationViewController === archivePage, !isArchivePageEnabled else { return }
+        pagingViewController.select(index: 0, animated: true)
+    }
+}
+
+private final class SelectCameraPagingTitleCell: PagingTitleCell {
+    static var isArchiveEnabled = false
+
+    private var isArchiveItem = false
+
+    override func setPagingItem(_ pagingItem: PagingItem, selected: Bool, options: PagingOptions) {
+        isArchiveItem = (pagingItem as? PagingIndexItem)?.index == 1
+        super.setPagingItem(pagingItem, selected: selected, options: options)
+        updateArchiveAvailability()
+    }
+
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        updateArchiveAvailability()
+    }
+
+    private func updateArchiveAvailability() {
+        guard isArchiveItem, !Self.isArchiveEnabled else {
+            isUserInteractionEnabled = true
+            titleLabel.alpha = 1
+            return
+        }
+
+        isUserInteractionEnabled = false
+        titleLabel.textColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
+        titleLabel.alpha = 1
     }
 }
 

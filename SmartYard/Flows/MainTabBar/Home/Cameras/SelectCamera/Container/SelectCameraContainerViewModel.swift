@@ -102,10 +102,16 @@ final class SelectCameraContainerViewModel: BaseViewModel {
             })
             .disposed(by: disposeBag)
 
+        let isArchiveAvailable = rangesForCamera
+            .map { !($0?.isEmpty ?? true) }
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+
         return Output(
             address: .just(address),
             cameraConfiguration: .just((cameras: cameras, preselectedCameraId: preselectedCameraId)),
             rangesForCurrentCamera: rangesForCamera.asDriver(onErrorJustReturn: nil),
+            isArchiveAvailable: isArchiveAvailable,
             areRangesBeingLoaded: rangesLoadingTracker.asDriver()
         )
     }
@@ -150,6 +156,7 @@ extension SelectCameraContainerViewModel {
         let address: Driver<String>
         let cameraConfiguration: Driver<(cameras: [CameraObject], preselectedCameraId: CameraID)>
         let rangesForCurrentCamera: Driver<[APIArchiveRange]?>
+        let isArchiveAvailable: Driver<Bool>
         let areRangesBeingLoaded: Driver<Bool>
     }
 }
