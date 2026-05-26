@@ -2,7 +2,7 @@
 //  StoryItem.swift
 //  SmartYard
 //
-//  Created by Codex on 19/05/2026.
+//  Created by Александр Попов on 19.05.2026.
 //
 
 import Foundation

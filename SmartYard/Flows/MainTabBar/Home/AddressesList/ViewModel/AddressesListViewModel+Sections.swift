@@ -2,7 +2,7 @@
 //  AddressesListViewModel+Sections.swift
 //  SmartYard
 //
-//  Created by Codex on 21/04/2026.
+//  Created by Александр Попов on 21.04.2026.
 //
 
 import Foundation
