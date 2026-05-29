@@ -10,6 +10,7 @@ import RxCocoa
 import RxSwift
 import XCoordinator
 
+// swiftlint:disable:next type_body_length
 final class AddressSettingsViewModel: BaseViewModel {
     
     private let apiWrapper: APIWrapper
