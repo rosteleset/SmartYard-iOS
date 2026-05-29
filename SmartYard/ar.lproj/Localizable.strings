@@ -633,4 +633,8 @@
 
 /* MARK: - VALIDATION */
 
+"validation.name.firstName.invalid" = "Please enter a valid first name";
+"validation.name.lastName.invalid" = "Please enter a valid last name";
+"validation.name.patronymic.invalid" = "Please enter a valid patronymic";
+
 "validation.phone.invalidFormat" = "تنسيق الرقم غير صحيح";

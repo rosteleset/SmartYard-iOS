@@ -633,4 +633,8 @@
 
 /* MARK: - VALIDATION */
 
+"validation.name.firstName.invalid" = "Введите корректное имя";
+"validation.name.lastName.invalid" = "Введите корректную фамилию";
+"validation.name.patronymic.invalid" = "Введите корректное отчество";
+
 "validation.phone.invalidFormat" = "Неправильный формат номера";

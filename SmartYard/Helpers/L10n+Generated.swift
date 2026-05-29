@@ -899,6 +899,20 @@ extension L10n {
     }
 
     enum Validation {
+        enum Name {
+            enum FirstName {
+                static let invalid = tr("validation.name.firstName.invalid")
+            }
+
+            enum LastName {
+                static let invalid = tr("validation.name.lastName.invalid")
+            }
+
+            enum Patronymic {
+                static let invalid = tr("validation.name.patronymic.invalid")
+            }
+        }
+
         enum Phone {
             static let invalidFormat = tr("validation.phone.invalidFormat")
         }

@@ -12,7 +12,7 @@ enum NameDefaults {
         max: 60,
         defaultPattern: #"^[A-Za-zА-Яа-яЁё\-\s'’]+$"#,
         allowEmpty: false,
-        errorMessageKey: "Please enter a valid first name"
+        errorMessageKey: "validation.name.firstName.invalid"
     )
 
     static let last = NamePartConfig(
@@ -20,7 +20,7 @@ enum NameDefaults {
         max: 60,
         defaultPattern: #"^[A-Za-zА-Яа-яЁё\-\s'’]+$"#,
         allowEmpty: false,
-        errorMessageKey: "Please enter a valid last name"
+        errorMessageKey: "validation.name.lastName.invalid"
     )
 
     static let patronymic = NamePartConfig(
@@ -28,6 +28,6 @@ enum NameDefaults {
         max: 60,
         defaultPattern: #"^[A-Za-zА-Яа-яЁё\-\s]+$"#,
         allowEmpty: true,
-        errorMessageKey: "Please enter a valid patronymic"
+        errorMessageKey: "validation.name.patronymic.invalid"
     )
 }
