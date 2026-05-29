@@ -38,6 +38,14 @@ final class NotificationsViewController: BaseViewController, LoaderPresentable {
         configureUI()
         bind()
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
+            webView.notifySmartYardThemeChanged()
+        }
+    }
     
     private func configureUI() {
         webView.layerCornerRadius = 24
@@ -45,6 +53,7 @@ final class NotificationsViewController: BaseViewController, LoaderPresentable {
         webView.navigationDelegate = self
         webView.scrollView.isScrollEnabled = true
         webView.scrollView.contentInsetAdjustmentBehavior = .automatic
+        webView.addSmartYardThemeBridgeScript()
     }
     
     private func bind() {
@@ -77,11 +86,22 @@ final class NotificationsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+
+        ThemeManager.shared.currentTheme
+            .distinctUntilChanged()
+            .skip(1)
+            .subscribe(with: self) { owner, _ in
+                owner.webView.notifySmartYardThemeChanged()
+            }
+            .disposed(by: disposeBag)
     }
 
 }
 
 extension NotificationsViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.notifySmartYardThemeChanged()
+    }
     
     func webView(
         _ webView: WKWebView,

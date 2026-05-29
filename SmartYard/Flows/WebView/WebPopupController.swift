@@ -65,6 +65,14 @@ final class WebPopupController: BaseViewController, LoaderPresentable {
         super.viewDidLayoutSubviews()
         swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
+            webView.notifySmartYardThemeChanged()
+        }
+    }
     
     private func bind() {
         let input = WebViewModel.Input(
@@ -94,6 +102,14 @@ final class WebPopupController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+
+        ThemeManager.shared.currentTheme
+            .distinctUntilChanged()
+            .skip(1)
+            .subscribe(with: self) { owner, _ in
+                owner.webView.notifySmartYardThemeChanged()
+            }
+            .disposed(by: disposeBag)
     }
     
     fileprivate func removeUserContentController() {
@@ -110,6 +126,7 @@ final class WebPopupController: BaseViewController, LoaderPresentable {
         webView.configuration.userContentController.add(self, name: "loadingFinishedHandler")
         webView.configuration.userContentController.add(self, name: "refreshParentHandler")
         webView.configuration.userContentController.add(self, name: "isAppInstalledHandler")
+        webView.addSmartYardThemeBridgeScript()
         
         let javaScript = "bearerToken = function() { return \"" + accessToken + "\"; };"
         let script = WKUserScript(source: javaScript, injectionTime: .atDocumentStart, forMainFrameOnly: false)
@@ -358,6 +375,7 @@ extension WebPopupController: WKNavigationDelegate {
         webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='none';")
         webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='none';")
         webView.allowsLinkPreview = false
+        webView.notifySmartYardThemeChanged()
         disableDragAndDropInteraction()
     }
     // swiftlint:disable:next function_body_length

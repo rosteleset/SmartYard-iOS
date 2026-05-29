@@ -105,6 +105,14 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         refreshDisposable?.disposed(by: disposeBag)
         super.viewWillAppear(animated)
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
+            webView.notifySmartYardThemeChanged()
+        }
+    }
     
     fileprivate func disableDragAndDropInteraction() {
         var webScrollView: UIView?
@@ -127,6 +135,7 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         webView.configuration.userContentController.add(self, name: "loadingStartedHandler")
         webView.configuration.userContentController.add(self, name: "loadingFinishedHandler")
         webView.configuration.userContentController.add(self, name: "isAppInstalledHandler")
+        webView.addSmartYardThemeBridgeScript()
         
         let javaScript = "bearerToken = function() { return \"" + accessToken + "\"; };"
         let script = WKUserScript(source: javaScript, injectionTime: .atDocumentStart, forMainFrameOnly: false)
@@ -167,7 +176,18 @@ isAppInstalled = function(url, callbackFunc ) {
         webView.uiDelegate = self
         webView.scrollView.refreshControl = self.enableRefreshControl ? refreshControl : nil
         configureUserContentController()
+        bindThemeBridge()
         
+    }
+
+    private func bindThemeBridge() {
+        ThemeManager.shared.currentTheme
+            .distinctUntilChanged()
+            .skip(1)
+            .subscribe(with: self) { owner, _ in
+                owner.webView.notifySmartYardThemeChanged()
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bind() {
@@ -292,6 +312,7 @@ extension WebViewController: WKNavigationDelegate {
         webView.evaluateJavaScript("document.documentElement.offsetHeight", completionHandler: { height, _ in
             self.webContentHeight = height as? CGFloat
         })
+        webView.notifySmartYardThemeChanged()
     }
     
     func webView(

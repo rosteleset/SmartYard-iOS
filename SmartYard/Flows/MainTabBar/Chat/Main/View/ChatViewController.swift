@@ -32,7 +32,16 @@ final class ChatViewController: ChatController, LoaderPresentable, HasDisposeBag
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        chatView.addSmartYardThemeBridgeScript()
         bind()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
+            chatView.notifySmartYardThemeChanged()
+        }
     }
     
     private func bind() {
@@ -95,11 +104,23 @@ final class ChatViewController: ChatController, LoaderPresentable, HasDisposeBag
                 }
             )
             .disposed(by: disposeBag)
+
+        ThemeManager.shared.currentTheme
+            .distinctUntilChanged()
+            .skip(1)
+            .subscribe(with: self) { owner, _ in
+                owner.chatView.notifySmartYardThemeChanged()
+            }
+            .disposed(by: disposeBag)
     }
     
 }
 extension ChatViewController {
     
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView.notifySmartYardThemeChanged()
+    }
+
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
