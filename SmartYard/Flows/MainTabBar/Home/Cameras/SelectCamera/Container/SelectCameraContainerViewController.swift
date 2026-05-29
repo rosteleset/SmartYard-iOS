@@ -106,9 +106,7 @@ final class SelectCameraContainerViewController: BaseViewController {
 
         output.cameraConfiguration
             .drive(with: self) { owner, config in
-                let dict: [CameraID: CameraObject] = Dictionary(
-                    uniqueKeysWithValues: config.cameras.map { ($0.id, $0) }
-                )
+                let dict = config.cameras.dictionaryByIdKeepingFirst()
 
                 owner.camerasByIdRelay.accept(dict)
 

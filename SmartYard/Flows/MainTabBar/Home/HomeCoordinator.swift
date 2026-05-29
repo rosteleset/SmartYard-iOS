@@ -32,9 +32,9 @@ enum HomeRoute: Route {
     case cameraContainer(address: String, cameras: [CameraObject], selectedCamera: CameraObject)
     case onlineFullscreen(
         cameras: [CameraObject],
-        selectedCamera: CameraObject,
-        accessActions: [CameraID: OnlineFullscreenAccessAction],
-        onDismiss: ((CameraID) -> Void)?
+        selectedIndex: Int,
+        accessActions: [Int: OnlineFullscreenAccessAction],
+        onDismiss: ((Int) -> Void)?
     )
     case yardCamerasMap(houseId: String, address: String, cameras: [CameraObject]?)
     case yardCamerasList(houseId: String, address: String, tree: CamerasTree, path: [Int])
@@ -297,7 +297,7 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
             
             return .push(vc)
 
-        case let .onlineFullscreen(cameras, selectedCamera, accessActions, onDismiss):
+        case let .onlineFullscreen(cameras, selectedIndex, accessActions, onDismiss):
             let provider = CameraStreamProvider(cameras: cameras, ttl: 120)
             let playback = OnlinePlaybackCoordinator(provider: provider)
             let cameraViewModels = makeOnlineCameraViewModels(from: cameras)
@@ -307,11 +307,11 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
 
             let vc = OnlineFullscreenViewController(
                 cameras: cameraViewModels,
-                initialCameraId: selectedCamera.id,
+                initialIndex: selectedIndex,
                 playback: playback,
                 accessActions: accessActions,
-                onDismiss: { cameraId in
-                    onDismiss?(cameraId)
+                onDismiss: { index in
+                    onDismiss?(index)
                     playback.stopHard()
                 }
             )
@@ -406,12 +406,21 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
 
 private extension HomeCoordinator {
     func makeOnlineCameraViewModels(from cameras: [CameraObject]) -> [CameraViewModel] {
-        cameras.map { camera in
-            CameraViewModel(
+        cameras.enumerated().map { index, camera in
+            let url = URL(string: camera.baseURLString)!
+            var videos: [SYPlayerResourceVideo] = []
+
+            if let whepURL = camera.whepURL {
+                videos.append(SYPlayerResourceVideo(whepEndpointURL: whepURL))
+            }
+            videos.append(SYPlayerResourceVideo(url: url))
+
+            return CameraViewModel(
+                identity: "\(index)_\(camera.id)",
                 id: camera.id,
                 number: camera.cameraNumber,
                 resource: SYPlayerResource(
-                    url: URL(string: camera.baseURLString)!,
+                    videos: videos,
                     previewImage: URL(string: camera.previewURL),
                     name: camera.name,
                     videoType: .online,

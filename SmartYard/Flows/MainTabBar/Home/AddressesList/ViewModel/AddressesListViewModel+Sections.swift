@@ -149,9 +149,11 @@ extension AddressesListViewModel {
         for door: APIDoor,
         camMap: CamMapCCTVResponseData
     ) -> CameraObject? {
-        guard let domophoneId = Int(door.domophoneId),
-              let mappedCamera = camMap.first(where: { $0.id == domophoneId })
-        else {
+        guard let domophoneId = Int(door.domophoneId) else {
+            return nil
+        }
+
+        guard let mappedCamera = camMap.first(where: { $0.id == domophoneId }) else {
             return nil
         }
 

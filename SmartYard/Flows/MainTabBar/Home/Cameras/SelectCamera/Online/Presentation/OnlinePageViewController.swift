@@ -23,6 +23,8 @@ final class OnlinePageViewController: BaseViewController {
 
     private var isTransitioningToFullscreen = false
     private var hasAppearedOnce = false
+    private var pendingFullscreenRestoreIndex: Int?
+    private var lockedCenteredIndexAfterFullscreen: Int?
 
     private let config = OnlinePageContext(
         cameras: BehaviorRelay<[CameraViewModel]>(value: []),
@@ -42,6 +44,10 @@ final class OnlinePageViewController: BaseViewController {
         let layout = OnlinePageLayoutBuilder().makeLayout(
             onTopCenteredIndex: { [weak self] index in
                 guard let self else { return }
+                if let lockedIndex = self.lockedCenteredIndexAfterFullscreen {
+                    Logger.logDebug("ignore centered index=\(index) locked=\(lockedIndex)")
+                    return
+                }
                 guard self.selectionNavigator.shouldForwardTopCenteredIndex(index) else { return }
                 self.events.didCenterMainIndex.accept(index)
             }
@@ -76,6 +82,7 @@ final class OnlinePageViewController: BaseViewController {
         Logger.logDebug("viewDidLoad")
 
         view.addSubview(collectionView)
+        addInlineSelectionUnlockGesture()
 
         bind()
         events.viewDidLoad.accept(())
@@ -102,7 +109,13 @@ final class OnlinePageViewController: BaseViewController {
             hasAppearedOnce = true
             return
         }
-        playbackBinder?.restorePlayback()
+        if let pendingFullscreenRestoreIndex {
+            self.pendingFullscreenRestoreIndex = nil
+            restoreInlineSelection(index: pendingFullscreenRestoreIndex)
+            playbackBinder?.restoreAfterFullscreen(selectedIndex: pendingFullscreenRestoreIndex, retryCount: 3)
+        } else {
+            playbackBinder?.restorePlayback()
+        }
         playbackBinder?.restoreCloseHandler()
     }
 
@@ -168,8 +181,8 @@ final class OnlinePageViewController: BaseViewController {
         if let output {
             pb.bind(
                 state: output.state,
-                onRequestFullscreen: { [weak self] cameraId in
-                    self?.presentFullscreen(startingAt: cameraId)
+                onRequestFullscreen: { [weak self] index in
+                    self?.presentFullscreen(startingAt: index)
                 },
                 disposeBag: disposeBag
             )
@@ -224,8 +237,8 @@ private extension OnlinePageViewController {
         if let playbackBinder {
             playbackBinder.bind(
                 state: output.state,
-                onRequestFullscreen: { [weak self] cameraId in
-                    self?.presentFullscreen(startingAt: cameraId)
+                onRequestFullscreen: { [weak self] index in
+                    self?.presentFullscreen(startingAt: index)
                 },
                 disposeBag: disposeBag
             )
@@ -239,6 +252,17 @@ private extension OnlinePageViewController {
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
+
+extension OnlinePageViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        true
+    }
+}
+
 // MARK: - Resource
 
 private extension OnlinePageViewController {
@@ -246,9 +270,15 @@ private extension OnlinePageViewController {
     func makeResource(from camera: CameraObject) -> SYPlayerResource {
         let preview = URL(string: camera.previewURL)
         let url = URL(string: camera.baseURLString)!
+        var videos: [SYPlayerResourceVideo] = []
+
+        if let whepURL = camera.whepURL {
+            videos.append(SYPlayerResourceVideo(whepEndpointURL: whepURL))
+        }
+        videos.append(SYPlayerResourceVideo(url: url))
 
         return SYPlayerResource(
-            url: url,
+            videos: videos,
             previewImage: preview,
             name: camera.name,
             videoType: .online,
@@ -257,11 +287,14 @@ private extension OnlinePageViewController {
     }
 
     func makeCameraVMs(from cameras: [CameraObject]) -> [CameraViewModel] {
-        cameras.map(makeCameraVM)
+        cameras.enumerated().map { index, camera in
+            makeCameraVM(from: camera, index: index)
+        }
     }
 
-    func makeCameraVM(from camera: CameraObject) -> CameraViewModel {
+    func makeCameraVM(from camera: CameraObject, index: Int) -> CameraViewModel {
         CameraViewModel(
+            identity: "\(index)_\(camera.id)",
             id: camera.id,
             number: camera.cameraNumber,
             resource: makeResource(from: camera),
@@ -274,7 +307,7 @@ private extension OnlinePageViewController {
 
 private extension OnlinePageViewController {
 
-    func presentFullscreen(startingAt cameraId: CameraID) {
+    func presentFullscreen(startingAt index: Int) {
         guard presentedViewController == nil else {
             Logger.logDebug("presentFullscreen blocked: already presented")
             return
@@ -291,28 +324,34 @@ private extension OnlinePageViewController {
             Logger.logError("presentFullscreen blocked: empty cameras")
             return
         }
+        guard state.cameras.indices.contains(index) else {
+            Logger.logError("presentFullscreen blocked: missing index=\(index)")
+            return
+        }
 
-        Logger.logDebug("presentFullscreen start id=\(cameraId)")
+        Logger.logDebug("presentFullscreen start index=\(index) id=\(state.cameras[index].id)")
         logCameraFullscreenOpened()
 
         isTransitioningToFullscreen = true
 
         let vc = OnlineFullscreenViewController(
             cameras: state.cameras,
-            initialCameraId: cameraId,
+            initialIndex: index,
             playback: playbackCoordinator,
-            onDismiss: { [weak self] selectedId in
+            onDismiss: { [weak self] selectedIndex in
                 guard let self else { return }
-                Logger.logDebug("fullscreen onDismiss id=\(selectedId)")
+                Logger.logDebug("fullscreen onDismiss index=\(selectedIndex)")
+                self.pendingFullscreenRestoreIndex = selectedIndex
+                self.restoreInlineSelection(index: selectedIndex)
                 // триггерим обычный путь: events -> VM -> selectionIntent -> navigator
-                self.events.didTapPreviewId.accept(selectedId)
+                self.events.didTapPreviewIndex.accept(selectedIndex)
 
                 // меняем режим на обычный
                 self.playbackCoordinator?.setMode(.default)
                 self.configureInlinePlaybackControls()
 
                 // чуть поможем attach-у (на всякий)
-                self.playbackBinder?.restoreAfterFullscreen(selectedId: selectedId, retryCount: 3)
+                self.playbackBinder?.restoreAfterFullscreen(selectedIndex: selectedIndex, retryCount: 3)
                 self.playbackBinder?.restoreCloseHandler()
             }
         )
@@ -322,6 +361,36 @@ private extension OnlinePageViewController {
         present(vc, animated: true) { [weak self] in
             self?.isTransitioningToFullscreen = false
         }
+    }
+
+    func restoreInlineSelection(index: Int) {
+        guard let state = latestState else {
+            Logger.logError("restoreInlineSelection blocked: missing state index=\(index)")
+            return
+        }
+        guard state.cameras.indices.contains(index) else {
+            Logger.logError("restoreInlineSelection missing index=\(index) cameras=\(state.cameras.count)")
+            return
+        }
+
+        lockedCenteredIndexAfterFullscreen = index
+        selectionNavigator.apply(
+            OnlineSelectionIntent(index: index, cameraId: state.cameras[index].id, source: .numberTap),
+            in: collectionView
+        )
+        collectionView.layoutIfNeeded()
+    }
+
+    func addInlineSelectionUnlockGesture() {
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(handleInlineSelectionPan(_:)))
+        gesture.cancelsTouchesInView = false
+        gesture.delegate = self
+        collectionView.addGestureRecognizer(gesture)
+    }
+
+    @objc func handleInlineSelectionPan(_ recognizer: UIPanGestureRecognizer) {
+        guard recognizer.state == .began else { return }
+        lockedCenteredIndexAfterFullscreen = nil
     }
 
     func logCameraFullscreenOpened() {

@@ -166,7 +166,7 @@ PODS:
   - SearchTextField (1.2.4)
   - SHSPhoneComponent (2.32)
   - SkeletonView (1.30.4)
-  - SmartYardVideoPlayer (0.1.11):
+  - SmartYardVideoPlayer (0.1.12):
     - Kingfisher
     - KTVHTTPCache
     - lottie-ios
@@ -254,7 +254,7 @@ DEPENDENCIES:
   - SearchTextField
   - SHSPhoneComponent
   - SkeletonView
-  - SmartYardVideoPlayer (from `https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git`, tag `0.1.11`)
+  - SmartYardVideoPlayer (from `https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git`, tag `0.1.12`)
   - SnapKit (~> 5.7)
   - SSCustomTabbar (from `https://github.com/rosteleset/SSCustomTabbar.git`, branch `feature/add-animation-options`)
   - SwifterSwift (from `https://github.com/SwifterSwift/SwifterSwift.git`, branch `master`)
@@ -330,7 +330,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/rosteleset/PopOverDatePicker.git
   SmartYardVideoPlayer:
     :git: https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git
-    :tag: 0.1.11
+    :tag: 0.1.12
   SSCustomTabbar:
     :branch: feature/add-animation-options
     :git: https://github.com/rosteleset/SSCustomTabbar.git
@@ -350,7 +350,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/rosteleset/PopOverDatePicker.git
   SmartYardVideoPlayer:
     :git: https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git
-    :tag: 0.1.11
+    :tag: 0.1.12
   SSCustomTabbar:
     :commit: 020adeb66030c710e636dc56bcbfec1ac2c907ed
     :git: https://github.com/rosteleset/SSCustomTabbar.git
@@ -402,7 +402,7 @@ SPEC CHECKSUMS:
   SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
   SHSPhoneComponent: c491cf87a0d5c3fb11b8f54100d05fd2706cb401
   SkeletonView: 5a050f6411e697abd4cda0a8d767013399dccd69
-  SmartYardVideoPlayer: b123679205ef9a9b0c025451f4ab4d262176ce03
+  SmartYardVideoPlayer: 5fda218df514ef8b243547ab25b3b4d712bac7c5
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
   SSCustomTabbar: e18f8aa256bce5c8a4742e53e638f64b33fb0e10
   SwifterSwift: ac4936934bcf86b4e0f717cc022eef64b335a826
@@ -414,6 +414,6 @@ SPEC CHECKSUMS:
   WKCookieWebView: 528260c9cf7d89d312d61639cfca75c5618326a2
   XCoordinator: 2cf9f72e10998b7a4a4bbeac3d07e071ea82fca3
 
-PODFILE CHECKSUM: bba4e1549bf57266d4649926932dc31ae7f6b388
+PODFILE CHECKSUM: a5e590d7193592540c3d354b65187303cb25a690
 
 COCOAPODS: 1.16.2

@@ -42,11 +42,12 @@ final class OnlinePageViewModel: BaseViewModel {
             }
             .compactMap { $0 }
 
-        // 2) preview tap id -> index
-        let didTapPreviewIndex = input.events.didTapPreviewId
+        // 2) preview tap index -> safe index
+        let didTapPreviewIndex = input.events.didTapPreviewIndex
             .asObservable()
-            .withLatestFrom(cameras) { id, cams -> Int? in
-                cams.firstIndex(where: { $0.id == id })
+            .withLatestFrom(cameras) { index, cams -> Int? in
+                guard !cams.isEmpty else { return nil }
+                return min(max(index, 0), cams.count - 1)
             }
             .compactMap { $0 }
 
@@ -58,12 +59,21 @@ final class OnlinePageViewModel: BaseViewModel {
             }
             .compactMap { $0 }
 
+        let preselectedSelection: Observable<(index: Int, source: OnlineSelectionSource)> = preselectedIndex
+            .map { (index: $0, source: .preselected) }
+        let mainCenteredSelection: Observable<(index: Int, source: OnlineSelectionSource)> = didCenterMainIndex
+            .map { (index: $0, source: .mainCentered) }
+        let previewTapSelection: Observable<(index: Int, source: OnlineSelectionSource)> = didTapPreviewIndex
+            .map { (index: $0, source: .numberTap) }
+
         // Unified selection intents (index is the main currency)
-        let selectionIntent = Observable.merge(
-            preselectedIndex.map { (index: $0, source: OnlineSelectionSource.preselected) },
-            didCenterMainIndex.map { (index: $0, source: OnlineSelectionSource.mainCentered) },
-            didTapPreviewIndex.map { (index: $0, source: OnlineSelectionSource.numberTap) }
+        let selectionEvent: Observable<(index: Int, source: OnlineSelectionSource)> = Observable.merge(
+            preselectedSelection,
+            mainCenteredSelection,
+            previewTapSelection
         )
+
+        let selectionIntent: Observable<OnlineSelectionIntent> = selectionEvent
             .withLatestFrom(cameras) { pair, cams -> OnlineSelectionIntent? in
                 guard !cams.isEmpty else { return nil }
                 let clamped = min(max(pair.index, 0), cams.count - 1)
@@ -71,7 +81,7 @@ final class OnlinePageViewModel: BaseViewModel {
                 return OnlineSelectionIntent(index: clamped, cameraId: id, source: pair.source)
             }
             .compactMap { $0 }
-            .distinctUntilChanged { $0.cameraId == $1.cameraId }
+            .distinctUntilChanged { $0.index == $1.index && $0.cameraId == $1.cameraId }
             .do(onNext: { intent in
                 Logger.logDebug(
                     "selectionIntent id=\(intent.cameraId) index=\(intent.index) source=\(intent.source.logValue)"
@@ -79,17 +89,23 @@ final class OnlinePageViewModel: BaseViewModel {
             })
             .share(replay: 1, scope: .whileConnected)
 
-        let selectedCameraId = selectionIntent
-            .map(\.cameraId)
+        let selectedCameraId: Observable<CameraID> = selectionIntent
+            .map { $0.cameraId }
+            .distinctUntilChanged()
+            .share(replay: 1, scope: .whileConnected)
+
+        let selectedIndex: Observable<Int> = selectionIntent
+            .map { $0.index }
             .distinctUntilChanged()
             .share(replay: 1, scope: .whileConnected)
 
         let state = Observable
-            .combineLatest(cameras, selectedCameraId)
-            .map { cams, selectedId in
+            .combineLatest(cameras, selectedCameraId, selectedIndex)
+            .map { cams, selectedId, selectedIndex in
                 OnlinePageState(
                     cameras: cams,
-                    selectedCameraId: selectedId
+                    selectedCameraId: selectedId,
+                    selectedIndex: selectedIndex
                 )
             }
             .asDriverOnErrorJustComplete()
@@ -103,7 +119,7 @@ final class OnlinePageViewModel: BaseViewModel {
         return Output(
             state: state,
             sections: sections,
-            selection: selectionIntent.asSignal(onErrorSignalWith: .empty())
+            selection: selectionIntent.asSignal(onErrorSignalWith: Signal<OnlineSelectionIntent>.empty())
         )
     }
 

@@ -20,8 +20,8 @@ extension OnlineItem: IdentifiableType, Equatable {
 
     var identity: String {
         switch self {
-        case .camera(let model): return "camera_\(model.id)"
-        case .number(let model): return "number_\(model.cameraId)"
+        case .camera(let model): return "camera_\(model.identity)"
+        case .number(let model): return "number_\(model.identity)"
         }
     }
 

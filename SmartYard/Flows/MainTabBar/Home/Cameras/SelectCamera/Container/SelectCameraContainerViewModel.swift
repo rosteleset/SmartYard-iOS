@@ -40,7 +40,7 @@ final class SelectCameraContainerViewModel: BaseViewModel {
         self.address = address
         self.cameras = cameras
         self.preselectedCameraId = selectedCamera.id
-        self.camerasById = Dictionary(uniqueKeysWithValues: cameras.map { ($0.id, $0) })
+        self.camerasById = cameras.dictionaryByIdKeepingFirst()
 
         self.router = router
         self.apiWrapper = apiWrapper

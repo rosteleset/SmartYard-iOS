@@ -450,7 +450,7 @@ final class AddressesListViewModel: BaseViewModel {
                         self.shouldShowEntrancePreviews,
                         let loadedAddresses,
                         let resolvedDoor = self.resolveDoor(identity: identity, in: loadedAddresses),
-                        let camera = self.resolveCamera(for: resolvedDoor.door, camMap: camMap)
+                        self.resolveCamera(for: resolvedDoor.door, camMap: camMap) != nil
                     else {
                         return
                     }
@@ -467,11 +467,11 @@ final class AddressesListViewModel: BaseViewModel {
                         return (identity, camera)
                     }
 
-                    var identityByCameraId: [CameraID: AddressesListDataItemIdentity] = [:]
-                    var accessActions: [CameraID: OnlineFullscreenAccessAction] = [:]
-                    previewEntries.forEach { entry in
-                        identityByCameraId[entry.camera.id] = entry.identity
-                        accessActions[entry.camera.id] = OnlineFullscreenAccessAction(
+                    var identityByIndex: [Int: AddressesListDataItemIdentity] = [:]
+                    var accessActions: [Int: OnlineFullscreenAccessAction] = [:]
+                    previewEntries.enumerated().forEach { index, entry in
+                        identityByIndex[index] = entry.identity
+                        accessActions[index] = OnlineFullscreenAccessAction(
                             isOpened: objectAccessDict[entry.identity, default: false],
                             open: { [weak self] completion in
                                 guard let self else {
@@ -485,14 +485,19 @@ final class AddressesListViewModel: BaseViewModel {
                     }
 
                     let cameras = previewEntries.map(\.camera)
+                    let selectedIdentity = self.makeDoorIdentity(
+                        addressId: resolvedDoor.address.houseId,
+                        door: resolvedDoor.door
+                    )
+                    let selectedIndex = previewEntries.firstIndex { $0.identity == selectedIdentity } ?? 0
 
                     self.router.trigger(
                         .onlineFullscreen(
                             cameras: cameras,
-                            selectedCamera: camera,
+                            selectedIndex: selectedIndex,
                             accessActions: accessActions,
-                            onDismiss: { [weak self] cameraId in
-                                guard let identity = identityByCameraId[cameraId] else {
+                            onDismiss: { [weak self] index in
+                                guard let identity = identityByIndex[index] else {
                                     return
                                 }
 
@@ -557,11 +562,10 @@ final class AddressesListViewModel: BaseViewModel {
                                 
                                 if response.type == .map {
                                     let camObjects: [CameraObject] = {
-                                        
                                         guard let cams = response.cameras else {
                                             return []
                                         }
-                                        let result = cams.enumerated().map { offset, element in
+                                        return cams.enumerated().map { offset, element in
                                             CameraObject(
                                                 id: element.id,
                                                 position: element.coordinate,
@@ -574,8 +578,6 @@ final class AddressesListViewModel: BaseViewModel {
                                                 hasSound: element.hasSound
                                             )
                                         }
-                                        return result
-                                        
                                     }()
                                     self.router.trigger(
                                         .yardCamerasMap(

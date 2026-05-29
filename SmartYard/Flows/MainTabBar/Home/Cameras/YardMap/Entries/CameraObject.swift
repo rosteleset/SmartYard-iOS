@@ -275,3 +275,12 @@ struct CameraObject: Equatable {
         self.hasSound = hasSound ?? false
     }
 }
+
+extension Sequence where Element == CameraObject {
+    func dictionaryByIdKeepingFirst() -> [CameraID: CameraObject] {
+        Dictionary(
+            map { ($0.id, $0) },
+            uniquingKeysWith: { first, _ in first }
+        )
+    }
+}

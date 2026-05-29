@@ -23,7 +23,7 @@ final class CameraStreamProvider: PlayerResourceProviding {
     private var inFlight: [CameraID: UUID] = [:]
 
     init(cameras: [CameraObject], ttl: TimeInterval = 20) {
-        self.camerasById = Dictionary(uniqueKeysWithValues: cameras.map { ($0.id, $0) })
+        self.camerasById = cameras.dictionaryByIdKeepingFirst()
         self.ttl = ttl
     }
 

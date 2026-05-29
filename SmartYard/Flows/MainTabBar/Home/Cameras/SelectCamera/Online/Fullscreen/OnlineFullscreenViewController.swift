@@ -22,8 +22,8 @@ final class OnlineFullscreenViewController: BaseViewController {
 
     private let cameras: [CameraViewModel]
     private let playback: OnlinePlaybackCoordinating
-    private let accessActions: [CameraID: OnlineFullscreenAccessAction]
-    private let onDismiss: (CameraID) -> Void
+    private let accessActions: [Int: OnlineFullscreenAccessAction]
+    private let onDismiss: (Int) -> Void
 
     // MARK: - State
 
@@ -33,7 +33,7 @@ final class OnlineFullscreenViewController: BaseViewController {
     private var didNotifyDismiss = false
     private var isOpeningAccess = false
     private var isPagingHandoffActive = false
-    private var accessOpenedStateByCameraId: [CameraID: Bool]
+    private var accessOpenedStateByIndex: [Int: Bool]
     private var resetAccessButtonWorkItem: DispatchWorkItem?
 
     // MARK: - Constants
@@ -68,17 +68,17 @@ final class OnlineFullscreenViewController: BaseViewController {
 
     init(
         cameras: [CameraViewModel],
-        initialCameraId: CameraID,
+        initialIndex: Int,
         playback: OnlinePlaybackCoordinating,
-        accessActions: [CameraID: OnlineFullscreenAccessAction] = [:],
-        onDismiss: @escaping (CameraID) -> Void
+        accessActions: [Int: OnlineFullscreenAccessAction] = [:],
+        onDismiss: @escaping (Int) -> Void
     ) {
         self.cameras = cameras
         self.playback = playback
         self.accessActions = accessActions
         self.onDismiss = onDismiss
-        self.currentIndex = cameras.firstIndex(where: { $0.id == initialCameraId }) ?? 0
-        self.accessOpenedStateByCameraId = accessActions.mapValues(\.isOpened)
+        self.currentIndex = cameras.indices.contains(initialIndex) ? initialIndex : 0
+        self.accessOpenedStateByIndex = accessActions.mapValues(\.isOpened)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -295,33 +295,33 @@ private extension OnlineFullscreenViewController {
 
     func openButtonTapped() {
         guard !isOpeningAccess,
-              let cameraId = currentCameraId,
               let accessAction = accessAction(for: currentIndex)
         else {
             return
         }
 
         isOpeningAccess = true
-        updateAccessButton(cameraId: cameraId, isOpened: false, isEnabled: false)
+        let index = currentIndex
+        updateAccessButton(index: index, isOpened: false, isEnabled: false)
         accessAction.open { [weak self] didOpen in
             DispatchQueue.main.async {
                 guard let self else { return }
 
                 self.isOpeningAccess = false
                 guard didOpen else {
-                    self.updateAccessButton(cameraId: cameraId, isOpened: false, isEnabled: true)
+                    self.updateAccessButton(index: index, isOpened: false, isEnabled: true)
                     return
                 }
 
-                self.accessOpenedStateByCameraId[cameraId] = true
-                self.updateAccessButton(cameraId: cameraId, isOpened: true, isEnabled: false)
-                self.scheduleAccessButtonReset(cameraId: cameraId)
+                self.accessOpenedStateByIndex[index] = true
+                self.updateAccessButton(index: index, isOpened: true, isEnabled: false)
+                self.scheduleAccessButtonReset(index: index)
             }
         }
     }
 
-    func updateAccessButton(cameraId: CameraID, isOpened: Bool, isEnabled: Bool) {
-        guard currentCameraId == cameraId else {
+    func updateAccessButton(index: Int, isOpened: Bool, isEnabled: Bool) {
+        guard currentIndex == index else {
             return
         }
 
@@ -336,12 +336,12 @@ private extension OnlineFullscreenViewController {
         }
     }
 
-    func scheduleAccessButtonReset(cameraId: CameraID) {
+    func scheduleAccessButtonReset(index: Int) {
         resetAccessButtonWorkItem?.cancel()
 
         let workItem = DispatchWorkItem { [weak self] in
-            self?.accessOpenedStateByCameraId[cameraId] = false
-            self?.updateAccessButton(cameraId: cameraId, isOpened: false, isEnabled: true)
+            self?.accessOpenedStateByIndex[index] = false
+            self?.updateAccessButton(index: index, isOpened: false, isEnabled: true)
         }
 
         resetAccessButtonWorkItem = workItem
@@ -400,9 +400,9 @@ private extension OnlineFullscreenViewController {
 
         guard cameras.indices.contains(currentIndex) else { return }
         let cameraId = cameras[currentIndex].id
-        Logger.logDebug("notifyDismiss id=\(cameraId)")
+        Logger.logDebug("notifyDismiss id=\(cameraId) index=\(currentIndex)")
         logCameraFullscreenClosed()
-        onDismiss(cameraId)
+        onDismiss(currentIndex)
 
         let indexPath = IndexPath(item: currentIndex, section: 0)
         if let cell = collectionView.cellForItem(at: indexPath) as? OnlineFullscreenCameraCell {
@@ -423,7 +423,7 @@ private extension OnlineFullscreenViewController {
             return nil
         }
 
-        return accessActions[cameras[index].id]
+        return accessActions[index]
     }
 
     var currentCameraId: CameraID? {
@@ -439,8 +439,7 @@ private extension OnlineFullscreenViewController {
             return false
         }
 
-        let cameraId = cameras[index].id
-        return accessOpenedStateByCameraId[cameraId] ?? accessActions[cameraId]?.isOpened ?? false
+        return accessOpenedStateByIndex[index] ?? accessActions[index]?.isOpened ?? false
     }
 
     func logCameraLandscapeEnabled() {

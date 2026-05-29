@@ -13,9 +13,11 @@ typealias CameraID = Int
 struct OnlinePageState {
     let cameras: [CameraViewModel]
     let selectedCameraId: CameraID
+    let selectedIndex: Int
 }
 
 struct CameraViewModel {
+    let identity: String
     let id: CameraID
     let number: Int
     let resource: SYPlayerResource
@@ -25,6 +27,7 @@ struct CameraViewModel {
 extension CameraViewModel {
     var cameraCell: CameraViewCellModel {
         return CameraViewCellModel(
+            identity: identity,
             id: id,
             isMuted: isMuted
         )
@@ -32,6 +35,7 @@ extension CameraViewModel {
 
     var numberCell: CameraNumberCellViewModel {
         return CameraNumberCellViewModel(
+            identity: identity,
             cameraId: id,
             number: number
         )

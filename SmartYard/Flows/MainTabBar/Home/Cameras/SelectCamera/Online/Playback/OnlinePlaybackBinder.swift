@@ -27,10 +27,10 @@ final class OnlinePlaybackBinder {
     private var lastCameraOrder: [CameraID] = []
     private var latestState: OnlinePageState?
 
-    private var lastForcedCameraId: CameraID?
+    private var lastForcedIndex: Int?
     private weak var lastForcedCameraCell: CameraViewCell?
 
-    private var onRequestFullscreen: ((CameraID) -> Void)?
+    private var onRequestFullscreen: ((Int) -> Void)?
 
     // MARK: - Init
 
@@ -43,7 +43,7 @@ final class OnlinePlaybackBinder {
 
     func bind(
         state: Driver<OnlinePageState>,
-        onRequestFullscreen: @escaping (CameraID) -> Void,
+        onRequestFullscreen: @escaping (Int) -> Void,
         disposeBag: DisposeBag
     ) {
         Logger.logDebug("bind")
@@ -65,45 +65,47 @@ final class OnlinePlaybackBinder {
                 }
 
                 // 2) selected & muted
-                guard let selected = state.cameras.first(where: { $0.id == state.selectedCameraId }) else {
+                guard state.cameras.indices.contains(state.selectedIndex) else {
                     Logger.logError(
-                        "selected camera missing id=\(state.selectedCameraId) cameras=\(state.cameras.count)"
+                        "selected camera missing index=\(state.selectedIndex) cameras=\(state.cameras.count)"
                     )
                     return
                 }
+                let selected = state.cameras[state.selectedIndex]
                 owner.playback.setSelectedCamera(id: selected.id, isMuted: selected.isMuted)
 
                 // 3) ensure attach
-                owner.forceAttachSelectedCameraIfNeeded(selectedId: selected.id, cameras: state.cameras)
+                owner.forceAttachSelectedCameraIfNeeded(selectedIndex: state.selectedIndex, cameras: state.cameras)
             }
             .disposed(by: disposeBag)
     }
 
     /// Можно дернуть после fullscreen dismiss, если хочешь принудительно помочь attach.
-    func restoreAfterFullscreen(selectedId: CameraID, retryCount: Int = 3) {
-        Logger.logDebug("restoreAfterFullscreen id=\(selectedId) retries=\(retryCount)")
+    func restoreAfterFullscreen(selectedIndex: Int, retryCount: Int = 3) {
+        Logger.logDebug("restoreAfterFullscreen index=\(selectedIndex) retries=\(retryCount)")
         guard let state = latestState else { return }
-        forceAttachSelectedCamera(selectedId: selectedId, cameras: state.cameras, retryCount: retryCount)
+        forceAttachSelectedCamera(selectedIndex: selectedIndex, cameras: state.cameras, retryCount: retryCount)
     }
 
     func restoreCloseHandler() {
         Logger.logDebug("restoreCloseHandler")
         playback.setCloseHandler { [weak self] in
-            guard let self, let id = self.latestState?.selectedCameraId else { return }
-            self.onRequestFullscreen?(id)
+            guard let self, let index = self.latestState?.selectedIndex else { return }
+            self.onRequestFullscreen?(index)
         }
     }
 
     func restorePlayback() {
         Logger.logDebug("restorePlayback")
-        lastForcedCameraId = nil
+        lastForcedIndex = nil
         lastForcedCameraCell = nil
 
         guard let state = latestState else { return }
-        guard let selected = state.cameras.first(where: { $0.id == state.selectedCameraId }) else { return }
+        guard state.cameras.indices.contains(state.selectedIndex) else { return }
+        let selected = state.cameras[state.selectedIndex]
 
         playback.setSelectedCamera(id: selected.id, isMuted: selected.isMuted)
-        forceAttachSelectedCamera(selectedId: selected.id, cameras: state.cameras, retryCount: 3)
+        forceAttachSelectedCamera(selectedIndex: state.selectedIndex, cameras: state.cameras, retryCount: 3)
     }
 }
 
@@ -111,45 +113,49 @@ final class OnlinePlaybackBinder {
 
 private extension OnlinePlaybackBinder {
 
-    func forceAttachSelectedCameraIfNeeded(selectedId: CameraID, cameras: [CameraViewModel]) {
+    func forceAttachSelectedCameraIfNeeded(selectedIndex: Int, cameras: [CameraViewModel]) {
         guard let collectionView else { return }
         guard !cameras.isEmpty else { return }
 
-        // Если мы уже форсили этот id в эту же cell — не дёргаем снова.
-        if lastForcedCameraId == selectedId, lastForcedCameraCell != nil {
+        // Если мы уже форсили этот index в эту же cell — не дёргаем снова.
+        if lastForcedIndex == selectedIndex, lastForcedCameraCell != nil {
             return
         }
 
-        forceAttachSelectedCamera(selectedId: selectedId, cameras: cameras, retryCount: 1)
+        forceAttachSelectedCamera(selectedIndex: selectedIndex, cameras: cameras, retryCount: 1)
     }
 
-    func forceAttachSelectedCamera(selectedId: CameraID, cameras: [CameraViewModel], retryCount: Int) {
+    func forceAttachSelectedCamera(selectedIndex: Int, cameras: [CameraViewModel], retryCount: Int) {
         guard let collectionView else { return }
         guard !cameras.isEmpty else { return }
-        guard let index = cameras.firstIndex(where: { $0.id == selectedId }) else {
-            Logger.logError("forceAttach missing id=\(selectedId) cameras=\(cameras.count)")
+        guard cameras.indices.contains(selectedIndex) else {
+            Logger.logError("forceAttach missing index=\(selectedIndex) cameras=\(cameras.count)")
             return
         }
 
         collectionView.layoutIfNeeded()
 
-        let indexPath = IndexPath(item: index, section: 0)
+        let indexPath = IndexPath(item: selectedIndex, section: 0)
         guard collectionView.indexPathsForVisibleItems.contains(indexPath) else { return }
 
         guard let cell = collectionView.cellForItem(at: indexPath) as? CameraViewCell else {
             guard retryCount > 0 else {
-                Logger.logError("forceAttach cell not found id=\(selectedId) index=\(index)")
+                Logger.logError("forceAttach cell not found index=\(selectedIndex)")
                 return
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
-                self?.forceAttachSelectedCamera(selectedId: selectedId, cameras: cameras, retryCount: retryCount - 1)
+                self?.forceAttachSelectedCamera(
+                    selectedIndex: selectedIndex,
+                    cameras: cameras,
+                    retryCount: retryCount - 1
+                )
             }
             return
         }
 
-        lastForcedCameraId = selectedId
+        lastForcedIndex = selectedIndex
         lastForcedCameraCell = cell
 
-        playback.willDisplay(cameraId: selectedId, cell: cell)
+        playback.willDisplay(cameraId: cameras[selectedIndex].id, cell: cell)
     }
 }

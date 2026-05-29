@@ -7,6 +7,7 @@
 //
 
 struct CameraNumberCellViewModel: Equatable {
+    let identity: String
     let cameraId: CameraID
     let number: Int
 

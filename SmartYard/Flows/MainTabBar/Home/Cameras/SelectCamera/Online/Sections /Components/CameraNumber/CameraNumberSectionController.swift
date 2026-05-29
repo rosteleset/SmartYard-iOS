@@ -48,6 +48,6 @@ final class CameraNumberSectionController: SectionController {
         at indexPath: IndexPath
     ) {
         Logger.logDebug("didSelect cameraId=\(item.cameraId) index=\(indexPath.item)")
-        events.didTapPreviewId.accept(item.cameraId)
+        events.didTapPreviewIndex.accept(indexPath.item)
     }
 }

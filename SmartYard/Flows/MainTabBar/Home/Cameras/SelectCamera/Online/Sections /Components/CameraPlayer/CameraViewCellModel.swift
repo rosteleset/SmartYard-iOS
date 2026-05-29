@@ -7,6 +7,7 @@
 //
 
 struct CameraViewCellModel: Equatable {
+    let identity: String
     let id: CameraID
     let isMuted: Bool
 }

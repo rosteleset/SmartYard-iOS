@@ -21,5 +21,5 @@ final class OnlinePageEvents {
     let didCenterMainIndex = PublishRelay<Int>()
 
     /// bottom grid (numbers)
-    let didTapPreviewId = PublishRelay<CameraID>()
+    let didTapPreviewIndex = PublishRelay<Int>()
 }
