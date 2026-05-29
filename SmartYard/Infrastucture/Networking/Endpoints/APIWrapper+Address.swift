@@ -174,6 +174,65 @@ extension APIWrapper {
             .mapAsEmptyDataInitializableResponse()
             .mapToOptional()
     }
+
+    func trackEvent(
+        flatId: Int,
+        eventType: Int,
+        eventDetail: String,
+        comments: String
+    ) -> Single<TrackEventResponseData?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+
+        let request = TrackEventRequest(
+            accessToken: accessToken,
+            flatId: flatId,
+            eventType: eventType,
+            eventDetail: eventDetail,
+            comments: comments
+        )
+        Logger.logDebug("Request data: \(String(describing: request))")
+
+        return provider.rx
+            .request(.trackEvent(request: request))
+            .convertNoConnectionError()
+            .trackBackend(backend, internet)
+            .mapAsDefaultResponse()
+            .mapToOptional()
+    }
+
+    func untrackEvent(watcherId: Int) -> Single<Void?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+
+        let request = UntrackEventRequest(accessToken: accessToken, watcherId: watcherId)
+        Logger.logDebug("Request data: \(String(describing: request))")
+
+        return provider.rx
+            .request(.untrackEvent(request: request))
+            .convertNoConnectionError()
+            .trackBackend(backend, internet)
+            .mapAsVoidResponse()
+            .mapToOptional()
+    }
+
+    func getTrackedEvents(flatId: Int) -> Single<[APITrackedEvent]?> {
+        guard let accessToken = accessService.accessToken else {
+            return .error(NSError.APIWrapperError.accessTokenMissingError)
+        }
+
+        let request = GetTrackedEventsRequest(accessToken: accessToken, flatId: flatId)
+        Logger.logDebug("Request data: \(String(describing: request))")
+
+        return provider.rx
+            .request(.getTrackedEvents(request: request))
+            .convertNoConnectionError()
+            .trackBackend(backend, internet)
+            .mapAsEmptyDataInitializableResponse()
+            .mapToOptional()
+    }
     
     func openDoor(domophoneId: String, doorId: Int?, blockReason: String?) -> Single<Void?> {
         guard let accessToken = accessService.accessToken else {

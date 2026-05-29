@@ -41,6 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         _ = SharedWebKit.warmWebView
 
+#if DEBUG
+        ParanoidFeatureChecks.run()
+#endif
+
         configureFirebase(for: application)
         logAppOpened()
 
@@ -53,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MapboxOptions.accessToken = Constants.mapBoxPublicKey
         
         appCoordinator.setRoot(for: mainWindow)
+        appCoordinator.presentPendingParanoidPushIfNeeded()
         
         // MARK: При запуске приложения запрашиваем количество непрочитанных сообщений
         // Пуши - вещь ненадежная, чисто в теории нам мог не дойти пуш с актуальным badge
@@ -100,6 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         quickActionsService.processPendingShortcutIfNeeded { [weak self] shortcutType in
             self?.openTab(for: shortcutType)
         }
+        appCoordinator.presentPendingParanoidPushIfNeeded()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -313,6 +319,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let backendURL = userInfo["baseUrl"] as? String {
             appCoordinator.updateBackendURL(backendURL)
         }
+
+        if appCoordinator.processParanoidPush(
+            userInfo: userInfo,
+            notificationTitle: notification.request.content.title,
+            notificationBody: notification.request.content.body
+        ) {
+            completionHandler([])
+            return
+        }
         
         // MARK: Если пришел входящий звонок - переходим на экран входящего звонка, но не показываем пуш
         
@@ -406,6 +421,15 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let backendURL = userInfo["baseUrl"] as? String {
             appCoordinator.updateBackendURL(backendURL)
         }
+
+        if appCoordinator.processParanoidPush(
+            userInfo: userInfo,
+            notificationTitle: response.notification.request.content.title,
+            notificationBody: response.notification.request.content.body
+        ) {
+            completionHandler()
+            return
+        }
         
         // MARK: Если нажали на уведомление о входящем звонке - процессим запрос
         
@@ -492,6 +516,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     private func pushType(from userInfo: [AnyHashable: Any]) -> String {
+        if ParanoidPushPayload.isParanoidAction(userInfo) {
+            return "paranoid"
+        }
+
         if CallPayload(pushNotificationPayload: userInfo, useCallKit: false) != nil {
             return "call"
         }

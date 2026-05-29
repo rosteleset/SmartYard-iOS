@@ -36,6 +36,8 @@ enum SettingsRoute: Route {
     case addFaceFromEvent(event: APIPlog)
     case showModal(withContent: ModalContent)
     case deleteFaceFromEvent(event: APIPlog, imageURL: String?)
+    case trackedEvents(flatId: Int, address: String)
+    case trackedEventsHistory(flatId: Int, address: String)
 }
 
 final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
@@ -306,6 +308,35 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
                 address: address
             )
             
+            addChild(coordinator)
+            return .none()
+
+        case let .trackedEvents(flatId, address):
+            let vm = TrackedEventsViewModel(
+                apiWrapper: apiWrapper,
+                router: weakRouter,
+                flatId: flatId,
+                address: address
+            )
+            let vc = TrackedEventsViewController(viewModel: vm)
+
+            return .push(vc)
+
+        case let .trackedEventsHistory(flatId, address):
+            let coordinator = HistoryCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                pushNotificationService: pushNotificationService,
+                accessService: accessService,
+                issueService: issueService,
+                permissionService: permissionService,
+                alertService: alertService,
+                logoutHelper: logoutHelper,
+                flatId: flatId,
+                eventsFilter: .all,
+                address: address
+            )
+
             addChild(coordinator)
             return .none()
             

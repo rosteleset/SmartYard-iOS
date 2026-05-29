@@ -40,6 +40,11 @@ private let issuesVersionKey = "issuesVersionKey"
 private let userPreferredAddressOrderKey = "userPreferredAddressOrderKey"
 private let nameValidationPatternKey = "nameValidationPatternKey"
 private let deliveryTabsConfigKey = "deliveryTabsConfigKey"
+private let eventsTrackingEnabledKey = "eventsTrackingEnabledKey"
+
+#if DEBUG
+private let forceEventsTrackingEnabledForTesting = true
+#endif
 private let showStoriesKey = "showStoriesKey"
 
 // swiftlint:disable:next type_body_length
@@ -357,6 +362,18 @@ final class AccessService {
         }
     }
 
+    var eventsTrackingEnabled: Bool {
+        get {
+#if DEBUG
+            if forceEventsTrackingEnabledForTesting { return true }
+#endif
+            return UserDefaults.standard.value(forKey: eventsTrackingEnabledKey) as? Bool ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: eventsTrackingEnabledKey)
+        }
+    }
+
     var showStories: Bool {
         get {
             UserDefaults.standard.value(forKey: showStoriesKey) as? Bool ?? false
@@ -451,6 +468,7 @@ final class AccessService {
         chatDomain = ""
         chatToken = ""
         showCityCams = false
+        eventsTrackingEnabled = false
         showStories = false
         userPreferredAddressOrder = []
         phonePrefix = Constants.defaultPhonePrefix

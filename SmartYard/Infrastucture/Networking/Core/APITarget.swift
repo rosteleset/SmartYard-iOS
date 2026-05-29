@@ -22,6 +22,9 @@ enum APITarget {
     case offices(request: OfficesRequest)
     case plog(request: PlogRequest)
     case plogDays(request: PlogDaysRequest)
+    case trackEvent(request: TrackEventRequest)
+    case untrackEvent(request: UntrackEventRequest)
+    case getTrackedEvents(request: GetTrackedEventsRequest)
     case phonePattern(request: PhonePrefixRequest)
     
     case allCCTV(request: AllCCTVRequest)
@@ -120,6 +123,9 @@ extension APITarget: TargetType {
         case .offices: return "address/offices"
         case .plog: return "address/plog"
         case .plogDays: return "address/plogDays"
+        case .trackEvent: return "address/trackEvent"
+        case .untrackEvent: return "address/untrackEvent"
+        case .getTrackedEvents: return "address/getTrackedEvents"
         
         case .allCCTV: return "cctv/all"
         case .allCCTVTree: return "cctv/allTree"
@@ -216,6 +222,9 @@ extension APITarget: TargetType {
             case .offices(let request): return (request.accessToken, false)
             case .plog(let request): return (request.accessToken, request.forceRefresh)
             case .plogDays(let request): return (request.accessToken, request.forceRefresh)
+            case .trackEvent(let request): return (request.accessToken, false)
+            case .untrackEvent(let request): return (request.accessToken, false)
+            case .getTrackedEvents(let request): return (request.accessToken, false)
             
             case .allCCTV(let request): return (request.accessToken, request.forceRefresh)
             case .allCCTVTree(let request): return (request.accessToken, request.forceRefresh)
@@ -317,6 +326,9 @@ extension APITarget: TargetType {
         case .offices(let request): return request.requestParameters
         case .plog(let request): return request.requestParameters
         case .plogDays(let request): return request.requestParameters
+        case .trackEvent(let request): return request.requestParameters
+        case .untrackEvent(let request): return request.requestParameters
+        case .getTrackedEvents(let request): return request.requestParameters
         case .phonePattern(let request): return request.requestParameters
         
         case .allCCTV(let request): return request.requestParameters

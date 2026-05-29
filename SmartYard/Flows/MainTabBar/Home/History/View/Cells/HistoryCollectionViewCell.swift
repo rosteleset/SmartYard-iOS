@@ -39,6 +39,12 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
     @IBOutlet private weak var actionsDescriptionLabel: UILabel!
     @IBOutlet private weak var questionMark: CircleIconControl!
     @IBOutlet private weak var descriptionContainer: UIView!
+    @IBOutlet private weak var mainStackView: UIStackView!
+
+    private let trackingContainerView = UIView()
+    private let trackingSwitch = UISwitch()
+    private let trackingTitleLabel = UILabel()
+    private let trackingCommentsLabel = UILabel()
     
     /*private var videoURL: String? {
         guard let eventDate = event?.date else {
@@ -65,6 +71,16 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
     var displayHintTrigger: Driver<Void> {
         return questionMark.rx.tap.asDriver()
     }
+
+    var trackingToggleChanged: Driver<(APIPlog, Bool)> {
+        return trackingSwitch.rx.controlEvent(.valueChanged)
+            .map { [weak self] _ -> (APIPlog, Bool)? in
+                guard let self = self, let event = self.event else { return nil }
+                return (event, self.trackingSwitch.isOn)
+            }
+            .ignoreNil()
+            .asDriverOnErrorJustComplete()
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -73,11 +89,15 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         doubleTap.numberOfTapsRequired = 2
         videoPlayerViewContainer.addGestureRecognizer(doubleTap)
         descriptionContainer.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
+        setupTrackingView()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         resetDisposeBag()
+        trackingContainerView.isHidden = true
+        trackingCommentsLabel.text = nil
+        trackingCommentsLabel.isHidden = true
     }
     
     @objc func doubleTapOnVideo(_ sender: UITapGestureRecognizer) {
@@ -204,7 +224,9 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         value: APIPlog,
         using cache: NSCache<NSString, UIImage>,
         camera: APICamMap? = nil,
-        token: String? = nil
+        token: String? = nil,
+        trackedEvent: APITrackedEvent? = nil,
+        isEventTrackingEnabled: Bool = false
     ) {
         self.event = value
         
@@ -215,6 +237,11 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         }
 
         questionMark.apply(style: .Others.question)
+        configureTrackingView(
+            event: value,
+            trackedEvent: trackedEvent,
+            isEventTrackingEnabled: isEventTrackingEnabled
+        )
         callStatusView.isHidden = true
         descriptionLabel.isHidden = false
         descriptionLabel.text = ""
@@ -245,53 +272,14 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         descriptionLabel.isHidden = (descriptionLabel.text ?? "").isEmpty
         
         addressLabel.text = value.mechanizmaDescription
-        var faceFrameColor = UIColor.red
-        
-        switch value.event {
-        case .answered:
-            titleLabel.text = L10n.Intercom.Incoming.title
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            callStatusView.isHidden = false
-            descriptionLabel.isHidden = true
-            callStatusLabel.text = L10n.History.Event.answeredCall
-            callStatusLabel.textColor = UIColor.SmartYard.darkGreen
-            callStatusIcon.image = UIImage(named: "AnsweredCall")
-        case .unanswered:
-            titleLabel.text = L10n.Intercom.Incoming.title
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            callStatusView.isHidden = false
-            descriptionLabel.isHidden = true
-            callStatusLabel.text = L10n.History.Event.missedCall
-            callStatusLabel.textColor = UIColor.SmartYard.incorrectDataRed
-            callStatusIcon.image = UIImage(named: "MissedCall")
-        case .rfid:
-            titleLabel.text = L10n.History.Event.openingWithKey
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-        case .app:
-            titleLabel.text = L10n.History.Event.openingFromApp
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-        case .face:
-            titleLabel.text = L10n.History.Event.openingWithFaceID
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            faceFrameColor = .green
-        case .passcode:
-            titleLabel.text = L10n.History.Event.openingWithCode
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-        case .call:
-            titleLabel.text = L10n.History.Event.gateOpeningOnCall
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-        case .plate:
-            titleLabel.text = L10n.History.Event.gateOpeningByNumberplate
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-        case .unknown:
-            titleLabel.text = L10n.History.Event.unknown
-            titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
-        }
-        image.image = nil
-    
-        if value.previewImage == nil {
+        let faceFrameColor = configureTitle(for: value.event)
+        resetImageView()
+
+        if let previewImage = value.previewImage {
+            image.image = previewImage
+        } else if let previewURL = value.previewURL, !previewURL.isEmpty {
             image.loadImageUsingUrlString(
-                urlString: value.previewURL ?? "",
+                urlString: previewURL,
                 cache: cache,
                 label: underImageLabel,
                 errorMessage: L10n.History.Event.imageMissing,
@@ -299,7 +287,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
                 rectColor: faceFrameColor
             )
         } else {
-            image.image = value.previewImage
+            configureMissingImage()
         }
         
         if let flags = value.detailX?.flags,
@@ -308,7 +296,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
             actionsDescriptionLabel.text = ""
             denyAccessButton.isHidden = true
             openAccessButton.isHidden = true
-            
+
             if flags.contains("canDislike") || flags.contains("canDisLike") {
                 denyAccessButton.isHidden = false
                 // swiftlint:disable:next line_length
@@ -317,15 +305,137 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
                 openAccessButton.isHidden = false
                 // swiftlint:disable:next line_length
                 actionsDescriptionLabel.text = L10n.History.Event.guestAllowedHint
-                
+
             }
-            
+
         } else {
             // нет выбора лайк-дизлайк
             actionsContainer.isHidden = true
         }
     }
 
+    private func configureTitle(for eventType: APIPlog.EventType) -> UIColor {
+        switch eventType {
+        case .answered:
+            titleLabel.text = L10n.Intercom.Incoming.title
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            callStatusView.isHidden = false
+            descriptionLabel.isHidden = true
+            callStatusLabel.text = L10n.History.Event.answeredCall
+            callStatusLabel.textColor = UIColor.SmartYard.darkGreen
+            callStatusIcon.image = UIImage(named: "AnsweredCall")
+            return .red
+        case .unanswered:
+            titleLabel.text = L10n.Intercom.Incoming.title
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            callStatusView.isHidden = false
+            descriptionLabel.isHidden = true
+            callStatusLabel.text = L10n.History.Event.missedCall
+            callStatusLabel.textColor = UIColor.SmartYard.incorrectDataRed
+            callStatusIcon.image = UIImage(named: "MissedCall")
+            return .red
+        case .rfid:
+            titleLabel.text = L10n.History.Event.openingWithKey
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .app:
+            titleLabel.text = L10n.History.Event.openingFromApp
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .face:
+            titleLabel.text = L10n.History.Event.openingWithFaceID
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .green
+        case .passcode:
+            titleLabel.text = L10n.History.Event.openingWithCode
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .call:
+            titleLabel.text = L10n.History.Event.gateOpeningOnCall
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .plate:
+            titleLabel.text = L10n.History.Event.gateOpeningByNumberplate
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .reserved, .unknown:
+            titleLabel.text = L10n.History.Event.unknown
+            titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
+            return .red
+        }
+    }
+
+}
+
+private extension HistoryCollectionViewCell {
+    func resetImageView() {
+        image.image = nil
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        image.backgroundColor = .SmartYard.grayBorder
+        underImageLabel.text = nil
+        underImageLabel.font = .SourceSansPro.semibold(size: 14)
+        underImageLabel.textAlignment = .center
+        underImageLabel.textColor = .SmartYard.semiBlack
+        underImageLabel.numberOfLines = 0
+        underImageLabel.superview?.bringSubviewToFront(underImageLabel)
+        questionMark.superview?.bringSubviewToFront(questionMark)
+    }
+
+    func configureMissingImage() {
+        underImageLabel.text = L10n.History.Event.imageMissing
+    }
+
+    func setupTrackingView() {
+        trackingContainerView.backgroundColor = .SmartYard.secondBackgroundColor
+        trackingContainerView.layer.cornerRadius = 12
+        trackingContainerView.clipsToBounds = true
+        trackingContainerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
+        trackingContainerView.isHidden = true
+
+        trackingTitleLabel.font = .SourceSansPro.regular(size: 14)
+        trackingTitleLabel.textColor = .SmartYard.semiBlack
+        trackingTitleLabel.numberOfLines = 0
+        trackingTitleLabel.text = L10n.History.EventTracking.toggleTitle
+
+        trackingSwitch.onTintColor = .SmartYard.darkGreen
+
+        trackingCommentsLabel.font = .SourceSansPro.regular(size: 12)
+        trackingCommentsLabel.textColor = .SmartYard.gray
+        trackingCommentsLabel.numberOfLines = 0
+        trackingCommentsLabel.isHidden = true
+
+        let row = UIStackView.horizontal(spacing: 12, alignment: .center).add {
+            trackingTitleLabel
+            trackingSwitch
+        }
+
+        let stack = UIStackView.vertical(spacing: 8).add {
+            row
+            trackingCommentsLabel
+        }
+
+        trackingContainerView.pinSubview(stack, with: UIEdgeInsets(top: 16, left: 20, bottom: 16, right: 20))
+
+        let insertIndex = min(7, mainStackView.arrangedSubviews.count)
+        mainStackView.insertArrangedSubview(trackingContainerView, at: insertIndex)
+    }
+
+    func configureTrackingView(
+        event: APIPlog,
+        trackedEvent: APITrackedEvent?,
+        isEventTrackingEnabled: Bool
+    ) {
+        let canTrack = isEventTrackingEnabled && ParanoidEventTracking.isSupported(event)
+        trackingContainerView.isHidden = !canTrack
+
+        guard canTrack else { return }
+
+        trackingSwitch.setOn(trackedEvent != nil, animated: false)
+        let comments = trackedEvent?.normalizedComments ?? ""
+        trackingCommentsLabel.text = comments
+        trackingCommentsLabel.isHidden = comments.isEmpty
+    }
 }
 
 extension HistoryCollectionViewCell {

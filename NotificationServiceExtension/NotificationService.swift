@@ -19,6 +19,11 @@ class NotificationService: UNNotificationServiceExtension {
         withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
     ) {
         self.contentHandler = contentHandler
+        if request.content.userInfo["action"] as? String == "paranoid" {
+            parseParanoidNotificationRequest(request, withContentHandler: contentHandler)
+            return
+        }
+
         parseIncomingCallNotificationRequest(request, withContentHandler: contentHandler)
     }
     
@@ -40,9 +45,9 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
         
-        bestAttemptContent.title = "Звонок в домофон"
+        bestAttemptContent.title = L10n.Notification.IncomingDoorCall.title
         bestAttemptContent.body = request.content.userInfo["callerId"] as? String ?? ""
-        bestAttemptContent.body += "\n\n(нажмите и удерживайте для быстрого ответа)"
+        bestAttemptContent.body += "\n\n" + L10n.Notification.IncomingDoorCall.quickReplyHint
         bestAttemptContent.sound = .default
         bestAttemptContent.categoryIdentifier = "INCOMING_DOOR_CALL"
         if #available(iOS 15.0, *) {
@@ -120,6 +125,69 @@ class NotificationService: UNNotificationServiceExtension {
         }
         task.resume()
     }
+
+    private func parseParanoidNotificationRequest(
+        _ request: UNNotificationRequest,
+        withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
+    ) {
+        guard let bestAttemptContent = request.content.mutableCopy() as? UNMutableNotificationContent else {
+            contentHandler(request.content)
+            return
+        }
+
+        if bestAttemptContent.title.isEmpty,
+           let title = stringValue(for: "title", in: bestAttemptContent.userInfo) {
+            bestAttemptContent.title = title
+        }
+
+        if bestAttemptContent.body.isEmpty,
+           let body = stringValue(for: "body", in: bestAttemptContent.userInfo) {
+            bestAttemptContent.body = body
+        }
+
+        self.bestAttemptContent = bestAttemptContent
+
+        guard let imageUrl = paranoidImageURL(from: bestAttemptContent.userInfo) else {
+            contentHandler(bestAttemptContent)
+            return
+        }
+
+        store(imageUrl: imageUrl) { result in
+            if let path = try? result.get(),
+               let attachment = try? UNNotificationAttachment(
+                   identifier: imageUrl.absoluteString,
+                   url: path,
+                   options: nil
+               ) {
+                bestAttemptContent.attachments = [attachment]
+            }
+
+            contentHandler(bestAttemptContent)
+        }
+    }
+
+    private func paranoidImageURL(from userInfo: [AnyHashable: Any]) -> URL? {
+        if let hash = stringValue(for: "hash", in: userInfo) {
+            let sharedData = SmartYardSharedDataUtilities.loadSharedData()
+            let baseURL = stringValue(for: "baseUrl", in: userInfo)
+                ?? sharedData?.backendURL
+
+            if let baseURL {
+                let separator = baseURL.hasSuffix("/") ? "" : "/"
+                return URL(string: baseURL + separator + "call/camshot/" + hash)
+            }
+        }
+
+        if let image = stringValue(for: "image", in: userInfo) {
+            return URL(string: image)
+        }
+
+        return nil
+    }
+
+    private func stringValue(for key: String, in userInfo: [AnyHashable: Any]) -> String? {
+        return userInfo[key] as? String
+    }
     
 }
 
@@ -135,5 +203,18 @@ extension Data {
         default:
             return ""
         }
+    }
+}
+
+private enum L10n {
+    enum Notification {
+        enum IncomingDoorCall {
+            static let quickReplyHint = tr("notification.incomingDoorCall.quickReplyHint")
+            static let title = tr("notification.incomingDoorCall.title")
+        }
+    }
+
+    static func tr(_ key: String) -> String {
+        NSLocalizedString(key, comment: "")
     }
 }

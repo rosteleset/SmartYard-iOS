@@ -299,6 +299,35 @@ final class SettingsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+
+        // MARK: Обработка нажатия на отслеживаемые события
+
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .action(uniqueId, type) = identity, type == .trackedEvents else {
+                    return .empty()
+                }
+
+                return .just(uniqueId)
+            }
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (uniqueId, loadedData) = args
+
+                    guard let match = loadedData.first(where: { $0.uniqueId == uniqueId }),
+                          let rawFlatId = match.flatId,
+                          let flatId = Int(rawFlatId),
+                          self?.accessService.eventsTrackingEnabled == true else {
+                        return
+                    }
+
+                    self?.router.trigger(
+                        .trackedEvents(flatId: flatId, address: match.address)
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
         
         // MARK: Обработка нажатия на предоставление доступа
         
@@ -420,16 +449,30 @@ final class SettingsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         // MARK: Создание моделей секций
+
+        let isEventsTrackingEnabled = Driver
+            .merge(
+                .just(accessService.eventsTrackingEnabled),
+                accessService.optionsUpdated
+                    .asDriverOnErrorJustComplete()
+                    .map { [accessService] in accessService.eventsTrackingEnabled }
+            )
+            .distinctUntilChanged()
         
         let sectionModels: Driver<[SettingsSectionModel]> = Driver
             .combineLatest(
                 loadedData.asDriver(onErrorJustReturn: []),
-                areSectionsExpanded.asDriver(onErrorJustReturn: [:])
+                areSectionsExpanded.asDriver(onErrorJustReturn: [:]),
+                isEventsTrackingEnabled
             )
             .map { [weak self] args in
-                let (data, expansionStateDict) = args
+                let (data, expansionStateDict, isEventsTrackingEnabled) = args
                 
-                return self?.createSections(data: data, expansionStateDict: expansionStateDict) ?? []
+                return self?.createSections(
+                    data: data,
+                    expansionStateDict: expansionStateDict,
+                    isEventsTrackingEnabled: isEventsTrackingEnabled
+                ) ?? []
             }
         
         return Output(
@@ -444,7 +487,8 @@ final class SettingsViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length
     private func createSections(
         data: [APISettingsAddress],
-        expansionStateDict: [String: Bool]
+        expansionStateDict: [String: Bool],
+        isEventsTrackingEnabled: Bool
     ) -> [SettingsSectionModel] {
         // swiftlint:disable:next closure_body_length
         let mainSections: [SettingsSectionModel] = data.map { item in
@@ -493,6 +537,21 @@ final class SettingsViewModel: BaseViewModel {
                         )
                     )
                 }()
+
+                let trackedEventsAction: SettingsDataItem? = {
+                    guard isEventsTrackingEnabled,
+                          let rawFlatId = item.flatId,
+                          Int(rawFlatId) != nil else {
+                        return nil
+                    }
+
+                    return .action(
+                        identity: .action(
+                            uniqueId: item.uniqueId,
+                            type: .trackedEvents
+                        )
+                    )
+                }()
                 
                 let grantAccessAction: SettingsDataItem? = {
                     guard item.flatId != nil, item.servicesAvailability[.domophone] == true else {
@@ -520,7 +579,13 @@ final class SettingsViewModel: BaseViewModel {
                     )
                 }()
                 
-                return [controlPanel, openAddressSettingsAction, grantAccessAction, webVersionAction]
+                return [
+                    controlPanel,
+                    openAddressSettingsAction,
+                    trackedEventsAction,
+                    grantAccessAction,
+                    webVersionAction
+                ]
                     .compactMap { $0 }
             }()
             

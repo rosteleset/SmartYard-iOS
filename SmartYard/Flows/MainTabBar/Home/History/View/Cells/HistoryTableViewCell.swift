@@ -130,7 +130,7 @@ final class HistoryTableViewCell: UITableViewCell {
             titleLabel.textColor = UIColor.SmartYard.semiBlack
             iconImage.image = UIImage(named: "LogsWicket")
             description = ""
-        case .unknown:
+        case .reserved, .unknown:
             titleLabel.text = L10n.History.Event.unknown
             titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
             iconImage.image = UIImage(named: "LogsApp")

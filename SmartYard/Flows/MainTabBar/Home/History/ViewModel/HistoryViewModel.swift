@@ -78,6 +78,9 @@ final class HistoryViewModel: BaseViewModel {
     /// таблица лиц по квартирам
     private var listFaces: [FlatId: GetPersonFacesResponseData] = [:]
 
+    /// таблица отслеживаемых событий: "\(flatId)_\(eventType)_\(eventDetail)" -> watcher.
+    private let trackedEvents = BehaviorRelay<[String: APITrackedEvent]>(value: [:])
+
     init(
         apiWrapper: APIWrapper,
         houseId: String? = nil,
@@ -224,7 +227,7 @@ final class HistoryViewModel: BaseViewModel {
                                 case .face:                  eventType = .faces
                                 case .passcode:              eventType = .code
                                 case .call, .plate:          eventType = .phoneCall
-                                case .unknown:               eventType = .all
+                                case .reserved, .unknown:    eventType = .all
                                 }
                                 // и фильтруем, только те типы, которые совпадают с фильтром
                                 return eventType == self.eventsFilter.value
@@ -361,6 +364,7 @@ final class HistoryViewModel: BaseViewModel {
                     self.flatIds = [flatId]
                     self.flatNumbers = [0]
                     self.apptsFilter.accept(self.flatIds)
+                    self.loadTrackedEvents(for: self.flatIds)
                     // изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
                 }
                 .disposed(by: disposeBag)
@@ -387,6 +391,7 @@ final class HistoryViewModel: BaseViewModel {
 
                     // по умолчанию фильтр содержит все доступные квартиры
                     self.apptsFilter.accept(self.flatIds)
+                    self.loadTrackedEvents(for: self.flatIds)
 
                     // изменение фильтра запустит запрос списков дат для квартир, поэтому больше ничего отсюда уже можно не дёргать
                 }
@@ -467,7 +472,14 @@ final class HistoryViewModel: BaseViewModel {
                     
                     self.apiWrapper.plog(flatId: flatId, fromDate: day, forceRefresh: self.forceRefresh)
                         .trackError(self.errorTracker)
-                        .map { $0 == nil ? nil : (day: day, items: $0!, flatId: Int(flatId) ) }
+                        .map { logs -> DayFlatItemsData? in
+                            guard let logs else { return nil }
+                            return (
+                                day: day,
+                                items: logs.map { $0.withFallbackFlatId(flatId) },
+                                flatId: flatId
+                            )
+                        }
                         .asDriver(onErrorJustReturn: nil)
                         .ignoreNil()
                         .drive { result in
@@ -573,7 +585,14 @@ final class HistoryViewModel: BaseViewModel {
                     
                     self.apiWrapper.plog(flatId: flatId, fromDate: day, forceRefresh: self.forceRefresh)
                         .trackError(self.errorTracker)
-                        .map { $0 == nil ?  nil : (day: day, items: $0!, flatId: Int(flatId) ) }
+                        .map { logs -> DayFlatItemsData? in
+                            guard let logs else { return nil }
+                            return (
+                                day: day,
+                                items: logs.map { $0.withFallbackFlatId(flatId) },
+                                flatId: flatId
+                            )
+                        }
                         .asDriver(onErrorJustReturn: nil)
                         .ignoreNil()
                         .drive { results.onNext($0) }
@@ -630,11 +649,81 @@ final class HistoryViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
 
+        input.trackEventTrigger
+            .flatMapLatest { [weak self] event, comments -> Driver<APITrackedEvent?> in
+                guard let self,
+                      let flatId = event.flatId else {
+                    return .empty()
+                }
+
+                let eventDetail = ParanoidEventTracking.eventDetail(from: event)
+
+                return self.apiWrapper
+                    .trackEvent(
+                        flatId: flatId,
+                        eventType: event.event.rawValue,
+                        eventDetail: eventDetail,
+                        comments: comments
+                    )
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .map { response -> APITrackedEvent? in
+                        guard let watcherId = response?.watcherId else { return nil }
+                        return APITrackedEvent(
+                            watcherId: watcherId,
+                            flatId: flatId,
+                            eventType: event.event.rawValue,
+                            eventDetail: eventDetail,
+                            comments: comments
+                        )
+                    }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] trackedEvent in
+                    guard let self else { return }
+
+                    var events = trackedEvents.value
+                    events[trackedEvent.key] = trackedEvent
+                    trackedEvents.accept(events)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        input.untrackEventTrigger
+            .flatMapLatest { [weak self] event -> Driver<String?> in
+                guard let self,
+                      let key = ParanoidEventTracking.key(for: event),
+                      let trackedEvent = trackedEvents.value[key] else {
+                    return .empty()
+                }
+
+                return self.apiWrapper
+                    .untrackEvent(watcherId: trackedEvent.watcherId)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .map { _ in key }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] key in
+                    guard let self else { return }
+
+                    var events = trackedEvents.value
+                    events.removeValue(forKey: key)
+                    trackedEvents.accept(events)
+                }
+            )
+            .disposed(by: disposeBag)
+
         return OutputDetail(
             availableDays: availableDaysSubject.asDriver(onErrorJustReturn: [:]),
             isLoading: activityTracker.asDriver(),
             sections: sections.asDriverOnErrorJustComplete(),
-            camMap: camMap.asDriverOnErrorJustComplete()
+            camMap: camMap.asDriverOnErrorJustComplete(),
+            trackedEvents: trackedEvents.asDriverOnErrorJustComplete()
         )
     }
 }
@@ -664,6 +753,8 @@ extension HistoryViewModel {
         let addFaceTrigger: Driver<APIPlog>
         let deleteFaceTrigger: Driver<APIPlog>
         let displayHintTrigger: Driver<Void>
+        let trackEventTrigger: Driver<(APIPlog, String)>
+        let untrackEventTrigger: Driver<APIPlog>
     }
     
     struct OutputDetail {
@@ -671,6 +762,7 @@ extension HistoryViewModel {
         let isLoading: Driver<Bool>
         let sections: Driver<[HistorySectionModel]>
         let camMap: Driver<[APICamMap]>
+        let trackedEvents: Driver<[String: APITrackedEvent]>
     }
     
     private func orderOf(row: Int, count: Int) -> HistoryCellOrder {
@@ -698,7 +790,7 @@ extension HistoryViewModel {
             return "face_access"
         case .plate:
             return "motion"
-        case .unknown:
+        case .reserved, .unknown:
             return AnalyticsValue.unknown
         }
     }
@@ -730,5 +822,38 @@ extension HistoryViewModel {
                 )
             )
         }
+    }
+}
+
+private extension HistoryViewModel {
+    func loadTrackedEvents(for flatIds: [Int]) {
+        guard apiWrapper.accessService.eventsTrackingEnabled else {
+            trackedEvents.accept([:])
+            return
+        }
+
+        guard !flatIds.isEmpty else {
+            trackedEvents.accept([:])
+            return
+        }
+
+        let requests = flatIds.map { flatId in
+            apiWrapper
+                .getTrackedEvents(flatId: flatId)
+                .trackError(errorTracker)
+                .asObservable()
+                .catchAndReturn(nil)
+        }
+
+        Observable.zip(requests)
+            .map { responses -> [String: APITrackedEvent] in
+                responses
+                    .flatMap { $0 ?? [] }
+                    .reduce(into: [String: APITrackedEvent]()) { result, event in
+                        result[event.key] = event
+                    }
+            }
+            .bind(to: trackedEvents)
+            .disposed(by: disposeBag)
     }
 }

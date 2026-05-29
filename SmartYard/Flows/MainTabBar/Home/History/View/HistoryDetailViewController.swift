@@ -46,6 +46,10 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     private let addFaceTrigger = PublishSubject<APIPlog>()
     private let deleteFaceTrigger = PublishSubject<APIPlog>()
     private let displayHintTrigger = PublishSubject<Void>()
+    private let trackEventTrigger = PublishSubject<(APIPlog, String)>()
+    private let untrackEventTrigger = PublishSubject<APIPlog>()
+    private let commentsTextFieldDelegate = MaxLengthTextFieldDelegate(maxLength: 30)
+    private var trackedEvents: [String: APITrackedEvent] = [:]
     
     init(viewModel: HistoryViewModel, focusedOn: HistoryDataItem? = nil) {
         self.viewModel = viewModel
@@ -154,7 +158,9 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 cell.configure(
                     value: item.value,
                     using: imagesCache,
-                    camera: camera
+                    camera: camera,
+                    trackedEvent: ParanoidEventTracking.key(for: item.value).flatMap { self.trackedEvents[$0] },
+                    isEventTrackingEnabled: AccessService.shared.eventsTrackingEnabled
                 )
 
                 cell.itsMeTrigger
@@ -167,6 +173,14 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
 
                 cell.displayHintTrigger
                     .drive(displayHintTrigger)
+                    .disposed(by: cell.disposeBag)
+
+                cell.trackingToggleChanged
+                    .drive(
+                        onNext: { [weak self] event, isOn in
+                            self?.handleTrackingToggle(event: event, isOn: isOn)
+                        }
+                    )
                     .disposed(by: cell.disposeBag)
 
                 return cell
@@ -194,7 +208,9 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             loadDay: loadDayTriger.asDriverOnErrorJustComplete(),
             addFaceTrigger: addFaceTrigger.asDriverOnErrorJustComplete(),
             deleteFaceTrigger: deleteFaceTrigger.asDriverOnErrorJustComplete(),
-            displayHintTrigger: displayHintTrigger.asDriverOnErrorJustComplete()
+            displayHintTrigger: displayHintTrigger.asDriverOnErrorJustComplete(),
+            trackEventTrigger: trackEventTrigger.asDriverOnErrorJustComplete(),
+            untrackEventTrigger: untrackEventTrigger.asDriverOnErrorJustComplete()
         )
         
         let output = viewModel.transform(input)
@@ -240,6 +256,15 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 self.camMap = data
             }
             .disposed(by: disposeBag)
+
+        output.trackedEvents
+            .drive(
+                onNext: { [weak self] trackedEvents in
+                    self?.trackedEvents = trackedEvents
+                    self?.collectionView.reloadData()
+                }
+            )
+            .disposed(by: disposeBag)
         
         availableDays.asDriverOnErrorJustComplete()
             .drive { [weak self] in
@@ -264,6 +289,69 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             }
             .disposed(by: disposeBag)
         
+    }
+}
+
+private extension HistoryDetailViewController {
+    func handleTrackingToggle(event: APIPlog, isOn: Bool) {
+        if isOn {
+            showTrackingCommentDialog(for: event)
+        } else {
+            untrackEventTrigger.onNext(event)
+        }
+    }
+
+    func showTrackingCommentDialog(for event: APIPlog) {
+        let alert = UIAlertController(
+            title: L10n.History.EventTracking.Comment.title,
+            message: nil,
+            preferredStyle: .alert
+        )
+
+        alert.addTextField { [commentsTextFieldDelegate = self.commentsTextFieldDelegate] textField in
+            textField.placeholder = String.localizedStringWithFormat(
+                L10n.History.EventTracking.Comment.placeholderFormat,
+                commentsTextFieldDelegate.maxLength
+            )
+            textField.delegate = commentsTextFieldDelegate
+            textField.clearButtonMode = .whileEditing
+        }
+
+        let cancelAction = UIAlertAction(title: L10n.Common.cancel, style: .cancel) { [weak self] _ in
+            self?.collectionView.reloadData()
+        }
+
+        let okAction = UIAlertAction(title: L10n.Common.ok, style: .default) { [weak self, weak alert] _ in
+            let text = alert?.textFields?.first?.text ?? ""
+            self?.trackEventTrigger.onNext((event, String(text.prefix(30))))
+        }
+
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+
+        present(alert, animated: true)
+    }
+}
+
+private final class MaxLengthTextFieldDelegate: NSObject, UITextFieldDelegate {
+    let maxLength: Int
+
+    init(maxLength: Int) {
+        self.maxLength = maxLength
+    }
+
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        guard let currentText = textField.text,
+              let range = Range(range, in: currentText) else {
+            return true
+        }
+
+        let updated = currentText.replacingCharacters(in: range, with: string)
+        return updated.count <= maxLength
     }
 }
 

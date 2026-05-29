@@ -241,6 +241,7 @@ extension L10n {
         static let cancel = tr("common.cancel")
         static let delete = tr("common.delete")
         static let deny = tr("common.deny")
+        static let edit = tr("common.edit")
         static let disable = tr("common.disable")
         static let done = tr("common.done")
         static let enable = tr("common.enable")
@@ -368,6 +369,15 @@ extension L10n {
             static let unknown = tr("history.event.unknown")
         }
 
+        enum EventTracking {
+            static let toggleTitle = tr("history.eventTracking.toggleTitle")
+
+            enum Comment {
+                static let placeholderFormat = tr("history.eventTracking.comment.placeholderFormat")
+                static let title = tr("history.eventTracking.comment.title")
+            }
+        }
+
         enum Filter {
             static let allApartments = tr("history.filter.allApartments")
             static let allButton = tr("history.filter.allButton")
@@ -452,6 +462,13 @@ extension L10n {
     enum Network {
         enum VPN {
             static let detectedWarning = tr("network.vpn.detectedWarning")
+        }
+    }
+
+    enum Notification {
+        enum IncomingDoorCall {
+            static let quickReplyHint = tr("notification.incomingDoorCall.quickReplyHint")
+            static let title = tr("notification.incomingDoorCall.title")
         }
     }
 
@@ -822,6 +839,15 @@ extension L10n {
                 static let activateServiceTemplate = tr("settings.main.serviceAction.activateServiceTemplate")
                 static let changeTariffTemplate = tr("settings.main.serviceAction.changeTariffTemplate")
                 static let talkAboutActivationTemplate = tr("settings.main.serviceAction.talkAboutActivationTemplate")
+            }
+        }
+
+        enum TrackedEvents {
+            static let emptyState = tr("settings.trackedEvents.emptyState")
+            static let title = tr("settings.trackedEvents.title")
+
+            enum DeleteConfirmation {
+                static let title = tr("settings.trackedEvents.deleteConfirmation.title")
             }
         }
 

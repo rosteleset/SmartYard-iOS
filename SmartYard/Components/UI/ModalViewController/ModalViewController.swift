@@ -18,6 +18,7 @@ enum ModalContent {
     case aboutVideoEvent
     case aboutCallKit
     case aboutAddressOrder
+    case paranoid(ParanoidPushPayload)
 
     func makeView() -> UIView {
         switch self {
@@ -31,6 +32,8 @@ enum ModalContent {
             return CallKitModalViewContent()
         case .aboutAddressOrder:
             return AddressOrderModalViewContent()
+        case let .paranoid(payload):
+            return ParanoidPushModalViewContent(payload: payload)
         }
     }
 }

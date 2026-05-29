@@ -26,6 +26,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let issuesVersion: String?
     let validationPattern: NameValidationPattern?
     let deliveryTabsConfig: DeliveryTabsConfig?
+    let eventsTracking: Bool?
     let stories: Bool?
 
     private enum CodingKeys: String, CodingKey {
@@ -48,6 +49,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case addressVerificationTabLayoutVisible
         case addressVerificationTab1Visible
         case addressVerificationTab2Visible
+        case eventsTracking
         case stories
     }
 
@@ -56,10 +58,16 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         func boolFromTF(_ key: CodingKeys) -> Bool? {
+            if let value = try? container.decode(Bool.self, forKey: key) {
+                return value
+            }
+
             guard let raw = try? container.decode(String.self, forKey: key) else { return nil }
             switch raw {
             case "t": return true
             case "f": return false
+            case "true": return true
+            case "false": return false
             default: return nil
             }
         }
@@ -114,6 +122,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         entrancesView = (try? container.decode(EntrancesViewType.self, forKey: .entrancesView)) ?? .list
         activeTab = (try? container.decode(TabNames.self, forKey: .activeTab)) ?? .addresses
         issuesVersion = try? container.decode(String.self, forKey: .issuesVersion)
+        eventsTracking = boolFromTF(.eventsTracking)
         stories = boolFromTF(.stories)
     }
 
@@ -133,6 +142,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         issuesVersion = nil
         deliveryTabsConfig = nil
         validationPattern = nil
+        eventsTracking = nil
         stories = nil
     }
 

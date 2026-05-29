@@ -189,6 +189,10 @@
 		844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844AC3DA23EBFE140066006D /* ChatViewController.xib */; };
 		844AC3ED23EBFF0E0066006D /* PaymentsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3EC23EBFF0E0066006D /* PaymentsCoordinator.swift */; };
 		844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */; };
+		9B7E10052F8B000000C0D001 /* TrackedEventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7E10032F8B000000C0D001 /* TrackedEventsViewController.swift */; };
+		9B7E10062F8B000000C0D001 /* TrackedEventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7E10042F8B000000C0D001 /* TrackedEventsViewModel.swift */; };
+		9B7E10082F8B000000C0D001 /* TrackedEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7E10072F8B000000C0D001 /* TrackedEventsView.swift */; };
+		9B7E100A2F8B000000C0D001 /* TrackedEventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B7E10092F8B000000C0D001 /* TrackedEventCell.swift */; };
 		844AC3F523EBFF900066006D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3F323EBFF900066006D /* SettingsViewController.swift */; };
 		844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */; };
 		844AC3FD23EC08FF0066006D /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E99EA6C123EAA72800BECEE6 /* SourceSansPro-Bold.ttf */; };
@@ -1062,6 +1066,10 @@
 		844AC3DA23EBFE140066006D /* ChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
 		844AC3EC23EBFF0E0066006D /* PaymentsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsCoordinator.swift; sourceTree = "<group>"; };
 		844AC3EE23EBFF5E0066006D /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		9B7E10032F8B000000C0D001 /* TrackedEventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedEventsViewController.swift; sourceTree = "<group>"; };
+		9B7E10042F8B000000C0D001 /* TrackedEventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedEventsViewModel.swift; sourceTree = "<group>"; };
+		9B7E10072F8B000000C0D001 /* TrackedEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedEventsView.swift; sourceTree = "<group>"; };
+		9B7E10092F8B000000C0D001 /* TrackedEventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedEventCell.swift; sourceTree = "<group>"; };
 		844AC3F323EBFF900066006D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		844AC3F723EBFF9B0066006D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		845842D424223D690019635E /* AddressSettingsSkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsSkeletonView.swift; sourceTree = "<group>"; };
@@ -2297,6 +2305,7 @@
 				84B89A7D23F2F88E009692B4 /* ServiceIsActivated */,
 				84B89A7E23F2F958009692B4 /* ServiceIsNotActivated */,
 				84B89A7F23F2F974009692B4 /* ServiceUnavailable */,
+				9B7E10002F8B000000C0D001 /* TrackedEvents */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2670,6 +2679,33 @@
 			isa = PBXGroup;
 			children = (
 				848D1B8B23F29D9B00D6E368 /* AddressSettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9B7E10002F8B000000C0D001 /* TrackedEvents */ = {
+			isa = PBXGroup;
+			children = (
+				9B7E10012F8B000000C0D001 /* View */,
+				9B7E10022F8B000000C0D001 /* ViewModel */,
+			);
+			path = TrackedEvents;
+			sourceTree = "<group>";
+		};
+		9B7E10012F8B000000C0D001 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9B7E10032F8B000000C0D001 /* TrackedEventsViewController.swift */,
+				9B7E10072F8B000000C0D001 /* TrackedEventsView.swift */,
+				9B7E10092F8B000000C0D001 /* TrackedEventCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9B7E10022F8B000000C0D001 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9B7E10042F8B000000C0D001 /* TrackedEventsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -6252,6 +6288,9 @@
 				3A4E5A4727AEE910002DE633 /* WebViewCoordinator.swift in Sources */,
 				E9E4273A23F5609E00F5D593 /* ServiceSoonAvailableViewController.swift in Sources */,
 				E94B6C1B23FACA7600FD9F65 /* NewAllowedPersonViewModel.swift in Sources */,
+				9B7E10062F8B000000C0D001 /* TrackedEventsViewModel.swift in Sources */,
+				9B7E10082F8B000000C0D001 /* TrackedEventsView.swift in Sources */,
+				9B7E100A2F8B000000C0D001 /* TrackedEventCell.swift in Sources */,
 				3A03FCF925DD5AA500B8488A /* YTVideoModel.swift in Sources */,
 				84CC15CD23EC35D400A1CB95 /* AddressesListSectionModel.swift in Sources */,
 				8BA6EA622DFA224900CDA2DA /* GateAccessSectionModel.swift in Sources */,
@@ -6260,6 +6299,7 @@
 				847721762497C31D003FCC24 /* ArchivePageViewController.swift in Sources */,
 				84AA8D6623E2F2A8001B3B43 /* TransportType+Extensions.swift in Sources */,
 				844AC3EF23EBFF5E0066006D /* SettingsCoordinator.swift in Sources */,
+				9B7E10052F8B000000C0D001 /* TrackedEventsViewController.swift in Sources */,
 				E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */,
 				3A7CD5482857790B003CDDC7 /* SelectProviderViewController.swift in Sources */,
 				84CD304724D305F500CC079E /* IncomingCallScreenType.swift in Sources */,

@@ -38,6 +38,7 @@ enum AppRoute: Route {
         completionHandler: (() -> Void)? = nil
     )
     case closeIncomingCall
+    case paranoidPush(payload: ParanoidPushPayload)
     
 }
 
@@ -88,6 +89,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
     private var isOfflinePresented = false
     private var didLoadOptionsOnce = false
     private var isLoadingOptions = false
+    private var pendingParanoidPushPayload: ParanoidPushPayload?
 
     init(mainWindow: UIWindow, dependencies: AppDependencies) {
         self.linphoneService = dependencies.linphoneService
@@ -308,6 +310,16 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             }
             
             return .none()
+
+        case let .paranoidPush(payload):
+            let vc = ModalViewController(
+                dismissCallback: { [weak self] in self?.trigger(.dismiss) },
+                content: .paranoid(payload)
+            )
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+
+            return .present(vc)
             
         case .registerQRCode(code: let code):
             let qrType = AnalyticsValue.qrType(from: code)
@@ -530,6 +542,38 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
 
     func openSettingsTab() {
         openMainTab(.settings)
+    }
+
+    @discardableResult
+    func processParanoidPush(
+        userInfo: [AnyHashable: Any],
+        notificationTitle: String?,
+        notificationBody: String?
+    ) -> Bool {
+        guard let payload = ParanoidPushPayload(
+            userInfo: userInfo,
+            notificationTitle: notificationTitle,
+            notificationBody: notificationBody,
+            providerBaseURL: accessService.backendURL,
+            serverTimeZone: accessService.timeZone
+        ) else {
+            return false
+        }
+
+        pendingParanoidPushPayload = payload
+        presentPendingParanoidPushIfNeeded()
+        return true
+    }
+
+    func presentPendingParanoidPushIfNeeded() {
+        guard let payload = pendingParanoidPushPayload else { return }
+        guard mainWindow.rootViewController != nil else { return }
+
+        pendingParanoidPushPayload = nil
+
+        DispatchQueue.main.async { [weak self] in
+            self?.trigger(.paranoidPush(payload: payload))
+        }
     }
 
     func openFirstAddressCameras() {

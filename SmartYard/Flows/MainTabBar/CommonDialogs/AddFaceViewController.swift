@@ -80,6 +80,7 @@ final class AddFaceViewController: BaseViewController {
                             date: event.date,
                             uuid: event.uuid,
                             imageUuid: event.imageUuid,
+                            flatId: event.flatId,
                             objectId: event.objectId,
                             objectType: event.objectType,
                             objectMechanizma: event.objectMechanizma,

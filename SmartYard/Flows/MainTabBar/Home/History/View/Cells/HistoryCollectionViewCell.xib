@@ -312,6 +312,7 @@
                 <outlet property="descriptionContainer" destination="nL3-iT-qx9" id="t9T-Hd-SVm"/>
                 <outlet property="descriptionLabel" destination="JPV-1h-Qtf" id="46a-Zi-TN4"/>
                 <outlet property="image" destination="0z6-lI-UZP" id="IeU-zQ-7NR"/>
+                <outlet property="mainStackView" destination="thh-lH-5Wj" id="ZL6-tE-0rd"/>
                 <outlet property="openAccessButton" destination="vBO-uS-mK9" id="lCQ-UK-Q3v"/>
                 <outlet property="questionMark" destination="6OW-HS-3Lf" id="JMd-XH-DPw"/>
                 <outlet property="scrollView" destination="rdg-vf-upe" id="tu4-bi-RUt"/>

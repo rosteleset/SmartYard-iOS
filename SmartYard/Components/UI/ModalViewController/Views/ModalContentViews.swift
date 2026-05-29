@@ -6,6 +6,71 @@
 import UIKit
 import SnapKit
 
+// MARK: - Paranoid Push
+
+final class ParanoidPushModalViewContent: UIView {
+    private let payload: ParanoidPushPayload
+
+    init(payload: ParanoidPushPayload) {
+        self.payload = payload
+        super.init(frame: .zero)
+        configureUI()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    private func configureUI() {
+        backgroundColor = .SmartYard.grayBorder
+
+        let titleLabel = UILabel.make(.modalTitle, text: payload.title)
+        titleLabel.textAlignment = .left
+
+        let bodyLabel = UILabel.make(.modalBody, text: payload.body)
+        let dateLabel = UILabel.make(.modalBodySemibold, text: payload.date)
+
+        let imageView = SafeCachedImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 12
+        imageView.backgroundColor = .SmartYard.grayBorder
+        imageView.snp.makeConstraints { make in
+            make.height.equalTo(180)
+        }
+
+        let imageStatusLabel = UILabel.make(.modalBodySemibold)
+        imageStatusLabel.textColor = .SmartYard.semiBlack
+        imageStatusLabel.textAlignment = .center
+        imageStatusLabel.numberOfLines = 0
+
+        imageView.addSubview(imageStatusLabel) { make in
+            make.center.equalToSuperview()
+            make.leading.greaterThanOrEqualToSuperview().offset(16)
+            make.trailing.lessThanOrEqualToSuperview().offset(-16)
+        }
+
+        if let imageUrl = payload.imageUrl, !imageUrl.isEmpty {
+            imageView.loadImageUsingUrlString(
+                urlString: imageUrl,
+                cache: imagesCache,
+                label: imageStatusLabel,
+                errorMessage: L10n.History.Event.imageMissing
+            )
+        } else {
+            imageStatusLabel.text = L10n.History.Event.imageMissing
+        }
+
+        let stackView = UIStackView.vertical(spacing: 12).add {
+            imageView
+            titleLabel
+            bodyLabel
+            dateLabel
+        }
+
+        pinSubview(stackView, with: .init(inset: 24))
+    }
+}
+
 // MARK: - AddressOrder
 
 final class AddressOrderModalViewContent: UIView {

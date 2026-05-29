@@ -173,6 +173,7 @@
 "common.cancel" = "Болдырмау";
 "common.delete" = "Жою";
 "common.deny" = "Бөгде";
+"common.edit" = "Өзгерту";
 "common.disable" = "Өшіру";
 "common.done" = "Аяқталды";
 "common.enable" = "Қосу";
@@ -267,6 +268,10 @@
 "history.event.openingWithKey" = "Кілтпен ашу";
 "history.event.unknown" = "Белгісіз үздік";
 
+"history.eventTracking.comment.placeholderFormat" = "Up to %d characters";
+"history.eventTracking.comment.title" = "Comment";
+"history.eventTracking.toggleTitle" = "Notify me about this event";
+
 "history.filter.allApartments" = "Барлық апартаменттер";
 "history.filter.allButton" = "Барлық";
 "history.filter.allInApartment" = "Көлік, барлық";
@@ -330,6 +335,11 @@
 /* MARK: - NETWORK */
 
 "network.vpn.detectedWarning" = "Открит е VPN. Приложението може да работи нестабилно.";
+
+/* MARK: - NOTIFICATION */
+
+"notification.incomingDoorCall.quickReplyHint" = "(press and hold for quick reply)";
+"notification.incomingDoorCall.title" = "Intercom call";
 
 /* MARK: - OFFLINE */
 
@@ -591,6 +601,10 @@
 
 әлеметсіз бе, мен қызметтің \"%(X)\" тарифін құпия шарты \"%(Y)\" үшін өзгертуді тілеймін";
 "settings.main.serviceAction.talkAboutActivationTemplate" = "Сәлеметсіз бе, \"%(X)\" қызметі менің мекенжайымда қолжетімді емес, бірақ мен оны \"%(Y)\" шартында пайдалану керек";
+
+"settings.trackedEvents.deleteConfirmation.title" = "Delete tracked event?";
+"settings.trackedEvents.emptyState" = "No tracked events";
+"settings.trackedEvents.title" = "Tracked events";
 
 "settings.shareCar.platePlaceholder" = "М 565 ХВ 68";
 "settings.shareCar.shareAccess" = "Доступты бөлісу";

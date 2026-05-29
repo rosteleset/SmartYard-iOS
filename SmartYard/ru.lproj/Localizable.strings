@@ -173,6 +173,7 @@
 "common.cancel" = "Отмена";
 "common.delete" = "Удалить";
 "common.deny" = "Чужой";
+"common.edit" = "Изменить";
 "common.disable" = "Выключить";
 "common.done" = "Готово";
 "common.enable" = "Включить";
@@ -257,13 +258,17 @@
 "history.event.gateOpeningOnCall" = "Открытие ворот по звонку";
 "history.event.guestAllowedHint" = "При выборе «‎Свой»‎ мы добавим фотографию из этого события, для дальнейшего распознавания пользователя по лицу.\nВсе лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа.";
 "history.event.guestDeniedHint" = "При выборе «‎Чужой»‎ мы удалим ваше зарегистрированное лицо, на какое произошло ложное срабатывание наших алгоритмов.\nВсе лица, зарегистрированные в системе, можно найти в разделе Настройки адресов -> Управление доступом -> Вход по лицу без ключа.";
-"history.event.imageMissing" = "Изображение отсутствует";
+"history.event.imageMissing" = "Фото нет";
 "history.event.missedCall" = "Неотвеченный вызов";
 "history.event.openingFromApp" = "Открытие из приложения";
 "history.event.openingWithCode" = "Открытие по коду";
 "history.event.openingWithFaceID" = "Открывание по лицу";
 "history.event.openingWithKey" = "Открывание ключом";
 "history.event.unknown" = "Неизвестное событие";
+
+"history.eventTracking.comment.placeholderFormat" = "До %d символов";
+"history.eventTracking.comment.title" = "Комментарий";
+"history.eventTracking.toggleTitle" = "Уведомлять о таком событии";
 
 "history.filter.allApartments" = "Все квартиры";
 "history.filter.allButton" = "Все";
@@ -328,6 +333,11 @@
 /* MARK: - NETWORK */
 
 "network.vpn.detectedWarning" = "Обнаружен VPN. Приложение может работать нестабильно.";
+
+/* MARK: - NOTIFICATION */
+
+"notification.incomingDoorCall.quickReplyHint" = "(нажмите и удерживайте для быстрого ответа)";
+"notification.incomingDoorCall.title" = "Звонок в домофон";
 
 /* MARK: - OFFLINE */
 
@@ -585,6 +595,10 @@
 "settings.main.serviceAction.activateServiceTemplate" = "Здравствуйте, я бы хотел подключить услугу \"%(X)\" на договор \"%(Y)\"";
 "settings.main.serviceAction.changeTariffTemplate" = "Здравствуйте, я бы хотел изменить тариф для услуги \"%(X)\" на договоре \"%(Y)\"";
 "settings.main.serviceAction.talkAboutActivationTemplate" = "Здравствуйте, услуга \"%(X)\" недоступна по моему адресу, но я хочу пользоваться ей на договоре \"%(Y)\"";
+
+"settings.trackedEvents.deleteConfirmation.title" = "Удалить отслеживаемое событие?";
+"settings.trackedEvents.emptyState" = "Нет отслеживаемых событий";
+"settings.trackedEvents.title" = "Отслеживаемые события";
 
 "settings.shareCar.platePlaceholder" = "М 565 ХВ 68";
 "settings.shareCar.shareAccess" = "Поделиться доступом";

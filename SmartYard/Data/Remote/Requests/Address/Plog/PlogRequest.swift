@@ -15,6 +15,24 @@ struct PlogRequest {
     let fromDate: Date
 }
 
+struct TrackEventRequest {
+    let accessToken: String
+    let flatId: Int
+    let eventType: Int
+    let eventDetail: String
+    let comments: String
+}
+
+struct UntrackEventRequest {
+    let accessToken: String
+    let watcherId: Int
+}
+
+struct GetTrackedEventsRequest {
+    let accessToken: String
+    let flatId: Int
+}
+
 extension PlogRequest {
     
     var requestParameters: [String: Any] {
@@ -26,4 +44,31 @@ extension PlogRequest {
         return params
     }
     
+}
+
+extension TrackEventRequest {
+    var requestParameters: [String: Any] {
+        return [
+            "flatId": flatId,
+            "eventType": eventType,
+            "eventDetail": eventDetail,
+            "comments": comments
+        ]
+    }
+}
+
+extension UntrackEventRequest {
+    var requestParameters: [String: Any] {
+        return [
+            "watcherId": watcherId
+        ]
+    }
+}
+
+extension GetTrackedEventsRequest {
+    var requestParameters: [String: Any] {
+        return [
+            "flatId": flatId
+        ]
+    }
 }
