@@ -425,10 +425,10 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <inset key="contentEdgeInsets" minX="4" minY="10" maxX="4" maxY="10"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Поделиться">
+                            <state key="normal" title="">
                                 <color key="titleColor" name="keyColor"/>
                             </state>
-                            <state key="disabled" title="Поделиться"/>
+                            <state key="disabled" title=""/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
                                     <real key="value" value="6"/>

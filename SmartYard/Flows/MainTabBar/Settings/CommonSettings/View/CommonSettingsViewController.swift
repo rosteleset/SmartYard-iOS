@@ -160,7 +160,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         editNameButton.touchAreaInsets = UIEdgeInsets(inset: 24)
         
         addressOrderResetButton.mode = .reset
-        changeAppereanceButton.setTitle("Как в системе", for: .normal)
+        changeAppereanceButton.setTitle(L10n.Settings.Common.Appearance.system, for: .normal)
 
         [
             nameContainerView,

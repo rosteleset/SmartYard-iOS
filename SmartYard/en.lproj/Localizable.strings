@@ -66,6 +66,8 @@
 
 "auth.codeRateLimit.message" = "You are requesting a code too often. Please try again later";
 
+"auth.pin.invalidCode" = "Incorrect code. Please try again";
+
 "auth.contractLogin.contractNumberPlaceholder" = "Contract number";
 "auth.contractLogin.createButton" = "Create";
 "auth.contractLogin.forgotCredentialsButton" = "I don't remember anything";
@@ -189,6 +191,7 @@
 "common.save" = "Save";
 "common.search" = "Search";
 "common.settings" = "Settings";
+"common.share" = "Share";
 "common.yes" = "Yes";
 
 "common.confirmation.title" = "Are you sure?";
@@ -323,6 +326,10 @@
 "intercom.incoming.speakerAction" = "Speaker";
 "intercom.incoming.title" = "Call to intercom";
 "intercom.incoming.videoAction" = "Video";
+
+/* MARK: - LICENSE PLATE */
+
+"licensePlate.keyboard.language.russian" = "Russian";
 
 /* MARK: - MENU */
 

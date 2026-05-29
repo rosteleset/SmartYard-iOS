@@ -66,6 +66,8 @@
 
 "auth.codeRateLimit.message" = "Դուք չափազանց հաճախ եք հարցում ուղարկում կոդի համար։ Խնդրում ենք փորձել ավելի ուշ";
 
+"auth.pin.invalidCode" = "Incorrect code. Please try again";
+
 "auth.contractLogin.contractNumberPlaceholder" = "Պայմանագրի համար";
 "auth.contractLogin.createButton" = "Ստեղծել";
 "auth.contractLogin.forgotCredentialsButton" = "Ես ոչինչ չեմ հիշում";
@@ -189,6 +191,7 @@
 "common.save" = "Պահպանել";
 "common.search" = "Որոնում";
 "common.settings" = "Կարգավորումներ";
+"common.share" = "Share";
 "common.yes" = "Այո";
 
 "common.confirmation.title" = "Համոզվա՞ծ եք։";
@@ -323,6 +326,10 @@
 "intercom.incoming.speakerAction" = "Բարձրախոս";
 "intercom.incoming.title" = "Զանգ ինտերկոմին";
 "intercom.incoming.videoAction" = "Տեսանյութ";
+
+/* MARK: - LICENSE PLATE */
+
+"licensePlate.keyboard.language.russian" = "Russian";
 
 /* MARK: - MENU */
 

@@ -66,6 +66,8 @@
 
 "auth.codeRateLimit.message" = "Kodni juda tez-tez so'rayapsiz. Iltimos, keyinroq qayta urinib ko'ring";
 
+"auth.pin.invalidCode" = "Incorrect code. Please try again";
+
 "auth.contractLogin.contractNumberPlaceholder" = "Shartnoma raqami";
 "auth.contractLogin.createButton" = "Yaratish";
 "auth.contractLogin.forgotCredentialsButton" = "Hech narsani eslay olmayapman";
@@ -189,6 +191,7 @@
 "common.save" = "Saqlash";
 "common.search" = "Qidiruv";
 "common.settings" = "Sozlamalar";
+"common.share" = "Share";
 "common.yes" = "Ha";
 
 "common.confirmation.title" = "Ishonchingiz komilmi?";
@@ -323,6 +326,10 @@
 "intercom.incoming.speakerAction" = "Dinamik";
 "intercom.incoming.title" = "Domofonga qo'ng'iroq";
 "intercom.incoming.videoAction" = "Video";
+
+/* MARK: - LICENSE PLATE */
+
+"licensePlate.keyboard.language.russian" = "Russian";
 
 /* MARK: - MENU */
 

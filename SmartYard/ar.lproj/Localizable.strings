@@ -66,6 +66,8 @@
 
 "auth.codeRateLimit.message" = "أنت تطلب الرمز بشكل متكرر. يرجى المحاولة لاحقاً";
 
+"auth.pin.invalidCode" = "Incorrect code. Please try again";
+
 "auth.contractLogin.contractNumberPlaceholder" = "رقم العقد";
 "auth.contractLogin.createButton" = "إنشاء";
 "auth.contractLogin.forgotCredentialsButton" = "لا أتذكر شيئاً";
@@ -189,6 +191,7 @@
 "common.save" = "حفظ";
 "common.search" = "بحث";
 "common.settings" = "الإعدادات";
+"common.share" = "Share";
 "common.yes" = "نعم";
 
 "common.confirmation.title" = "هل أنت متأكد؟";
@@ -323,6 +326,10 @@
 "intercom.incoming.speakerAction" = "مكبر الصوت";
 "intercom.incoming.title" = "اتصال بالإنتركم";
 "intercom.incoming.videoAction" = "فيديو";
+
+/* MARK: - LICENSE PLATE */
+
+"licensePlate.keyboard.language.russian" = "Russian";
 
 /* MARK: - MENU */
 

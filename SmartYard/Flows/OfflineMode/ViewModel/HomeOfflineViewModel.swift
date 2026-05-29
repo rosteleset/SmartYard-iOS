@@ -99,7 +99,7 @@ final class HomeOfflineViewModel: BaseViewModel {
                     .dialog(
                         title: L10n.Offline.Alert.noConnectionTitle,
                         message: L10n.Offline.Message.serverUnavailable,
-                        actions: [UIAlertAction(title: "Ок", style: .default)]
+                        actions: [UIAlertAction(title: L10n.Common.ok, style: .default)]
                     )
                 )
             }

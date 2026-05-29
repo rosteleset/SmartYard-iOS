@@ -120,6 +120,8 @@ extension LicencePlateKeyboardView {
         
         actionButton.setTitleColor(.SYKeyboard.textKeyColor, for: .disabled)
         actionButton.setTitleColor(.white, for: .normal)
+        actionButton.setTitle(L10n.Common.share, for: .normal)
+        actionButton.setTitle(L10n.Common.share, for: .disabled)
 
         configureCountryButton()
         
@@ -205,7 +207,10 @@ extension LicencePlateKeyboardView {
         countryButton.setTitleColorForAllStates(UIColor.SYKeyboard.textKeyColor)
 
         if #available(iOS 14.0, *) {
-            let russianAction = UIAction(title: "Русский", state: .on) { [weak self] _ in
+            let russianAction = UIAction(
+                title: L10n.LicensePlate.Keyboard.Language.russian,
+                state: .on
+            ) { [weak self] _ in
                 self?.currentCountryMode = .russia
             }
             countryButton.menu = UIMenu(title: "", children: [russianAction])

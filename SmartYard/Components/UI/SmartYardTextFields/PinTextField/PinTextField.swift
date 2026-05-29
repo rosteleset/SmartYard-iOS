@@ -31,6 +31,7 @@ final class PinTextField: PMNibLinkableView, HasDisposeBag {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        wrongPassLabel.text = L10n.Auth.Pin.invalidCode
         configureFakeTextField()
         addViewTapGesture()
         bind()
@@ -138,4 +139,3 @@ extension Reactive where Base: PinTextField {
     }
     
 }
-

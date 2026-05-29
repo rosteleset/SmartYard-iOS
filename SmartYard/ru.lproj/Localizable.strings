@@ -66,6 +66,8 @@
 
 "auth.codeRateLimit.message" = "Вы запрашиваете код слишком часто. Пожалуйста, попробуйте позже";
 
+"auth.pin.invalidCode" = "Неверный код. Попробуйте ещё раз";
+
 "auth.contractLogin.contractNumberPlaceholder" = "Номер договора";
 "auth.contractLogin.createButton" = "Создать";
 "auth.contractLogin.forgotCredentialsButton" = "Ничего не помню";
@@ -189,6 +191,7 @@
 "common.save" = "Сохранить";
 "common.search" = "Поиск";
 "common.settings" = "Настройки";
+"common.share" = "Поделиться";
 "common.yes" = "Да";
 
 "common.confirmation.title" = "Вы уверены?";
@@ -323,6 +326,10 @@
 "intercom.incoming.speakerAction" = "Динамик";
 "intercom.incoming.title" = "Звонок в домофон";
 "intercom.incoming.videoAction" = "Видео";
+
+/* MARK: - LICENSE PLATE */
+
+"licensePlate.keyboard.language.russian" = "Русский";
 
 /* MARK: - MENU */
 

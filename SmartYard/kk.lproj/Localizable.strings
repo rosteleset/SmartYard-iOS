@@ -66,6 +66,8 @@
 
 "auth.codeRateLimit.message" = "Сіз кодты тым көп сұрағансыз. Кейінірек қайталап көріңіз";
 
+"auth.pin.invalidCode" = "Incorrect code. Please try again";
+
 "auth.contractLogin.contractNumberPlaceholder" = "Шарттың нөмірі";
 "auth.contractLogin.createButton" = "Жасау";
 "auth.contractLogin.forgotCredentialsButton" = "Нәтіжесіз есті ештеңе естемін";
@@ -189,6 +191,7 @@
 "common.save" = "Сақтау";
 "common.search" = "Іздеу";
 "common.settings" = "Параметрлер";
+"common.share" = "Share";
 "common.yes" = "Ия";
 
 "common.confirmation.title" = "Сіз сенімдісіз бе?";
@@ -325,6 +328,10 @@
 "intercom.incoming.speakerAction" = "Динамик";
 "intercom.incoming.title" = "Домофонға звонок";
 "intercom.incoming.videoAction" = "Бейне";
+
+/* MARK: - LICENSE PLATE */
+
+"licensePlate.keyboard.language.russian" = "Russian";
 
 /* MARK: - MENU */
 

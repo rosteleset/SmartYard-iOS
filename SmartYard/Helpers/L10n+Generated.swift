@@ -145,6 +145,10 @@ extension L10n {
             }
         }
 
+        enum Pin {
+            static let invalidCode = tr("auth.pin.invalidCode")
+        }
+
         enum ProviderSelection {
             static let chooseAProvider = tr("auth.providerSelection.chooseAProvider")
             static let searchPlaceholder = tr("auth.providerSelection.searchPlaceholder")
@@ -257,6 +261,7 @@ extension L10n {
         static let save = tr("common.save")
         static let search = tr("common.search")
         static let settings = tr("common.settings")
+        static let share = tr("common.share")
         static let yes = tr("common.yes")
 
         enum Confirmation {
@@ -446,6 +451,14 @@ extension L10n {
             static let speakerAction = tr("intercom.incoming.speakerAction")
             static let title = tr("intercom.incoming.title")
             static let videoAction = tr("intercom.incoming.videoAction")
+        }
+    }
+
+    enum LicensePlate {
+        enum Keyboard {
+            enum Language {
+                static let russian = tr("licensePlate.keyboard.language.russian")
+            }
         }
     }
 
@@ -863,6 +876,7 @@ extension L10n {
             static let shareButton = tr("settings.sharePerson.shareButton")
             static let subtitle = tr("settings.sharePerson.subtitle")
         }
+
     }
 
     enum Support {

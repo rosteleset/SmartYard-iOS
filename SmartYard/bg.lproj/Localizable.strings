@@ -66,6 +66,8 @@
 
 "auth.codeRateLimit.message" = "Искате код твърде често. Моля, опитайте отново по-късно";
 
+"auth.pin.invalidCode" = "Incorrect code. Please try again";
+
 "auth.contractLogin.contractNumberPlaceholder" = "Номер на договор";
 "auth.contractLogin.createButton" = "Създай";
 "auth.contractLogin.forgotCredentialsButton" = "Не помня нищо";
@@ -189,6 +191,7 @@
 "common.save" = "Запази";
 "common.search" = "Търсене";
 "common.settings" = "Настройки";
+"common.share" = "Share";
 "common.yes" = "Да";
 
 "common.confirmation.title" = "Сигурни ли сте?";
@@ -323,6 +326,10 @@
 "intercom.incoming.speakerAction" = "Високоговорител";
 "intercom.incoming.title" = "Обаждане до домофон";
 "intercom.incoming.videoAction" = "Видео";
+
+/* MARK: - LICENSE PLATE */
+
+"licensePlate.keyboard.language.russian" = "Russian";
 
 /* MARK: - MENU */
 
