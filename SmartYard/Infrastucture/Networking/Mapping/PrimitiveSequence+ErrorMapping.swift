@@ -156,7 +156,7 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     }
 
     private func printDebugInfo() -> PrimitiveSequence<Trait, Element> {
-        flatMap { response in
+        self.do(onSuccess: { response in
             var logLines: [String] = []
 
             if let request = response.request {
@@ -181,8 +181,30 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
 
             let fullLog = logLines.joined(separator: "\n")
             Logger.logDebug(fullLog)
+        }, onError: { error in
+            var logLines = ["❌ Request failed:"]
 
-            return .just(response)
-        }
+            if let requestURL = Self.extractRequestURL(from: error) {
+                logLines.append("URL: \(requestURL.absoluteString)")
+            } else {
+                logLines.append("URL: <unknown>")
+            }
+
+            let nsError = error as NSError
+            logLines.append("Error: \(nsError.domain)(\(nsError.code)) \(nsError.localizedDescription)")
+
+            if let moyaError = error as? MoyaError,
+               let response = moyaError.response {
+                logLines.append("⬅️ Response (\(response.statusCode)):")
+
+                if let responseString = try? response.mapString(), !responseString.isEmpty {
+                    logLines.append(responseString)
+                } else {
+                    logLines.append("<empty>")
+                }
+            }
+
+            Logger.logDebug(logLines.joined(separator: "\n"))
+        })
     }
 }
