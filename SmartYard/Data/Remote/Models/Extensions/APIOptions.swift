@@ -26,6 +26,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let issuesVersion: String?
     let validationPattern: NameValidationPattern?
     let deliveryTabsConfig: DeliveryTabsConfig?
+    let stories: Bool?
 
     private enum CodingKeys: String, CodingKey {
         case paymentsUrl
@@ -47,6 +48,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case addressVerificationTabLayoutVisible
         case addressVerificationTab1Visible
         case addressVerificationTab2Visible
+        case stories
     }
 
     // swiftlint:disable:next cyclomatic_complexity
@@ -112,6 +114,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         entrancesView = (try? container.decode(EntrancesViewType.self, forKey: .entrancesView)) ?? .list
         activeTab = (try? container.decode(TabNames.self, forKey: .activeTab)) ?? .addresses
         issuesVersion = try? container.decode(String.self, forKey: .issuesVersion)
+        stories = boolFromTF(.stories)
     }
 
     init() {
@@ -130,6 +133,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         issuesVersion = nil
         deliveryTabsConfig = nil
         validationPattern = nil
+        stories = nil
     }
 
     struct ChatOptions: Decodable {

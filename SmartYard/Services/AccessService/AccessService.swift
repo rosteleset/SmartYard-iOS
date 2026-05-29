@@ -40,6 +40,7 @@ private let issuesVersionKey = "issuesVersionKey"
 private let userPreferredAddressOrderKey = "userPreferredAddressOrderKey"
 private let nameValidationPatternKey = "nameValidationPatternKey"
 private let deliveryTabsConfigKey = "deliveryTabsConfigKey"
+private let showStoriesKey = "showStoriesKey"
 
 // swiftlint:disable:next type_body_length
 final class AccessService {
@@ -355,6 +356,15 @@ final class AccessService {
             UserDefaults.standard.setValue(newValue, forKey: issuesVersionKey)
         }
     }
+
+    var showStories: Bool {
+        get {
+            UserDefaults.standard.value(forKey: showStoriesKey) as? Bool ?? false
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: showStoriesKey)
+        }
+    }
     
     var userPreferredAddressOrder: [String] {
         get {
@@ -441,6 +451,7 @@ final class AccessService {
         chatDomain = ""
         chatToken = ""
         showCityCams = false
+        showStories = false
         userPreferredAddressOrder = []
         phonePrefix = Constants.defaultPhonePrefix
         phonePattern = Constants.defaultPhonePattern

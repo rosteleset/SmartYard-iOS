@@ -141,6 +141,7 @@ final class OptionsService: OptionsServicing, HasDisposeBag {
             accessService.chatToken = chatOptions.token
         }
         if let cityCams = response.cityCams { accessService.showCityCams = cityCams }
+        if let stories = response.stories { accessService.showStories = stories }
         if let timeZone = response.timeZone { accessService.timeZone = timeZone }
         if let deliveryTabsConfig = response.deliveryTabsConfig { accessService.deliveryTabsConfig = deliveryTabsConfig }
 

@@ -75,13 +75,29 @@ final class AddressesListViewModel: BaseViewModel {
             .filter { $0 == .online }
             .mapToVoid()
 
-        let stories = Driver
+        let storiesEnabled = Driver
+            .merge(
+                .just(accessService.showStories),
+                accessService.optionsUpdated
+                    .asDriverOnErrorJustComplete()
+                    .map { [accessService] in accessService.showStories }
+            )
+            .distinctUntilChanged()
+
+        let storiesRefresh = Driver
             .merge(
                 .just(false),
                 input.refreshDataTrigger.asDriver().mapToTrue(),
                 hasNetworkBecomeReachable.mapToFalse()
             )
-            .flatMapLatest { [weak self] forceRefresh -> Driver<[StoryItem]> in
+
+        let stories = Driver
+            .combineLatest(storiesRefresh, storiesEnabled)
+            .flatMapLatest { [weak self] forceRefresh, isEnabled -> Driver<[StoryItem]> in
+                guard isEnabled else {
+                    return .just([])
+                }
+
                 guard let self = self else {
                     return .just([])
                 }
