@@ -29,6 +29,7 @@ enum AppRoute: Route {
     case onboarding
     case offline
     case dismissOffline
+    case webView(url: URL)
     case appSettings(title: String, message: String?)
     case registerQRCode(code: String)
     case incomingCall(
@@ -86,6 +87,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         mainTabBarCoordinator?.selectedPresentable
     }
 
+    private var webViewCoordinator: WebViewCoordinator?
     private var isOfflinePresented = false
     private var didLoadOptionsOnce = false
     private var isLoadingOptions = false
@@ -157,6 +159,21 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             
         case .dismiss:
             return .dismiss()
+
+        case let .webView(url):
+            let coordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
+                url: url,
+                backButtonLabel: L10n.Common.back,
+                push: true,
+                version: 2
+            )
+
+            webViewCoordinator = coordinator
+            addChild(coordinator)
+            return .none()
             
         case let .userName(preloadedName):
             let vm = UserNameViewModel(

@@ -121,6 +121,11 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "Как к вам обращаться?";
+"auth.userName.agreement.text" = "Я согласен(на) на обработку персональных данных в соответствии с политикой конфиденциальности и с пользовательским соглашением";
+"auth.userName.agreement.personalDataLinkText" = "обработку персональных данных";
+"auth.userName.agreement.privacyPolicyLinkText" = "политикой конфиденциальности";
+"auth.userName.agreement.userAgreementLinkText" = "пользовательским соглашением";
+"auth.userName.agreement.accessibilityLabel" = "Согласие с условиями";
 
 /* MARK: - CAMERA */
 

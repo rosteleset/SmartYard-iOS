@@ -121,6 +121,11 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "Сізге қалай шағым беруге болады?";
+"auth.userName.agreement.text" = "Мен жеке деректерді өңдеуге құпиялылық саясатына және пайдаланушы келісіміне сәйкес келісемін";
+"auth.userName.agreement.personalDataLinkText" = "жеке деректерді өңдеуге";
+"auth.userName.agreement.privacyPolicyLinkText" = "құпиялылық саясатына";
+"auth.userName.agreement.userAgreementLinkText" = "пайдаланушы келісіміне";
+"auth.userName.agreement.accessibilityLabel" = "Шарттармен келісу";
 
 /* MARK: - CAMERA */
 

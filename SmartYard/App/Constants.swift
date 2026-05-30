@@ -24,4 +24,7 @@ enum Constants {
     static let defaultTimeZone = "Europe/Moscow"
     static let showDeleteAccountButton = false
     static let isDarkModeEnabled = false // set 'true' if you have Dark Mode
+    static let personalDataProcessingAgreementURL: String? = nil
+    static let privacyPolicyURL: String? = nil
+    static let userAgreementURL: String? = nil
 }

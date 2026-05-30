@@ -8,17 +8,36 @@
 
 import UIKit
 import JGProgressHUD
+import RxCocoa
+import RxRelay
+import RxSwift
 
 final class UserNameViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var nameTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var middleNameTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var continueButton: UIButton!
+    @IBOutlet private weak var agreementCheckBoxView: SmartYardCheckBoxView!
+    @IBOutlet private weak var agreementTextView: UITextView!
     
     @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabel: UILabel!
     private let viewModel: UserNameViewModel
     private let preloadedName: APIClientName?
+    private let agreementAcceptedRelay = BehaviorRelay<Bool>(value: true)
+    private let legalDocumentTrigger = PublishSubject<URL>()
+    private let agreementLinkColor = UIColor(
+        red: 0.1607843137,
+        green: 0.5450980392,
+        blue: 1,
+        alpha: 1
+    )
+    private var isAgreementAccepted = true {
+        didSet {
+            agreementAcceptedRelay.accept(isAgreementAccepted)
+            updateAgreementCheckBoxAppearance()
+        }
+    }
     
     var loader: JGProgressHUD?
     
@@ -45,11 +64,17 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         
         view.isUserInteractionEnabled = true
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateAgreementCheckBoxAppearance()
+    }
     
     private func configureUI() {
         titleLabel.text = L10n.Auth.UserName.howCanICallYou
         continueButton.setTitle(L10n.Common.next, for: .normal)
         let gesture = UITapGestureRecognizer()
+        gesture.cancelsTouchesInView = false
         view.addGestureRecognizer(gesture)
 
         let serverPattern = AccessService.shared.nameValidationPattern
@@ -59,9 +84,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
             patronymic: ValidatorFactory.makePatronymic(from: serverPattern)
         )
 
-        [nameTextField, middleNameTextField].forEach {
-            $0?.addTarget(self, action: #selector(enableContinueButton), for: .editingChanged)
-        }
+        configureAgreementView()
 
         gesture.rx.event.asDriver()
             .drive(
@@ -117,6 +140,16 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         let input = UserNameViewModel.Input(
             name: nameTextField.rx.text.asDriver(),
             middleName: middleNameTextField.rx.text.asDriver(),
+            isNameValid: nameTextField.rx.controlEvent(.editingChanged)
+                .map { [weak self] in self?.nameTextField.isValid ?? false }
+                .startWith(nameTextField.isValid)
+                .asDriver(onErrorJustReturn: false),
+            isMiddleNameValid: middleNameTextField.rx.controlEvent(.editingChanged)
+                .map { [weak self] in self?.middleNameTextField.isValid ?? false }
+                .startWith(middleNameTextField.isValid)
+                .asDriver(onErrorJustReturn: false),
+            isAgreementAccepted: agreementAcceptedRelay.asDriver(),
+            legalDocumentTrigger: legalDocumentTrigger.asDriverOnErrorJustComplete(),
             continueTrigger: continueButton.rx.tap.asDriver()
         )
         
@@ -143,10 +176,114 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+
+        output.isContinueEnabled
+            .drive(continueButton.rx.isEnabled)
+            .disposed(by: disposeBag)
     }
 
-    @objc private func enableContinueButton() {
-        continueButton.isEnabled = nameTextField.isValid && middleNameTextField.isValid
+    private func configureAgreementView() {
+        guard let links = makeAgreementLinks() else {
+            agreementCheckBoxView.isHidden = true
+            agreementTextView.isHidden = true
+            isAgreementAccepted = true
+            return
+        }
+
+        agreementTextView.backgroundColor = .clear
+        agreementTextView.delegate = self
+        agreementTextView.isEditable = false
+        agreementTextView.isScrollEnabled = false
+        agreementTextView.setContentCompressionResistancePriority(.required, for: .vertical)
+        agreementTextView.tintColor = agreementLinkColor
+        agreementTextView.textContainerInset = .zero
+        agreementTextView.textContainer.lineFragmentPadding = 0
+        agreementTextView.attributedText = makeAgreementText(links: links)
+        agreementTextView.linkTextAttributes = [
+            .foregroundColor: agreementLinkColor,
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .underlineColor: agreementLinkColor
+        ]
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleAgreement))
+        agreementCheckBoxView.addGestureRecognizer(tapGesture)
+        agreementCheckBoxView.isAccessibilityElement = true
+        agreementCheckBoxView.accessibilityLabel = NSLocalizedString(
+            "auth.userName.agreement.accessibilityLabel",
+            comment: ""
+        )
+        agreementCheckBoxView.accessibilityTraits = [.button, .selected]
+
+        updateAgreementCheckBoxAppearance()
+    }
+
+    private func makeAgreementLinks() -> [(substring: String, url: URL)]? {
+        guard
+            let personalDataURLString = Constants.personalDataProcessingAgreementURL,
+            let privacyPolicyURLString = Constants.privacyPolicyURL,
+            let userAgreementURLString = Constants.userAgreementURL,
+            !personalDataURLString.isEmpty,
+            !privacyPolicyURLString.isEmpty,
+            !userAgreementURLString.isEmpty,
+            let personalDataURL = URL(string: personalDataURLString),
+            let privacyPolicyURL = URL(string: privacyPolicyURLString),
+            let userAgreementURL = URL(string: userAgreementURLString)
+        else {
+            return nil
+        }
+
+        return [
+            (
+                NSLocalizedString("auth.userName.agreement.personalDataLinkText", comment: ""),
+                personalDataURL
+            ),
+            (
+                NSLocalizedString("auth.userName.agreement.privacyPolicyLinkText", comment: ""),
+                privacyPolicyURL
+            ),
+            (
+                NSLocalizedString("auth.userName.agreement.userAgreementLinkText", comment: ""),
+                userAgreementURL
+            )
+        ]
+    }
+
+    private func makeAgreementText(links: [(substring: String, url: URL)]) -> NSAttributedString {
+        let text = NSLocalizedString("auth.userName.agreement.text", comment: "")
+        let attributedString = NSMutableAttributedString(
+            string: text,
+            attributes: [
+                .font: UIFont.SourceSansPro.regular(size: 14),
+                .foregroundColor: UIColor.SmartYard.semiBlack
+            ]
+        )
+
+        links.forEach { substring, url in
+            guard let range = text.range(of: substring) else {
+                return
+            }
+
+            attributedString.addAttributes(
+                [
+                    .link: url,
+                    .foregroundColor: agreementLinkColor,
+                    .underlineStyle: NSUnderlineStyle.single.rawValue,
+                    .underlineColor: agreementLinkColor
+                ],
+                range: NSRange(range, in: text)
+            )
+        }
+
+        return attributedString
+    }
+
+    private func updateAgreementCheckBoxAppearance() {
+        agreementCheckBoxView.setState(state: isAgreementAccepted ? .checkedActive : .uncheckedActive)
+        agreementCheckBoxView.accessibilityTraits = isAgreementAccepted ? [.button, .selected] : .button
+    }
+
+    @objc private func toggleAgreement() {
+        isAgreementAccepted.toggle()
     }
 
 }
@@ -163,4 +300,18 @@ extension UserNameViewController: UITextFieldDelegate {
         return true
     }
     
+}
+
+extension UserNameViewController: UITextViewDelegate {
+
+    func textView(
+        _ textView: UITextView,
+        shouldInteractWith URL: URL,
+        in characterRange: NSRange,
+        interaction: UITextItemInteraction
+    ) -> Bool {
+        legalDocumentTrigger.onNext(URL)
+        return false
+    }
+
 }

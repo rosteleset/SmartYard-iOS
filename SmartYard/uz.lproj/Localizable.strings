@@ -121,6 +121,11 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "Sizga qanday murojaat qilishim kerak?";
+"auth.userName.agreement.text" = "Shaxsiy ma'lumotlarni maxfiylik siyosati va foydalanuvchi kelishuviga muvofiq qayta ishlashga roziman";
+"auth.userName.agreement.personalDataLinkText" = "Shaxsiy ma'lumotlarni";
+"auth.userName.agreement.privacyPolicyLinkText" = "maxfiylik siyosati";
+"auth.userName.agreement.userAgreementLinkText" = "foydalanuvchi kelishuviga";
+"auth.userName.agreement.accessibilityLabel" = "Shartlarga rozilik";
 
 /* MARK: - CAMERA */
 

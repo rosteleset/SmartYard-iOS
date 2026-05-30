@@ -62,6 +62,12 @@ final class UserNameViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         let prepareTransitionTrigger = PublishSubject<Void>()
+
+        input.legalDocumentTrigger
+            .drive(with: self) { owner, url in
+                owner.router.trigger(.webView(url: url))
+            }
+            .disposed(by: disposeBag)
         
         input.continueTrigger
             .withLatestFrom(input.name)
@@ -104,6 +110,9 @@ final class UserNameViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
+            isContinueEnabled: Driver
+                .combineLatest(input.isNameValid, input.isMiddleNameValid, input.isAgreementAccepted)
+                .map { $0 && $1 && $2 },
             isLoading: activityTracker.asDriver(),
             prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
         )
@@ -116,10 +125,15 @@ extension UserNameViewModel {
     struct Input {
         let name: Driver<String?>
         let middleName: Driver<String?>
+        let isNameValid: Driver<Bool>
+        let isMiddleNameValid: Driver<Bool>
+        let isAgreementAccepted: Driver<Bool>
+        let legalDocumentTrigger: Driver<URL>
         let continueTrigger: Driver<Void>
     }
     
     struct Output {
+        let isContinueEnabled: Driver<Bool>
         let isLoading: Driver<Bool>
         let prepareTransitionTrigger: Driver<Void>
     }
