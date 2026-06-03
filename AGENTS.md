@@ -1,5 +1,20 @@
 # Codex Project Rules
 
+- Do not run `xcodebuild` unless explicitly requested.
+- If a build check is needed, first ask the user to run the command locally.
+- Verify changes using only static analysis: `git diff`, project search, and reading files.
+- If a build is required, provide a short command and wait for the user's error log.
+- Use this commit message format:
+
+  ```text
+  type: short subject
+
+  One concise paragraph explaining why/what changed at a higher level.
+
+  - Optional bullet with concrete change
+  - Optional bullet with concrete change
+  ```
+
 - In RxSwift subscriptions, prefer `subscribe(with: self) { owner, ... in ... }` over `subscribe(onNext: { [weak self] ... })` when the subscription captures `self`.
 - Prefer ternary operators over `if`/`else` when the expression stays readable and the conditional is simple.
 - Follow the Google Swift Style Guide by default, unless existing project conventions or SwiftLint rules require otherwise.
