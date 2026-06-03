@@ -66,3 +66,4 @@ sourcetree-hook.json
 # Private tokens, keys, backend urls and so on.
 GoogleService-Info.plist
 Constants.swift
+Docs/ProjectContext.md
