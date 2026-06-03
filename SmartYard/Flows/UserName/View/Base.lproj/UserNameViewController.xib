@@ -25,6 +25,8 @@
                 <outlet property="agreementCheckBoxView" destination="agc-vw-box" id="acb-ow-let"/>
                 <outlet property="agreementTextView" destination="agt-tv-txt" id="atv-ow-let"/>
                 <outlet property="continueButton" destination="MyO-ec-zrb" id="CKS-Kd-iua"/>
+                <outlet property="continueButtonAgreementCheckBoxTopConstraint" destination="btn-below-checkbox" id="btn-acb-top-out"/>
+                <outlet property="continueButtonAgreementTextTopConstraint" destination="REd-9J-Wig" id="btn-agt-top-out"/>
                 <outlet property="mainContainerBottomConstraint" destination="mzc-29-aat" id="amC-Ja-cMV"/>
                 <outlet property="middleNameTextField" destination="PoY-jf-rQZ" id="CcG-Xw-0E2"/>
                 <outlet property="nameTextField" destination="EEN-Gu-xjS" id="ap6-iP-yBt"/>

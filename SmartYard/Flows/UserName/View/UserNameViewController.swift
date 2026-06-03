@@ -21,11 +21,17 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var agreementTextView: UITextView!
     
     @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private var continueButtonAgreementCheckBoxTopConstraint: NSLayoutConstraint!
+    @IBOutlet private var continueButtonAgreementTextTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabel: UILabel!
     private let viewModel: UserNameViewModel
     private let preloadedName: APIClientName?
     private let agreementAcceptedRelay = BehaviorRelay<Bool>(value: true)
     private let legalDocumentTrigger = PublishSubject<URL>()
+    private lazy var continueButtonCompactTopConstraint = continueButton.topAnchor.constraint(
+        equalTo: middleNameTextField.bottomAnchor,
+        constant: 24
+    )
     private let agreementLinkColor = UIColor(
         red: 0.1607843137,
         green: 0.5450980392,
@@ -101,7 +107,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         nameTextField.configure(with: validators.first)
         nameTextField.updateValidationAppearance()
 
-        middleNameTextField.setPlaceholder(string: NSLocalizedString("Patronymic", comment: ""))
+        middleNameTextField.setPlaceholder(string: L10n.Profile.patronymic)
         middleNameTextField.delegate = self
         middleNameTextField.text = preloadedName?.patronymic
         middleNameTextField.sendActions(for: .allEditingEvents)
@@ -186,10 +192,12 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         guard let links = makeAgreementLinks() else {
             agreementCheckBoxView.isHidden = true
             agreementTextView.isHidden = true
+            setAgreementLayoutVisible(false)
             isAgreementAccepted = true
             return
         }
 
+        setAgreementLayoutVisible(true)
         agreementTextView.backgroundColor = .clear
         agreementTextView.delegate = self
         agreementTextView.isEditable = false
@@ -215,6 +223,12 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         agreementCheckBoxView.accessibilityTraits = [.button, .selected]
 
         updateAgreementCheckBoxAppearance()
+    }
+
+    private func setAgreementLayoutVisible(_ isVisible: Bool) {
+        continueButtonAgreementCheckBoxTopConstraint.isActive = isVisible
+        continueButtonAgreementTextTopConstraint.isActive = isVisible
+        continueButtonCompactTopConstraint.isActive = !isVisible
     }
 
     private func makeAgreementLinks() -> [(substring: String, url: URL)]? {
