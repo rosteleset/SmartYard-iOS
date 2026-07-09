@@ -82,26 +82,20 @@ final class CityCameraViewController: BaseViewController {
     fileprivate func configureUI() {
         cameraAddress.text = L10n.Camera.City.Detail.addressPlaceholder
         cameraName.text = L10n.Camera.City.Detail.title
+        cameraName.adjustsFontSizeToFitWidth = true
+        cameraName.minimumScaleFactor = 0.65
+        cameraName.allowsDefaultTighteningForTruncation = true
+        cameraName.baselineAdjustment = .alignCenters
         fakeNavBar.setText(L10n.Camera.City.mapTitle)
         guard let camera = camera else {
             return
         }
         
         // Устанавливаем название камеры и её адрес
-        let cameraStrings = camera.name.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true)
+        let cameraTitle = splitCameraTitle(camera.name)
         
-        var cameraNameString = ""
-        var cameraAddressString = ""
-        
-        if cameraStrings.count == 2 {
-            cameraNameString = String(cameraStrings[0])
-            cameraAddressString = String(cameraStrings[1])
-        } else {
-            cameraNameString = camera.name
-        }
-        
-        cameraName.text = cameraNameString
-        cameraAddress.text = cameraAddressString
+        cameraName.text = cameraTitle.name
+        cameraAddress.text = cameraTitle.address
         
         // настраиваем градиент между кнопкой и CollectionView
         let gradientBackgroundColors = [UIColor.SmartYard.secondBackgroundColor.cgColor, UIColor.SmartYard.secondBackgroundColor.withAlphaComponent(0).cgColor]
@@ -114,6 +108,22 @@ final class CityCameraViewController: BaseViewController {
 
         gradientLayer.frame = gradientView.bounds
         gradientView.layer.addSublayer(gradientLayer)
+    }
+
+    private func splitCameraTitle(_ title: String) -> (name: String, address: String) {
+        let separators: [Character] = ["/", "|"]
+
+        for separator in separators {
+            let components = title
+                .split(separator: separator, maxSplits: 1, omittingEmptySubsequences: true)
+                .map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+
+            if components.count == 2 {
+                return (components[0], components[1])
+            }
+        }
+
+        return (title, "")
     }
     
     override func viewDidLoad() {
