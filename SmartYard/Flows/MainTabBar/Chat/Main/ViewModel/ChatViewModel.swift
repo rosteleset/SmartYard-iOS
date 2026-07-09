@@ -107,10 +107,27 @@ final class ChatViewModel: BaseViewModel {
             .skip(1)
 
         let chatConfiguration = Driver
-            .merge(hasNetworkBecomeReachable, .just(()))
-            .map { _ -> ChatConfiguration in
-                ChatConfiguration(language: nil, clientId: phone?.md5)
+            .merge(
+                hasNetworkBecomeReachable,
+                accessService.optionsUpdated.asDriverOnErrorJustComplete(),
+                .just(())
+            )
+            .map { [accessService] _ -> ChatConfiguration? in
+                let id = accessService.chatId.trimmingCharacters(in: .whitespacesAndNewlines)
+                let domain = accessService.chatDomain.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !id.isEmpty, !domain.isEmpty else {
+                    return nil
+                }
+
+                return ChatConfiguration(
+                    id: id,
+                    domain: domain,
+                    language: nil,
+                    clientId: phone?.md5
+                )
             }
+            .ignoreNil()
+            .distinctUntilChanged()
         
         // MARK: Если пришло новое сообщение в тот момент, когда мы на этом экране
         

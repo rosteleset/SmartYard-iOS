@@ -463,6 +463,7 @@ final class AccessService {
         paymentsUrl = ""
         supportPhone = ""
         showChat = false
+        chatUrl = ""
         issuesVersion = ""
         chatId = ""
         chatDomain = ""

@@ -132,9 +132,10 @@ final class OptionsService: OptionsServicing, HasDisposeBag {
     private func apply(_ response: GetOptionsResponseData) {
         if let payments = response.payments { accessService.showPayments = payments; accessService.paymentsUrl = "" }
         if let paymentsUrl = response.paymentsUrl { accessService.paymentsUrl = paymentsUrl }
-        if let chatUrl = response.chatUrl { accessService.chatUrl = chatUrl }
         if let supportPhone = response.supportPhone { accessService.supportPhone = supportPhone }
+        if response.chat != nil || response.chatOptions != nil { accessService.chatUrl = "" }
         if let chat = response.chat { accessService.showChat = chat }
+        if let chatUrl = response.chatUrl { accessService.chatUrl = chatUrl }
         if let chatOptions = response.chatOptions {
             accessService.chatId = chatOptions.id
             accessService.chatDomain = chatOptions.domain

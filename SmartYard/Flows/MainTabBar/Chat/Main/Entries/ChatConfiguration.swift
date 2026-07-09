@@ -7,11 +7,10 @@
 //
 
 struct ChatConfiguration: Equatable {
-    
-    let id = AccessService.shared.chatId
-    let domain = AccessService.shared.chatDomain
-    
+
+    let id: String
+    let domain: String
     let language: String?
     let clientId: String?
-    
+
 }

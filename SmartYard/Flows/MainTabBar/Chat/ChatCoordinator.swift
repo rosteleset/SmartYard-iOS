@@ -42,25 +42,17 @@ final class ChatCoordinator: NavigationCoordinator<ChatRoute>, HasDisposeBag {
         self.alertService = alertService
         self.networkStateProvider = networkStateProvider
 
-        if self.apiWrapper.accessService.chatUrl.isEmpty {
-            super.init(initialRoute: .main)
-        } else {
-            if let url = URL(string: self.apiWrapper.accessService.chatUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)) {
-                super.init(initialRoute: .webView(url: url))
-            } else {
-                super.init(initialRoute: .alert(
-                    title: L10n.Common.error,
-                    message: L10n.Chat.Error.unableToOpenPage
-                ))
-            }
-        }
-        
+        super.init(initialRoute: Self.route(for: accessService))
+
         rootViewController.setNavigationBarHidden(true, animated: false)
+        subscribeToOptionsUpdates()
     }
     
     override func prepareTransition(for route: ChatRoute) -> NavigationTransition {
         switch route {
         case .main:
+            children.forEach { removeChild($0) }
+
             let vm = ChatViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,
@@ -105,4 +97,34 @@ final class ChatCoordinator: NavigationCoordinator<ChatRoute>, HasDisposeBag {
         }
     }
     
+}
+
+private extension ChatCoordinator {
+
+    func subscribeToOptionsUpdates() {
+        accessService.optionsUpdated
+            .asDriverOnErrorJustComplete()
+            .drive(with: self) { owner, _ in
+                owner.trigger(Self.route(for: owner.accessService))
+            }
+            .disposed(by: disposeBag)
+    }
+
+    static func route(for accessService: AccessService) -> ChatRoute {
+        let chatUrl = accessService.chatUrl.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !chatUrl.isEmpty else {
+            return .main
+        }
+
+        guard let encodedUrl = chatUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: encodedUrl) else {
+            return .alert(
+                title: L10n.Common.error,
+                message: L10n.Chat.Error.unableToOpenPage
+            )
+        }
+
+        return .webView(url: url)
+    }
+
 }
