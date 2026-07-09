@@ -7,13 +7,24 @@
 - Use this commit message format:
 
   ```text
-  type: short subject
+  <type>: <short description>
 
-  One concise paragraph explaining why/what changed at a higher level.
+  <description of the problem or short feature description>
 
-  - Optional bullet with concrete change
-  - Optional bullet with concrete change
+  - <optional commit body item>
+  - <optional commit body item>
   ```
+
+- Use only these commit types:
+  - `build`: build system changes
+  - `ci`: CI configuration changes
+  - `docs`: documentation-only changes
+  - `feat`: new functionality
+  - `fix`: bug fix
+  - `chore`: performance improvement
+  - `refactor`: code refactoring
+  - `style`: formatting and indentation
+  - `test`: adding tests
 
 - In RxSwift subscriptions, prefer `subscribe(with: self) { owner, ... in ... }` over `subscribe(onNext: { [weak self] ... })` when the subscription captures `self`.
 - Prefer ternary operators over `if`/`else` when the expression stays readable and the conditional is simple.
