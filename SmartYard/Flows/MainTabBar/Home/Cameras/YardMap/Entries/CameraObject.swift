@@ -39,13 +39,8 @@ struct CameraObject: Equatable {
             return nil
         }
 
-        if let url = URL(string: baseURLString),
-           url.pathComponents.contains(where: { $0.lowercased() == "whep" }) {
-            return url
-        }
-
         let base = baseURLString.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-        return URL(string: "\(base)/whep/")
+        return URL(string: "\(base)/whep?token=\(token)")
     }
     
     var previewURL: String {
