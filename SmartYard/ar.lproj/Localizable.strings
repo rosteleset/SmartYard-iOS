@@ -555,6 +555,7 @@
 
 "settings.common.calls" = "المكالمات";
 "settings.common.deleteAccountButton" = "حذف الحساب";
+"settings.common.language" = "لغة التطبيق";
 "settings.common.logoutButton" = "تسجيل الخروج";
 "settings.common.lowBalanceNotificationTitle" = "إرسال إشعار عندما يقترب\nالرصيد من الصفر";
 "settings.common.notifications" = "الإشعارات";

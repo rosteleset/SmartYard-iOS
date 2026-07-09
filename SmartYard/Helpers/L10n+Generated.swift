@@ -779,6 +779,7 @@ extension L10n {
         enum Common {
             static let calls = tr("settings.common.calls")
             static let deleteAccountButton = tr("settings.common.deleteAccountButton")
+            static let language = tr("settings.common.language")
             static let logoutButton = tr("settings.common.logoutButton")
             static let lowBalanceNotificationTitle = tr("settings.common.lowBalanceNotificationTitle")
             static let notifications = tr("settings.common.notifications")

@@ -6,6 +6,7 @@
 //  Copyright © 2021 LanTa. All rights reserved.
 //
 
+import UIKit
 import RxCocoa
 import RxSwift
 import XCoordinator
@@ -86,6 +87,13 @@ final class CommonSettingsViewModel: BaseViewModel {
         let isChangeAppearanceButtonVisible = Constants.isDarkModeEnabled
         let displaySettingsSubject = BehaviorSubject<(Bool, Bool)>(value: (isChangeEnableListButtonVisible, isChangeAppearanceButtonVisible))
         let appereanceButtonTextSubject = BehaviorSubject<String>(value: L10n.Settings.Common.Appearance.system)
+        let currentLanguage = Driver.merge(
+            .just(()),
+            NotificationCenter.default.rx.notification(UIApplication.didBecomeActiveNotification)
+                .map { _ in () }
+                .asDriver(onErrorJustReturn: ())
+        )
+            .map { Self.currentAppLanguageName() }
         let resetConfirmed = PublishRelay<Void>()
         let resetDidComplete = resetConfirmed
             .do(onNext: { [weak self] in
@@ -267,6 +275,15 @@ final class CommonSettingsViewModel: BaseViewModel {
                         screen: "settings"
                     )
                     showCamerasOnMapSubject.onNext(newState)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        input.languageTrigger
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: {
+                    Self.openApplicationSettings()
                 }
             )
             .disposed(by: disposeBag)
@@ -506,6 +523,7 @@ final class CommonSettingsViewModel: BaseViewModel {
             enableCallkit: enableCallkitSubject.asDriverOnErrorJustComplete(),
             enableSpeakerByDefault: enableSpeakerByDefaultSubject.asDriverOnErrorJustComplete(), 
             showCamerasOnMap: showCamerasOnMapSubject.asDriverOnErrorJustComplete(),
+            currentLanguage: currentLanguage,
             displaySettings: displaySettingsSubject.asDriverOnErrorJustComplete(),
             appereanceButtonText: appereanceButtonTextSubject.asDriverOnErrorJustComplete(),
             isLoading: activityTracker.asDriver(),
@@ -517,6 +535,23 @@ final class CommonSettingsViewModel: BaseViewModel {
 }
 
 private extension CommonSettingsViewModel {
+
+    static func currentAppLanguageName() -> String {
+        let localization = Bundle.main.preferredLocalizations.first ?? Locale.preferredLanguages.first ?? "ru"
+        let languageCode = Locale(identifier: localization).languageCode ?? localization
+        let languageName = Locale(identifier: languageCode)
+            .localizedString(forLanguageCode: languageCode) ?? localization
+
+        return languageName.prefix(1).uppercased() + String(languageName.dropFirst())
+    }
+
+    static func openApplicationSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
+
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
 
     func logNotificationSettingChanged(_ settingName: String, isEnabled: Bool) {
         AppAnalytics.log(
@@ -584,6 +619,7 @@ extension CommonSettingsViewModel {
         let callkitTrigger: Driver<Void>
         let speakerTrigger: Driver<Void>
         let showCamerasOnMapTrigger: Driver<Void>
+        let languageTrigger: Driver<Void>
         let showApereanceApert: Driver<Void>
         let logoutTrigger: Driver<Void>
         let deleteAccountTrigger: Driver<Void>
@@ -600,6 +636,7 @@ extension CommonSettingsViewModel {
         let enableCallkit: Driver<Bool>
         let enableSpeakerByDefault: Driver<Bool>
         let showCamerasOnMap: Driver<Bool>
+        let currentLanguage: Driver<String>
         let displaySettings: Driver<(Bool, Bool)>
         let appereanceButtonText: Driver<String>
         let isLoading: Driver<Bool>

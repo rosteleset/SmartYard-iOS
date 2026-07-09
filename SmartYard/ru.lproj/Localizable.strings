@@ -555,6 +555,7 @@
 
 "settings.common.calls" = "Звонки";
 "settings.common.deleteAccountButton" = "Удалить аккаунт";
+"settings.common.language" = "Язык приложения";
 "settings.common.logoutButton" = "Выйти";
 "settings.common.lowBalanceNotificationTitle" = "Прислать уведомление, когда баланс приблизится к нулю";
 "settings.common.notifications" = "Уведомления";

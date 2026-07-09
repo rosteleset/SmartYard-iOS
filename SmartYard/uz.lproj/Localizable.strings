@@ -555,6 +555,7 @@
 
 "settings.common.calls" = "Qo'ng'iroqlar";
 "settings.common.deleteAccountButton" = "Hisobni o'chirish";
+"settings.common.language" = "Ilova tili";
 "settings.common.logoutButton" = "Chiqish";
 "settings.common.lowBalanceNotificationTitle" = "Balans nolga yaqinlashganda xabar yuborish";
 "settings.common.notifications" = "Xabarlar";

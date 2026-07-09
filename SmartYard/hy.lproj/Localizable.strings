@@ -555,6 +555,7 @@
 
 "settings.common.calls" = "Զանգեր";
 "settings.common.deleteAccountButton" = "Ջնջել հաշիվը";
+"settings.common.language" = "Հավելվածի լեզու";
 "settings.common.logoutButton" = "Դուրս գալ";
 "settings.common.lowBalanceNotificationTitle" = "Ուղարկել ծանուցում, երբ հաշվեկշիռը մոտենում է զրոյին";
 "settings.common.notifications" = "Ծանուցումներ";

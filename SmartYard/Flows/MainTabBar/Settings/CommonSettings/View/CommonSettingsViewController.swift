@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import JGProgressHUD
 
+// swiftlint:disable:next type_body_length
 final class CommonSettingsViewController: BaseViewController, LoaderPresentable {
 
     @IBOutlet private weak var headerView: HeaderView!
@@ -67,6 +68,10 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     @IBOutlet private weak var appearanceContainerView: UIView!
     @IBOutlet private weak var appearanceHighSeparator: UIView!
     @IBOutlet private weak var changeAppereanceButton: UIButton!
+
+    @IBOutlet private weak var languageContainerView: UIView!
+    @IBOutlet private weak var languageLabel: UILabel!
+    @IBOutlet private weak var changeLanguageButton: UIButton!
     
     @IBOutlet private var сollapsedDisplayBottomConstraint: NSLayoutConstraint!
     @IBOutlet private var expandedDisplayBottomConstaint: NSLayoutConstraint!
@@ -95,6 +100,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
     private let speakerTapGesture = UITapGestureRecognizer()
     private let enableListTapGesture = UITapGestureRecognizer()
     private let balanceWarningTapGesture = UITapGestureRecognizer()
+    private let languageTapGesture = UITapGestureRecognizer()
     
     var loader: JGProgressHUD?
     
@@ -145,6 +151,7 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         mapCamerasLabel.text = L10n.Settings.Common.showCamerasOnTheMap
         addressOrderLabel.text = L10n.Settings.Common.AddressOrder.title
         addressOrderResetButton.setTitle(L10n.Common.reset, for: .normal)
+        languageLabel.text = L10n.Settings.Common.language
         themeLabel.text = L10n.Settings.Common.theme
         changeAppereanceButton.setTitle(L10n.Settings.Common.Appearance.system, for: .normal)
         logoutButton.setTitle(L10n.Settings.Common.logoutButton, for: .normal)
@@ -160,6 +167,8 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         editNameButton.touchAreaInsets = UIEdgeInsets(inset: 24)
         
         addressOrderResetButton.mode = .reset
+        languageTapGesture.cancelsTouchesInView = false
+        languageContainerView.addGestureRecognizer(languageTapGesture)
         changeAppereanceButton.setTitle(L10n.Settings.Common.Appearance.system, for: .normal)
 
         [
@@ -274,6 +283,10 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
             callkitTrigger: callkitSwitch.rx.isOn.asDriver().mapToVoid(),
             speakerTrigger: speakerSwitch.rx.isOn.asDriver().mapToVoid(),
             showCamerasOnMapTrigger: showCamerasOnMapSwitch.rx.isOn.asDriver().mapToVoid(),
+            languageTrigger: Driver.merge(
+                changeLanguageButton.rx.tap.asDriver(),
+                languageTapGesture.rx.event.asDriver().mapToVoid()
+            ),
             showApereanceApert: changeAppereanceButton.rx.tap.asDriver().mapToVoid(),
             logoutTrigger: logoutButton.rx.tap.asDriver(),
             deleteAccountTrigger: deleteAccountButton.rx.tap.asDriver(),
@@ -318,6 +331,10 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         
         output.showCamerasOnMap
             .drive(showCamerasOnMapSwitch.rx.isOn)
+            .disposed(by: disposeBag)
+
+        output.currentLanguage
+            .drive(changeLanguageButton.rx.title(for: .normal))
             .disposed(by: disposeBag)
         
         output.displaySettings

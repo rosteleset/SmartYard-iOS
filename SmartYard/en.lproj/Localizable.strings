@@ -555,6 +555,7 @@
 
 "settings.common.calls" = "Calls";
 "settings.common.deleteAccountButton" = "Delete account";
+"settings.common.language" = "App language";
 "settings.common.logoutButton" = "Logout";
 "settings.common.lowBalanceNotificationTitle" = "Send a notification when the balance is close to zero";
 "settings.common.notifications" = "Notifications";
