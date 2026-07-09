@@ -256,6 +256,7 @@ extension AppDelegate: MessagingDelegate {
     
     private func configureFirebase(for application: UIApplication) {
         FirebaseApp.configure()
+        telemetryService.configureCrashlytics()
         appCoordinator.setCrashlyticsUserID()
         appCoordinator.setAnalyticsOperatorID()
         

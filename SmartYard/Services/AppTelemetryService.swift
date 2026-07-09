@@ -9,6 +9,7 @@ import FirebaseAnalytics
 import FirebaseCrashlytics
 
 protocol AppTelemetryServicing {
+    func configureCrashlytics()
     func setCrashlyticsUserID(_ userID: String?)
     func setAnalyticsOperator(id: String, name: String)
     func log(_ message: String)
@@ -18,10 +19,24 @@ protocol AppTelemetryServicing {
 final class AppTelemetryService: AppTelemetryServicing {
     static let shared = AppTelemetryService()
 
+    private let lock = NSLock()
+    private var crashlyticsService: Crashlytics?
+
     private init() {}
 
+    func configureCrashlytics() {
+        guard Thread.isMainThread else {
+            DispatchQueue.main.async { [weak self] in
+                self?.configureCrashlytics()
+            }
+            return
+        }
+
+        setCrashlyticsService(Crashlytics.crashlytics())
+    }
+
     func setCrashlyticsUserID(_ userID: String?) {
-        Crashlytics.crashlytics().setUserID(userID ?? "unknown")
+        currentCrashlyticsService()?.setUserID(userID ?? "unknown")
     }
 
     func setAnalyticsOperator(id: String, name: String) {
@@ -30,10 +45,24 @@ final class AppTelemetryService: AppTelemetryServicing {
     }
 
     func log(_ message: String) {
-        Crashlytics.crashlytics().log(message)
+        currentCrashlyticsService()?.log(message)
     }
 
     func record(error: Error) {
-        Crashlytics.crashlytics().record(error: error)
+        currentCrashlyticsService()?.record(error: error)
+    }
+
+    private func setCrashlyticsService(_ crashlyticsService: Crashlytics) {
+        lock.lock()
+        defer { lock.unlock() }
+
+        self.crashlyticsService = crashlyticsService
+    }
+
+    private func currentCrashlyticsService() -> Crashlytics? {
+        lock.lock()
+        defer { lock.unlock() }
+
+        return crashlyticsService
     }
 }
