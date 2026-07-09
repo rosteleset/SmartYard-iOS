@@ -144,7 +144,12 @@ private extension CameraStreamProvider {
     }
 
     func prefetchHls(resource: SYPlayerResource, cameraId: CameraID) {
-        let urls = resource.videos.map(\.url)
+        let urls = resource.videos.compactMap { video -> URL? in
+            guard case .hls(let url) = video.source else {
+                return nil
+            }
+            return url
+        }
         guard !urls.isEmpty else { return }
         Logger.logDebug("prefetch hls id=\(cameraId) urls=\(urls.count)")
         SYPlayerConfig.shared.prefetch(urls: urls, maxCount: 3)
