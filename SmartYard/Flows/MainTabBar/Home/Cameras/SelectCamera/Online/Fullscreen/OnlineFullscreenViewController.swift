@@ -33,6 +33,7 @@ final class OnlineFullscreenViewController: BaseViewController {
     private var didNotifyDismiss = false
     private var isOpeningAccess = false
     private var isPagingHandoffActive = false
+    private var isSwipeDismissInProgress = false
     private var accessOpenedStateByIndex: [Int: Bool]
     private var resetAccessButtonWorkItem: DispatchWorkItem?
 
@@ -41,6 +42,12 @@ final class OnlineFullscreenViewController: BaseViewController {
     private enum AccessButton {
         static let id = "fullscreen.openAccess"
         static let iconConfiguration = UIImage.SymbolConfiguration(pointSize: 24, weight: .semibold)
+    }
+
+    private enum SwipeDismiss {
+        static let distanceThresholdRatio: CGFloat = 0.25
+        static let velocityThreshold: CGFloat = 900
+        static let backgroundMinimumAlpha: CGFloat = 0.35
     }
 
     // MARK: - UI
@@ -62,6 +69,13 @@ final class OnlineFullscreenViewController: BaseViewController {
 
         cv.register(cellWithClass: OnlineFullscreenCameraCell.self)
         return cv
+    }()
+
+    private lazy var dismissPanGesture: UIPanGestureRecognizer = {
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(handleDismissPan(_:)))
+        gesture.delegate = self
+        gesture.cancelsTouchesInView = false
+        return gesture
     }()
 
     // MARK: - Init
@@ -232,7 +246,77 @@ extension OnlineFullscreenViewController: UIScrollViewDelegate {
 private extension OnlineFullscreenViewController {
     func setupUI() {
         view.backgroundColor = .black
+        view.addGestureRecognizer(dismissPanGesture)
         configureAccessButton()
+    }
+
+    @objc func handleDismissPan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+
+        switch gesture.state {
+        case .began, .changed:
+            let progress = min(1, abs(translation.y) / max(view.bounds.height, 1))
+            view.transform = CGAffineTransform(translationX: 0, y: translation.y)
+            view.backgroundColor = UIColor.black.withAlphaComponent(
+                max(
+                    SwipeDismiss.backgroundMinimumAlpha,
+                    1 - progress
+                )
+            )
+
+        case .ended:
+            finishDismissPan(translationY: translation.y, velocityY: gesture.velocity(in: view).y)
+
+        case .cancelled, .failed:
+            restoreAfterDismissPan()
+
+        default:
+            break
+        }
+    }
+
+    func finishDismissPan(translationY: CGFloat, velocityY: CGFloat) {
+        let distanceThreshold = view.bounds.height * SwipeDismiss.distanceThresholdRatio
+        let shouldDismiss = abs(translationY) >= distanceThreshold
+            || abs(velocityY) >= SwipeDismiss.velocityThreshold
+
+        guard shouldDismiss else {
+            restoreAfterDismissPan()
+            return
+        }
+
+        isSwipeDismissInProgress = true
+        let direction: CGFloat = translationY == 0
+            ? (velocityY >= 0 ? 1 : -1)
+            : (translationY >= 0 ? 1 : -1)
+        let targetTranslationY = direction * view.bounds.height
+
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0,
+            options: [.curveEaseOut, .beginFromCurrentState],
+            animations: {
+                self.view.transform = CGAffineTransform(translationX: 0, y: targetTranslationY)
+                self.view.backgroundColor = .clear
+            },
+            completion: { [weak self] _ in
+                self?.dismiss(animated: false)
+            }
+        )
+    }
+
+    func restoreAfterDismissPan() {
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0,
+            usingSpringWithDamping: 0.82,
+            initialSpringVelocity: 0,
+            options: [.beginFromCurrentState, .allowUserInteraction],
+            animations: {
+                self.view.transform = .identity
+                self.view.backgroundColor = .black
+            }
+        )
     }
 
     func setupConstraints() {
@@ -459,5 +543,33 @@ private extension OnlineFullscreenViewController {
                 streamType: "live"
             )
         )
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension OnlineFullscreenViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard gestureRecognizer === dismissPanGesture,
+              !isSwipeDismissInProgress,
+              !isPagingHandoffActive,
+              let panGesture = gestureRecognizer as? UIPanGestureRecognizer,
+              let currentCell = collectionView.cellForItem(
+                  at: IndexPath(item: currentIndex, section: 0)
+              ) as? OnlineFullscreenCameraCell,
+              !currentCell.isZoomed
+        else {
+            return false
+        }
+
+        let velocity = panGesture.velocity(in: view)
+        return abs(velocity.y) > abs(velocity.x)
+    }
+
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        gestureRecognizer === dismissPanGesture || otherGestureRecognizer === dismissPanGesture
     }
 }

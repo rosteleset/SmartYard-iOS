@@ -23,6 +23,10 @@ final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable, 
     }
     var onContentTap: (() -> Void)?
 
+    var isZoomed: Bool {
+        zoomScrollView.zoomScale > minZoomScale + 0.001
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()

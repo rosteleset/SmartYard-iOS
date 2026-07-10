@@ -315,7 +315,7 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
                     playback.stopHard()
                 }
             )
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .overFullScreen
 
             return .present(vc)
             

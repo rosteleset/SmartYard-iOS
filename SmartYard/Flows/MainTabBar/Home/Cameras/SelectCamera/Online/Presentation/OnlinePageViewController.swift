@@ -357,7 +357,7 @@ private extension OnlinePageViewController {
         )
 
         playbackCoordinator.setMode(.fullscreen)
-        vc.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true) { [weak self] in
             self?.isTransitioningToFullscreen = false
         }
