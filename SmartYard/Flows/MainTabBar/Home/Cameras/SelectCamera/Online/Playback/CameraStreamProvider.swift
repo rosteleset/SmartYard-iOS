@@ -27,6 +27,11 @@ final class CameraStreamProvider: PlayerResourceProviding {
         self.ttl = ttl
     }
 
+    init(camerasById: [CameraID: CameraObject], ttl: TimeInterval = 20) {
+        self.camerasById = camerasById
+        self.ttl = ttl
+    }
+
     // MARK: - PlayerResourceProviding
 
     func fetch(id: PlayerItemID, completion: @escaping (SYPlayerResource?) -> Void) {

@@ -153,7 +153,11 @@ extension AddressesListViewModel {
             return nil
         }
 
-        guard let mappedCamera = camMap.first(where: { $0.id == domophoneId }) else {
+        let mappedCameras = camMap.filter { $0.id == domophoneId }
+        let mappedCamera = mappedCameras.first { $0.entranceId == door.doorId }
+            ?? (mappedCameras.count == 1 ? mappedCameras.first : nil)
+
+        guard let mappedCamera else {
             return nil
         }
 

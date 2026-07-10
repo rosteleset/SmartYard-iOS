@@ -298,7 +298,10 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
             return .push(vc)
 
         case let .onlineFullscreen(cameras, selectedIndex, accessActions, onDismiss):
-            let provider = CameraStreamProvider(cameras: cameras, ttl: 120)
+            let camerasByPlaybackId = Dictionary(
+                uniqueKeysWithValues: cameras.enumerated().map { ($0.offset, $0.element) }
+            )
+            let provider = CameraStreamProvider(camerasById: camerasByPlaybackId, ttl: 120)
             let playback = OnlinePlaybackCoordinator(provider: provider)
             let cameraViewModels = makeOnlineCameraViewModels(from: cameras)
 
@@ -417,7 +420,7 @@ private extension HomeCoordinator {
 
             return CameraViewModel(
                 identity: "\(index)_\(camera.id)",
-                id: camera.id,
+                id: index,
                 number: camera.cameraNumber,
                 resource: SYPlayerResource(
                     videos: videos,
