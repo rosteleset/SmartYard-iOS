@@ -42,6 +42,7 @@ enum HomeRoute: Route {
     case history(houseId: String, address: String)
     case storyWebPopup(url: URL)
     case storyWebView(url: URL)
+    case extensionWebView(content: String, baseURL: String, version: Int)
 }
 
 final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
@@ -374,6 +375,21 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
                 backButtonLabel: L10n.Common.back,
                 push: true,
                 version: 2
+            )
+
+            addChild(coordinator)
+            return .none()
+
+        case let .extensionWebView(content, baseURL, version):
+            let coordinator = WebViewCoordinator(
+                rootVC: rootViewController,
+                apiWrapper: apiWrapper,
+                networkStateProvider: networkStateProvider,
+                content: content,
+                baseURL: baseURL,
+                backButtonLabel: L10n.Common.back,
+                push: true,
+                version: version
             )
 
             addChild(coordinator)

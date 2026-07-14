@@ -12,6 +12,7 @@ enum AddressesListDataItemIdentity: Hashable {
     case doorPreviewPager(addressId: String)
     case cameras(addressId: String)
     case history(addressId: String)
+    case serviceExtension(addressId: String, extId: String)
     case unapprovedObject(issueId: String, address: String)
     case emptyState
 

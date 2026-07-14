@@ -304,7 +304,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
 
         collectionView.register(cellWithClass: AddressesListDoorPreviewCell.self)
         collectionView.register(cellWithClass: AddressesListDoorPreviewPagerCell.self)
-        
+        collectionView.register(cellWithClass: AddressesListExtensionCell.self)
         collectionView.register(cellWithClass: AddressesHeaderCell.self)
         
         let dataSource = RxCollectionViewSectionedAnimatedDataSource<AddressesListSectionModel>(
@@ -447,6 +447,18 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
                     for: indexPath
                 )
                 cell.configure(itemsCount: eventsCount)
+                return cell
+
+            case let .extensionItem(_, caption, iconURL, isHighlighted):
+                let cell = collectionView.dequeueReusableCell(
+                    withClass: AddressesListExtensionCell.self,
+                    for: indexPath
+                )
+                cell.configure(
+                    caption: caption,
+                    icon: UIImage(base64URLString: iconURL),
+                    isHighlighted: isHighlighted
+                )
                 return cell
                 
             case let .unapprovedAddresses(_, address):

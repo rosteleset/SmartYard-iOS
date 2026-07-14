@@ -33,7 +33,7 @@ struct APIExtensionListItem: Decodable {
         iconURL = try container.decode(String.self, forKey: .icon)
         icon = UIImage(base64URLString: iconURL)
         extId = try container.decode(String.self, forKey: .extId)
-        order = try container.decode(Int.self, forKey: .order)
+        order = (try? container.decode(Int.self, forKey: .order)) ?? 0
         
         if let highlightRawValue = try? container.decode(String.self, forKey: .highlight),
            highlightRawValue == "t" {

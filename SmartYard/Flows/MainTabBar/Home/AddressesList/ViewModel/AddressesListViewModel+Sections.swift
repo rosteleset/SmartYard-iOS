@@ -87,7 +87,16 @@ extension AddressesListViewModel {
                 }()
 
                 let entranceItems = shouldShowEntrancePreviews ? [doorPreviewPager].compactMap { $0 } : doorItems
-                return entranceItems + [cameras, history].compactMap { $0 }
+                let extensionItems = address.extensions.map { ext in
+                    AddressesListDataItem.extensionItem(
+                        identity: .serviceExtension(addressId: addressId, extId: ext.extId),
+                        caption: ext.caption,
+                        iconURL: ext.iconURL,
+                        isHighlighted: ext.highlight
+                    )
+                }
+
+                return entranceItems + [cameras, history].compactMap { $0 } + extensionItems
             }()
 
             return AddressesListSectionModel(

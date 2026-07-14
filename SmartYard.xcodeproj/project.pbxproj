@@ -657,6 +657,7 @@
 		8BF9A1D12F79E10000C0D001 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9A1D32F79E10000C0D001 /* L10n.swift */; };
 		8BF9A1D22F79E10000C0D001 /* L10n+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9A1D42F79E10000C0D001 /* L10n+Generated.swift */; };
 		8C3F91C62F655F0A00C0D001 /* AddressesListDoorPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3F91C52F655F0A00C0D001 /* AddressesListDoorPreviewCell.swift */; };
+		A1E000012F90000000C0D001 /* AddressesListExtensionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E000002F90000000C0D001 /* AddressesListExtensionCell.swift */; };
 		8C6765E42F8AA7C500D1B3E9 /* ModalContentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6765E32F8AA7C500D1B3E9 /* ModalContentViews.swift */; };
 		9770CD7E9D04A0BA9C6BDF88 /* Pods_SmartYardWidget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */; };
 		97D9CB75897E6E419D6B163F /* APIStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3574A0CCA4084CCA23784D25 /* APIStory.swift */; };
@@ -1559,6 +1560,7 @@
 		8BF9A1D32F79E10000C0D001 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		8BF9A1D42F79E10000C0D001 /* L10n+Generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "L10n+Generated.swift"; sourceTree = "<group>"; };
 		8C3F91C52F655F0A00C0D001 /* AddressesListDoorPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListDoorPreviewCell.swift; sourceTree = "<group>"; };
+		A1E000002F90000000C0D001 /* AddressesListExtensionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesListExtensionCell.swift; sourceTree = "<group>"; };
 		8C6765E32F8AA7C500D1B3E9 /* ModalContentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalContentViews.swift; sourceTree = "<group>"; };
 		8C6A61012F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = hy.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8C6A61022F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = ../hy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3100,6 +3102,7 @@
 		84CC15BE23EC31D100A1CB95 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				A1E000022F90000000C0D001 /* ExtensionCell */,
 				8B25DEB32FBDEF93008CAE8B /* StoryItemCell */,
 				E9618A302420AB6E003FF47D /* UnapprovedObjectCell */,
 				84CC15D923EC6A9300A1CB95 /* CameraCell */,
@@ -3110,6 +3113,14 @@
 				8B7148A02EFACA150099703B /* EmptyStateCell */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		A1E000022F90000000C0D001 /* ExtensionCell */ = {
+			isa = PBXGroup;
+			children = (
+				A1E000002F90000000C0D001 /* AddressesListExtensionCell.swift */,
+			);
+			path = ExtensionCell;
 			sourceTree = "<group>";
 		};
 		84CC15BF23EC31FD00A1CB95 /* HeaderCell */ = {
@@ -6843,6 +6854,7 @@
 				84CC15EF23ED75B100A1CB95 /* TabBarTransitions.swift in Sources */,
 				84CC15D123EC409500A1CB95 /* AddressesListObjectCell.swift in Sources */,
 				8C3F91C62F655F0A00C0D001 /* AddressesListDoorPreviewCell.swift in Sources */,
+				A1E000012F90000000C0D001 /* AddressesListExtensionCell.swift in Sources */,
 				8B1F8E752FB235500021CA64 /* VideoThumbnailLoader.swift in Sources */,
 				8B1F8E762FB235500021CA64 /* VideoThumbnailTask.swift in Sources */,
 				8B1F8E772FB235500021CA64 /* Cancellable.swift in Sources */,

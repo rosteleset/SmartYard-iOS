@@ -13,6 +13,7 @@ struct APIAddress: Decodable {
     let doors: [APIDoor]
     let cctv: Int
     let hasPlog: Bool
+    let extensions: [APIExtensionListItem]
     
     private enum CodingKeys: String, CodingKey {
         case houseId
@@ -20,6 +21,7 @@ struct APIAddress: Decodable {
         case doors
         case cctv
         case hasPlog
+        case ext
     }
     
     init(from decoder: Decoder) throws {
@@ -35,6 +37,7 @@ struct APIAddress: Decodable {
         case "t": hasPlog = true
         default: hasPlog = false
         }
+        extensions = (try? container.decode([APIExtensionListItem].self, forKey: .ext)) ?? []
     }
     
 }

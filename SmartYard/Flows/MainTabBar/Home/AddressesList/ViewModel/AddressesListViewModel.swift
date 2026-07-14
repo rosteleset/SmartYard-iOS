@@ -618,6 +618,35 @@ final class AddressesListViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
+
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .serviceExtension(_, extId) = identity else {
+                    return .empty()
+                }
+
+                return .just(extId)
+            }
+            .flatMapLatest { [weak self] extId -> Driver<APIExtension> in
+                guard let self else {
+                    return .empty()
+                }
+
+                return self.apiWrapper.getExtension(extId: extId)
+                    .trackActivity(self.activityTracker)
+                    .trackError(self.errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive(with: self) { owner, ext in
+                owner.router.trigger(
+                    .extensionWebView(
+                        content: ext.contentHTML,
+                        baseURL: ext.basePath,
+                        version: ext.version
+                    )
+                )
+            }
+            .disposed(by: disposeBag)
         
         // Нажатие на кнопку "истории"
         input.itemSelected
