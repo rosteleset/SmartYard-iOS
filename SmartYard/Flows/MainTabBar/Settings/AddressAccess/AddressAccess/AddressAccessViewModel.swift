@@ -133,6 +133,9 @@ final class AddressAccessViewModel: BaseViewModel {
         
         /// Есть у нас права владельца или нет (от этого зависит, показываем список постоянного доступа или нет)
         let isOwnerSubject = BehaviorSubject<Bool>(value: false)
+
+        /// Есть ли у пользователя доступ к журналу событий, из которого можно добавить лицо
+        let hasPlogSubject = BehaviorSubject<Bool>(value: false)
         
         /// Есть ли в доме ворота/калитки
         /// От этого зависит, показываем список временного доступа и доступ для автомобилей или нет
@@ -177,6 +180,7 @@ final class AddressAccessViewModel: BaseViewModel {
                     
                     isOwnerSubject.onNext(isOwner)
                     hasGatesSubject.onNext(hasGates)
+                    hasPlogSubject.onNext(address.hasPlog)
                     
                     // MARK: Здесь нужно запросить доступ к контактам при выполнении условий:
                     // 1. Юзер может раздавать временный или постоянный доступ (иначе нет смысла)
@@ -315,23 +319,20 @@ final class AddressAccessViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.configureFaces
-            .drive(
-                onNext: { [weak self] in
-                    guard
-                        let self = self,
-                        let flatId = Int(self.flatId)
-                    else {
-                        return
-                    }
-                    
-                    self.router.trigger(
-                        .facesSettings(
-                            flatId: flatId,
-                            address: self.address
-                        )
-                    )
+            .withLatestFrom(hasPlogSubject.asDriver(onErrorJustReturn: false))
+            .drive(with: self) { owner, hasPlog in
+                guard let flatId = Int(owner.flatId) else {
+                    return
                 }
-            )
+
+                owner.router.trigger(
+                    .facesSettings(
+                        flatId: flatId,
+                        address: owner.address,
+                        canAddFace: hasPlog
+                    )
+                )
+            }
             .disposed(by: disposeBag)
         
         input.smsToGateAccessContactTrigger

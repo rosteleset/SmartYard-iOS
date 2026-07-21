@@ -29,7 +29,7 @@ enum SettingsRoute: Route {
     case newAllowedCar(delegate: NewAllowedCarViewModelDelegate)
     case safariPage(url: URL)
     case editName
-    case facesSettings(flatId: Int, address: String)
+    case facesSettings(flatId: Int, address: String, canAddFace: Bool)
     case showFace(image: UIImage?)
     case deleteFace(image: UIImage?, flatId: Int, faceId: Int)
     case addFace(flatId: Int, address: String)
@@ -266,14 +266,15 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .facesSettings(flatId, address):
+        case let .facesSettings(flatId, address, canAddFace):
             let vm = FacesSettingsViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,
                 alertService: alertService,
                 router: weakRouter,
                 flatId: flatId,
-                address: address
+                address: address,
+                canAddFace: canAddFace
             )
             
             let vc = FacesSettingsViewController(viewModel: vm)

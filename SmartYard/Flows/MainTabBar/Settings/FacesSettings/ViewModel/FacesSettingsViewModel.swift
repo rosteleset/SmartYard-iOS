@@ -19,6 +19,7 @@ final class FacesSettingsViewModel: BaseViewModel {
     private let router: WeakRouter<SettingsRoute>
     private let flatId: Int
     private let address: String
+    private let canAddFace: Bool
     
     private let registeredFaces = PublishSubject<[APIFace]>()
     
@@ -28,7 +29,8 @@ final class FacesSettingsViewModel: BaseViewModel {
         alertService: AlertService,
         router: WeakRouter<SettingsRoute>,
         flatId: Int,
-        address: String
+        address: String,
+        canAddFace: Bool
     ) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
@@ -36,6 +38,7 @@ final class FacesSettingsViewModel: BaseViewModel {
         self.router = router
         self.flatId = flatId
         self.address = address
+        self.canAddFace = canAddFace
     }
     
     // swiftlint:disable:next function_body_length
@@ -85,19 +88,18 @@ final class FacesSettingsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.addFaceTrigger
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    self.router.trigger(
-                        .addFace(
-                            flatId: self.flatId,
-                            address: self.address
-                        )
-                    )
+            .drive(with: self) { owner, _ in
+                guard owner.canAddFace else {
+                    return
                 }
-            )
+
+                owner.router.trigger(
+                    .addFace(
+                        flatId: owner.flatId,
+                        address: owner.address
+                    )
+                )
+            }
             .disposed(by: disposeBag)
         
         input.deleteFaceTrigger
@@ -151,7 +153,8 @@ final class FacesSettingsViewModel: BaseViewModel {
         return Output(
             isLoading: activityTracker.asDriver(),
             shouldShowInitialLoading: initialLoadingTracker.asDriver(),
-            registeredFaces: self.registeredFaces.asDriver(onErrorJustReturn: [])
+            registeredFaces: self.registeredFaces.asDriver(onErrorJustReturn: []),
+            canAddFace: .just(canAddFace)
         )
     }
     
@@ -171,6 +174,7 @@ extension FacesSettingsViewModel {
         let isLoading: Driver<Bool>
         let shouldShowInitialLoading: Driver<Bool>
         let registeredFaces: Driver<[APIFace]>
+        let canAddFace: Driver<Bool>
     }
     
 }

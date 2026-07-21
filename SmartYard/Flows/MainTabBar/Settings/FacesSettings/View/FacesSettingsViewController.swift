@@ -29,6 +29,7 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     private var selectFaceTrigger = PublishSubject<(Int, UIImage?)>()
     
     private var registeredFaces: [APIFace] = []
+    private var canAddFace = false
     
     init(viewModel: FacesSettingsViewModel) {
         self.viewModel = viewModel
@@ -111,6 +112,16 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
                 }
             )
             .disposed(by: disposeBag)
+
+        output.canAddFace
+            .distinctUntilChanged()
+            .drive(with: self) { owner, canAddFace in
+                owner.canAddFace = canAddFace
+                owner.registrationHintLabel.text = canAddFace ? L10n.Settings.Faces.registrationHint : nil
+                owner.registrationHintLabel.isHidden = !canAddFace
+                owner.facesCollectionView.reloadData()
+            }
+            .disposed(by: disposeBag)
     }
     
     private func showInitialLoading() {
@@ -159,14 +170,14 @@ extension FacesSettingsViewController: UICollectionViewDelegateFlowLayout {
 
 extension FacesSettingsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return registeredFaces.count + 1
+        return registeredFaces.count + (canAddFace ? 1 : 0)
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        if indexPath.row == 0 {
+        if canAddFace && indexPath.row == 0 {
             let cell = collectionView.dequeueReusableCell(withClass: AddFaceCell.self, for: indexPath)
             cell.configure(
                 onTapHandler: { [weak self] in
@@ -177,11 +188,12 @@ extension FacesSettingsViewController: UICollectionViewDataSource {
         } else {
             let cell = collectionView.dequeueReusableCell(withClass: FaceCell.self, for: indexPath)
             cell.reset()
-            
-            guard 0...registeredFaces.count ~= indexPath.row - 1 else {
+
+            let faceIndex = indexPath.row - (canAddFace ? 1 : 0)
+            guard registeredFaces.indices.contains(faceIndex) else {
                 return cell
             }
-            let face = registeredFaces[indexPath.row - 1]
+            let face = registeredFaces[faceIndex]
             
             cell.configure(
                 faceId: face.faceId,
