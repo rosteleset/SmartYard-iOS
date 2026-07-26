@@ -4,6 +4,8 @@
 - If a build check is needed, first ask the user to run the command locally.
 - Verify changes using only static analysis: `git diff`, project search, and reading files.
 - If a build is required, provide a short command and wait for the user's error log.
+- Push the `Sesame` branch only to the `gitap` remote.
+- Push the `Teledom(OEM-version)` branch only to the `PUBLIC` GitHub remote.
 - Use this commit message format:
 
   ```text
