@@ -26,6 +26,7 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
     private let networkStateProvider: NetworkStateProviding
 
     private let version: Int
+    private let webViewOptions: APIExtension.WebViewOptions?
     
     private let backButtonLabel: String
     
@@ -36,12 +37,14 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
         url: URL,
         backButtonLabel: String,
         push: Bool,
-        version: Int, // = 2
-        refreshControl: Bool = true
+        version: Int,
+        refreshControl: Bool = true,
+        webViewOptions: APIExtension.WebViewOptions? = nil
     ) {
         self.apiWrapper = apiWrapper
         self.networkStateProvider = networkStateProvider
         self.version = version
+        self.webViewOptions = webViewOptions
         self.backButtonLabel = backButtonLabel
         super.init(rootViewController: rootVC, initialRoute: nil)
         trigger(.webView(url: url, push: push, refreshControl: refreshControl))
@@ -58,6 +61,7 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
         self.apiWrapper = apiWrapper
         self.networkStateProvider = networkStateProvider
         self.version = version
+        self.webViewOptions = nil
         self.backButtonLabel = L10n.Common.back
         super.init(rootViewController: rootVC, initialRoute: nil)
         trigger(.webViewPopup(url: popupUrl))
@@ -72,12 +76,14 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
         baseURL: String,
         backButtonLabel: String,
         push: Bool,
-        version: Int, // = 2
-        refreshControl: Bool = true
+        version: Int,
+        refreshControl: Bool = true,
+        webViewOptions: APIExtension.WebViewOptions? = nil
     ) {
         self.apiWrapper = apiWrapper
         self.networkStateProvider = networkStateProvider
         self.version = version
+        self.webViewOptions = webViewOptions
         self.backButtonLabel = backButtonLabel
         super.init(rootViewController: rootVC, initialRoute: nil)
         trigger(.webViewFromContent(content: content, baseURL: baseURL, push: push, refreshControl: refreshControl))
@@ -123,7 +129,8 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
                 backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
                 accessToken: apiWrapper.accessService.accessToken ?? "",
                 version: version,
-                refreshControl: refreshControl
+                refreshControl: refreshControl,
+                webViewOptions: webViewOptions
             )
             
             return .push(vc)
@@ -147,7 +154,8 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
                 backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
                 accessToken: apiWrapper.accessService.accessToken ?? "",
                 version: version,
-                refreshControl: refreshControl
+                refreshControl: refreshControl,
+                webViewOptions: webViewOptions
             )
             return .push(vc)
             

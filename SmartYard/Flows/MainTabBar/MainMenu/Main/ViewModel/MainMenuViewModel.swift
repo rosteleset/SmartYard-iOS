@@ -148,7 +148,8 @@ final class MainMenuViewModel: BaseViewModel {
                                         .webViewFromContent(
                                             content: ext.contentHTML,
                                             baseURL: ext.basePath,
-                                            version: ext.version
+                                            version: ext.version,
+                                            webViewOptions: ext.webViewOptions
                                         )
                                     )
                                 }

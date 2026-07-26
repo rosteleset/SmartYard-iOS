@@ -32,6 +32,17 @@ final class FakeNavBar: PMNibLinkableView {
         backButton.setTitleColor(UIColor.SmartYard.semiBlack, for: .normal)
         backButton.tintColor = UIColor.SmartYard.semiBlack
     }
+
+    func configure(backgroundColor: UIColor?, contentColor: UIColor?) {
+        if let backgroundColor {
+            self.backgroundColor = backgroundColor
+        }
+
+        if let contentColor {
+            backButton.setTitleColor(contentColor, for: .normal)
+            backButton.tintColor = contentColor
+        }
+    }
     
     func setText(_ newText: String) {
         backButton.setTitle(newText, for: .normal)

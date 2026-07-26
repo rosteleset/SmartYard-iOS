@@ -21,7 +21,12 @@ enum MainMenuRoute: Route {
     case alert(title: String, message: String)
     case back
     case webView(url: URL, version: Int)
-    case webViewFromContent(content: String, baseURL: String, version: Int)
+    case webViewFromContent(
+        content: String,
+        baseURL: String,
+        version: Int,
+        webViewOptions: APIExtension.WebViewOptions?
+    )
 }
 
 class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute>, HasDisposeBag {
@@ -154,7 +159,7 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute>, HasDisposeBag {
             addChild(coordinator)
             return .none()
 
-        case let .webViewFromContent(content, baseURL, version):
+        case let .webViewFromContent(content, baseURL, version, webViewOptions):
             let coordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
@@ -163,7 +168,8 @@ class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute>, HasDisposeBag {
                 baseURL: baseURL,
                 backButtonLabel: L10n.Tab.menu,
                 push: true,
-                version: version
+                version: version,
+                webViewOptions: webViewOptions
             )
 
             addChild(coordinator)

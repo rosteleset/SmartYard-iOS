@@ -12,6 +12,8 @@ import RxCocoa
 import WebKit
 import JGProgressHUD
 import WKCookieWebView
+import SwifterSwift
+import SnapKit
 
 final class WebViewController: BaseViewController, LoaderPresentable {
     
@@ -42,19 +44,22 @@ final class WebViewController: BaseViewController, LoaderPresentable {
     
     private let version: Int
     private let enableRefreshControl: Bool
+    private let webViewOptions: APIExtension.WebViewOptions?
     
     init(
         viewModel: WebViewModel,
         backButtonLabel: String = L10n.Common.back,
         accessToken: String = "",
         version: Int,
-        refreshControl: Bool = true
+        refreshControl: Bool = true,
+        webViewOptions: APIExtension.WebViewOptions? = nil
     ) {
         self.viewModel = viewModel
         self.backButtonLabel = backButtonLabel
         self.accessToken = accessToken
         self.version = version
         self.enableRefreshControl = refreshControl
+        self.webViewOptions = webViewOptions
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,7 +69,18 @@ final class WebViewController: BaseViewController, LoaderPresentable {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        switch webViewOptions?.statusBarStyle {
+        case .light:
+            return .lightContent
+        case .dark:
+            return .darkContent
+        case .none:
+            return .default
+        }
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        webViewOptions?.navBarHidden == true
     }
     
     override func viewDidLoad() {
@@ -159,18 +175,34 @@ isAppInstalled = function(url, callbackFunc ) {
     }
     
     private func configureUI() {
-        let shouldShowFakeNavBar = !backButtonLabel.isEmpty
+        let isNavBarHidden = webViewOptions?.navBarHidden == true
+        let shouldShowFakeNavBar = !backButtonLabel.isEmpty && !isNavBarHidden
 
         fakeNavBar.configueDarkNavBar()
+        fakeNavBar.configure(
+            backgroundColor: webViewOptions?.navBarColor.flatMap { UIColor(hexString: $0) },
+            contentColor: webViewOptions?.navBarContentColor.flatMap { UIColor(hexString: $0) }
+        )
         fakeNavBar.setText(backButtonLabel)
         fakeNavBar.isHidden = !shouldShowFakeNavBar
+        view.backgroundColor = webViewOptions?.statusBarColor.flatMap { UIColor(hexString: $0) }
+            ?? UIColor.SmartYard.backgroundColor
 
-        webViewTopToFakeNavBarConstraint?.isActive = shouldShowFakeNavBar
-        skeletonTopToFakeNavBarConstraint?.isActive = shouldShowFakeNavBar
-        webViewTopToSafeAreaConstraint?.isActive = !shouldShowFakeNavBar
-        skeletonTopToSafeAreaConstraint?.isActive = !shouldShowFakeNavBar
+        webViewTopToFakeNavBarConstraint?.isActive = shouldShowFakeNavBar && !isNavBarHidden
+        skeletonTopToFakeNavBarConstraint?.isActive = shouldShowFakeNavBar && !isNavBarHidden
+        webViewTopToSafeAreaConstraint?.isActive = !shouldShowFakeNavBar && !isNavBarHidden
+        skeletonTopToSafeAreaConstraint?.isActive = !shouldShowFakeNavBar && !isNavBarHidden
 
-        webView.scrollView.contentInsetAdjustmentBehavior = .automatic
+        if isNavBarHidden {
+            webView.snp.makeConstraints { make in
+                make.top.equalToSuperview()
+            }
+            skeletonView.snp.makeConstraints { make in
+                make.top.equalToSuperview()
+            }
+        }
+
+        webView.scrollView.contentInsetAdjustmentBehavior = isNavBarHidden ? .never : .automatic
         webView.scrollView.scrollIndicatorInsets = .zero
         webView.navigationDelegate = self
         webView.uiDelegate = self
@@ -255,6 +287,7 @@ isAppInstalled = function(url, callbackFunc ) {
     }
 
 }
+
 extension WebViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let dict = message.body as? [String: AnyObject] else {
