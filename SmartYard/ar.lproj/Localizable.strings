@@ -593,6 +593,7 @@
 
 "settings.faces.faceRegistration" = "تسجيل الوجه";
 "settings.faces.registeredFaces" = "الوجوه المسجلة";
+"settings.faces.emptyStateMessage" = "لا توجد وجوه مسجلة بعد";
 "settings.faces.registrationHint" = "تُحفظ صور ضيوفك في قسم سجل الأحداث.\n\nلاختيار وجه وتسجيله، انتقل إلى هذا القسم بالضغط على علامة плюс.\nفي سجل الأحداث، اضغط على أيقونة المعلومات بجانب الحدث المطلوب، ثم اختر الصورة اللازمة في الشاشة التي ستفتح.\n\n";
 
 "settings.main.addAddressButton" = "إضافة عنوان";

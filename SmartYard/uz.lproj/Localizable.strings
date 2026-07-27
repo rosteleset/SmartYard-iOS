@@ -593,6 +593,7 @@
 
 "settings.faces.faceRegistration" = "Yuzni ro'yxatdan o'tkazish";
 "settings.faces.registeredFaces" = "Ro'yxatdan o'tgan yuzlar";
+"settings.faces.emptyStateMessage" = "Hali ro'yxatdan o'tgan yuzlar yo'q";
 "settings.faces.registrationHint" = "Mehmonlaringizning suratlari Voqealar tarixi bo'limida saqlanadi. \n\nShaxsni tanlash va ro'yxatdan o'tkazish uchun ushbu bo'limga o'ting, Plus tugmasini bosib. \nVoqealar tarixida kerakli voqea yonida ma'lumot belgisini bosib, ochilgan ekranda zarur suratni tanlang.\n\n";
 
 "settings.main.addAddressButton" = "Manzil qo'shish";

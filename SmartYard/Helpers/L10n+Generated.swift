@@ -827,6 +827,7 @@ extension L10n {
         }
 
         enum Faces {
+            static let emptyStateMessage = tr("settings.faces.emptyStateMessage")
             static let faceRegistration = tr("settings.faces.faceRegistration")
             static let registeredFaces = tr("settings.faces.registeredFaces")
             static let registrationHint = tr("settings.faces.registrationHint")

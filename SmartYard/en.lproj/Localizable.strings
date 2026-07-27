@@ -593,6 +593,7 @@
 
 "settings.faces.faceRegistration" = "Face registration";
 "settings.faces.registeredFaces" = "Registered faces";
+"settings.faces.emptyStateMessage" = "No registered faces yet";
 "settings.faces.registrationHint" = "Photos of your guests are stored in the Event History section. \n\nTo select and register a person, go to the specified section by clicking on Plus. \nIn the Event History, click on the information icon opposite the desired event and select the required photo on the screen that opens.\n\n";
 
 "settings.main.addAddressButton" = "Add address";

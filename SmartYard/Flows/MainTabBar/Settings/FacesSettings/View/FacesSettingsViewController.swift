@@ -30,6 +30,8 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
     
     private var registeredFaces: [APIFace] = []
     private var canAddFace = false
+    private lazy var emptyStateView = makeEmptyStateView()
+    private var emptyStateLabelLeadingConstraint: NSLayoutConstraint?
     
     init(viewModel: FacesSettingsViewModel) {
         self.viewModel = viewModel
@@ -63,6 +65,7 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
         
         facesCollectionView.delegate = self
         facesCollectionView.dataSource = self
+        facesCollectionView.backgroundView = emptyStateView
         
         if let flowLayout = facesCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
@@ -109,6 +112,7 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
                 onNext: { [weak self] faces in
                     self?.registeredFaces = faces
                     self?.facesCollectionView.reloadData()
+                    self?.updateEmptyState()
                 }
             )
             .disposed(by: disposeBag)
@@ -119,9 +123,46 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
                 owner.canAddFace = canAddFace
                 owner.registrationHintLabel.text = canAddFace ? L10n.Settings.Faces.registrationHint : nil
                 owner.registrationHintLabel.isHidden = !canAddFace
+                owner.emptyStateLabelLeadingConstraint?.constant = canAddFace ? 88 : 32
                 owner.facesCollectionView.reloadData()
             }
             .disposed(by: disposeBag)
+    }
+
+    private func makeEmptyStateView() -> UIView {
+        let containerView = UIView(frame: facesCollectionView.bounds)
+        containerView.backgroundColor = .clear
+        containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        containerView.isHidden = true
+
+        let titleLabel = UILabel.make(
+            .bodySemibold,
+            text: L10n.Settings.Faces.emptyStateMessage
+        )
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = .SmartYard.gray
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
+
+        containerView.addSubview(titleLabel)
+
+        let leadingConstraint = titleLabel.leadingAnchor.constraint(
+            equalTo: containerView.leadingAnchor,
+            constant: 32
+        )
+        emptyStateLabelLeadingConstraint = leadingConstraint
+
+        NSLayoutConstraint.activate([
+            leadingConstraint,
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+        ])
+
+        return containerView
+    }
+
+    private func updateEmptyState() {
+        emptyStateView.isHidden = !registeredFaces.isEmpty
     }
     
     private func showInitialLoading() {
