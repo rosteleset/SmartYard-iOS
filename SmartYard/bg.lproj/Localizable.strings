@@ -645,3 +645,13 @@
 "validation.name.patronymic.invalid" = "Please enter a valid patronymic";
 
 "validation.phone.invalidFormat" = "Грешен формат на номера";
+
+/* MARK: - PLAYER */
+
+"player.transport.connectedHLS" = "Свързано чрез HLS";
+"player.transport.connectingHLS" = "Свързване чрез HLS…";
+"player.transport.connectingWebRTC" = "Свързване чрез WebRTC…";
+"player.transport.hlsInfo" = "HLS използва буфериране, което може да изглади кратките прекъсвания на мрежата. Възможно е закъснение спрямо реалното време.";
+"player.transport.switchingToHLS" = "WebRTC не е достъпен. Свързване чрез HLS…";
+"player.transport.videoUnavailable" = "Видеото не може да бъде заредено";
+"player.transport.webRTCInfo" = "Видеото се предава чрез WebRTC. Този метод обикновено осигурява по-ниско закъснение.";

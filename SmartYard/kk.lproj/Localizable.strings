@@ -651,3 +651,13 @@
 "validation.name.patronymic.invalid" = "Please enter a valid patronymic";
 
 "validation.phone.invalidFormat" = "Дұрыс емес номер форматы";
+
+/* MARK: - PLAYER */
+
+"player.transport.connectedHLS" = "HLS арқылы қосылды";
+"player.transport.connectingHLS" = "HLS арқылы қосылуда…";
+"player.transport.connectingWebRTC" = "WebRTC арқылы қосылуда…";
+"player.transport.hlsInfo" = "HLS буферлеуді пайдаланады, бұл желідегі қысқа үзілістерді азайтуы мүмкін. Нақты уақытпен салыстырғанда кідіріс болуы мүмкін.";
+"player.transport.switchingToHLS" = "WebRTC қолжетімсіз. HLS арқылы қосылуда…";
+"player.transport.videoUnavailable" = "Бейнені жүктеу мүмкін болмады";
+"player.transport.webRTCInfo" = "Бейне WebRTC арқылы беріледі. Бұл әдіс әдетте кідірісті азайтады.";

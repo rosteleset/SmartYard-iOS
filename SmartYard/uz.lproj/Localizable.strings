@@ -645,3 +645,13 @@
 "validation.name.patronymic.invalid" = "Please enter a valid patronymic";
 
 "validation.phone.invalidFormat" = "Noto'g'ri raqam formati";
+
+/* MARK: - PLAYER */
+
+"player.transport.connectedHLS" = "HLS orqali ulandi";
+"player.transport.connectingHLS" = "HLS orqali ulanmoqda…";
+"player.transport.connectingWebRTC" = "WebRTC orqali ulanmoqda…";
+"player.transport.hlsInfo" = "HLS buferlashdan foydalanadi, bu tarmoqdagi qisqa uzilishlarni yumshatishi mumkin. Real vaqtga nisbatan kechikish bo'lishi mumkin.";
+"player.transport.switchingToHLS" = "WebRTC mavjud emas. HLS orqali ulanmoqda…";
+"player.transport.videoUnavailable" = "Videoni yuklab bo'lmadi";
+"player.transport.webRTCInfo" = "Video WebRTC orqali uzatiladi. Bu usul odatda kamroq kechikishni ta'minlaydi.";

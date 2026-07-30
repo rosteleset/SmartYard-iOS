@@ -645,3 +645,13 @@
 "validation.name.patronymic.invalid" = "Please enter a valid patronymic";
 
 "validation.phone.invalidFormat" = "تنسيق الرقم غير صحيح";
+
+/* MARK: - PLAYER */
+
+"player.transport.connectedHLS" = "تم الاتصال عبر HLS";
+"player.transport.connectingHLS" = "جارٍ الاتصال عبر HLS…";
+"player.transport.connectingWebRTC" = "جارٍ الاتصال عبر WebRTC…";
+"player.transport.hlsInfo" = "يستخدم HLS التخزين المؤقت، ما قد يخفف انقطاعات الشبكة القصيرة. قد يحدث تأخير مقارنة بالوقت الفعلي.";
+"player.transport.switchingToHLS" = "WebRTC غير متاح. جارٍ الاتصال عبر HLS…";
+"player.transport.videoUnavailable" = "تعذر تحميل الفيديو";
+"player.transport.webRTCInfo" = "يتم نقل الفيديو عبر WebRTC. توفر هذه الطريقة عادةً زمن انتقال أقل.";

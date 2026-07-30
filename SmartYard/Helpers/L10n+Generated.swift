@@ -565,6 +565,18 @@ extension L10n {
         }
     }
 
+    enum Player {
+        enum Transport {
+            static let connectedHLS = tr("player.transport.connectedHLS")
+            static let connectingHLS = tr("player.transport.connectingHLS")
+            static let connectingWebRTC = tr("player.transport.connectingWebRTC")
+            static let hlsInfo = tr("player.transport.hlsInfo")
+            static let switchingToHLS = tr("player.transport.switchingToHLS")
+            static let videoUnavailable = tr("player.transport.videoUnavailable")
+            static let webRTCInfo = tr("player.transport.webRTCInfo")
+        }
+    }
+
     enum Permissions {
         enum Camera {
             static let message = tr("permissions.camera.message")

@@ -645,3 +645,13 @@
 "validation.name.patronymic.invalid" = "Please enter a valid patronymic";
 
 "validation.phone.invalidFormat" = "Համարի սխալ ձևաչափ";
+
+/* MARK: - PLAYER */
+
+"player.transport.connectedHLS" = "Միացված է HLS-ով";
+"player.transport.connectingHLS" = "Միանում ենք HLS-ով…";
+"player.transport.connectingWebRTC" = "Միանում ենք WebRTC-ին…";
+"player.transport.hlsInfo" = "HLS-ն օգտագործում է բուֆերացում, որը կարող է մեղմել ցանցի կարճատև ընդհատումները։ Հնարավոր է ուշացում իրական ժամանակի համեմատ։";
+"player.transport.switchingToHLS" = "WebRTC-ն անհասանելի է։ Միանում ենք HLS-ով…";
+"player.transport.videoUnavailable" = "Չհաջողվեց բեռնել տեսանյութը";
+"player.transport.webRTCInfo" = "Տեսանյութը փոխանցվում է WebRTC-ով։ Այս եղանակը սովորաբար ապահովում է ավելի փոքր ուշացում։";
