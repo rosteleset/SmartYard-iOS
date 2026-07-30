@@ -77,6 +77,7 @@ final class SelectCameraContainerViewController: BaseViewController {
         pagingController.menuBackgroundColor = UIColor.SmartYard.secondBackgroundColor
         pagingController.textColor = UIColor.SmartYard.gray
         pagingController.selectedTextColor = UIColor.SmartYard.semiBlack
+        pagingController.indicatorColor = UIColor.SmartYard.blue
 
         pagingController.menuItemSize = .sizeToFit(minWidth: 100, height: 70)
         pagingController.collectionView.isScrollEnabled = false
