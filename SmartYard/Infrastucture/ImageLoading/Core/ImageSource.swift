@@ -13,13 +13,19 @@ enum ImageSource {
     case videoThumbnail(URL)   // mp4 -> AVAssetImageGenerator (VideoThumbnailLoader)
 }
 
+enum ImageCachePolicy {
+    case standard
+    case refresh(after: TimeInterval)
+}
+
 protocol ImageProviding {
     func setImage(
         on imageView: UIImageView,
         key: String,
         source: ImageSource,
+        cachePolicy: ImageCachePolicy,
         completion: ((UIImage?) -> Void)?
     )
 
-     func cancel(on imageView: UIImageView)
+    func cancel(on imageView: UIImageView)
 }

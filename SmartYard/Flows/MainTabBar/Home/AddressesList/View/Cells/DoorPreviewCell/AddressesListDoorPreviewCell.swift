@@ -10,6 +10,11 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
+private enum EntrancePreviewRefresh {
+    static let interval: TimeInterval = 5 * 60
+    static let cacheKeyPrefix = "entrance-preview-v2"
+}
+
 final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDisposeBag {
 
     private let previewImageView = UIImageView()
@@ -21,10 +26,16 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
     private let streamIndicatorView = UIView()
 
     private let imageProvider: ImageProviding = SYImageProvider()
+    private var previewSource: AddressesListDoorPreviewSource?
+    private var previewRefreshDisposable: Disposable?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+    }
+
+    deinit {
+        previewRefreshDisposable?.dispose()
     }
 
     @available(*, unavailable)
@@ -43,6 +54,9 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
         super.prepareForReuse()
 
         resetDisposeBag()
+        previewSource = nil
+        previewRefreshDisposable?.dispose()
+        previewRefreshDisposable = nil
         imageProvider.cancel(on: previewImageView)
     }
 
@@ -59,7 +73,9 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
         openButton.isOn = isOpened
         streamIndicatorView.isHidden = !hasCamera
 
+        self.previewSource = previewSource
         applyPreview(previewSource)
+        startPreviewRefreshing()
     }
 
     func bind(with outerSubject: PublishSubject<Void>) {
@@ -157,9 +173,14 @@ private extension AddressesListDoorPreviewCell {
         )
     }
 
-    func applyPreview(_ previewSource: AddressesListDoorPreviewSource?) {
-        previewImageView.image = nil
-        placeholderIconView.isHidden = false
+    func applyPreview(
+        _ previewSource: AddressesListDoorPreviewSource?,
+        keepingCurrentImage: Bool = false
+    ) {
+        if !keepingCurrentImage {
+            previewImageView.image = nil
+            placeholderIconView.isHidden = false
+        }
         imageProvider.cancel(on: previewImageView)
 
         guard
@@ -178,11 +199,42 @@ private extension AddressesListDoorPreviewCell {
 
         imageProvider.setImage(
             on: previewImageView,
-            key: previewSource.urlString,
-            source: source
+            key: "\(EntrancePreviewRefresh.cacheKeyPrefix):\(previewSource.urlString)",
+            source: source,
+            cachePolicy: .refresh(after: EntrancePreviewRefresh.interval)
         ) { [weak self] image in
-            self?.placeholderIconView.isHidden = image != nil
+            guard let self, self.previewSource == previewSource else {
+                return
+            }
+
+            self.placeholderIconView.isHidden = image != nil || self.previewImageView.image != nil
         }
+    }
+
+    func startPreviewRefreshing() {
+        previewRefreshDisposable?.dispose()
+
+        guard previewSource != nil else {
+            previewRefreshDisposable = nil
+            return
+        }
+
+        let periodicRefresh = Observable<Int>
+            .interval(
+                .seconds(Int(EntrancePreviewRefresh.interval)),
+                scheduler: MainScheduler.instance
+            )
+            .mapToVoid()
+
+        let foregroundRefresh = NotificationCenter.default.rx
+            .notification(UIApplication.didBecomeActiveNotification)
+            .mapToVoid()
+
+        previewRefreshDisposable = Observable
+            .merge(periodicRefresh, foregroundRefresh)
+            .subscribe(with: self) { owner, _ in
+                owner.applyPreview(owner.previewSource, keepingCurrentImage: true)
+            }
     }
 
 }
