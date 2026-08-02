@@ -31,10 +31,21 @@
 - In RxSwift subscriptions, prefer `subscribe(with: self) { owner, ... in ... }` over `subscribe(onNext: { [weak self] ... })` when the subscription captures `self`.
 - Prefer ternary operators over `if`/`else` when the expression stays readable and the conditional is simple.
 - Follow the Google Swift Style Guide by default, unless existing project conventions or SwiftLint rules require otherwise.
-- For programmatic layout, prefer the local AutoLayoutDSL helpers from `UIStackView+Ext` and `UIView+Ext`.
-- Prefer stack-based programmatic layout with `UIStackView.vertical`, `UIStackView.horizontal`, `HSpacer`, `VSpacer`, and `pinSubview`; add arranged subviews with the `UIStackView.vertical(...).add { ... }` / `UIStackView.horizontal(...).add { ... }` builder style when possible; use explicit constraints mainly for fixed sizes, overlays, and cases that stack layout cannot express cleanly.
-- When pinning a subview to all edges of its superview, use `pinSubview` instead of `snp.makeConstraints { make in make.edges.equalToSuperview() }`.
+- Follow the project programmatic-layout rules below.
+
+## Programmatic layout rules
+
+- Build ordinary rows and columns with `UIStackView.vertical(...)` and `UIStackView.horizontal(...)`. Use their `spacing`, `alignment`, `paddings`, and `arrangedSubviews` parameters instead of recreating equivalent constraints.
+- Add static arranged subviews with the local builder: `stackView.add { ... }`. For a dynamic array, use `stackView.add(views)`. Use `insert(at:block:)` only when insertion at a specific arranged-subview index is required.
+- `UIStackView.add { ... }`, `add(_:)`, and `insert(at:block:)` return `UIView`, not `UIStackView`. When stack-specific access is needed after population, create the stack first and call `stackView.add { ... }` as a separate statement.
+- Express non-uniform gaps inside stacks with `VSpacer(value)` and `HSpacer(value)`. Use `VSpacer()` or `HSpacer()` for flexible space. Do not use `setCustomSpacing` or `addArrangedSubview(_:customSpacing:)` in feature layout.
+- Use `UIStackView`'s `paddings` parameter for stack layout margins. Use `addBackground(color:cornerRadius:cornerMask:)` when a stack itself needs a background.
+- Pin a child to all four parent edges with `pinSubview`. Use `.init(inset: value)` when all four insets are equal; spell out `UIEdgeInsets(top:left:bottom:right:)` only when they actually differ.
+- Use `view.insets(...)` or `view.add(insets:)` when a view needs to be wrapped in an inset container before it is placed in a stack.
+- Add a subview with SnapKit constraints through `addSubview(view) { make in ... }`. Use direct `snp.makeConstraints` only when the view is already in the hierarchy.
+- Use SnapKit mainly for fixed control/icon sizes, aspect ratios, overlays, centering, and relationships that stack layout cannot express cleanly. Do not introduce `NSLayoutConstraint.activate`, anchors, or `translatesAutoresizingMaskIntoConstraints` in new feature layout when the local DSL or SnapKit can express the layout.
+- Do not hardcode the overall width or height of content views, modal content, cells, or screens. Derive container size from safe/readable guides and intrinsic content. Fixed dimensions remain acceptable for genuinely fixed controls, icons, and bounded media.
+- For xibless views and cells, keep visual configuration in `setupUI` and hierarchy/layout construction in `setupConstraints`.
 - Before creating custom buttons, controls, or repeated UI pieces, check for existing project components such as `SmartYardActionModeButton` and reuse them when they fit.
 - In reusable cells, keep `prepareForReuse` focused on lifecycle cleanup such as resetting dispose bags and cancelling async work; do not duplicate UI state that is always set by `configure`.
-- For xibless views and cells, separate visual setup from layout setup with clearly marked `setupUI` and `setupConstraints` sections/functions.
 - Prefer existing utilities from SwifterSwift and local extensions before adding custom helper code.
