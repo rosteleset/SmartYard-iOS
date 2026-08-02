@@ -655,3 +655,18 @@
 "player.transport.switchingToHLS" = "WebRTC is unavailable. Connecting via HLS…";
 "player.transport.videoUnavailable" = "Unable to load video";
 "player.transport.webRTCInfo" = "Video is delivered via WebRTC. This method usually provides lower latency.";
+/* MARK: - WHAT'S NEW */
+
+"whatsNew.accessibilityPages" = "What's new pages";
+"whatsNew.done" = "Done";
+"whatsNew.next" = "Next";
+"whatsNew.titleFormat" = "What's new in version %@";
+
+"whatsNew.cameraSwipe.message" = "Open a camera full screen and swipe left or right to move between cameras without returning to the list.";
+"whatsNew.cameraSwipe.title" = "Swipe between cameras";
+
+"whatsNew.entrancePreviews.message" = "Entrance previews now refresh automatically, so the latest camera image is always close at hand.";
+"whatsNew.entrancePreviews.title" = "Up-to-date entrance previews";
+
+"whatsNew.language.message" = "Change the language in General settings. The app interface switches immediately.";
+"whatsNew.language.title" = "Choose the app language";

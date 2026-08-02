@@ -931,5 +931,27 @@ extension L10n {
             static let invalidFormat = tr("validation.phone.invalidFormat")
         }
     }
+
+    enum WhatsNew {
+        static let accessibilityPages = tr("whatsNew.accessibilityPages")
+        static let done = tr("whatsNew.done")
+        static let next = tr("whatsNew.next")
+        static let titleFormat = tr("whatsNew.titleFormat")
+
+        enum CameraSwipe {
+            static let message = tr("whatsNew.cameraSwipe.message")
+            static let title = tr("whatsNew.cameraSwipe.title")
+        }
+
+        enum EntrancePreviews {
+            static let message = tr("whatsNew.entrancePreviews.message")
+            static let title = tr("whatsNew.entrancePreviews.title")
+        }
+
+        enum Language {
+            static let message = tr("whatsNew.language.message")
+            static let title = tr("whatsNew.language.title")
+        }
+    }
 }
 // swiftlint:enable file_length type_body_length nesting

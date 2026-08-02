@@ -655,3 +655,18 @@
 "player.transport.switchingToHLS" = "WebRTC недоступен. Подключаемся по HLS…";
 "player.transport.videoUnavailable" = "Не удалось загрузить видео";
 "player.transport.webRTCInfo" = "Видео передаётся по WebRTC. Этот способ обычно обеспечивает меньшую задержку.";
+/* MARK: - WHAT'S NEW */
+
+"whatsNew.accessibilityPages" = "Страницы с новыми возможностями";
+"whatsNew.done" = "Готово";
+"whatsNew.next" = "Далее";
+"whatsNew.titleFormat" = "Что нового в версии %@";
+
+"whatsNew.cameraSwipe.message" = "Откройте камеру на весь экран и листайте влево или вправо, чтобы переключаться между камерами без возврата к списку.";
+"whatsNew.cameraSwipe.title" = "Переключение камер свайпом";
+
+"whatsNew.entrancePreviews.message" = "Превью подъездов теперь обновляются автоматически — актуальный кадр с камеры всегда под рукой.";
+"whatsNew.entrancePreviews.title" = "Актуальные превью подъездов";
+
+"whatsNew.language.message" = "Сменить язык можно в общих настройках. Интерфейс приложения переключится сразу.";
+"whatsNew.language.title" = "Выбор языка приложения";

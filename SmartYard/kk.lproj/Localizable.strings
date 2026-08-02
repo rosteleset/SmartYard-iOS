@@ -661,3 +661,18 @@
 "player.transport.switchingToHLS" = "WebRTC қолжетімсіз. HLS арқылы қосылуда…";
 "player.transport.videoUnavailable" = "Бейнені жүктеу мүмкін болмады";
 "player.transport.webRTCInfo" = "Бейне WebRTC арқылы беріледі. Бұл әдіс әдетте кідірісті азайтады.";
+/* MARK: - WHAT'S NEW */
+
+"whatsNew.accessibilityPages" = "Жаңа мүмкіндіктер беттері";
+"whatsNew.done" = "Дайын";
+"whatsNew.next" = "Келесі";
+"whatsNew.titleFormat" = "%@ нұсқасындағы жаңалықтар";
+
+"whatsNew.cameraSwipe.message" = "Камераны толық экранда ашып, тізімге оралмай камералар арасында ауысу үшін солға немесе оңға сырғытыңыз.";
+"whatsNew.cameraSwipe.title" = "Камералар арасында сырғыту";
+
+"whatsNew.entrancePreviews.message" = "Кіреберіс көріністері енді автоматты түрде жаңартылады, сондықтан камераның соңғы кадры әрдайым қолжетімді.";
+"whatsNew.entrancePreviews.title" = "Кіреберістің өзекті көріністері";
+
+"whatsNew.language.message" = "Тілді жалпы параметрлерден өзгертіңіз. Қолданба интерфейсі бірден ауысады.";
+"whatsNew.language.title" = "Қолданба тілін таңдаңыз";

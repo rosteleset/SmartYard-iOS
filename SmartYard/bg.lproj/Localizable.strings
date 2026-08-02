@@ -655,3 +655,18 @@
 "player.transport.switchingToHLS" = "WebRTC не е достъпен. Свързване чрез HLS…";
 "player.transport.videoUnavailable" = "Видеото не може да бъде заредено";
 "player.transport.webRTCInfo" = "Видеото се предава чрез WebRTC. Този метод обикновено осигурява по-ниско закъснение.";
+/* MARK: - WHAT'S NEW */
+
+"whatsNew.accessibilityPages" = "Страници с нови възможности";
+"whatsNew.done" = "Готово";
+"whatsNew.next" = "Напред";
+"whatsNew.titleFormat" = "Какво ново във версия %@";
+
+"whatsNew.cameraSwipe.message" = "Отворете камера на цял екран и плъзнете наляво или надясно, за да превключвате между камерите, без да се връщате към списъка.";
+"whatsNew.cameraSwipe.title" = "Плъзгане между камерите";
+
+"whatsNew.entrancePreviews.message" = "Прегледите на входовете вече се обновяват автоматично, така че последното изображение от камерата е винаги под ръка.";
+"whatsNew.entrancePreviews.title" = "Актуални прегледи на входовете";
+
+"whatsNew.language.message" = "Сменете езика в общите настройки. Интерфейсът на приложението се превключва веднага.";
+"whatsNew.language.title" = "Изберете езика на приложението";

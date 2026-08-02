@@ -655,3 +655,18 @@
 "player.transport.switchingToHLS" = "WebRTC-ն անհասանելի է։ Միանում ենք HLS-ով…";
 "player.transport.videoUnavailable" = "Չհաջողվեց բեռնել տեսանյութը";
 "player.transport.webRTCInfo" = "Տեսանյութը փոխանցվում է WebRTC-ով։ Այս եղանակը սովորաբար ապահովում է ավելի փոքր ուշացում։";
+/* MARK: - WHAT'S NEW */
+
+"whatsNew.accessibilityPages" = "Նոր հնարավորությունների էջեր";
+"whatsNew.done" = "Պատրաստ է";
+"whatsNew.next" = "Հաջորդը";
+"whatsNew.titleFormat" = "Նորություններ %@ տարբերակում";
+
+"whatsNew.cameraSwipe.message" = "Բացեք տեսախցիկը ամբողջ էկրանով և սահեցրեք ձախ կամ աջ՝ առանց ցանկ վերադառնալու տեսախցիկների միջև անցնելու համար։";
+"whatsNew.cameraSwipe.title" = "Սահեցրեք տեսախցիկների միջև";
+
+"whatsNew.entrancePreviews.message" = "Մուտքերի նախադիտումներն այժմ ինքնաբերաբար թարմացվում են, ուստի տեսախցիկի վերջին պատկերը միշտ հասանելի է։";
+"whatsNew.entrancePreviews.title" = "Մուտքերի արդիական նախադիտումներ";
+
+"whatsNew.language.message" = "Փոխեք լեզուն ընդհանուր կարգավորումներում։ Հավելվածի միջերեսն անմիջապես կփոխվի։";
+"whatsNew.language.title" = "Ընտրեք հավելվածի լեզուն";

@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let mainWindow: UIWindow
     private let appCoordinator: AppCoordinator
     private let telemetryService: AppTelemetryServicing
-    private let appFirstOpenedKey = "analytics.app_first_opened_logged"
+    private let appLaunchStateStore = AppLaunchStateStore()
     private lazy var quickActionsService = QuickActionsService()
 
     override init() {
@@ -45,8 +45,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ParanoidFeatureChecks.run()
 #endif
 
+        let launchState = appLaunchStateStore.registerLaunch()
         configureFirebase(for: application)
-        logAppOpened()
+        WhatsNewPresentationStore.prepareForLaunch(
+            isFirstAppLaunch: launchState.isFirstLaunch
+        )
+        logAppOpened(isFirstLaunch: launchState.isFirstLaunch)
 
         configureImageCache()
 
@@ -58,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appCoordinator.setRoot(for: mainWindow)
         appCoordinator.presentPendingParanoidPushIfNeeded()
+        appCoordinator.presentWhatsNewIfNeeded()
         
         // MARK: При запуске приложения запрашиваем количество непрочитанных сообщений
         // Пуши - вещь ненадежная, чисто в теории нам мог не дойти пуш с актуальным badge
@@ -106,6 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self?.openTab(for: shortcutType)
         }
         appCoordinator.presentPendingParanoidPushIfNeeded()
+        appCoordinator.presentWhatsNewIfNeeded()
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -220,15 +226,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         quickActionsService.updateShortcutItems(for: UIApplication.shared)
     }
 
-    private func logAppOpened() {
+    private func logAppOpened(isFirstLaunch: Bool) {
         logLifecycleEvent(AppAnalyticsEvent.appOpened)
 
-        guard !UserDefaults.standard.bool(forKey: appFirstOpenedKey) else {
+        guard isFirstLaunch else {
             return
         }
 
         logLifecycleEvent(AppAnalyticsEvent.appFirstOpened)
-        UserDefaults.standard.set(true, forKey: appFirstOpenedKey)
     }
 
     private func logLifecycleEvent(

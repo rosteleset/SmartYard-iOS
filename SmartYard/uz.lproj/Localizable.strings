@@ -655,3 +655,18 @@
 "player.transport.switchingToHLS" = "WebRTC mavjud emas. HLS orqali ulanmoqda…";
 "player.transport.videoUnavailable" = "Videoni yuklab bo'lmadi";
 "player.transport.webRTCInfo" = "Video WebRTC orqali uzatiladi. Bu usul odatda kamroq kechikishni ta'minlaydi.";
+/* MARK: - WHAT'S NEW */
+
+"whatsNew.accessibilityPages" = "Yangi imkoniyatlar sahifalari";
+"whatsNew.done" = "Tayyor";
+"whatsNew.next" = "Keyingi";
+"whatsNew.titleFormat" = "%@ versiyasidagi yangiliklar";
+
+"whatsNew.cameraSwipe.message" = "Kamerani to‘liq ekranda oching va ro‘yxatga qaytmasdan kameralar orasida o‘tish uchun chapga yoki o‘ngga suring.";
+"whatsNew.cameraSwipe.title" = "Kameralar orasida suring";
+
+"whatsNew.entrancePreviews.message" = "Kirish joylari tasvirlari endi avtomatik yangilanadi, shuning uchun kameraning eng so‘nggi kadri doim qo‘l ostida.";
+"whatsNew.entrancePreviews.title" = "Kirish joylarining dolzarb tasvirlari";
+
+"whatsNew.language.message" = "Tilni umumiy sozlamalarda o‘zgartiring. Ilova interfeysi darhol almashadi.";
+"whatsNew.language.title" = "Ilova tilini tanlang";

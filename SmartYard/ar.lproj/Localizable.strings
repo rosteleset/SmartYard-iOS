@@ -655,3 +655,18 @@
 "player.transport.switchingToHLS" = "WebRTC غير متاح. جارٍ الاتصال عبر HLS…";
 "player.transport.videoUnavailable" = "تعذر تحميل الفيديو";
 "player.transport.webRTCInfo" = "يتم نقل الفيديو عبر WebRTC. توفر هذه الطريقة عادةً زمن انتقال أقل.";
+/* MARK: - WHAT'S NEW */
+
+"whatsNew.accessibilityPages" = "صفحات الميزات الجديدة";
+"whatsNew.done" = "تم";
+"whatsNew.next" = "التالي";
+"whatsNew.titleFormat" = "ما الجديد في الإصدار %@";
+
+"whatsNew.cameraSwipe.message" = "افتح الكاميرا بملء الشاشة واسحب لليسار أو اليمين للتنقل بين الكاميرات دون الرجوع إلى القائمة.";
+"whatsNew.cameraSwipe.title" = "اسحب للتنقل بين الكاميرات";
+
+"whatsNew.entrancePreviews.message" = "يتم الآن تحديث معاينات المداخل تلقائيًا، لتبقى أحدث صورة من الكاميرا في متناولك دائمًا.";
+"whatsNew.entrancePreviews.title" = "معاينات مداخل محدّثة";
+
+"whatsNew.language.message" = "غيّر اللغة من الإعدادات العامة. ستتغير واجهة التطبيق فورًا.";
+"whatsNew.language.title" = "اختر لغة التطبيق";

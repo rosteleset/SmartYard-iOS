@@ -40,6 +40,7 @@ enum AppRoute: Route {
     )
     case closeIncomingCall
     case paranoidPush(payload: ParanoidPushPayload)
+    case whatsNew(release: WhatsNewRelease)
     
 }
 
@@ -92,6 +93,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
     private var didLoadOptionsOnce = false
     private var isLoadingOptions = false
     private var pendingParanoidPushPayload: ParanoidPushPayload?
+    private var isWhatsNewPresented = false
 
     init(mainWindow: UIWindow, dependencies: AppDependencies) {
         self.linphoneService = dependencies.linphoneService
@@ -332,6 +334,21 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             let vc = ModalViewController(
                 dismissCallback: { [weak self] in self?.trigger(.dismiss) },
                 content: .paranoid(payload)
+            )
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+
+            return .present(vc)
+
+        case let .whatsNew(release):
+            let vc = ModalViewController(
+                dismissCallback: { [weak self] in
+                    guard let self else { return }
+                    WhatsNewPresentationStore.markPresented(version: release.version)
+                    isWhatsNewPresented = false
+                    trigger(.dismiss)
+                },
+                content: .whatsNew(release)
             )
             vc.modalPresentationStyle = .overFullScreen
             vc.modalTransitionStyle = .crossDissolve
@@ -593,6 +610,20 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         }
     }
 
+    func presentWhatsNewIfNeeded() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self else { return }
+            guard accessService.appState == .main else { return }
+            guard mainTabBarCoordinator != nil else { return }
+            guard !isWhatsNewPresented else { return }
+            guard rootViewController.presentedViewController == nil else { return }
+            guard let release = WhatsNewPresentationStore.releaseToPresent() else { return }
+
+            isWhatsNewPresented = true
+            trigger(.whatsNew(release: release))
+        }
+    }
+
     func openFirstAddressCameras() {
         openViaMainTabBarCoordinator { coordinator in
             coordinator.openFirstAddressCameras()
@@ -737,9 +768,10 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             .disposed(by: disposeBag)
     
         accessService.sessionAuthorized
-            .subscribe { [weak self] _ in
-                self?.setCrashlyticsUserID()
-                self?.optionsService.forceReload(reason: .didAuthorize)
+            .subscribe(with: self) { owner, _ in
+                owner.setCrashlyticsUserID()
+                owner.optionsService.forceReload(reason: .didAuthorize)
+                owner.presentWhatsNewIfNeeded()
             }
             .disposed(by: disposeBag)
     }
@@ -797,6 +829,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             isOfflinePresented = false
             accessService.appState = .main
             trigger(.dismissOffline)
+            presentWhatsNewIfNeeded()
         }
         let cancelAction = UIAlertAction(
             title: L10n.Common.cancel,

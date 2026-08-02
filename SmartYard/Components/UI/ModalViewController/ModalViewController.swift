@@ -19,8 +19,27 @@ enum ModalContent {
     case aboutCallKit
     case aboutAddressOrder
     case paranoid(ParanoidPushPayload)
+    case whatsNew(WhatsNewRelease)
 
-    func makeView() -> UIView {
+    var showsCloseButton: Bool {
+        switch self {
+        case .whatsNew:
+            return false
+        default:
+            return true
+        }
+    }
+
+    var usesReadableWidth: Bool {
+        switch self {
+        case .whatsNew:
+            return true
+        default:
+            return false
+        }
+    }
+
+    func makeView(dismissCallback: @escaping () -> Void) -> UIView {
         switch self {
         case .aboutWhiteRabbit:
             return WhiteRabbitModalViewContent()
@@ -34,18 +53,26 @@ enum ModalContent {
             return AddressOrderModalViewContent()
         case let .paranoid(payload):
             return ParanoidPushModalViewContent(payload: payload)
+        case let .whatsNew(release):
+            return WhatsNewModalViewContent(
+                release: release,
+                dismissCallback: dismissCallback
+            )
         }
     }
 }
 
-final class ModalViewController: BaseViewController {
+final class ModalViewController: BaseViewController, UIGestureRecognizerDelegate {
 
     private let dismissCallback: () -> Void
     private let contentView: UIView
+    private let showsCloseButton: Bool
+    private let usesReadableWidth: Bool
 
     private lazy var dismissGesture: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer()
         gesture.cancelsTouchesInView = false
+        gesture.delegate = self
         return gesture
     }()
 
@@ -61,7 +88,9 @@ final class ModalViewController: BaseViewController {
 
     init(dismissCallback: @escaping () -> Void, content: ModalContent) {
         self.dismissCallback = dismissCallback
-        self.contentView = content.makeView()
+        self.showsCloseButton = content.showsCloseButton
+        self.usesReadableWidth = content.usesReadableWidth
+        self.contentView = content.makeView(dismissCallback: dismissCallback)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -87,18 +116,24 @@ final class ModalViewController: BaseViewController {
         view.addSubview(containerView) { make in
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().offset(5)
-            make.leading.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(16)
-            make.trailing.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(-16)
-            make.top.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(44)
+            make.top.greaterThanOrEqualTo(view.safeAreaLayoutGuide)
+                .offset(showsCloseButton ? 44 : 16)
             make.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(-16)
-            make.width.greaterThanOrEqualTo(100)
-            make.height.greaterThanOrEqualTo(100)
+
+            if usesReadableWidth {
+                make.leading.trailing.equalTo(view.readableContentGuide)
+            } else {
+                make.leading.greaterThanOrEqualTo(view.safeAreaLayoutGuide).offset(16)
+                make.trailing.lessThanOrEqualTo(view.safeAreaLayoutGuide).offset(-16)
+            }
         }
 
-        view.addSubview(cancelButton) { make in
-            make.width.height.equalTo(28)
-            make.bottom.equalTo(containerView.snp.top).offset(-8)
-            make.trailing.equalTo(containerView.snp.trailing).offset(-4)
+        if showsCloseButton {
+            view.addSubview(cancelButton) { make in
+                make.width.height.equalTo(28)
+                make.bottom.equalTo(containerView.snp.top).offset(-8)
+                make.trailing.equalTo(containerView.snp.trailing).offset(-4)
+            }
         }
 
         containerView.pinSubview(contentView)
@@ -113,5 +148,17 @@ final class ModalViewController: BaseViewController {
             dismissCallback()
         })
         .disposed(by: disposeBag)
+    }
+
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
+        guard gestureRecognizer === dismissGesture, let touchedView = touch.view else {
+            return true
+        }
+
+        return !touchedView.isDescendant(of: containerView)
+            && !touchedView.isDescendant(of: cancelButton)
     }
 }
