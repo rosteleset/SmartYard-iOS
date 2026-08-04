@@ -95,6 +95,7 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: "loadingStartedHandler")
         webView.configuration.userContentController.removeScriptMessageHandler(forName: "loadingFinishedHandler")
         webView.configuration.userContentController.removeScriptMessageHandler(forName: "isAppInstalledHandler")
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: "backHandler")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -151,6 +152,7 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         webView.configuration.userContentController.add(self, name: "loadingStartedHandler")
         webView.configuration.userContentController.add(self, name: "loadingFinishedHandler")
         webView.configuration.userContentController.add(self, name: "isAppInstalledHandler")
+        webView.configuration.userContentController.add(self, name: "backHandler")
         webView.addSmartYardThemeBridgeScript()
         
         let javaScript = "bearerToken = function() { return \"" + accessToken + "\"; };"
@@ -290,6 +292,11 @@ isAppInstalled = function(url, callbackFunc ) {
 
 extension WebViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "backHandler" {
+            navigationController?.popViewController(animated: true)
+            return
+        }
+
         guard let dict = message.body as? [String: AnyObject] else {
             return
         }
