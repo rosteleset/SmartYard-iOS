@@ -878,6 +878,18 @@ extension IncomingCallViewModel: LinphoneDelegate {
     
     func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
         Logger.logDebug("CALL STATE: \(cstate)")
+        // the remote side (server / panel) ended or cancelled the call - e.g. an unanswered call timing out -
+        // liblinphone reports .End/.Released/.Error; close the screen, otherwise it stays with dead buttons
+        if cstate == .End || cstate == .Released || cstate == .Error {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self,
+                      let state = try? self.currentStateSubject.value(),
+                      state.callState != .callFinished else {
+                    return
+                }
+                self.finishCallAndClose()
+            }
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             self?.callStateIsStreamRunning.onNext(cstate == .StreamsRunning ? true : false)
         }
