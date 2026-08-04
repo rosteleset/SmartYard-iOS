@@ -153,6 +153,7 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         webView.configuration.userContentController.add(self, name: "loadingFinishedHandler")
         webView.configuration.userContentController.add(self, name: "isAppInstalledHandler")
         webView.configuration.userContentController.add(self, name: "backHandler")
+        webView.configuration.userContentController.addUserScript(makeZoomLockScript())
         webView.addSmartYardThemeBridgeScript()
         
         let javaScript = "bearerToken = function() { return \"" + accessToken + "\"; };"
@@ -206,12 +207,78 @@ isAppInstalled = function(url, callbackFunc ) {
 
         webView.scrollView.contentInsetAdjustmentBehavior = isNavBarHidden ? .never : .automatic
         webView.scrollView.scrollIndicatorInsets = .zero
+        disableWebViewZoom()
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.scrollView.refreshControl = self.enableRefreshControl ? refreshControl : nil
         configureUserContentController()
         bindThemeBridge()
         
+    }
+
+    private func disableWebViewZoom() {
+        webView.scrollView.minimumZoomScale = 1
+        webView.scrollView.maximumZoomScale = 1
+        webView.scrollView.zoomScale = 1
+        webView.scrollView.bouncesZoom = false
+        webView.scrollView.pinchGestureRecognizer?.isEnabled = false
+        disableDoubleTapRecognizers(in: webView)
+    }
+
+    private func makeZoomLockScript() -> WKUserScript {
+        let source = """
+        (function () {
+            var viewportContent = "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover";
+
+            function lockViewport() {
+                var root = document.head || document.documentElement;
+                if (!root) {
+                    return;
+                }
+
+                var viewports = document.querySelectorAll('meta[name="viewport"]');
+                var viewport = viewports.length ? viewports[0] : null;
+                if (!viewport) {
+                    viewport = document.createElement("meta");
+                    viewport.name = "viewport";
+                    root.appendChild(viewport);
+                }
+                viewport.setAttribute("content", viewportContent);
+                for (var index = 1; index < viewports.length; index += 1) {
+                    viewports[index].remove();
+                }
+
+                var style = document.getElementById("smart-yard-disable-webview-zoom");
+                if (!style) {
+                    style = document.createElement("style");
+                    style.id = "smart-yard-disable-webview-zoom";
+                    style.textContent = "html, body { touch-action: pan-x pan-y !important; } button, a, input, textarea, select, label, [role='button'] { touch-action: manipulation !important; }";
+                    root.appendChild(style);
+                }
+            }
+
+            function preventZoom(event) {
+                event.preventDefault();
+            }
+
+            lockViewport();
+            document.addEventListener("DOMContentLoaded", lockViewport, { once: true });
+            document.addEventListener("gesturestart", preventZoom, { passive: false });
+            document.addEventListener("gesturechange", preventZoom, { passive: false });
+            document.addEventListener("gestureend", preventZoom, { passive: false });
+        }());
+        """
+
+        return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+    }
+
+    private func disableDoubleTapRecognizers(in view: UIView) {
+        view.gestureRecognizers?
+            .compactMap { $0 as? UITapGestureRecognizer }
+            .filter { $0.numberOfTapsRequired > 1 }
+            .forEach { $0.isEnabled = false }
+
+        view.subviews.forEach(disableDoubleTapRecognizers)
     }
 
     private func bindThemeBridge() {
@@ -341,6 +408,7 @@ extension WebViewController: WKNavigationDelegate {
         self.refreshControl.endRefreshing()
         self.skeletonView.isHidden = true
         disableDragAndDropInteraction()
+        disableWebViewZoom()
         
         // self.titleString = webView.title ?? self.backButtonLabel
         // увы webView.title возвращает пустую строку, когда страница повторно загружается,
