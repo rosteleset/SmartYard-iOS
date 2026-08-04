@@ -62,6 +62,7 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         self.enableRefreshControl = refreshControl
         self.webViewOptions = webViewOptions
         super.init(nibName: nil, bundle: nil)
+        hidesBottomBarWhenPushed = webViewOptions?.tabBarHidden == true
     }
     
     @available(*, unavailable)
@@ -202,6 +203,14 @@ isAppInstalled = function(url, callbackFunc ) {
     private func configureUI() {
         let isNavBarHidden = webViewOptions?.navBarHidden == true
         let shouldShowFakeNavBar = !backButtonLabel.isEmpty && !isNavBarHidden
+        let shouldExtendUnderTabBar = webViewOptions?.extendsUnderTabBar == true
+
+        if shouldExtendUnderTabBar {
+            edgesForExtendedLayout.insert(.bottom)
+            extendedLayoutIncludesOpaqueBars = true
+            webView.scrollView.contentInset = .zero
+            webView.scrollView.scrollIndicatorInsets = .zero
+        }
 
         fakeNavBar.configueDarkNavBar()
         fakeNavBar.configure(
@@ -227,7 +236,9 @@ isAppInstalled = function(url, callbackFunc ) {
             }
         }
 
-        webView.scrollView.contentInsetAdjustmentBehavior = isNavBarHidden ? .never : .automatic
+        webView.scrollView.contentInsetAdjustmentBehavior = isNavBarHidden || shouldExtendUnderTabBar
+            ? .never
+            : .automatic
         webView.scrollView.scrollIndicatorInsets = .zero
         disableWebViewZoom()
         webView.navigationDelegate = self

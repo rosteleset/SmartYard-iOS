@@ -39,6 +39,8 @@ struct APIExtension: Decodable {
         let statusBarStyle: StatusBarStyle?
         let navBarColor: String?
         let navBarContentColor: String?
+        let tabBarHidden: Bool?
+        let extendsUnderTabBar: Bool?
         let pullToRefreshEnabled: Bool?
 
         // swiftlint:disable:next nesting
@@ -48,6 +50,8 @@ struct APIExtension: Decodable {
             case statusBarStyle
             case navBarColor
             case navBarContentColor
+            case tabBarHidden
+            case extendsUnderTabBar
             case pullToRefreshEnabled
         }
 
@@ -59,7 +63,29 @@ struct APIExtension: Decodable {
             statusBarStyle = try? container.decode(StatusBarStyle.self, forKey: .statusBarStyle)
             navBarColor = try? container.decode(String.self, forKey: .navBarColor)
             navBarContentColor = try? container.decode(String.self, forKey: .navBarContentColor)
+            tabBarHidden = try? container.decode(Bool.self, forKey: .tabBarHidden)
+            extendsUnderTabBar = try? container.decode(Bool.self, forKey: .extendsUnderTabBar)
             pullToRefreshEnabled = try? container.decode(Bool.self, forKey: .pullToRefreshEnabled)
+        }
+
+        init(
+            navBarHidden: Bool? = nil,
+            statusBarColor: String? = nil,
+            statusBarStyle: StatusBarStyle? = nil,
+            navBarColor: String? = nil,
+            navBarContentColor: String? = nil,
+            tabBarHidden: Bool? = nil,
+            extendsUnderTabBar: Bool? = nil,
+            pullToRefreshEnabled: Bool? = nil
+        ) {
+            self.navBarHidden = navBarHidden
+            self.statusBarColor = statusBarColor
+            self.statusBarStyle = statusBarStyle
+            self.navBarColor = navBarColor
+            self.navBarContentColor = navBarContentColor
+            self.tabBarHidden = tabBarHidden
+            self.extendsUnderTabBar = extendsUnderTabBar
+            self.pullToRefreshEnabled = pullToRefreshEnabled
         }
     }
 
