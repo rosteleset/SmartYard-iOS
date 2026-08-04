@@ -232,7 +232,8 @@ isAppInstalled = function(url, callbackFunc ) {
         disableWebViewZoom()
         webView.navigationDelegate = self
         webView.uiDelegate = self
-        webView.scrollView.refreshControl = self.enableRefreshControl ? refreshControl : nil
+        let isPullToRefreshEnabled = enableRefreshControl && webViewOptions?.pullToRefreshEnabled != false
+        webView.scrollView.refreshControl = isPullToRefreshEnabled ? refreshControl : nil
         configureUserContentController()
         bindThemeBridge()
         

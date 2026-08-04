@@ -39,6 +39,7 @@ struct APIExtension: Decodable {
         let statusBarStyle: StatusBarStyle?
         let navBarColor: String?
         let navBarContentColor: String?
+        let pullToRefreshEnabled: Bool?
 
         // swiftlint:disable:next nesting
         private enum CodingKeys: String, CodingKey {
@@ -47,6 +48,7 @@ struct APIExtension: Decodable {
             case statusBarStyle
             case navBarColor
             case navBarContentColor
+            case pullToRefreshEnabled
         }
 
         init(from decoder: Decoder) throws {
@@ -57,6 +59,7 @@ struct APIExtension: Decodable {
             statusBarStyle = try? container.decode(StatusBarStyle.self, forKey: .statusBarStyle)
             navBarColor = try? container.decode(String.self, forKey: .navBarColor)
             navBarContentColor = try? container.decode(String.self, forKey: .navBarContentColor)
+            pullToRefreshEnabled = try? container.decode(Bool.self, forKey: .pullToRefreshEnabled)
         }
     }
 
