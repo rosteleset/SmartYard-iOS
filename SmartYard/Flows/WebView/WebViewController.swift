@@ -153,6 +153,7 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         webView.configuration.userContentController.add(self, name: "loadingFinishedHandler")
         webView.configuration.userContentController.add(self, name: "isAppInstalledHandler")
         webView.configuration.userContentController.add(self, name: "backHandler")
+        webView.configuration.userContentController.addUserScript(makeLocaleBridgeScript())
         webView.configuration.userContentController.addUserScript(makeZoomLockScript())
         webView.addSmartYardThemeBridgeScript()
         
@@ -176,7 +177,27 @@ isAppInstalled = function(url, callbackFunc ) {
             webView.configuration.userContentController.addUserScript(script)
         }()
     }
-    
+
+    private func makeLocaleBridgeScript() -> WKUserScript {
+        let locale = Bundle.main.preferredLocalizations.first
+            ?? Locale.preferredLanguages.first
+            ?? "ru"
+        let encodedLocale = (try? JSONSerialization.data(withJSONObject: [locale]))
+            .flatMap { String(data: $0, encoding: .utf8) }
+            .flatMap { value -> String? in
+                guard value.count >= 2 else { return nil }
+                return String(value.dropFirst().dropLast())
+            }
+            ?? "\"ru\""
+        let source = "window.smartYardLocale = \(encodedLocale);"
+
+        return WKUserScript(
+            source: source,
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: false
+        )
+    }
+
     private func configureUI() {
         let isNavBarHidden = webViewOptions?.navBarHidden == true
         let shouldShowFakeNavBar = !backButtonLabel.isEmpty && !isNavBarHidden
