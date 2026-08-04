@@ -93,10 +93,6 @@ enum WhatsNewPresentationStore {
             return nil
         }
 
-        guard !WhatsNewCatalog.isForcedForDebug else {
-            return release
-        }
-
         let lastPresentedVersion = UserDefaults.standard.string(forKey: lastPresentedVersionKey)
         return lastPresentedVersion == release.version ? nil : release
     }
