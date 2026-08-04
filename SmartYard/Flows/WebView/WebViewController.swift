@@ -45,6 +45,7 @@ final class WebViewController: BaseViewController, LoaderPresentable {
     private let version: Int
     private let enableRefreshControl: Bool
     private let webViewOptions: APIExtension.WebViewOptions?
+    private var pageControlsLoadingState = false
     
     init(
         viewModel: WebViewModel,
@@ -395,6 +396,7 @@ extension WebViewController: WKScriptMessageHandler {
         }
         
         if message.name == "loadingStartedHandler" {
+            self.pageControlsLoadingState = true
             self.updateLoader(isEnabled: true, detailText: nil)
             self.skeletonView.isHidden = false
         }
@@ -418,6 +420,7 @@ extension WebViewController: WKScriptMessageHandler {
 extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         // page starts loading - показать скелетон
+        self.pageControlsLoadingState = false
         self.updateLoader(isEnabled: true, detailText: nil)
         self.skeletonView.isHidden = false
         
@@ -425,9 +428,11 @@ extension WebViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // page loaded - скрыть скелетон
-        self.updateLoader(isEnabled: false, detailText: nil)
         self.refreshControl.endRefreshing()
-        self.skeletonView.isHidden = true
+        if !self.pageControlsLoadingState {
+            self.updateLoader(isEnabled: false, detailText: nil)
+            self.skeletonView.isHidden = true
+        }
         disableDragAndDropInteraction()
         disableWebViewZoom()
         
