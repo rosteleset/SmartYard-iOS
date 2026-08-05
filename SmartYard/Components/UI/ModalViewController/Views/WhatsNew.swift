@@ -12,17 +12,20 @@ import UIKit
 struct WhatsNewPage {
     let title: String
     let message: String
+    let footnote: String?
     let imageName: String?
     let systemImageName: String
 
     init(
         title: String,
         message: String,
+        footnote: String? = nil,
         imageName: String? = nil,
         systemImageName: String
     ) {
         self.title = title
         self.message = message
+        self.footnote = footnote
         self.imageName = imageName
         self.systemImageName = systemImageName
     }
@@ -240,7 +243,9 @@ private final class WhatsNewPageView: UIView {
 
     private func setupUI() {
         isAccessibilityElement = true
-        accessibilityLabel = "\(page.title). \(page.message)"
+        accessibilityLabel = [page.title, page.message, page.footnote]
+            .compactMap { $0 }
+            .joined(separator: ". ")
     }
 
     // MARK: - setupConstraints
@@ -268,11 +273,21 @@ private final class WhatsNewPageView: UIView {
         }
         let titleLabel = UILabel.make(.whatsNewPageTitle, text: page.title)
         let messageLabel = UILabel.make(.whatsNewPageMessage, text: page.message)
+        let footnoteLabel = page.footnote.map {
+            UILabel.make(.whatsNewPageFootnote, text: $0)
+        }
 
-        let stackView = UIStackView.vertical(spacing: 12).add {
+        let stackView = UIStackView.vertical(spacing: 12)
+        stackView.add {
             imageContainer
             titleLabel
             messageLabel
+        }
+        if let footnoteLabel {
+            stackView.add {
+                VSpacer(4)
+                footnoteLabel
+            }
         }
 
         imageContainer.snp.makeConstraints { make in
@@ -336,6 +351,16 @@ private extension LabelConfig {
     static let whatsNewPageMessage = LabelConfig(
         font: .SourceSansPro.regular(size: 15),
         color: .SmartYard.semiBlack,
+        alignment: .center,
+        numberOfLines: 0,
+        lineBreakMode: .byWordWrapping,
+        adjustsFontSizeToFitWidth: false,
+        minimumScaleFactor: 0
+    )
+
+    static let whatsNewPageFootnote = LabelConfig(
+        font: .SourceSansPro.regular(size: 12),
+        color: .SmartYard.gray,
         alignment: .center,
         numberOfLines: 0,
         lineBreakMode: .byWordWrapping,
