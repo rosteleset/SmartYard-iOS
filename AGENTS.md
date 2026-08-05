@@ -49,3 +49,13 @@
 - Before creating custom buttons, controls, or repeated UI pieces, check for existing project components such as `SmartYardActionModeButton` and reuse them when they fit.
 - In reusable cells, keep `prepareForReuse` focused on lifecycle cleanup such as resetting dispose bags and cancelling async work; do not duplicate UI state that is always set by `configure`.
 - Prefer existing utilities from SwifterSwift and local extensions before adding custom helper code.
+
+## Version-up and What's New workflow
+
+- Treat every `v-up` as a release-preparation trigger for `What's New`.
+- Work from the target operator branch. Find the latest previous `v-up` reachable from that branch, then review the exclusive commit range up to the version being prepared.
+- Convert the range into user-facing pages for that specific operator. Include notable features, interface improvements, and meaningful fixes; do not impose an arbitrary small page limit.
+- Give every page a localized title, message, and SF Symbol. When a feature depends on an operator-provided service, append `*` to its title and provide a localized `footnote` explaining that availability depends on the operator's support and connected services.
+- Generate `What's New` content and translations for every app locale supported by the target build. Operator branches may require different pages and wording; do not copy another operator's release notes without checking its commit range and available services.
+- Keep release-specific `What's New` pages, release versions, and translations as local build-preparation artifacts. Never stage, commit, or push them. Only reusable `What's New` infrastructure belongs in the repository.
+- Before the release build, verify that the generated release version matches `MARKETING_VERSION` and that every generated page has all required translations. After the build, restore or remove the generated release-specific changes.
