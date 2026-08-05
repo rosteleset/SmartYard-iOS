@@ -7555,7 +7555,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -7564,7 +7564,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.14.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.intents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7581,7 +7581,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardIntents/SmartYardIntents.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = SmartYardIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -7590,7 +7590,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.14.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.intents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7606,7 +7606,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -7615,7 +7615,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.14.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7631,7 +7631,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYardWidget/SmartYardWidget.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = "$(SRCROOT)/SmartYardWidget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -7640,7 +7640,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.14.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7656,7 +7656,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -7665,7 +7665,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.14.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7680,7 +7680,7 @@
 				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 74;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -7690,7 +7690,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.14.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7828,7 +7828,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/Debug/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 73;
+				CURRENT_PROJECT_VERSION = 74;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
@@ -7839,7 +7839,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.14.11;
+				MARKETING_VERSION = 1.14.12;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -7870,7 +7870,7 @@
 				CODE_SIGN_ENTITLEMENTS = SmartYard/Resources/SmartYard.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 73;
+				CURRENT_PROJECT_VERSION = 74;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MJS3C63KA9;
 				ENABLE_BITCODE = NO;
@@ -7881,7 +7881,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.14.11;
+				MARKETING_VERSION = 1.14.12;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
