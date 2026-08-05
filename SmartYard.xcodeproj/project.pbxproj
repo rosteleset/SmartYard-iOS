@@ -1570,6 +1570,7 @@
 		8C6A61022F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = ../hy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8C6A61032F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = hy.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8C6A61042F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = hy.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		8C6A61052F8A100000A1B201 /* hy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hy; path = hy.lproj/Intents.strings; sourceTree = "<group>"; };
 		8E65EC65DF6EAF2CB3A1B831 /* Pods_SmartYard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9632D77FAF39A6CB99673DCB /* Pods-SmartYardIntents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.debug.xcconfig"; sourceTree = "<group>"; };
 		9A0F5A0C2F751A5E00C0D001 /* AppTelemetryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTelemetryService.swift; sourceTree = "<group>"; };
@@ -6985,6 +6986,7 @@
 				3ACD657C2B2734CD00146796 /* uz */,
 				3AD02E6D2B304B6B001C4717 /* bg */,
 				8BA57F932EFAF20E00B63297 /* ar */,
+				8C6A61052F8A100000A1B201 /* hy */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
