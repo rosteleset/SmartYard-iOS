@@ -82,6 +82,11 @@ enum WhatsNewCatalog {
 
 enum WhatsNewPresentationStore {
     private static let lastPresentedVersionKey = "whatsNew.lastPresentedVersion"
+    private static var versionsPresentedInCurrentSession = Set<String>()
+
+    private static var isTestFlightBuild: Bool {
+        Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+    }
 
     static func prepareForLaunch(isFirstAppLaunch: Bool) {
         guard isFirstAppLaunch, let version = AppMetadata.shortVersion else {
@@ -96,11 +101,16 @@ enum WhatsNewPresentationStore {
             return nil
         }
 
+        if isTestFlightBuild {
+            return versionsPresentedInCurrentSession.contains(release.version) ? nil : release
+        }
+
         let lastPresentedVersion = UserDefaults.standard.string(forKey: lastPresentedVersionKey)
         return lastPresentedVersion == release.version ? nil : release
     }
 
     static func markPresented(version: String) {
+        versionsPresentedInCurrentSession.insert(version)
         UserDefaults.standard.set(version, forKey: lastPresentedVersionKey)
     }
 }
