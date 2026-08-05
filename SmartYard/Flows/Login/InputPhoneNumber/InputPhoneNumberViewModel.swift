@@ -25,9 +25,6 @@ final class InputPhoneNumberViewModel: BaseViewModel {
     
     // swiftlint:disable:next function_body_length
     func transform(input: Input) -> Output {
-        let tempPhoneSubject = BehaviorSubject<String?>(value: nil)
-        let tempPhone = tempPhoneSubject.asDriver(onErrorJustReturn: nil)
-        
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
@@ -65,12 +62,11 @@ final class InputPhoneNumberViewModel: BaseViewModel {
             .distinctUntilChanged()
             .filter { $0.count == AccessService.shared.phoneLengthWithoutPrefix }
             .do(
-                onNext: { [weak self] phone in
-                    tempPhoneSubject.onNext(phone)
+                onNext: { [weak self] _ in
                     self?.logPhoneEnteredAndCodeRequested()
                 }
             )
-            .flatMapLatest { [weak self] phone -> Driver<RequestCodeResponseData?> in
+            .flatMapLatest { [weak self] phone -> Driver<(RequestCodeResponseData, String)?> in
                 guard let self = self else {
                     return .just(nil)
                 }
@@ -78,26 +74,29 @@ final class InputPhoneNumberViewModel: BaseViewModel {
                 return self.apiWrapper.requestCode(userPhone: AccessService.shared.phonePrefix + phone)
                     .trackActivity(activityTracker)
                     .trackError(errorTracker)
+                    .map { response in
+                        guard let response = response else {
+                            return nil
+                        }
+
+                        return (response, phone)
+                    }
                     .asDriver(onErrorJustReturn: nil)
             }
             .ignoreNil()
-            .withLatestFrom(tempPhone.ignoreNil()) { ($0, $1) }
             .do(
                 onNext: { [weak self] response, phoneNumber in
-                    self?.logAuthCodeRequestSuccess()
+                    guard let self = self else {
+                        return
+                    }
 
-                    switch response {
-                    case .outgoingCall(let confirmNumbers):
-                        guard let confirmNumber = confirmNumbers.first else {
-                            self?.accessService.appState = .smsCode(phoneNumber: phoneNumber)
-                            return
-                        }
-                        self?.accessService.appState = .authByOutgoingCall(
-                            phoneNumber: phoneNumber,
-                            confirmPhoneNumber: confirmNumber
-                        )
-                    default:
-                        self?.accessService.appState = .smsCode(phoneNumber: phoneNumber)
+                    self.logAuthCodeRequestSuccess()
+
+                    let transition = self.authTransition(for: response, phoneNumber: phoneNumber)
+                    self.accessService.appState = transition.appState
+
+                    if !transition.shouldPrepare {
+                        return
                     }
                     
                     prepareTransitionTrigger.onNext(())
@@ -110,38 +109,7 @@ final class InputPhoneNumberViewModel: BaseViewModel {
                         return
                     }
                     
-                    switch response {
-                    case .outgoingCall(let confirmNumbers):
-                        guard let confirmNumber = confirmNumbers.first else {
-                            self.router.trigger(.alert(
-                                title: L10n.Common.error,
-                                message: L10n.Auth.PhoneEntry.Error.confirmationNumberMissing
-                            ))
-                            return
-                        }
-                        self.router.trigger(
-                            .authByOutgoingCall(
-                                phoneNumber: phone,
-                                confirmPhoneNumber: confirmNumber
-                            )
-                        )
-                    case .flashCall:
-                        self.router.trigger(
-                            .pinCode(phoneNumber: phone,
-                                     isInitial: true,
-                                     useFlashCall: true
-                                    )
-                        )
-                    case .otp:
-                        self.router.trigger(
-                            .pinCode(
-                                phoneNumber: phone,
-                                isInitial: true,
-                                useFlashCall: false
-                            )
-                        )
-                    }
-                    
+                    self.triggerAuthRoute(for: response, phone: phone)
                 }
             )
             .disposed(by: disposeBag)
@@ -176,6 +144,66 @@ final class InputPhoneNumberViewModel: BaseViewModel {
 }
 
 private extension InputPhoneNumberViewModel {
+
+    func authTransition(
+        for response: RequestCodeResponseData,
+        phoneNumber: String
+    ) -> (appState: AppState, shouldPrepare: Bool) {
+        switch response {
+        case .outgoingCall(let confirmNumbers):
+            guard let confirmNumber = confirmNumbers.first else {
+                return (.smsCode(phoneNumber: phoneNumber), false)
+            }
+
+            return (
+                .authByOutgoingCall(
+                    phoneNumber: phoneNumber,
+                    confirmPhoneNumber: confirmNumber
+                ),
+                true
+            )
+        case .flashCall:
+            return (.flashCall(phoneNumber: phoneNumber), true)
+        case .otp:
+            return (.smsCode(phoneNumber: phoneNumber), true)
+        }
+    }
+
+    func triggerAuthRoute(for response: RequestCodeResponseData, phone: String) {
+        switch response {
+        case .outgoingCall(let confirmNumbers):
+            guard let confirmNumber = confirmNumbers.first else {
+                router.trigger(.alert(
+                    title: L10n.Common.error,
+                    message: L10n.Auth.PhoneEntry.Error.confirmationNumberMissing
+                ))
+                return
+            }
+
+            router.trigger(
+                .authByOutgoingCall(
+                    phoneNumber: phone,
+                    confirmPhoneNumber: confirmNumber
+                )
+            )
+        case .flashCall:
+            router.trigger(
+                .pinCode(
+                    phoneNumber: phone,
+                    isInitial: true,
+                    useFlashCall: true
+                )
+            )
+        case .otp:
+            router.trigger(
+                .pinCode(
+                    phoneNumber: phone,
+                    isInitial: true,
+                    useFlashCall: false
+                )
+            )
+        }
+    }
 
     func logPhoneEnteredAndCodeRequested() {
         AppAnalytics.log(AppAnalyticsEvent.authPhoneEntered(source: "phone_entry"))
