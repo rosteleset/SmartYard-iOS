@@ -164,7 +164,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
         frsContainerView.addGestureRecognizer(frsTapGesture)
         frsSwitch.isUserInteractionEnabled = false
 
-        frsContainerView.addGestureRecognizer(lprsTapGesture)
+        lprsContainerView.addGestureRecognizer(lprsTapGesture)
         lprsSwitch.isUserInteractionEnabled = false
 
         skeletonView.isHidden = true
@@ -299,14 +299,8 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
         output.isLPRSEnabled
             .drive(
                 onNext: { [weak self] state in
-                    // MARK: - We remove the logic because the switch doesn't work on the server
-                    /*
-                     self?.lprsContainerView.isHidden = !state
-                     self?.lprsSwitch.setOn(state, animated: true)
-                     */
-
-                    // Hiding the button at all times
-                    self?.lprsContainerView.isHidden = true
+                    self?.lprsContainerView.isHidden = !state
+                    self?.lprsSwitch.setOn(state, animated: true)
                 }
             )
             .disposed(by: disposeBag)
