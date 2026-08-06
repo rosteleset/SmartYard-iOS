@@ -39,6 +39,7 @@ struct WhatsNewRelease {
 enum WhatsNewCatalog {
     /// Update this value and the pages below while preparing each release.
     private static let releaseVersion = "1.14.12"
+    private static let pages: [WhatsNewPage] = []
 
     static var isForcedForDebug: Bool {
 #if DEBUG
@@ -53,29 +54,13 @@ enum WhatsNewCatalog {
     }
 
     static var currentRelease: WhatsNewRelease? {
-        guard isAvailableInCurrentBuild else {
+        guard !pages.isEmpty, isAvailableInCurrentBuild else {
             return nil
         }
 
         return WhatsNewRelease(
             version: releaseVersion,
-            pages: [
-                WhatsNewPage(
-                    title: L10n.WhatsNew.Language.title,
-                    message: L10n.WhatsNew.Language.message,
-                    systemImageName: "globe"
-                ),
-                WhatsNewPage(
-                    title: L10n.WhatsNew.CameraSwipe.title,
-                    message: L10n.WhatsNew.CameraSwipe.message,
-                    systemImageName: "rectangle.stack.fill"
-                ),
-                WhatsNewPage(
-                    title: L10n.WhatsNew.EntrancePreviews.title,
-                    message: L10n.WhatsNew.EntrancePreviews.message,
-                    systemImageName: "camera.fill"
-                )
-            ]
+            pages: pages
         )
     }
 }
