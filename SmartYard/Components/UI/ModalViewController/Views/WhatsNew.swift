@@ -37,8 +37,7 @@ struct WhatsNewRelease {
 }
 
 enum WhatsNewCatalog {
-    /// Update this value and the pages below while preparing each release.
-    private static let releaseVersion = "1.14.12"
+    /// Update these pages while preparing each release.
     private static let pages: [WhatsNewPage] = []
 
     static var isForcedForDebug: Bool {
@@ -49,12 +48,8 @@ enum WhatsNewCatalog {
 #endif
     }
 
-    private static var isAvailableInCurrentBuild: Bool {
-        AppMetadata.shortVersion == releaseVersion || isForcedForDebug
-    }
-
     static var currentRelease: WhatsNewRelease? {
-        guard !pages.isEmpty, isAvailableInCurrentBuild else {
+        guard !pages.isEmpty, let releaseVersion = AppMetadata.shortVersion else {
             return nil
         }
 
