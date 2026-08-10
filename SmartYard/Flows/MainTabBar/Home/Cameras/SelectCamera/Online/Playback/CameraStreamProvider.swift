@@ -9,6 +9,11 @@
 import Foundation
 import SmartYardVideoPlayer
 
+enum CameraStreamTransportPolicy {
+    case hlsOnly
+    case webRTCPreferred
+}
+
 final class CameraStreamProvider: PlayerResourceProviding {
 
     private struct CacheEntry {
@@ -18,18 +23,34 @@ final class CameraStreamProvider: PlayerResourceProviding {
 
     private let camerasById: [CameraID: CameraObject]
     private let ttl: TimeInterval
+    private let transportPolicy: CameraStreamTransportPolicy
+    private let iceServers: [String]
 
     private var cache: [CameraID: CacheEntry] = [:]
     private var inFlight: [CameraID: UUID] = [:]
 
-    init(cameras: [CameraObject], ttl: TimeInterval = 20) {
+    init(
+        cameras: [CameraObject],
+        ttl: TimeInterval = 20,
+        transportPolicy: CameraStreamTransportPolicy,
+        iceServers: [String] = []
+    ) {
         self.camerasById = cameras.dictionaryByIdKeepingFirst()
         self.ttl = ttl
+        self.transportPolicy = transportPolicy
+        self.iceServers = iceServers
     }
 
-    init(camerasById: [CameraID: CameraObject], ttl: TimeInterval = 20) {
+    init(
+        camerasById: [CameraID: CameraObject],
+        ttl: TimeInterval = 20,
+        transportPolicy: CameraStreamTransportPolicy,
+        iceServers: [String] = []
+    ) {
         self.camerasById = camerasById
         self.ttl = ttl
+        self.transportPolicy = transportPolicy
+        self.iceServers = iceServers
     }
 
     // MARK: - PlayerResourceProviding
@@ -113,11 +134,16 @@ private extension CameraStreamProvider {
                 return
             }
 
-            var videos: [SYPlayerResourceVideo] = []
-            if let whepURL = camera.whepURL {
-                videos.append(SYPlayerResourceVideo(whepEndpointURL: whepURL))
+            let hlsVideo = SYPlayerResourceVideo(url: url)
+            let videos: [SYPlayerResourceVideo]
+            switch transportPolicy {
+            case .hlsOnly:
+                videos = [hlsVideo]
+            case .webRTCPreferred:
+                videos = camera.whepURL.map {
+                    [SYPlayerResourceVideo(whepEndpointURL: $0, iceServers: self.iceServers), hlsVideo]
+                } ?? [hlsVideo]
             }
-            videos.append(SYPlayerResourceVideo(url: url))
 
             let resource = SYPlayerResource(
                 videos: videos,

@@ -45,10 +45,10 @@ extension AddressesListViewModel {
                     )
                 }
 
-                let doorPreviewItems = address.doors.map { door -> AddressesListDoorPreviewItem in
+                let resolvedCameras = resolveCameras(for: address.doors, camMap: camMapData)
+                let doorPreviewItems = zip(address.doors, resolvedCameras).map {
+                    door, camera -> AddressesListDoorPreviewItem in
                     let identity = makeDoorIdentity(addressId: addressId, door: door)
-
-                    let camera = resolveCamera(for: door, camMap: camMapData)
 
                     return AddressesListDoorPreviewItem(
                         identity: identity,
@@ -154,33 +154,71 @@ extension AddressesListViewModel {
         )
     }
 
-    func resolveCamera(
-        for door: APIDoor,
+    func resolveCameras(
+        for doors: [APIDoor],
         camMap: CamMapCCTVResponseData
-    ) -> CameraObject? {
-        guard let domophoneId = Int(door.domophoneId) else {
-            return nil
+    ) -> [CameraObject?] {
+        var mappedCameraIndices = Array<Int?>(repeating: nil, count: doors.count)
+        var usedCameraIndices = Set<Int>()
+
+        for (doorIndex, door) in doors.enumerated() {
+            guard
+                let domophoneId = Int(door.domophoneId),
+                let entranceId = door.entrance.flatMap(Int.init),
+                let cameraIndex = camMap.indices.first(where: {
+                    !usedCameraIndices.contains($0)
+                        && camMap[$0].id == domophoneId
+                        && camMap[$0].entranceId == entranceId
+                })
+            else {
+                continue
+            }
+
+            mappedCameraIndices[doorIndex] = cameraIndex
+            usedCameraIndices.insert(cameraIndex)
         }
 
-        let mappedCameras = camMap.filter { $0.id == domophoneId }
-        let mappedCamera = mappedCameras.first { $0.entranceId == door.doorId }
-            ?? (mappedCameras.count == 1 ? mappedCameras.first : nil)
+        for (doorIndex, door) in doors.enumerated() where mappedCameraIndices[doorIndex] == nil {
+            guard let domophoneId = Int(door.domophoneId) else {
+                continue
+            }
 
-        guard let mappedCamera else {
-            return nil
+            let cameraIndices = camMap.indices.filter { camMap[$0].id == domophoneId }
+            let indexedCamera = cameraIndices.indices.contains(door.doorId)
+                ? cameraIndices[door.doorId]
+                : nil
+            let cameraIndex = indexedCamera.flatMap {
+                usedCameraIndices.contains($0) ? nil : $0
+            } ?? cameraIndices.first {
+                !usedCameraIndices.contains($0)
+            }
+
+            guard let cameraIndex else {
+                continue
+            }
+
+            mappedCameraIndices[doorIndex] = cameraIndex
+            usedCameraIndices.insert(cameraIndex)
         }
 
-        return CameraObject(
-            id: mappedCamera.id,
-            position: Constants.defaultMapCenterCoordinates,
-            cameraNumber: 1,
-            name: door.name,
-            video: mappedCamera.url,
-            token: mappedCamera.token,
-            serverType: mappedCamera.serverType,
-            hlsMode: mappedCamera.hlsMode,
-            hasSound: mappedCamera.hasSound
-        )
+        return zip(doors, mappedCameraIndices).map { door, cameraIndex -> CameraObject? in
+            guard let cameraIndex else {
+                return nil
+            }
+
+            let mappedCamera = camMap[cameraIndex]
+            return CameraObject(
+                id: mappedCamera.id,
+                position: Constants.defaultMapCenterCoordinates,
+                cameraNumber: 1,
+                name: door.name,
+                video: mappedCamera.url,
+                token: mappedCamera.token,
+                serverType: mappedCamera.serverType,
+                hlsMode: mappedCamera.hlsMode,
+                hasSound: mappedCamera.hasSound
+            )
+        }
     }
 
     func makePreviewSource(from camera: CameraObject?) -> AddressesListDoorPreviewSource? {

@@ -146,6 +146,7 @@ final class OptionsService: OptionsServicing, HasDisposeBag {
         if let stories = response.stories { accessService.showStories = stories }
         if let timeZone = response.timeZone { accessService.timeZone = timeZone }
         if let deliveryTabsConfig = response.deliveryTabsConfig { accessService.deliveryTabsConfig = deliveryTabsConfig }
+        accessService.stunUrl = response.stunUrl
 
         accessService.guestAccessModeOnOnly = response.guestAccessOnOnly
         accessService.issuesVersion = response.issuesVersion ?? "1"

@@ -147,7 +147,11 @@ final class OnlinePageViewController: BaseViewController {
         }
 
         // Provider ресурсов
-        let streamProvider = CameraStreamProvider(cameras: cameras, ttl: 120)
+        let streamProvider = CameraStreamProvider(
+            cameras: cameras,
+            ttl: 120,
+            transportPolicy: .hlsOnly
+        )
 
         // Playback coordinator
         let playback = OnlinePlaybackCoordinator(provider: streamProvider)

@@ -41,6 +41,7 @@ private let userPreferredAddressOrderKey = "userPreferredAddressOrderKey"
 private let nameValidationPatternKey = "nameValidationPatternKey"
 private let deliveryTabsConfigKey = "deliveryTabsConfigKey"
 private let eventsTrackingEnabledKey = "eventsTrackingEnabledKey"
+private let stunUrlKey = "stunUrlKey"
 
 #if DEBUG
 private let forceEventsTrackingEnabledForTesting = true
@@ -350,6 +351,20 @@ final class AccessService {
         }
         set {
             UserDefaults.standard.setValue(newValue, forKey: timeZoneKey)
+        }
+    }
+
+    var stunUrl: String? {
+        get {
+            UserDefaults.standard.string(forKey: stunUrlKey)
+        }
+        set {
+            guard let newValue else {
+                UserDefaults.standard.removeObject(forKey: stunUrlKey)
+                return
+            }
+
+            UserDefaults.standard.setValue(newValue, forKey: stunUrlKey)
         }
     }
     

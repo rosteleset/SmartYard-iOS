@@ -28,6 +28,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let deliveryTabsConfig: DeliveryTabsConfig?
     let eventsTracking: Bool?
     let stories: Bool?
+    let stunUrl: String?
 
     private enum CodingKeys: String, CodingKey {
         case paymentsUrl
@@ -51,6 +52,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case addressVerificationTab2Visible
         case eventsTracking
         case stories
+        case stunUrl
     }
 
     // swiftlint:disable:next cyclomatic_complexity
@@ -124,6 +126,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         issuesVersion = try? container.decode(String.self, forKey: .issuesVersion)
         eventsTracking = boolFromTF(.eventsTracking)
         stories = boolFromTF(.stories)
+        stunUrl = try? container.decode(String.self, forKey: .stunUrl)
     }
 
     init() {
@@ -144,6 +147,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         validationPattern = nil
         eventsTracking = nil
         stories = nil
+        stunUrl = nil
     }
 
     struct ChatOptions: Decodable {

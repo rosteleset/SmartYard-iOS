@@ -307,7 +307,18 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
             let camerasByPlaybackId = Dictionary(
                 uniqueKeysWithValues: cameras.enumerated().map { ($0.offset, $0.element) }
             )
-            let provider = CameraStreamProvider(camerasById: camerasByPlaybackId, ttl: 120)
+            let iceServers = [
+                accessService.stunUrl,
+                "stun:stun.l.google.com:19302"
+            ]
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
+            let provider = CameraStreamProvider(
+                camerasById: camerasByPlaybackId,
+                ttl: 120,
+                transportPolicy: .webRTCPreferred,
+                iceServers: iceServers
+            )
             let playback = OnlinePlaybackCoordinator(provider: provider)
             let cameraViewModels = makeOnlineCameraViewModels(from: cameras)
 

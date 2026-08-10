@@ -465,18 +465,24 @@ final class AddressesListViewModel: BaseViewModel {
                         let self = self,
                         self.shouldShowEntrancePreviews,
                         let loadedAddresses,
-                        let resolvedDoor = self.resolveDoor(identity: identity, in: loadedAddresses),
-                        self.resolveCamera(for: resolvedDoor.door, camMap: camMap) != nil
+                        let resolvedDoor = self.resolveDoor(identity: identity, in: loadedAddresses)
                     else {
                         return
                     }
 
-                    let previewEntries = resolvedDoor.address.doors.compactMap { door -> (
+                    let resolvedCameras = self.resolveCameras(
+                        for: resolvedDoor.address.doors,
+                        camMap: camMap
+                    )
+                    let previewEntries = zip(
+                        resolvedDoor.address.doors,
+                        resolvedCameras
+                    ).compactMap { door, camera -> (
                         identity: AddressesListDataItemIdentity,
                         camera: CameraObject
                     )? in
                         let identity = self.makeDoorIdentity(addressId: resolvedDoor.address.houseId, door: door)
-                        guard let camera = self.resolveCamera(for: door, camMap: camMap) else {
+                        guard let camera else {
                             return nil
                         }
 
@@ -505,7 +511,11 @@ final class AddressesListViewModel: BaseViewModel {
                         addressId: resolvedDoor.address.houseId,
                         door: resolvedDoor.door
                     )
-                    let selectedIndex = previewEntries.firstIndex { $0.identity == selectedIdentity } ?? 0
+                    guard let selectedIndex = previewEntries.firstIndex(where: {
+                        $0.identity == selectedIdentity
+                    }) else {
+                        return
+                    }
 
                     self.router.trigger(
                         .onlineFullscreen(
