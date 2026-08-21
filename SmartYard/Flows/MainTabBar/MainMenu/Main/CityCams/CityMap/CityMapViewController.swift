@@ -24,7 +24,8 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
     private let viewModel: CityMapViewModel
     
     private let cameraSelectedTrigger = PublishSubject<Int>()
-    private let camerasProxy = BehaviorSubject<[CityCameraObject]>(value: [])
+    private var annotationManager: PointAnnotationManager!
+    private var cameras: [CityCameraObject] = []
     
     init(viewModel: CityMapViewModel) {
         self.viewModel = viewModel
@@ -60,6 +61,7 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
             styleURI: styleURI
         )
         mapView = MapView(frame: containerView.bounds, mapInitOptions: options)
+        annotationManager = mapView.annotations.makePointAnnotationManager()
         mapView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(mapView)
         mapView.alignToView(containerView)
@@ -73,12 +75,25 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
     }
     
     private func getCityCamImage() -> UIImage {
-        let camView = CircleIconControl(style: .Others.cam, frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let style = CircleIconStyle.Others.cam
+        let userInterfaceStyle: UIUserInterfaceStyle = traitCollection.userInterfaceStyle == .dark ? .dark : .light
+        let traits = UITraitCollection(userInterfaceStyle: userInterfaceStyle)
+        let iconColor = style.iconColor.resolvedColor(with: traits)
+        let resolvedStyle = CircleIconStyle(
+            image: style.image?.withTintColor(iconColor, renderingMode: .alwaysOriginal),
+            circleColor: style.circleColor.resolvedColor(with: traits),
+            iconColor: iconColor,
+            borderColor: style.borderColor?.resolvedColor(with: traits),
+            borderWidth: style.borderWidth
+        )
+        let camView = CircleIconControl(style: resolvedStyle, frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         return camView.asImage()
     }
 
-    fileprivate func updateAnnotations(_ annotationManager: PointAnnotationManager, _ cameras: [CityCameraObject]) {
+    fileprivate func updateAnnotations(_ cameras: [CityCameraObject]) {
         annotationManager.annotations = []
+        let image = getCityCamImage()
+        let imageName = "CityCamResolved-\(traitCollection.userInterfaceStyle.rawValue)"
         
         let points = cameras.map { camera -> PointAnnotation in
             var point = PointAnnotation(coordinate: camera.position)
@@ -88,8 +103,8 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
             }
             // point.userInfo = ["camera": camera]
             point.image = .init(
-                image: getCityCamImage(),
-                name: "MapPoint"
+                image: image,
+                name: imageName
             )
             point.iconAnchor = .center
             return point
@@ -114,10 +129,8 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
                         return
                     }
                     
-                    self.camerasProxy.onNext(cameras)
-                    let annotationManager = self.mapView.annotations.makePointAnnotationManager()
-                    
-                    self.updateAnnotations(annotationManager, cameras)
+                    self.cameras = cameras
+                    self.updateAnnotations(cameras)
                     
                     let annotationCoordinates = cameras
                         .map { $0.position }
@@ -158,8 +171,13 @@ extension CityMapViewController {
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        
+
+        guard previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true else {
+            return
+        }
+
         updateMapStyle()
+        updateAnnotations(cameras)
     }
     
     private func updateMapStyle() {
