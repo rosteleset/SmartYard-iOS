@@ -13,11 +13,13 @@ import SnapKit
 private enum EntrancePreviewRefresh {
     static let interval: TimeInterval = 5 * 60
     static let cacheKeyPrefix = "entrance-preview-v2"
+    static let transitionDuration: TimeInterval = 0.2
 }
 
 final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDisposeBag {
 
     private let previewImageView = UIImageView()
+    private let pendingPreviewImageView = UIImageView()
     private let overlayView = LinearGradientView(frame: .zero)
     private let placeholderIconView = UIImageView(image: UIImage(named: "CameraIcon")?.withRenderingMode(.alwaysTemplate))
     private let titleLabel = UILabel()
@@ -54,10 +56,10 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
         super.prepareForReuse()
 
         resetDisposeBag()
-        previewSource = nil
         previewRefreshDisposable?.dispose()
         previewRefreshDisposable = nil
-        imageProvider.cancel(on: previewImageView)
+        imageProvider.cancel(on: pendingPreviewImageView)
+        resetPendingPreview()
     }
 
     func configure(
@@ -73,8 +75,10 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
         openButton.isOn = isOpened
         streamIndicatorView.isHidden = !hasCamera
 
+        let shouldKeepCurrentImage = self.previewSource == previewSource
+            && previewImageView.image != nil
         self.previewSource = previewSource
-        applyPreview(previewSource)
+        applyPreview(previewSource, keepingCurrentImage: shouldKeepCurrentImage)
         startPreviewRefreshing()
     }
 
@@ -101,6 +105,10 @@ private extension AddressesListDoorPreviewCell {
         previewImageView.contentMode = .scaleAspectFill
         previewImageView.clipsToBounds = true
         previewImageView.backgroundColor = .SmartYard.grayBorder
+
+        pendingPreviewImageView.contentMode = .scaleAspectFill
+        pendingPreviewImageView.clipsToBounds = true
+        pendingPreviewImageView.alpha = 0
 
         overlayView.colors = [
             UIColor(white: 0.18, alpha: 0.08),
@@ -130,6 +138,7 @@ private extension AddressesListDoorPreviewCell {
 
     func setupConstraints() {
         contentView.pinSubview(previewImageView)
+        contentView.pinSubview(pendingPreviewImageView)
         contentView.pinSubview(overlayView)
 
         contentView.addSubview(placeholderIconView) { make in
@@ -177,11 +186,13 @@ private extension AddressesListDoorPreviewCell {
         _ previewSource: AddressesListDoorPreviewSource?,
         keepingCurrentImage: Bool = false
     ) {
+        imageProvider.cancel(on: pendingPreviewImageView)
+        resetPendingPreview()
+
         if !keepingCurrentImage {
             previewImageView.image = nil
             placeholderIconView.isHidden = false
         }
-        imageProvider.cancel(on: previewImageView)
 
         guard
             let previewSource,
@@ -198,7 +209,7 @@ private extension AddressesListDoorPreviewCell {
         }()
 
         imageProvider.setImage(
-            on: previewImageView,
+            on: pendingPreviewImageView,
             key: "\(EntrancePreviewRefresh.cacheKeyPrefix):\(previewSource.urlString)",
             source: source,
             cachePolicy: .refresh(after: EntrancePreviewRefresh.interval)
@@ -207,8 +218,36 @@ private extension AddressesListDoorPreviewCell {
                 return
             }
 
-            self.placeholderIconView.isHidden = image != nil || self.previewImageView.image != nil
+            guard let image else {
+                self.placeholderIconView.isHidden = self.previewImageView.image != nil
+                return
+            }
+
+            UIView.animate(
+                withDuration: UIAccessibility.isReduceMotionEnabled
+                    ? 0
+                    : EntrancePreviewRefresh.transitionDuration
+            ) {
+                self.pendingPreviewImageView.alpha = 1
+                self.placeholderIconView.alpha = 0
+            } completion: { [weak self] finished in
+                guard let self, finished, self.previewSource == previewSource else {
+                    return
+                }
+
+                self.previewImageView.image = image
+                self.placeholderIconView.isHidden = true
+                self.resetPendingPreview()
+            }
         }
+    }
+
+    func resetPendingPreview() {
+        pendingPreviewImageView.layer.removeAllAnimations()
+        pendingPreviewImageView.alpha = 0
+        pendingPreviewImageView.image = nil
+        placeholderIconView.layer.removeAllAnimations()
+        placeholderIconView.alpha = 1
     }
 
     func startPreviewRefreshing() {
