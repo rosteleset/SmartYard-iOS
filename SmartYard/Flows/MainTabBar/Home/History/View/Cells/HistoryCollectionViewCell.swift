@@ -41,6 +41,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
     @IBOutlet private weak var descriptionContainer: UIView!
     @IBOutlet private weak var mainStackView: UIStackView!
 
+    private let trackingActionsStackView = UIStackView.vertical(spacing: 8)
     private let trackingContainerView = UIView()
     private let trackingSwitch = UISwitch()
     private let trackingTitleLabel = UILabel()
@@ -387,6 +388,8 @@ private extension HistoryCollectionViewCell {
     }
 
     func setupTrackingView() {
+        guard let actionsContainer else { return }
+
         trackingContainerView.backgroundColor = .SmartYard.secondBackgroundColor
         trackingContainerView.layer.cornerRadius = 12
         trackingContainerView.clipsToBounds = true
@@ -418,7 +421,15 @@ private extension HistoryCollectionViewCell {
         trackingContainerView.pinSubview(stack, with: UIEdgeInsets(top: 16, left: 20, bottom: 16, right: 20))
 
         let insertIndex = min(7, mainStackView.arrangedSubviews.count)
-        mainStackView.insertArrangedSubview(trackingContainerView, at: insertIndex)
+        mainStackView.removeArrangedSubview(actionsContainer)
+        actionsContainer.removeFromSuperview()
+        trackingActionsStackView.add {
+            trackingContainerView
+            actionsContainer
+        }
+        mainStackView.insert(at: insertIndex) {
+            trackingActionsStackView
+        }
     }
 
     func configureTrackingView(

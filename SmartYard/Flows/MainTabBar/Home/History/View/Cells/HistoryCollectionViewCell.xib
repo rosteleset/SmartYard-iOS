@@ -46,7 +46,7 @@
                                                     <constraint firstAttribute="height" constant="12" id="t4z-9Q-j5M"/>
                                                 </constraints>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Открытие из приложения" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="UTx-sj-H9R">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Открытие из приложения" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="UTx-sj-H9R">
                                                 <rect key="frame" x="0.0" y="12" width="315" height="80.5"/>
                                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="32"/>
                                                 <color key="textColor" name="semiBlack"/>
@@ -198,7 +198,7 @@
                                                 <rect key="frame" x="0.0" y="390" width="315" height="20"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="nrc-r8-Z2B"/>
+                                                    <constraint firstAttribute="height" constant="8" id="nrc-r8-Z2B"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Nsw-xM-f0E" userLabel="ActionsContainer">
