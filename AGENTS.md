@@ -31,6 +31,7 @@
 - In RxSwift subscriptions, prefer `subscribe(with: self) { owner, ... in ... }` over `subscribe(onNext: { [weak self] ... })` when the subscription captures `self`.
 - Prefer ternary operators over `if`/`else` when the expression stays readable and the conditional is simple.
 - Follow the Google Swift Style Guide by default, unless existing project conventions or SwiftLint rules require otherwise.
+- Treat localization as required whenever user-facing text changes: update the corresponding key in every supported `.lproj`, keep meaning, placeholders, formatting, and paragraph breaks consistent across translations, and never update only one locale unless the user explicitly limits the scope.
 - Follow the project programmatic-layout rules below.
 
 ## Programmatic layout rules

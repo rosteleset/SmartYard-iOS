@@ -569,7 +569,7 @@
 "settings.common.title" = "Umumiy sozlamalar";
 "settings.common.useCallkit" = "CallKit'dan foydalanish";
 
-"settings.common.addressOrder.description" = "Standart holatda manzillar alifbo tartibida ko‘rsatiladi. Kirish mumkin bo‘lgan manzillar doimo birinchi o‘rinda bo‘ladi. Tartibni qo‘lda sozlash uchun — manzil sarlavhasini bosib turing, “ko‘tarilgan kartochka” effekti paydo bo‘lishi uchun 0.3–0.5 soniya kuting, so‘ng yuqoriga yoki pastga suring. Kerakli joyga qo‘yganingizda — tartib avtomatik tarzda saqlanadi.";
+"settings.common.addressOrder.description" = "Manzillar tartibini qo‘lda sozlashingiz mumkin — manzil sarlavhasini bosib turing, “ko‘tarilgan kartochka” effekti paydo bo‘lguncha 0,3–0,5 soniya kuting, so‘ng manzillarni kerakli tartibda joylashtirish uchun kartochkani yuqoriga yoki pastga suring. Kartochkani kerakli joyda qo‘yib yuboring — tartib avtomatik saqlanadi.\n\nStandart holatda manzillar alifbo tartibida ko‘rsatiladi. Kirish mumkin bo‘lgan manzillar doimo birinchi bo‘lib ko‘rsatiladi.";
 "settings.common.addressOrder.resetDialogMessage" = "Bu manzillar standart tartibiga qaytariladi.";
 "settings.common.addressOrder.resetDialogTitle" = "Manzillar tartibini tiklash?";
 "settings.common.addressOrder.resetHint" = "Asl tartibga qaytish uchun sozlamalarda “Tiklash” tugmasidan foydalaning.";

@@ -569,7 +569,7 @@
 "settings.common.title" = "Common settings";
 "settings.common.useCallkit" = "Use CallKit";
 
-"settings.common.addressOrder.description" = "By default, addresses are displayed in alphabetical order. Addresses with available entrances are always shown first. You can adjust the order manually — just hold your finger on the address header, wait 0.3–0.5 seconds for the “lifted card” effect to appear, then drag it up or down. Release at the desired position — the order will be saved automatically.";
+"settings.common.addressOrder.description" = "You can arrange addresses manually — touch and hold an address header, wait 0.3–0.5 seconds for the “lifted card” effect, then move the card up or down to place the addresses in your preferred order. Release the card in the desired position — the order will be saved automatically.\n\nBy default, addresses are displayed in alphabetical order. Addresses with available entrances are always shown first.";
 "settings.common.addressOrder.resetDialogMessage" = "Reset address order?";
 "settings.common.addressOrder.resetDialogTitle" = "Reset address order?";
 "settings.common.addressOrder.resetHint" = "To restore the default order, use the “Reset” button in settings.";
