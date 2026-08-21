@@ -152,9 +152,10 @@ extension UIView {
 
 extension UIView {
     func asImage() -> UIImage {
+        layoutIfNeeded()
         let renderer = UIGraphicsImageRenderer(size: bounds.size)
-        let image = renderer.image { _ in
-            drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let image = renderer.image { context in
+            layer.render(in: context.cgContext)
         }
         return image
     }

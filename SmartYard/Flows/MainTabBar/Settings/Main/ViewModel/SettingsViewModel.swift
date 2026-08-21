@@ -147,6 +147,7 @@ final class SettingsViewModel: BaseViewModel {
                 newDict[firstUniqueId] = true
                 return Driver.just(newDict)
             }
+            .delay(.milliseconds(200))
             .drive(onNext: { [weak self] newDict in
                 self?.areSectionsExpanded.onNext(newDict)
             })
@@ -475,11 +476,17 @@ final class SettingsViewModel: BaseViewModel {
                 ) ?? []
             }
         
+        let shouldBlockInteraction = interactionBlockingRequestTracker.asDriver()
+            .startWith(true)
+            .flatMapLatest { isBlocking -> Driver<Bool> in
+                isBlocking ? .just(true) : .just(false).delay(.milliseconds(150))
+            }
+
         return Output(
             sectionModels: sectionModels,
             updateKind: updateKind,
             reloadingFinished: reloadingFinished,
-            shouldBlockInteraction: interactionBlockingRequestTracker.asDriver(),
+            shouldBlockInteraction: shouldBlockInteraction,
             isLoading: activityTracker.asDriver()
         )
     }

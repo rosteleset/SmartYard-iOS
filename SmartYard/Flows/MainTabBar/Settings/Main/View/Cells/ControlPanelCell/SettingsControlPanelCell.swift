@@ -17,8 +17,7 @@ final class SettingsControlPanelCell: CustomBorderCollectionViewCell, HasDispose
     @IBOutlet private weak var callButton: UIButton!
     @IBOutlet private weak var keyButton: UIButton!
     @IBOutlet private weak var eyeButton: UIButton!
-    
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
@@ -28,7 +27,7 @@ final class SettingsControlPanelCell: CustomBorderCollectionViewCell, HasDispose
         super.prepareForReuse()
         resetDisposeBag()
     }
-    
+
     func bind(with outerSubject: PublishSubject<SettingsServiceType>) {
         let internet = wifiButton.rx.tap
             .map { _ -> SettingsServiceType in .internet }
@@ -68,30 +67,17 @@ final class SettingsControlPanelCell: CustomBorderCollectionViewCell, HasDispose
     }
     
     private func configureUI() {
-        wifiButton.configureSelectableButton(
-            imageForNormal: SettingsServiceType.internet.unselectedIcon,
-            imageForSelected: SettingsServiceType.internet.selectedIcon
-        )
-        
-        monitorButton.configureSelectableButton(
-            imageForNormal: SettingsServiceType.iptv.unselectedIcon,
-            imageForSelected: SettingsServiceType.iptv.selectedIcon
-        )
-        
-        callButton.configureSelectableButton(
-            imageForNormal: SettingsServiceType.phone.unselectedIcon,
-            imageForSelected: SettingsServiceType.phone.selectedIcon
-        )
-        
-        keyButton.configureSelectableButton(
-            imageForNormal: SettingsServiceType.domophone.unselectedIcon,
-            imageForSelected: SettingsServiceType.domophone.selectedIcon
-        )
-        
-        eyeButton.configureSelectableButton(
-            imageForNormal: SettingsServiceType.cctv.unselectedIcon,
-            imageForSelected: SettingsServiceType.cctv.selectedIcon
-        )
+        configure(wifiButton, with: .internet)
+        configure(monitorButton, with: .iptv)
+        configure(callButton, with: .phone)
+        configure(keyButton, with: .domophone)
+        configure(eyeButton, with: .cctv)
+    }
+
+    private func configure(_ button: UIButton, with serviceType: SettingsServiceType) {
+        button.setImage(serviceType.unselectedIcon, for: .normal)
+        button.setImage(serviceType.selectedIcon, for: .selected)
+        button.adjustsImageWhenHighlighted = true
     }
 
 }
