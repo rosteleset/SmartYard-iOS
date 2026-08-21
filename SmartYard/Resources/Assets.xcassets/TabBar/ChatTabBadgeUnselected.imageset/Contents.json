@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "ChatTabBadgeUnselected.pdf",
+      "filename" : "ChatTabBadgeUnselected.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "ChatTabBadgeUnselected_dark.pdf",
+      "filename" : "ChatTabBadgeUnselected_dark.svg",
       "idiom" : "universal"
     }
   ],

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "MenuTabUnselected.pdf",
+      "filename" : "MenuTabUnselected.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "MenuTabUnselected_dark.pdf",
+      "filename" : "MenuTabUnselected_dark.svg",
       "idiom" : "universal"
     }
   ],
@@ -20,6 +20,7 @@
     "version" : 1
   },
   "properties" : {
-    "template-rendering-intent" : "original"
+    "template-rendering-intent" : "original",
+    "preserves-vector-representation" : true
   }
 }

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "PaymentsTabUnselected_any.pdf",
+      "filename" : "PaymentsTabUnselected_any.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "ic_pay_no_active.pdf",
+      "filename" : "ic_pay_no_active.svg",
       "idiom" : "universal"
     }
   ],

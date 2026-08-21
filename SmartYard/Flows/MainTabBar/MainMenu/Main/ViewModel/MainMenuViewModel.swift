@@ -40,7 +40,7 @@ final class MainMenuViewModel: BaseViewModel {
         ) + [
             MenuListItem.essential(
                 label: L10n.Settings.Main.Address.title,
-                iconName: "HomeIcon",
+                iconName: "AddressSettingsMenuIcon",
                 route: .settings,
                 order: 200
             ),

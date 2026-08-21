@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "NotificationsTabBadgeUnselected.pdf",
+      "filename" : "NotificationsTabBadgeUnselected.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "NotificationsTabBadgeUnselected_dark.pdf",
+      "filename" : "NotificationsTabBadgeUnselected_dark.svg",
       "idiom" : "universal"
     }
   ],
