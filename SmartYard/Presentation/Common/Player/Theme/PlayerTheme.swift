@@ -169,13 +169,15 @@ extension PlayerTheme {
             messageFont: fonts.transportMessageFont
         )
         SYPlayerConfig.shared.transportStrings = SYPlayerTransportStrings(
+            connecting: L10n.Player.Transport.connecting,
             connectingWebRTC: L10n.Player.Transport.connectingWebRTC,
             connectingHLS: L10n.Player.Transport.connectingHLS,
             switchingToHLS: L10n.Player.Transport.switchingToHLS,
             connectedHLS: L10n.Player.Transport.connectedHLS,
             videoUnavailable: L10n.Player.Transport.videoUnavailable,
             webRTCInfo: L10n.Player.Transport.webRTCInfo,
-            hlsInfo: L10n.Player.Transport.hlsInfo
+            hlsInfo: L10n.Player.Transport.hlsInfo,
+            lowLatencyHLSInfo: L10n.Player.Transport.lowLatencyHLSInfo
         )
 
         // Icons

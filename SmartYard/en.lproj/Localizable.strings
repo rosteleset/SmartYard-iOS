@@ -649,9 +649,11 @@
 /* MARK: - PLAYER */
 
 "player.transport.connectedHLS" = "Connected via HLS";
+"player.transport.connecting" = "Connecting…";
 "player.transport.connectingHLS" = "Connecting via HLS…";
 "player.transport.connectingWebRTC" = "Connecting via WebRTC…";
 "player.transport.hlsInfo" = "HLS uses buffering, which can smooth brief network interruptions. A delay from real time is possible.";
+"player.transport.lowLatencyHLSInfo" = "Low-latency video delivery.";
 "player.transport.switchingToHLS" = "WebRTC is unavailable. Connecting via HLS…";
 "player.transport.videoUnavailable" = "Unable to load video";
 "player.transport.webRTCInfo" = "Video is delivered via WebRTC. This method usually provides lower latency.";

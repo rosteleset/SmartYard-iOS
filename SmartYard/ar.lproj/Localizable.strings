@@ -649,9 +649,11 @@
 /* MARK: - PLAYER */
 
 "player.transport.connectedHLS" = "تم الاتصال عبر HLS";
+"player.transport.connecting" = "جارٍ الاتصال…";
 "player.transport.connectingHLS" = "جارٍ الاتصال عبر HLS…";
 "player.transport.connectingWebRTC" = "جارٍ الاتصال عبر WebRTC…";
 "player.transport.hlsInfo" = "يستخدم HLS التخزين المؤقت، ما قد يخفف انقطاعات الشبكة القصيرة. قد يحدث تأخير مقارنة بالوقت الفعلي.";
+"player.transport.lowLatencyHLSInfo" = "نقل فيديو بزمن انتقال منخفض.";
 "player.transport.switchingToHLS" = "WebRTC غير متاح. جارٍ الاتصال عبر HLS…";
 "player.transport.videoUnavailable" = "تعذر تحميل الفيديو";
 "player.transport.webRTCInfo" = "يتم نقل الفيديو عبر WebRTC. توفر هذه الطريقة عادةً زمن انتقال أقل.";

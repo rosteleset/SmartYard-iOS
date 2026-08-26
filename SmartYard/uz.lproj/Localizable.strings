@@ -649,9 +649,11 @@
 /* MARK: - PLAYER */
 
 "player.transport.connectedHLS" = "HLS orqali ulandi";
+"player.transport.connecting" = "Ulanmoqda…";
 "player.transport.connectingHLS" = "HLS orqali ulanmoqda…";
 "player.transport.connectingWebRTC" = "WebRTC orqali ulanmoqda…";
 "player.transport.hlsInfo" = "HLS buferlashdan foydalanadi, bu tarmoqdagi qisqa uzilishlarni yumshatishi mumkin. Real vaqtga nisbatan kechikish bo'lishi mumkin.";
+"player.transport.lowLatencyHLSInfo" = "Video past kechikish bilan uzatiladi.";
 "player.transport.switchingToHLS" = "WebRTC mavjud emas. HLS orqali ulanmoqda…";
 "player.transport.videoUnavailable" = "Videoni yuklab bo'lmadi";
 "player.transport.webRTCInfo" = "Video WebRTC orqali uzatiladi. Bu usul odatda kamroq kechikishni ta'minlaydi.";
