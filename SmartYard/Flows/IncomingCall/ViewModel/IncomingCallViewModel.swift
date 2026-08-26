@@ -42,9 +42,7 @@ final class IncomingCallViewModel: BaseViewModel {
     private let isDoorBeingOpened = BehaviorSubject<Bool>(value: false)
     private let shouldMuteCall = BehaviorSubject<Bool>(value: false)
     
-    // MARK: По умолчанию звонок принятый через CallKit должен показываться со статичной картинкой
-    // Чтобы показалось видео - нужно, чтобы пользователь нажал на кнопку "Video" в коллките
-    // Если CallKit выключен, то всегда по умолчанию показывается видео
+    // MARK: Активный звонок всегда показывается с видео, включая ответ через CallKit
     
     private let preferredPreviewModeForActiveCall: BehaviorSubject<IncomingCallPreviewState>
     private let subtitleSubject: BehaviorSubject<String?>
@@ -84,7 +82,7 @@ final class IncomingCallViewModel: BaseViewModel {
         self.completionHandler = completionHandler
         
         preferredPreviewModeForActiveCall = BehaviorSubject<IncomingCallPreviewState>(
-            value: isCallKitUsed ? .staticImage : .video
+            value: .video
         )
         
         subtitleSubject = BehaviorSubject<String?>(value: callPayload.callerId)
