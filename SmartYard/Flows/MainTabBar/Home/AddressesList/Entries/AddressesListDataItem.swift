@@ -24,6 +24,7 @@ struct AddressesListDoorPreviewItem: Equatable {
     let identity: AddressesListDataItemIdentity
     let title: String
     let subtitle: String?
+    let iconImageName: String
     let previewSource: AddressesListDoorPreviewSource?
     let hasCamera: Bool
     let isOpened: Bool

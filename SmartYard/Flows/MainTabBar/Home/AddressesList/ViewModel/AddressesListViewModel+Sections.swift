@@ -54,6 +54,7 @@ extension AddressesListViewModel {
                         identity: identity,
                         title: door.name,
                         subtitle: makeDoorPreviewSubtitle(for: door),
+                        iconImageName: door.type.iconImageName,
                         previewSource: makePreviewSource(from: camera),
                         hasCamera: camera != nil,
                         isOpened: objectAccessDict[identity, default: false]

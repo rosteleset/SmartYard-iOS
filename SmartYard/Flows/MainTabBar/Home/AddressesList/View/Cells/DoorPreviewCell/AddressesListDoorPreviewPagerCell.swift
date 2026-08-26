@@ -112,8 +112,11 @@ private extension AddressesListDoorPreviewPagerCell {
         collectionView.delegate = self
         collectionView.register(cellWithClass: AddressesListDoorPreviewCell.self)
 
-        pageControl.currentPageIndicatorTintColor = .white
-        pageControl.pageIndicatorTintColor = UIColor.white.withAlphaComponent(0.35)
+        pageControl.currentPageIndicatorTintColor = .SmartYard.mediaOverlayPrimary
+        pageControl.pageIndicatorTintColor = .SmartYard.mediaOverlayInactiveIndicator
+        pageControl.backgroundColor = UIColor.black.withAlphaComponent(0.32)
+        pageControl.layer.cornerRadius = 14
+        pageControl.clipsToBounds = true
         pageControl.hidesForSinglePage = true
         pageControl.isUserInteractionEnabled = false
         pageControl.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
@@ -181,8 +184,8 @@ extension AddressesListDoorPreviewPagerCell: UICollectionViewDataSource {
         cell.configure(
             title: item.title,
             subtitle: item.subtitle,
+            iconImageName: item.iconImageName,
             previewSource: item.previewSource,
-            hasCamera: item.hasCamera,
             isOpened: item.isOpened
         )
 

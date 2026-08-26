@@ -20,12 +20,16 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
 
     private let previewImageView = UIImageView()
     private let pendingPreviewImageView = UIImageView()
-    private let overlayView = LinearGradientView(frame: .zero)
     private let placeholderIconView = UIImageView(image: UIImage(named: "CameraIcon")?.withRenderingMode(.alwaysTemplate))
+    private let entranceIconView = UIImageView()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let openButton = SmartYardActionModeButton()
-    private let streamIndicatorView = UIView()
+    private let bottomScrimStackView = UIStackView.horizontal(
+        paddings: NSDirectionalEdgeInsets(top: 8, leading: 24, bottom: 8, trailing: 16),
+        spacing: 15,
+        alignment: .center
+    )
 
     private let imageProvider: ImageProviding = SYImageProvider()
     private var previewSource: AddressesListDoorPreviewSource?
@@ -65,15 +69,16 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
     func configure(
         title: String,
         subtitle: String?,
+        iconImageName: String?,
         previewSource: AddressesListDoorPreviewSource?,
-        hasCamera: Bool,
         isOpened: Bool
     ) {
         titleLabel.text = title
         subtitleLabel.text = subtitle
         subtitleLabel.isHidden = subtitle?.isEmpty ?? true
+        entranceIconView.image = UIImage(named: iconImageName ?? "HouseIcon")?
+            .withRenderingMode(.alwaysTemplate)
         openButton.isOn = isOpened
-        streamIndicatorView.isHidden = !hasCamera
 
         let shouldKeepCurrentImage = self.previewSource == previewSource
             && previewImageView.image != nil
@@ -110,28 +115,25 @@ private extension AddressesListDoorPreviewCell {
         pendingPreviewImageView.clipsToBounds = true
         pendingPreviewImageView.alpha = 0
 
-        overlayView.colors = [
-            UIColor(white: 0.18, alpha: 0.08),
-            UIColor(white: 0.18, alpha: 0.64)
-        ]
-        overlayView.gradientLayer.locations = [0.0, 1.0]
-
         placeholderIconView.tintColor = UIColor.white.withAlphaComponent(0.82)
         placeholderIconView.contentMode = .scaleAspectFit
 
+        entranceIconView.tintColor = .SmartYard.mediaOverlaySecondary
+        entranceIconView.contentMode = .scaleAspectFit
+
         titleLabel.font = UIFont.SourceSansPro.semibold(size: 18)
-        titleLabel.textColor = .white
-        titleLabel.numberOfLines = 2
+        titleLabel.textColor = .SmartYard.mediaOverlayPrimary
+        titleLabel.numberOfLines = 1
+        titleLabel.lineBreakMode = .byTruncatingTail
 
         subtitleLabel.font = UIFont.SourceSansPro.regular(size: 13)
-        subtitleLabel.textColor = UIColor.white.withAlphaComponent(0.9)
+        subtitleLabel.textColor = .SmartYard.mediaOverlaySecondary
         subtitleLabel.numberOfLines = 1
 
         openButton.mode = .open
         openButton.visualStyle = .overImage
 
-        streamIndicatorView.backgroundColor = UIColor.SmartYard.blue
-        streamIndicatorView.layer.cornerRadius = 4
+        bottomScrimStackView.addBackground(color: UIColor.black.withAlphaComponent(0.4))
     }
 
     // MARK: - Setup Constraints
@@ -139,47 +141,37 @@ private extension AddressesListDoorPreviewCell {
     func setupConstraints() {
         contentView.pinSubview(previewImageView)
         contentView.pinSubview(pendingPreviewImageView)
-        contentView.pinSubview(overlayView)
 
         contentView.addSubview(placeholderIconView) { make in
             make.center.equalToSuperview()
             make.size.equalTo(36)
         }
 
-        streamIndicatorView.widthAnchor.constraint(equalToConstant: 8).isActive = true
-        streamIndicatorView.heightAnchor.constraint(equalToConstant: 8).isActive = true
-        openButton.widthAnchor.constraint(equalToConstant: 84).isActive = true
-        openButton.heightAnchor.constraint(equalToConstant: 36).isActive = true
-
-        let streamIndicatorColumn = UIStackView.vertical(alignment: .leading)
-        streamIndicatorColumn.add {
-            VSpacer(4)
-            streamIndicatorView
-            VSpacer()
+        let labelsStackView = UIStackView.vertical(spacing: 2).add {
+            titleLabel
+            subtitleLabel
         }
-        streamIndicatorColumn.widthAnchor.constraint(equalToConstant: 8).isActive = true
+        labelsStackView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        let topStackView = UIStackView.horizontal(alignment: .top).add {
-            streamIndicatorColumn
+        bottomScrimStackView.add {
+            entranceIconView
+            labelsStackView
             HSpacer()
             openButton
         }
 
-        let labelsStackView = UIStackView.vertical(spacing: 4).add {
-            titleLabel
-            subtitleLabel
+        entranceIconView.snp.makeConstraints { make in
+            make.size.equalTo(30)
         }
 
-        let contentStackView = UIStackView.vertical().add {
-            topStackView
-            VSpacer()
-            labelsStackView
+        openButton.snp.makeConstraints { make in
+            make.width.equalTo(84)
+            make.height.equalTo(36)
         }
 
-        contentView.pinSubview(
-            contentStackView,
-            with: UIEdgeInsets(top: 16, left: 20, bottom: 18, right: 16)
-        )
+        contentView.addSubview(bottomScrimStackView) { make in
+            make.leading.trailing.bottom.equalToSuperview()
+        }
     }
 
     func applyPreview(

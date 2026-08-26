@@ -24,6 +24,19 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
     private let bottomLineSeparatorLayer = CALayer()
     
     private var separatorInset: CGFloat?
+    private var customBorderColor: UIColor?
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard previousTraitCollection?
+            .hasDifferentColorAppearance(comparedTo: traitCollection) == true
+        else {
+            return
+        }
+
+        updateLayerColors()
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -94,9 +107,9 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         separatorInset: CGFloat?
     ) {
         removeCustomBorder()
+        self.customBorderColor = customBorderColor
         
         borderLayer.borderWidth = customBorderWidth
-        borderLayer.borderColor = customBorderColor?.cgColor
         borderLayer.frame = bounds
         layer.addSublayer(borderLayer)
         
@@ -110,8 +123,6 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         // Таким образом, избегаем двухпиксельного разделителя между ячейками
         
         if !maskedCorners.contains(.topCorners) {
-            topLineMaskLayer.backgroundColor = backgroundColor?.cgColor
-            
             topLineMaskLayer.frame = CGRect(
                 x: customBorderWidth,
                 y: 0,
@@ -127,9 +138,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
         
         if !maskedCorners.contains(.bottomCorners), let separatorInset = separatorInset {
             self.separatorInset = separatorInset
-            
-            bottomLineMaskLayer.backgroundColor = backgroundColor?.cgColor
-            
+
             bottomLineMaskLayer.frame = CGRect(
                 x: customBorderWidth,
                 y: bounds.height - customBorderWidth,
@@ -138,9 +147,7 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
             )
             
             layer.addSublayer(bottomLineMaskLayer)
-            
-            bottomLineSeparatorLayer.backgroundColor = customBorderColor?.cgColor
-            
+
             bottomLineSeparatorLayer.frame = CGRect(
                 x: customBorderWidth + separatorInset,
                 y: bounds.height - customBorderWidth,
@@ -150,6 +157,22 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
             
             layer.addSublayer(bottomLineSeparatorLayer)
         }
+
+        updateLayerColors()
+    }
+
+    private func updateLayerColors() {
+        let resolvedBorderColor = customBorderColor?
+            .resolvedColor(with: traitCollection)
+            .cgColor
+        let resolvedBackgroundColor = backgroundColor?
+            .resolvedColor(with: traitCollection)
+            .cgColor
+
+        borderLayer.borderColor = resolvedBorderColor
+        topLineMaskLayer.backgroundColor = resolvedBackgroundColor
+        bottomLineMaskLayer.backgroundColor = resolvedBackgroundColor
+        bottomLineSeparatorLayer.backgroundColor = resolvedBorderColor
     }
     
     private func removeCustomBorder() {

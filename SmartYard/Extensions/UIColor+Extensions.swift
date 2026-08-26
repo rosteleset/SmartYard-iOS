@@ -35,6 +35,33 @@ extension UIColor {
         
         /// light: #FFFFFF   :  dark: #191919
         static let secondBackgroundColor = UIColor(named: "secondBackgroundColor")!
+
+        /// Foreground over a dark media scrim.
+        /// light: secondBackgroundColor (#FFFFFF)   :  dark: semiBlack (#E0E0E0)
+        static let mediaOverlayPrimary = UIColor { traits in
+            let color = traits.userInterfaceStyle == .dark
+                ? semiBlack
+                : secondBackgroundColor
+            return color.resolvedColor(with: traits)
+        }
+
+        /// Secondary foreground over a dark media scrim.
+        /// light: secondBackgroundColor (#FFFFFF)   :  dark: gray (#A0A0A0)
+        static let mediaOverlaySecondary = UIColor { traits in
+            let color = traits.userInterfaceStyle == .dark
+                ? gray
+                : secondBackgroundColor
+            return color.resolvedColor(with: traits)
+        }
+
+        /// Inactive page indicator over a dark media scrim.
+        /// light: secondBackgroundColor at 35%   :  dark: gray (#A0A0A0)
+        static let mediaOverlayInactiveIndicator = UIColor { traits in
+            let color = traits.userInterfaceStyle == .dark
+                ? gray
+                : secondBackgroundColor.withAlphaComponent(0.35)
+            return color.resolvedColor(with: traits)
+        }
     }
     
     // TODO: - Заполнить остальные кастомные цвета сюда - 
@@ -56,4 +83,3 @@ extension UIColor {
     }
     
 }
-

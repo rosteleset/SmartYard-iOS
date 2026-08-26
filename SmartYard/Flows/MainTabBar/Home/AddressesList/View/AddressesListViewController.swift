@@ -408,7 +408,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
 
                 return cell
 
-            case let .doorPreview(_, title, subtitle, previewSource, hasCamera, isOpened):
+            case let .doorPreview(_, title, subtitle, previewSource, _, isOpened):
                 let cell = collectionView.dequeueReusableCell(
                     withClass: AddressesListDoorPreviewCell.self,
                     for: indexPath
@@ -417,8 +417,8 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
                 cell.configure(
                     title: title,
                     subtitle: subtitle,
+                    iconImageName: nil,
                     previewSource: previewSource,
-                    hasCamera: hasCamera,
                     isOpened: isOpened
                 )
 
@@ -791,16 +791,6 @@ extension AddressesListViewController: UICollectionViewDropDelegate {
         } else {
             return UICollectionViewDropProposal(operation: .forbidden)
         }
-    }
-    
-}
-
-extension AddressesListViewController {
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        collectionView.reloadData()
     }
     
 }

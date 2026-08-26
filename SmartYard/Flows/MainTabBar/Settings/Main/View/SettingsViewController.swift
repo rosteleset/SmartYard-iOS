@@ -431,13 +431,3 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
-
-extension SettingsViewController {
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        collectionView.reloadData()
-    }
-    
-}

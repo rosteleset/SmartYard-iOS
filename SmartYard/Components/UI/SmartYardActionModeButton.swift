@@ -63,6 +63,18 @@ final class SmartYardActionModeButton: UIButton {
         super.init(coder: aDecoder)
         prepareUI()
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard previousTraitCollection?
+            .hasDifferentColorAppearance(comparedTo: traitCollection) == true
+        else {
+            return
+        }
+
+        prepareUI()
+    }
     
     private func prepareUI() {
         layerCornerRadius = 8
@@ -98,10 +110,10 @@ final class SmartYardActionModeButton: UIButton {
             setTitleColor(.SmartYard.secondBackgroundColor, for: .disabled)
 
         case .overImage:
-            setTitleColor(.white, for: .normal)
-            setTitleColor(.white, for: .highlighted)
-            setTitleColor(.white, for: .selected)
-            setTitleColor(.white, for: .disabled)
+            setTitleColor(.SmartYard.mediaOverlayPrimary, for: .normal)
+            setTitleColor(.SmartYard.mediaOverlayPrimary, for: .highlighted)
+            setTitleColor(.SmartYard.secondBackgroundColor, for: .selected)
+            setTitleColor(.SmartYard.secondBackgroundColor, for: .disabled)
         }
 
         updateAppearance()
@@ -121,22 +133,22 @@ final class SmartYardActionModeButton: UIButton {
         case .normal:
             backgroundColor = .SmartYard.secondBackgroundColor
             layerBorderWidth = 1
-            layerBorderColor = UIColor.SmartYard.blue
+            setLayerBorderColor(.SmartYard.blue)
             
         case .highlighted:
             backgroundColor = .SmartYard.secondBackgroundColor.darken(by: 0.1)
             layerBorderWidth = 1
-            layerBorderColor = UIColor.SmartYard.blue.darken(by: 0.1)
+            setLayerBorderColor(UIColor.SmartYard.blue.darken(by: 0.1))
             
         case .disabled:
             backgroundColor = .SmartYard.darkGreen
             layerBorderWidth = 0
-            layerBorderColor = .clear
+            setLayerBorderColor(.clear)
             
         case .selected:
             backgroundColor = .SmartYard.darkGreen
             layerBorderWidth = 0
-            layerBorderColor = .clear
+            setLayerBorderColor(.clear)
             
         default:
             break
@@ -148,26 +160,30 @@ final class SmartYardActionModeButton: UIButton {
         case .normal:
             backgroundColor = .clear
             layerBorderWidth = 1
-            layerBorderColor = UIColor.white.withAlphaComponent(0.9)
+            setLayerBorderColor(.SmartYard.mediaOverlayPrimary)
 
         case .highlighted:
-            backgroundColor = UIColor.white.withAlphaComponent(0.16)
+            backgroundColor = UIColor.SmartYard.mediaOverlaySecondary.withAlphaComponent(0.16)
             layerBorderWidth = 1
-            layerBorderColor = UIColor.white.withAlphaComponent(0.9)
+            setLayerBorderColor(.SmartYard.mediaOverlayPrimary)
 
         case .disabled:
             backgroundColor = .SmartYard.darkGreen
             layerBorderWidth = 0
-            layerBorderColor = .clear
+            setLayerBorderColor(.clear)
 
         case .selected:
             backgroundColor = .SmartYard.darkGreen
             layerBorderWidth = 0
-            layerBorderColor = .clear
+            setLayerBorderColor(.clear)
 
         default:
             break
         }
+    }
+
+    private func setLayerBorderColor(_ color: UIColor) {
+        layer.borderColor = color.resolvedColor(with: traitCollection).cgColor
     }
     
 }
