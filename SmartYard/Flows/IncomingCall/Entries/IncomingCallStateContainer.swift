@@ -24,8 +24,9 @@ struct IncomingCallStateContainer {
         )
     }
     
-    /// Определяет режим Динамика по-умолчанию.
-    /// для CallKit он всегда выключен, а для обычного режима - зависит от настроек пользователя.
+    /// Определяет режим динамика по умолчанию.
+    /// Для CallKit начальный маршрут остаётся обычным до активации аудиосессии,
+    /// чтобы не перехватывать подключённые наушники или другой внешний аудиовыход.
     static func getDefaultSpeakerMode(_ isCallKitUsed: Bool, apiWrapper: APIWrapper) -> IncomingCallStateContainer {
         
         if isCallKitUsed {

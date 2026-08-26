@@ -787,6 +787,24 @@ final class IncomingCallViewModel: BaseViewModel {
             Logger.logError("Failed to switch output audio port. Error: \(error.localizedDescription)")
         }
     }
+
+    private func applyPreferredSpeakerRoute(to audioSession: AVAudioSession) {
+        guard apiWrapper.accessService.prefersSpeakerForCalls else {
+            return
+        }
+
+        let outputs = audioSession.currentRoute.outputs
+        let usesOnlyBuiltInOutput = !outputs.isEmpty && outputs.allSatisfy {
+            $0.portType == .builtInReceiver || $0.portType == .builtInSpeaker
+        }
+
+        guard usesOnlyBuiltInOutput else {
+            Logger.logInfo("Keeping the external audio route selected by CallKit.")
+            return
+        }
+
+        updateState(soundOutputState: .speaker)
+    }
     
     private func openTheDoor(for call: Call) {
         doorOpeningRequestedByUser.onNext(false)
@@ -933,6 +951,7 @@ extension IncomingCallViewModel: CXProviderProxyDelegate {
     
     func provider(_ provider: CXProvider, didActivateAudioSession audioSession: AVAudioSession) {
         linphoneService.core?.activateAudioSession(activated: true)
+        applyPreferredSpeakerRoute(to: audioSession)
     }
     
     func provider(_ provider: CXProvider, didDeactivateAudioSession audioSession: AVAudioSession) {

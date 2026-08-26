@@ -221,12 +221,6 @@ final class CommonSettingsViewModel: BaseViewModel {
                     )
                     
                     enableCallkitSubject.onNext(newState)
-                    
-                    // Если включен CallKit, то динамик по-умолчанию всегда будет обычный
-                    if newState {
-                        self?.accessService.prefersSpeakerForCalls = false
-                        enableSpeakerByDefaultSubject.onNext(false)
-                    }
                 }
             )
             .disposed(by: disposeBag)
@@ -235,9 +229,6 @@ final class CommonSettingsViewModel: BaseViewModel {
         
         input.speakerTrigger
             .skip(1)
-            .filter { [weak self] in
-                self?.accessService.prefersVoipForCalls == false
-            }
             .withLatestFrom(enableSpeakerByDefaultSubject.asDriver(onErrorJustReturn: false))
             .drive(
                 onNext: { [weak self] isActive in
