@@ -136,6 +136,28 @@ final class OnlineFullscreenViewController: BaseViewController {
         }
     }
 
+    override func viewWillTransition(
+        to size: CGSize,
+        with coordinator: UIViewControllerTransitionCoordinator
+    ) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+            guard let self else { return }
+            collectionView.layoutIfNeeded()
+
+            guard cameras.indices.contains(currentIndex),
+                  let cell = collectionView.cellForItem(
+                      at: IndexPath(item: currentIndex, section: 0)
+                  ) as? OnlineFullscreenCameraCell
+            else {
+                return
+            }
+
+            playback.willDisplay(cameraId: cameras[currentIndex].id, cell: cell)
+        }
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         Logger.logDebug("viewWillDisappear beingDismissed=\(isBeingDismissed)")

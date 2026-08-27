@@ -337,6 +337,7 @@ private extension OnlinePageViewController {
         logCameraFullscreenOpened()
 
         isTransitioningToFullscreen = true
+        lockedCenteredIndexAfterFullscreen = index
 
         let vc = OnlineFullscreenViewController(
             cameras: state.cameras,
