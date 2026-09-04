@@ -51,8 +51,8 @@ final class IncomingCallViewModel: BaseViewModel {
     private let answerCallProxySubject = PublishSubject<Void>()
     private let endCallProxySubject = PublishSubject<Void>()
     
-    /// Название быстрого действия из push-уведомления, которое надо выполнить в этой модели.
-    private let actionIdentifier: String
+    /// Быстрое действие из push-уведомления, которое надо выполнить в этой модели.
+    private let quickAction: IncomingCallQuickAction
     
     /// Задаётся только, когда модель была вызвана из быстрого действия в push-уведомлении.
     /// Выполняется, когда надо уведомить iOS, что мы закончили выполнять команду
@@ -78,7 +78,7 @@ final class IncomingCallViewModel: BaseViewModel {
         self.pushNotificationService = pushNotificationService
         self.router = router
         self.callPayload = callPayload
-        self.actionIdentifier = actionIdentifier
+        self.quickAction = IncomingCallRoutingPolicy.quickAction(identifier: actionIdentifier)
         self.completionHandler = completionHandler
         
         preferredPreviewModeForActiveCall = BehaviorSubject<IncomingCallPreviewState>(
@@ -616,7 +616,7 @@ final class IncomingCallViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         // MARK: обработка выбранного пользователем в Push-notification действия(Открыть или Игнорировать)
-        if ["OPEN_ACTION", "IGNORE_ACTION"].contains(self.actionIdentifier) {
+        if quickAction != .none {
             incomingCall
                 .asDriverOnErrorJustComplete()
                 .filter { callObject in
@@ -642,17 +642,16 @@ final class IncomingCallViewModel: BaseViewModel {
                             UNUserNotificationCenter.current().removeAllDeliveredNotifications()
                         }
                         
-                        switch self.actionIdentifier {
-                        case "OPEN_ACTION":
+                        switch self.quickAction {
+                        case .openDoor:
                             DispatchQueue.main.async {
                                 self.doorOpeningRequestedByUser.onNext(true)
                             }
-                        case "IGNORE_ACTION":
+                        case .ignore:
                             DispatchQueue.main.async {
                                 self.endCallProxySubject.onNext(())
                             }
-                            
-                        default:
+                        case .none:
                             break
                         }
                     }

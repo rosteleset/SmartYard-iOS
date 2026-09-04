@@ -161,6 +161,7 @@
 		3AFBA7B9263984E000C7DEB6 /* AVPlayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA7B8263984E000C7DEB6 /* AVPlayer+Extensions.swift */; };
 		3BE4B35EE8C96FD592F29A6C /* GetStoriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9C3BE1BDB9EDBCEBCEFA5 /* GetStoriesRequest.swift */; };
 		4F26E99B55E4CB8B9B1D54D5 /* Pods_SmartYardIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297C4C1274F6636BA2F4B75B /* Pods_SmartYardIntents.framework */; };
+		52F69782AAF3DCDBCFDDA523 /* Pods_SmartYardTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63CC9F2893130F15129AA5B /* Pods_SmartYardTests.framework */; };
 		842DBD00243750ED00A1D346 /* SettingsServiceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */; };
 		843A7A7F23F29A2900840E51 /* FakeNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A7A7E23F29A2900840E51 /* FakeNavBar.swift */; };
 		843C38DE242A57C40035BF80 /* NotificationsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C38D7242A57C40035BF80 /* NotificationsCoordinator.swift */; };
@@ -685,6 +686,28 @@
 		B0A1C2D3E4F50617283941A7 /* EdgeHandoffZoomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283941A6 /* EdgeHandoffZoomScrollView.swift */; };
 		B0A1C2D3E4F50617283941A9 /* PlayerControlsOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F50617283941A8 /* PlayerControlsOverlayView.swift */; };
 		B5B707A225A8BB5FF054D9F9 /* GetStoriesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34C6D37942B34574D4AE47BF /* GetStoriesResponseData.swift */; };
+		C0D3A1000000000000000001 /* ParanoidPushPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000011 /* ParanoidPushPayload.swift */; };
+		C0D3A1000000000000000002 /* AuthorizationErrorClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000012 /* AuthorizationErrorClassifier.swift */; };
+		C0D3A1000000000000000003 /* ParanoidPushPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000011 /* ParanoidPushPayload.swift */; };
+		C0D3A1000000000000000004 /* AuthorizationErrorClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000012 /* AuthorizationErrorClassifier.swift */; };
+		C0D3A1000000000000000005 /* ParanoidPushPayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000013 /* ParanoidPushPayloadTests.swift */; };
+		C0D3A1000000000000000006 /* AuthorizationErrorClassifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000014 /* AuthorizationErrorClassifierTests.swift */; };
+		C0D3A1000000000000000061 /* LogoutWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000071 /* LogoutWorkflow.swift */; };
+		C0D3A1000000000000000062 /* LogoutWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000071 /* LogoutWorkflow.swift */; };
+		C0D3A1000000000000000063 /* LogoutWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3A1000000000000000072 /* LogoutWorkflowTests.swift */; };
+		C0D3A1000000000000000081 /* DoorOpeningDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000001 /* DoorOpeningDecision.swift */; };
+		C0D3A1000000000000000082 /* DoorOpeningDecision.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000001 /* DoorOpeningDecision.swift */; };
+		C0D3A1000000000000000083 /* DoorOpeningDecisionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000002 /* DoorOpeningDecisionTests.swift */; };
+		C0D3A1000000000000000084 /* AddressListTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000003 /* AddressListTransformer.swift */; };
+		C0D3A1000000000000000085 /* AddressListTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000003 /* AddressListTransformer.swift */; };
+		C0D3A1000000000000000086 /* AddressListTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000004 /* AddressListTransformerTests.swift */; };
+		C0D3A1000000000000000087 /* MessagePushRoutingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000005 /* MessagePushRoutingPolicy.swift */; };
+		C0D3A1000000000000000088 /* MessagePushRoutingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000005 /* MessagePushRoutingPolicy.swift */; };
+		C0D3A1000000000000000089 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714DD82EFACCAD0099703B /* MessageType.swift */; };
+		C0D3A1000000000000000090 /* MessagePushRoutingPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000006 /* MessagePushRoutingPolicyTests.swift */; };
+		C0D3A1000000000000000091 /* IncomingCallRoutingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000007 /* IncomingCallRoutingPolicy.swift */; };
+		C0D3A1000000000000000092 /* IncomingCallRoutingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000007 /* IncomingCallRoutingPolicy.swift */; };
+		C0D3A1000000000000000093 /* IncomingCallRoutingPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3B1000000000000000008 /* IncomingCallRoutingPolicyTests.swift */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
 		E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */; };
@@ -1037,8 +1060,10 @@
 		3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSnappingFlowLayout.swift; sourceTree = "<group>"; };
 		3AFBA74726383B4200C7DEB6 /* APICamMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICamMap.swift; sourceTree = "<group>"; };
 		3AFBA7B8263984E000C7DEB6 /* AVPlayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Extensions.swift"; sourceTree = "<group>"; };
+		4098C33E5FB5F9952026293C /* Pods-SmartYardTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardTests.release.xcconfig"; path = "Target Support Files/Pods-SmartYardTests/Pods-SmartYardTests.release.xcconfig"; sourceTree = "<group>"; };
 		484ED75460AB5A897D8A784D /* Pods-SmartYardIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardIntents.release.xcconfig"; path = "Target Support Files/Pods-SmartYardIntents/Pods-SmartYardIntents.release.xcconfig"; sourceTree = "<group>"; };
 		4F1570A8C1369881D07795C6 /* Pods-SmartYard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.debug.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.debug.xcconfig"; sourceTree = "<group>"; };
+		552F284845C2D29AD41998A6 /* Pods-SmartYardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardTests.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardTests/Pods-SmartYardTests.debug.xcconfig"; sourceTree = "<group>"; };
 		80B3D212974F574B9FEDA4E1 /* Pods-SmartYard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYard.release.xcconfig"; path = "Target Support Files/Pods-SmartYard/Pods-SmartYard.release.xcconfig"; sourceTree = "<group>"; };
 		842DBCFF243750ED00A1D346 /* SettingsServiceAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAction.swift; sourceTree = "<group>"; };
 		842FECB8242B8A04007CA0F3 /* APIOffice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIOffice.swift; sourceTree = "<group>"; };
@@ -1593,6 +1618,22 @@
 		B0A1C2D3E4F50617283940A3 /* OnlineFullscreenCameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineFullscreenCameraCell.swift; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283941A6 /* EdgeHandoffZoomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeHandoffZoomScrollView.swift; sourceTree = "<group>"; };
 		B0A1C2D3E4F50617283941A8 /* PlayerControlsOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsOverlayView.swift; sourceTree = "<group>"; };
+		B63CC9F2893130F15129AA5B /* Pods_SmartYardTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0D3A1000000000000000011 /* ParanoidPushPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParanoidPushPayload.swift; sourceTree = "<group>"; };
+		C0D3A1000000000000000012 /* AuthorizationErrorClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationErrorClassifier.swift; sourceTree = "<group>"; };
+		C0D3A1000000000000000013 /* ParanoidPushPayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParanoidPushPayloadTests.swift; sourceTree = "<group>"; };
+		C0D3A1000000000000000014 /* AuthorizationErrorClassifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationErrorClassifierTests.swift; sourceTree = "<group>"; };
+		C0D3A1000000000000000015 /* SmartYardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartYardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0D3A1000000000000000071 /* LogoutWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWorkflow.swift; sourceTree = "<group>"; };
+		C0D3A1000000000000000072 /* LogoutWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutWorkflowTests.swift; sourceTree = "<group>"; };
+		C0D3B1000000000000000001 /* DoorOpeningDecision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorOpeningDecision.swift; sourceTree = "<group>"; };
+		C0D3B1000000000000000002 /* DoorOpeningDecisionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoorOpeningDecisionTests.swift; sourceTree = "<group>"; };
+		C0D3B1000000000000000003 /* AddressListTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListTransformer.swift; sourceTree = "<group>"; };
+		C0D3B1000000000000000004 /* AddressListTransformerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressListTransformerTests.swift; sourceTree = "<group>"; };
+		C0D3B1000000000000000005 /* MessagePushRoutingPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePushRoutingPolicy.swift; sourceTree = "<group>"; };
+		C0D3B1000000000000000006 /* MessagePushRoutingPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePushRoutingPolicyTests.swift; sourceTree = "<group>"; };
+		C0D3B1000000000000000007 /* IncomingCallRoutingPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallRoutingPolicy.swift; sourceTree = "<group>"; };
+		C0D3B1000000000000000008 /* IncomingCallRoutingPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallRoutingPolicyTests.swift; sourceTree = "<group>"; };
 		D6B9C3BE1BDB9EDBCEBCEFA5 /* GetStoriesRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetStoriesRequest.swift; sourceTree = "<group>"; };
 		E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55C74937714AE9E4DD06B3B /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
@@ -1724,6 +1765,14 @@
 			files = (
 				E97EAFE9243EFF3800D81243 /* SmartYardSharedDataFramework.framework in Frameworks */,
 				F05CF42A050E47DD1C09583F /* Pods_SmartYard.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C0D3A1000000000000000032 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52F69782AAF3DCDBCFDDA523 /* Pods_SmartYardTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2351,6 +2400,7 @@
 		844AC3E023EBFE810066006D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C0D3B1000000000000000003 /* AddressListTransformer.swift */,
 				9A0F5A3E2F7A000000C0D001 /* AddressesListViewModel+Sections.swift */,
 				844AC3D423EBFDAF0066006D /* AddressesListViewModel.swift */,
 			);
@@ -2432,6 +2482,7 @@
 		844AC40423EC22140066006D /* Entries */ = {
 			isa = PBXGroup;
 			children = (
+				C0D3B1000000000000000007 /* IncomingCallRoutingPolicy.swift */,
 				FAD4E0712D31CDFC00B0130C /* IncomingCallVideoState.swift */,
 				844AC3B023EAD0930066006D /* IncomingCallState.swift */,
 				844AC3B223EAD09B0066006D /* IncomingCallDoorState.swift */,
@@ -3052,6 +3103,7 @@
 				3A3EF203271DFA9600B73B36 /* Swift.swift */,
 				84854B4023FA9A99001B44F2 /* ActivityTracker.swift */,
 				84854B3C23FA9918001B44F2 /* ErrorTracker.swift */,
+				C0D3A1000000000000000012 /* AuthorizationErrorClassifier.swift */,
 				84854B4B23FADD94001B44F2 /* CustomRxKeyboard.swift */,
 				847880DF24A4BB3B008D9E33 /* ScreenshotHelper.swift */,
 				3A4A4A772704826600C5B609 /* SharedFunctions.swift */,
@@ -3310,6 +3362,7 @@
 				B0B71A96C6C8995993C06C49 /* Pods */,
 				9597597AA6C1CAECCA7D92F7 /* Frameworks */,
 				8B71479B2EFAB1250099703B /* Recovered References */,
+				C0D3A1000000000000000021 /* SmartYardTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3321,6 +3374,7 @@
 				E97EAFE2243EFF3800D81243 /* SmartYardSharedDataFramework.framework */,
 				849653072472C93A000E1375 /* SmartYardWidget.appex */,
 				3A555B0E2700573400E70CB9 /* SmartYardIntents.appex */,
+				C0D3A1000000000000000015 /* SmartYardTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4517,6 +4571,7 @@
 		8B714DA32EFACCAD0099703B /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
+				C0D3B1000000000000000001 /* DoorOpeningDecision.swift */,
 				8B714D992EFACCAD0099703B /* APIWrapper+Address.swift */,
 				8B714D9A2EFACCAD0099703B /* ApiWrapper+CCTV.swift */,
 				8B714D9B2EFACCAD0099703B /* APIWrapper+Extensions.swift */,
@@ -4709,7 +4764,9 @@
 			isa = PBXGroup;
 			children = (
 				8B714DD82EFACCAD0099703B /* MessageType.swift */,
+				C0D3B1000000000000000005 /* MessagePushRoutingPolicy.swift */,
 				8B714DD92EFACCAD0099703B /* PushNotificationService.swift */,
+				C0D3A1000000000000000011 /* ParanoidPushPayload.swift */,
 			);
 			path = PushNotificationService;
 			sourceTree = "<group>";
@@ -4769,6 +4826,7 @@
 				8B714DE62EFACCAD0099703B /* WebRTCService */,
 				9A0F5A0C2F751A5E00C0D001 /* AppTelemetryService.swift */,
 				8B714DE72EFACCAD0099703B /* LogoutHelper.swift */,
+				C0D3A1000000000000000071 /* LogoutWorkflow.swift */,
 				9A0F5A2A2F75350000C0D001 /* PhoneDialing.swift */,
 				9A0F5A2C2F75350000C0D001 /* RequestSupportCallbackUseCase.swift */,
 				9A0F5A2E2F75350000C0D001 /* SupportCallActionsPresenter.swift */,
@@ -5128,6 +5186,7 @@
 				8E65EC65DF6EAF2CB3A1B831 /* Pods_SmartYard.framework */,
 				297C4C1274F6636BA2F4B75B /* Pods_SmartYardIntents.framework */,
 				E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */,
+				B63CC9F2893130F15129AA5B /* Pods_SmartYardTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -5163,8 +5222,24 @@
 				484ED75460AB5A897D8A784D /* Pods-SmartYardIntents.release.xcconfig */,
 				2A7BA6D3CA5EBA045CB5F988 /* Pods-SmartYardWidget.debug.xcconfig */,
 				E55C74937714AE9E4DD06B3B /* Pods-SmartYardWidget.release.xcconfig */,
+				552F284845C2D29AD41998A6 /* Pods-SmartYardTests.debug.xcconfig */,
+				4098C33E5FB5F9952026293C /* Pods-SmartYardTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C0D3A1000000000000000021 /* SmartYardTests */ = {
+			isa = PBXGroup;
+			children = (
+				C0D3A1000000000000000013 /* ParanoidPushPayloadTests.swift */,
+				C0D3A1000000000000000014 /* AuthorizationErrorClassifierTests.swift */,
+				C0D3A1000000000000000072 /* LogoutWorkflowTests.swift */,
+				C0D3B1000000000000000002 /* DoorOpeningDecisionTests.swift */,
+				C0D3B1000000000000000004 /* AddressListTransformerTests.swift */,
+				C0D3B1000000000000000006 /* MessagePushRoutingPolicyTests.swift */,
+				C0D3B1000000000000000008 /* IncomingCallRoutingPolicyTests.swift */,
+			);
+			path = SmartYardTests;
 			sourceTree = "<group>";
 		};
 		E91724492410E27D00F2B810 /* SmartYardSearchTextFields */ = {
@@ -5776,6 +5851,25 @@
 			productReference = 84F840D223E07DA5008DBE50 /* SmartYard.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C0D3A1000000000000000041 /* SmartYardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C0D3A1000000000000000053 /* Build configuration list for PBXNativeTarget "SmartYardTests" */;
+			buildPhases = (
+				6C24D12A8693230C110BF5A2 /* [CP] Check Pods Manifest.lock */,
+				C0D3A1000000000000000031 /* Sources */,
+				C0D3A1000000000000000032 /* Frameworks */,
+				C0D3A1000000000000000033 /* Resources */,
+				E949CFEF0CF6886CB4CA4393 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartYardTests;
+			productName = SmartYardTests;
+			productReference = C0D3A1000000000000000015 /* SmartYardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E97EAFE1243EFF3800D81243 /* SmartYardSharedDataFramework */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E97EAFEB243EFF3800D81243 /* Build configuration list for PBXNativeTarget "SmartYardSharedDataFramework" */;
@@ -5824,6 +5918,9 @@
 							};
 						};
 					};
+					C0D3A1000000000000000041 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					E97EAFE1243EFF3800D81243 = {
 						CreatedOnToolsVersion = 10.3;
 						LastSwiftMigration = 1030;
@@ -5854,6 +5951,7 @@
 				E97EAFE1243EFF3800D81243 /* SmartYardSharedDataFramework */,
 				849653062472C93A000E1375 /* SmartYardWidget */,
 				3A555B0D2700573400E70CB9 /* SmartYardIntents */,
+				C0D3A1000000000000000041 /* SmartYardTests */,
 			);
 		};
 /* End PBXProject section */
@@ -6010,6 +6108,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C0D3A1000000000000000033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E97EAFE0243EFF3800D81243 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6082,6 +6187,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Look for a global file named 'mapbox' or '.mapbox' within the home directory\ntoken_file=~/.mapbox\ntoken_file2=~/mapbox\ntoken=\"$(cat $token_file 2>/dev/null || cat $token_file2 2>/dev/null)\"\nif [ \"$token\" ]; then\n  plutil -replace MGLMapboxAccessToken -string $token \"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\nelse\n  echo 'warning: Missing Mapbox access token'\n  echo \"warning: Get an access token from <https://account.mapbox.com/access-tokens/>, then create a new file at $token_file or $token_file2 that contains the access token.\"\nfi\n";
+		};
+		6C24D12A8693230C110BF5A2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SmartYardTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 		84B9EC9F23E08D7500979C39 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6202,6 +6329,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E949CFEF0CF6886CB4CA4393 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SmartYardTests/Pods-SmartYardTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SmartYardTests/Pods-SmartYardTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SmartYardTests/Pods-SmartYardTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E988DABC2444AB1D00C66371 /* Setup GoogleService-Info.plist */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -6264,6 +6408,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0D3A1000000000000000081 /* DoorOpeningDecision.swift in Sources */,
+				C0D3A1000000000000000084 /* AddressListTransformer.swift in Sources */,
+				C0D3A1000000000000000087 /* MessagePushRoutingPolicy.swift in Sources */,
+				C0D3A1000000000000000091 /* IncomingCallRoutingPolicy.swift in Sources */,
+				C0D3A1000000000000000001 /* ParanoidPushPayload.swift in Sources */,
+				C0D3A1000000000000000002 /* AuthorizationErrorClassifier.swift in Sources */,
+				C0D3A1000000000000000061 /* LogoutWorkflow.swift in Sources */,
 				3A9C5E2D261B7989004FB962 /* HistoryDataItem.swift in Sources */,
 				E9E4273423F55C4400F5D593 /* ServiceUnavailableViewController.swift in Sources */,
 				84963973248680C10086B6E9 /* VideoPeriodPickerCell.swift in Sources */,
@@ -6886,6 +7037,28 @@
 				3A200B0D27297F950022A0EC /* SmartYardSharedDataUtilities.swift in Sources */,
 				849652CC2472AF44000E1375 /* SmartYardSharedData.swift in Sources */,
 				849652CE2472AF4A000E1375 /* SmartYardSharedObject.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C0D3A1000000000000000031 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0D3A1000000000000000082 /* DoorOpeningDecision.swift in Sources */,
+				C0D3A1000000000000000083 /* DoorOpeningDecisionTests.swift in Sources */,
+				C0D3A1000000000000000085 /* AddressListTransformer.swift in Sources */,
+				C0D3A1000000000000000086 /* AddressListTransformerTests.swift in Sources */,
+				C0D3A1000000000000000088 /* MessagePushRoutingPolicy.swift in Sources */,
+				C0D3A1000000000000000089 /* MessageType.swift in Sources */,
+				C0D3A1000000000000000090 /* MessagePushRoutingPolicyTests.swift in Sources */,
+				C0D3A1000000000000000092 /* IncomingCallRoutingPolicy.swift in Sources */,
+				C0D3A1000000000000000093 /* IncomingCallRoutingPolicyTests.swift in Sources */,
+				C0D3A1000000000000000003 /* ParanoidPushPayload.swift in Sources */,
+				C0D3A1000000000000000004 /* AuthorizationErrorClassifier.swift in Sources */,
+				C0D3A1000000000000000062 /* LogoutWorkflow.swift in Sources */,
+				C0D3A1000000000000000005 /* ParanoidPushPayloadTests.swift in Sources */,
+				C0D3A1000000000000000006 /* AuthorizationErrorClassifierTests.swift in Sources */,
+				C0D3A1000000000000000063 /* LogoutWorkflowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7904,6 +8077,38 @@
 			};
 			name = Release;
 		};
+		C0D3A1000000000000000051 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 552F284845C2D29AD41998A6 /* Pods-SmartYardTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C0D3A1000000000000000052 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4098C33E5FB5F9952026293C /* Pods-SmartYardTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = MJS3C63KA9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sesameware.smartyard.oem.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		E97EAFEC243EFF3800D81243 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -8018,6 +8223,15 @@
 			buildConfigurations = (
 				84F840E523E07DA5008DBE50 /* Debug */,
 				84F840E623E07DA5008DBE50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C0D3A1000000000000000053 /* Build configuration list for PBXNativeTarget "SmartYardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C0D3A1000000000000000051 /* Debug */,
+				C0D3A1000000000000000052 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

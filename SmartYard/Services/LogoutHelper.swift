@@ -45,21 +45,14 @@ final class LogoutHelper {
             guard let self = self else {
                 return
             }
-            
-            Messaging.messaging().isAutoInitEnabled = false
-            self.pushNotificationService.deletePushToken()
-            self.pushNotificationService.resetInstanceId()
-                .trackActivity(activityTracker)
-                .trackError(errorTracker)
-                .asDriver(onErrorJustReturn: nil)
-                .ignoreNil()
-                .drive(
-                    onNext: { [weak self] in
-                        SmartYardSharedDataUtilities.clearSharedData()
-                        self?.accessService.logout()
-                    }
-                )
-                .disposed(by: disposeBag)
+
+            self.makeLogoutWorkflow(
+                activityTracker: activityTracker,
+                errorTracker: errorTracker
+            )
+            .run()
+            .subscribe()
+            .disposed(by: disposeBag)
         }
         
         alertService.showDialog(
@@ -69,5 +62,36 @@ final class LogoutHelper {
             priority: 1000
         )
     }
-    
+
+    private func makeLogoutWorkflow(
+        activityTracker: ActivityTracker,
+        errorTracker: ErrorTracker
+    ) -> LogoutWorkflow {
+        let pushNotificationService = self.pushNotificationService
+        let accessService = self.accessService
+
+        return LogoutWorkflow(
+            disableAutomaticPushRegistration: {
+                Messaging.messaging().isAutoInitEnabled = false
+            },
+            deletePushToken: {
+                pushNotificationService.deletePushToken()
+            },
+            resetPushRegistration: {
+                return pushNotificationService.resetInstanceId()
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .ignoreElements()
+                    .asCompletable()
+                    .observe(on: MainScheduler.instance)
+            },
+            clearSharedData: {
+                SmartYardSharedDataUtilities.clearSharedData()
+            },
+            clearSession: {
+                accessService.logout()
+            }
+        )
+    }
+
 }

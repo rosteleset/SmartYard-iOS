@@ -373,15 +373,10 @@ final class AddressesListViewModel: BaseViewModel {
                     // TODO: Удалить этот workaround, когда сервер перестанет возвращать дубликаты адресов
                     // В редких случаях сервер дважды присылает один и тот же address с одинаковым houseId — это баг на бэке
                     // Временно фильтруем такие дубликаты вручную
-                    var seen = Set<String>()
-                    let uniqueApprovedAddresses = approvedAddresses.filter { address in
-                        if seen.contains(address.houseId) {
-                            return false
-                        } else {
-                            seen.insert(address.houseId)
-                            return true
-                        }
-                    }
+                    let uniqueApprovedAddresses = AddressListTransformer.removingDuplicates(
+                        from: approvedAddresses,
+                        identifiedBy: { $0.houseId }
+                    )
 
                     self?.cacheOfflineAccess(uniqueApprovedAddresses)
                     self?.logAddressListOpened(addressesCount: uniqueApprovedAddresses.count)
@@ -1172,38 +1167,19 @@ extension AddressesListViewModel: QRCodeScanViewModelDelegate {
 }
 
 extension AddressesListViewModel {
-    private func defaultSorted(_ addresses: GetAddressListResponseData) -> GetAddressListResponseData {
-        let alphabetic = addresses.sorted {
-            $0.address.localizedCaseInsensitiveCompare($1.address) == .orderedAscending
-        }
-        let withDoors = alphabetic.filter { !$0.doors.isEmpty }
-        let withoutDoors = alphabetic.filter { $0.doors.isEmpty }
-
-        return withDoors + withoutDoors
-    }
-    
     func saveAddressesOrder(_ addresses: GetAddressListResponseData) {
         let order = addresses.map { $0.houseId }
         accessService.userPreferredAddressOrder = order
     }
     
     private func applySavedOrder(to addresses: GetAddressListResponseData) -> GetAddressListResponseData {
-        let savedOrder = accessService.userPreferredAddressOrder
-        
-        guard !savedOrder.isEmpty else {
-            return defaultSorted(addresses)
-        }
-        
-        return addresses.sorted { lhs, rhs in
-            let lhsIndex = savedOrder.firstIndex(of: lhs.houseId) ?? Int.max
-            let rhsIndex = savedOrder.firstIndex(of: rhs.houseId) ?? Int.max
-            if lhsIndex != rhsIndex {
-                return lhsIndex < rhsIndex
-            }
-            
-            // Если оба отсутствуют в saved, сортируем по алфавиту
-            return lhs.address.localizedCaseInsensitiveCompare(rhs.address) == .orderedAscending
-        }
+        AddressListTransformer.sorted(
+            addresses,
+            savedOrder: accessService.userPreferredAddressOrder,
+            identifier: { $0.houseId },
+            title: { $0.address },
+            hasDoors: { !$0.doors.isEmpty }
+        )
     }
     
     func moveApprovedAddress(from fromIndex: Int, to toIndex: Int) {

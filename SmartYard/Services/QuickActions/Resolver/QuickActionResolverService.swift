@@ -178,28 +178,13 @@ private extension QuickActionResolverService {
     }
 
     func sortedAddresses(_ addresses: GetAddressListResponseData) -> GetAddressListResponseData {
-        let savedOrder = accessService.userPreferredAddressOrder
-
-        guard !savedOrder.isEmpty else {
-            let alphabetic = addresses.sorted {
-                $0.address.localizedCaseInsensitiveCompare($1.address) == .orderedAscending
-            }
-            let withDoors = alphabetic.filter { !$0.doors.isEmpty }
-            let withoutDoors = alphabetic.filter { $0.doors.isEmpty }
-
-            return withDoors + withoutDoors
-        }
-
-        return addresses.sorted { first, second in
-            let firstIndex = savedOrder.firstIndex(of: first.houseId) ?? Int.max
-            let secondIndex = savedOrder.firstIndex(of: second.houseId) ?? Int.max
-
-            if firstIndex != secondIndex {
-                return firstIndex < secondIndex
-            }
-
-            return first.address.localizedCaseInsensitiveCompare(second.address) == .orderedAscending
-        }
+        AddressListTransformer.sorted(
+            addresses,
+            savedOrder: accessService.userPreferredAddressOrder,
+            identifier: { $0.houseId },
+            title: { $0.address },
+            hasDoors: { !$0.doors.isEmpty }
+        )
     }
 
     func sortedSettingsAddresses(_ addresses: GetSettingsListResponseData) -> GetSettingsListResponseData {

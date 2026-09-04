@@ -307,7 +307,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             }
 
             // MARK: Если вызов пришёл обычным пуш-уведомлением, то показываем экран входящего вызова
-            if !isCallKitUsed {
+            if IncomingCallRoutingPolicy.presentation(useCallKit: isCallKitUsed) == .immediately {
                 incomingCallWindow?.rootViewController = portraitVC
                 incomingCallWindow?.makeKeyAndVisible()
             }
@@ -453,14 +453,23 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         // MARK: Проверяем, есть ли у нас уже входящие звонки на данный момент
         // Скорее всего, дальше надо будет делать какую-то очередь, но сейчас для демо и так сгодится
         
-        guard !linphoneService.hasEnqueuedCalls else {
+        let hasEnqueuedCall = linphoneService.hasEnqueuedCalls
+        let isIgnored = !hasEnqueuedCall
+            && pushNotificationService.isCallIgnored(callId: callPayload.uniqueIdentifier)
+        let admissionDecision = IncomingCallRoutingPolicy.admission(
+            hasEnqueuedCall: hasEnqueuedCall,
+            isIgnored: isIgnored
+        )
+
+        switch admissionDecision {
+        case .rejectAlreadyHandling:
             Logger.logWarning("Cannot process incoming call: already handling another call.")
             return
-        }
-        
-        guard !pushNotificationService.isCallIgnored(callId: callPayload.uniqueIdentifier) else {
+        case .rejectIgnored:
             Logger.logInfo("Ignored call with ID: \(callPayload.uniqueIdentifier)")
             return
+        case .enqueue:
+            break
         }
         
         linphoneService.hasEnqueuedCalls = true

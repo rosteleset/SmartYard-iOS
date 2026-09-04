@@ -358,49 +358,26 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             return
         }
         
-        // MARK: Если пришло уведомление о новом уведомлении в списке - отправляем .newInboxMessageReceived
-        // Это вызовет показ баджа в табе "Уведомления" и обновление списка уведомлений
-        
-        if action == .inbox || action == .videoReady {
-            NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
-            NotificationCenter.default.post(name: .unreadInboxMessagesAvailable, object: nil)
-        }
-        
-        // MARK: Если пришло уведомление о новом сообщении чата - отправляем .newInboxMessageReceived
-        // Это вызовет показ баджа в табе "Чат" и обновление сообщений чата
-        
-        if action == .chat {
-            NotificationCenter.default.post(name: .newChatMessageReceived, object: nil)
-            NotificationCenter.default.post(name: .unreadChatMessagesAvailable, object: nil)
-            
-            // MARK: Если уже находимся на вкладке "Чат", то не показываем пуш
-            
-            if appCoordinator.selectedTabPresentable?.router(for: ChatRoute.main) != nil {
-                completionHandler([])
-                return
-            }
-        }
-        
-        // MARK: Если пришло уведомление о добавленном адресе - отправляем .addressAdded
-        // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
-        
-        if action == .newAddress {
-            NotificationCenter.default.post(name: .addressAdded, object: nil)
-        }
-        
-        // MARK: Если пришло уведомление об успешном платеже - отправляем .paymentCompleted
-        // Это вызовет обновление данных в табе "Оплатить"
-        
-        if action == .paySuccess {
-            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
-            logPaymentPushSuccess()
-        }
+        let initialDecision = MessagePushRoutingPolicy.foreground(
+            action: action,
+            isChatVisible: false
+        )
+        performMessagePushEffects(initialDecision.effects)
 
-        if action == .payError {
-            logPaymentPushFailed()
-        }
-        
-        completionHandler([.alert, .badge, .sound])
+        // NotificationCenter observers are synchronous. Preserve the existing order by
+        // checking the visible chat only after delivering the chat update events.
+        let decision = action == .chat
+            ? MessagePushRoutingPolicy.foreground(
+                action: action,
+                isChatVisible: appCoordinator.selectedTabPresentable?.router(
+                    for: ChatRoute.main
+                ) != nil
+            )
+            : initialDecision
+
+        completionHandler(
+            decision.shouldPresentSystemNotification ? [.alert, .badge, .sound] : []
+        )
     }
     
     // MARK: Чтобы при нажатии на пуш происходило какое-то действие
@@ -482,36 +459,43 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             return
         }
         
-        // MARK: Переход в конкретный таб при нажатии на уведомление
+        let decision = MessagePushRoutingPolicy.opened(action: action)
+        openMessagePushDestination(decision.destination)
+        performMessagePushEffects(decision.effects)
         
-        switch action {
-        case .inbox, .newAddress, .paySuccess, .payError, .videoReady:
+        completionHandler()
+    }
+
+    private func openMessagePushDestination(_ destination: MessagePushDestination) {
+        switch destination {
+        case .notifications:
             appCoordinator.openNotificationsTab()
-            NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
         case .chat:
             appCoordinator.openChatTab()
         }
-        
-        // MARK: Если нажали на уведомление о добавленном адресе - отправляем .addressAdded
-        // Это вызовет перезагрузку данных в табах "Адреса" и "Настройки"
-        // Сделано это вроде для того, чтобы если приложение ушло в бекграунд, данные обновились при нажатии
-        
-        if action == .newAddress {
-            NotificationCenter.default.post(name: .addressAdded, object: nil)
-        }
-        
-        // MARK: Для платежей - аналогично
-        
-        if action == .paySuccess {
-            NotificationCenter.default.post(name: .paymentCompleted, object: nil)
-            logPaymentPushSuccess()
-        }
+    }
 
-        if action == .payError {
-            logPaymentPushFailed()
+    private func performMessagePushEffects(_ effects: [MessagePushEffect]) {
+        effects.forEach { effect in
+            switch effect {
+            case .refreshInbox:
+                NotificationCenter.default.post(name: .newInboxMessageReceived, object: nil)
+            case .markInboxUnread:
+                NotificationCenter.default.post(name: .unreadInboxMessagesAvailable, object: nil)
+            case .refreshChat:
+                NotificationCenter.default.post(name: .newChatMessageReceived, object: nil)
+            case .markChatUnread:
+                NotificationCenter.default.post(name: .unreadChatMessagesAvailable, object: nil)
+            case .addressAdded:
+                NotificationCenter.default.post(name: .addressAdded, object: nil)
+            case .paymentCompleted:
+                NotificationCenter.default.post(name: .paymentCompleted, object: nil)
+            case .logPaymentSuccess:
+                logPaymentPushSuccess()
+            case .logPaymentFailure:
+                logPaymentPushFailed()
+            }
         }
-        
-        completionHandler()
     }
     
     fileprivate func reportDebugInfo(_ userInfo: [AnyHashable: Any]) {

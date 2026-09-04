@@ -64,6 +64,12 @@ target 'SmartYard' do
   
 end
 
+target 'SmartYardTests' do
+  use_frameworks!
+
+  pod 'RxSwift'
+end
+
 target 'SmartYardWidget' do
   use_frameworks!
 
