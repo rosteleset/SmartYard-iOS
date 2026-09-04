@@ -10,12 +10,9 @@ import Foundation
 import RxRelay
 
 private let appStateKey = "appState"
-private let accessTokenKey = "accessToken"
 private let voipTokenKey = "voipToken"
 private let prefersVoipForCallsKey = "prefersVoipForCalls"
 private let prefersSpeakerForCallsKey = "prefersSpeakerForCalls"
-private let clientNameKey = "clientName"
-private let clientPhoneNumberKey = "clientPhoneNumber"
 private let backendURLKey = "backendURL"
 private let providerIdKey = "providerId"
 private let providerNameKey = "providerNameKey"
@@ -52,6 +49,8 @@ private let showStoriesKey = "showStoriesKey"
 final class AccessService {
     static let shared = AccessService()
 
+    private let sessionStore: SessionStore
+
     let optionsUpdated = PublishRelay<Void>()
     let providerChanged = PublishRelay<APIProvider>()
     let backendURLChanged = PublishRelay<String>()
@@ -60,6 +59,10 @@ final class AccessService {
     struct Provider: Equatable {
         let id: String
         let name: String
+    }
+
+    init(sessionStore: SessionStore = SessionStore()) {
+        self.sessionStore = sessionStore
     }
 
     var appState: AppState {
@@ -73,15 +76,10 @@ final class AccessService {
     
     var accessToken: String? {
         get {
-            UserDefaults.standard.string(forKey: accessTokenKey)
+            sessionStore.accessToken
         }
         set {
-            guard let newValue = newValue else {
-                UserDefaults.standard.removeObject(forKey: accessTokenKey)
-                return
-            }
-            
-            UserDefaults.standard.setValue(newValue, forKey: accessTokenKey)
+            sessionStore.accessToken = newValue
         }
     }
     
@@ -119,29 +117,19 @@ final class AccessService {
     
     var clientName: APIClientName? {
         get {
-            UserDefaults.standard.object(APIClientName.self, with: clientNameKey)
+            sessionStore.clientName
         }
         set {
-            guard let newValue = newValue else {
-                UserDefaults.standard.removeObject(forKey: clientNameKey)
-                return
-            }
-            
-            UserDefaults.standard.set(object: newValue, forKey: clientNameKey)
+            sessionStore.clientName = newValue
         }
     }
     
     var clientPhoneNumber: String? {
         get {
-            UserDefaults.standard.string(forKey: clientPhoneNumberKey)
+            sessionStore.clientPhoneNumber
         }
         set {
-            guard let newValue = newValue else {
-                UserDefaults.standard.removeObject(forKey: clientPhoneNumberKey)
-                return
-            }
-            
-            UserDefaults.standard.setValue(newValue, forKey: clientPhoneNumberKey)
+            sessionStore.clientPhoneNumber = newValue
         }
     }
     
@@ -460,17 +448,13 @@ final class AccessService {
     }
 
     func authorizeSession(token: String, name: APIClientName?, phone: String) {
-        accessToken = token
-        clientName = name
-        clientPhoneNumber = phone
+        sessionStore.authorize(token: token, name: name, phone: phone)
 
         sessionAuthorized.accept(())
     }
 
     func logout() {
-        accessToken = nil
-        clientName = nil
-        clientPhoneNumber = nil
+        sessionStore.clear()
         backendURL = Constants.defaultBackendURL ?? "https://127.0.0.1/mobile"
         appState = Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber
         provider = Provider(id: "default", name:"default")
@@ -518,5 +502,5 @@ extension AccessService {
 }
 
 extension AccessService {
-    var hasValidToken: Bool { !(accessToken ?? "").isEmpty }
+    var hasValidToken: Bool { sessionStore.hasValidToken }
 }
