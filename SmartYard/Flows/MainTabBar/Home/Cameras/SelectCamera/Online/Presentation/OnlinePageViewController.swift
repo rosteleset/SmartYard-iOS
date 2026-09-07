@@ -150,7 +150,7 @@ final class OnlinePageViewController: BaseViewController {
         let streamProvider = CameraStreamProvider(
             cameras: cameras,
             ttl: 120,
-            transportPolicy: .hlsOnly
+            transportPolicy: .webRTCPreferred
         )
 
         // Playback coordinator

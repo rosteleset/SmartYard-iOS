@@ -712,6 +712,12 @@
 		C0D3C1000000000000000002 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3C1000000000000000011 /* SessionStore.swift */; };
 		C0D3C1000000000000000003 /* APIClientName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714CDA2EFACCAD0099703B /* APIClientName.swift */; };
 		C0D3C1000000000000000004 /* SessionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3C1000000000000000012 /* SessionStoreTests.swift */; };
+		C0D3D1000000000000000001 /* OperatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3D1000000000000000011 /* OperatorConfiguration.swift */; };
+		C0D3D1000000000000000002 /* OperatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3D1000000000000000011 /* OperatorConfiguration.swift */; };
+		C0D3D1000000000000000003 /* DeliveryTabsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3D1000000000000000012 /* DeliveryTabsConfig.swift */; };
+		C0D3D1000000000000000004 /* DeliveryTabsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3D1000000000000000012 /* DeliveryTabsConfig.swift */; };
+		C0D3D1000000000000000005 /* OperatorConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3D1000000000000000013 /* OperatorConfigurationTests.swift */; };
+		C0D3D1000000000000000006 /* NameValidationPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658B22E81702200C9F9DA /* NameValidationPattern.swift */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
 		E917244D24125CAD00F2B810 /* AvailableServicesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244C24125CAD00F2B810 /* AvailableServicesViewModel.swift */; };
@@ -1640,6 +1646,9 @@
 		C0D3B1000000000000000008 /* IncomingCallRoutingPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallRoutingPolicyTests.swift; sourceTree = "<group>"; };
 		C0D3C1000000000000000011 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		C0D3C1000000000000000012 /* SessionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStoreTests.swift; sourceTree = "<group>"; };
+		C0D3D1000000000000000011 /* OperatorConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorConfiguration.swift; sourceTree = "<group>"; };
+		C0D3D1000000000000000012 /* DeliveryTabsConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryTabsConfig.swift; sourceTree = "<group>"; };
+		C0D3D1000000000000000013 /* OperatorConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorConfigurationTests.swift; sourceTree = "<group>"; };
 		D6B9C3BE1BDB9EDBCEBCEFA5 /* GetStoriesRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetStoriesRequest.swift; sourceTree = "<group>"; };
 		E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55C74937714AE9E4DD06B3B /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
@@ -3797,6 +3806,7 @@
 				8B714CC92EFACCAD0099703B /* APIExtension.swift */,
 				8B714CCA2EFACCAD0099703B /* APIExtensionListItem.swift */,
 				8B714CCB2EFACCAD0099703B /* APIOptions.swift */,
+				C0D3D1000000000000000012 /* DeliveryTabsConfig.swift */,
 				8B714CCC2EFACCAD0099703B /* MenuListItem.swift */,
 			);
 			path = Extensions;
@@ -4696,6 +4706,7 @@
 			children = (
 				8B714DBE2EFACCAD0099703B /* AccessService.swift */,
 				8B714DBF2EFACCAD0099703B /* AppState.swift */,
+				C0D3D1000000000000000011 /* OperatorConfiguration.swift */,
 				C0D3C1000000000000000011 /* SessionStore.swift */,
 			);
 			path = AccessService;
@@ -5246,6 +5257,7 @@
 				C0D3B1000000000000000006 /* MessagePushRoutingPolicyTests.swift */,
 				C0D3B1000000000000000008 /* IncomingCallRoutingPolicyTests.swift */,
 				C0D3C1000000000000000012 /* SessionStoreTests.swift */,
+				C0D3D1000000000000000013 /* OperatorConfigurationTests.swift */,
 			);
 			path = SmartYardTests;
 			sourceTree = "<group>";
@@ -6416,6 +6428,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0D3D1000000000000000001 /* OperatorConfiguration.swift in Sources */,
+				C0D3D1000000000000000003 /* DeliveryTabsConfig.swift in Sources */,
 				C0D3A1000000000000000081 /* DoorOpeningDecision.swift in Sources */,
 				C0D3A1000000000000000084 /* AddressListTransformer.swift in Sources */,
 				C0D3A1000000000000000087 /* MessagePushRoutingPolicy.swift in Sources */,
@@ -7053,6 +7067,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0D3D1000000000000000002 /* OperatorConfiguration.swift in Sources */,
+				C0D3D1000000000000000004 /* DeliveryTabsConfig.swift in Sources */,
+				C0D3D1000000000000000005 /* OperatorConfigurationTests.swift in Sources */,
+				C0D3D1000000000000000006 /* NameValidationPattern.swift in Sources */,
 				C0D3A1000000000000000082 /* DoorOpeningDecision.swift in Sources */,
 				C0D3A1000000000000000083 /* DoorOpeningDecisionTests.swift in Sources */,
 				C0D3A1000000000000000085 /* AddressListTransformer.swift in Sources */,

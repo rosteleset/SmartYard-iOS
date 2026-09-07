@@ -13,56 +13,33 @@ private let appStateKey = "appState"
 private let voipTokenKey = "voipToken"
 private let prefersVoipForCallsKey = "prefersVoipForCalls"
 private let prefersSpeakerForCallsKey = "prefersSpeakerForCalls"
-private let backendURLKey = "backendURL"
-private let providerIdKey = "providerId"
-private let providerNameKey = "providerNameKey"
-private let showPaymentsKey = "showPayments"
-private let showChatKey = "showChat"
-private let chatIdKey = "chatId"
-private let chatDomainKey = "chatDomain"
-private let chatTokenKey = "chatToken"
-private let showCityCamsKey = "showCityCams"
-private let paymentsUrlKey = "paymentsUrl"
-private let chatUrlKey = "chatUrl"
-private let supportPhoneKey = "supportPhoneKey"
-private let phonePrefixKey = "phonePrefixKey"
-private let phonePatternKey = "phonePatternKey"
-private let guestAccessModeKey = "guestAccessKey"
-private let timeZoneKey = "timeZoneKey"
-private let cctvViewKey = "cctvViewKey"
-private let entrancesViewKey = "entrancesViewKey"
 private let showListKey = "showListKey"
-private let activeTabKey = "activeTabKey"
-private let issuesVersionKey = "issuesVersionKey"
 private let userPreferredAddressOrderKey = "userPreferredAddressOrderKey"
-private let nameValidationPatternKey = "nameValidationPatternKey"
-private let deliveryTabsConfigKey = "deliveryTabsConfigKey"
-private let eventsTrackingEnabledKey = "eventsTrackingEnabledKey"
-private let stunUrlKey = "stunUrlKey"
 
 #if DEBUG
 private let forceEventsTrackingEnabledForTesting = true
 #endif
-private let showStoriesKey = "showStoriesKey"
 
 // swiftlint:disable:next type_body_length
 final class AccessService {
     static let shared = AccessService()
 
     private let sessionStore: SessionStore
+    private let operatorConfiguration: OperatorConfiguration
 
     let optionsUpdated = PublishRelay<Void>()
     let providerChanged = PublishRelay<APIProvider>()
     let backendURLChanged = PublishRelay<String>()
     let sessionAuthorized = PublishRelay<Void>()
     
-    struct Provider: Equatable {
-        let id: String
-        let name: String
-    }
+    typealias Provider = OperatorConfiguration.Provider
 
-    init(sessionStore: SessionStore = SessionStore()) {
+    init(
+        sessionStore: SessionStore = SessionStore(),
+        operatorConfiguration: OperatorConfiguration = OperatorConfiguration(defaultValues: .live)
+    ) {
         self.sessionStore = sessionStore
+        self.operatorConfiguration = operatorConfiguration
     }
 
     var appState: AppState {
@@ -157,27 +134,23 @@ final class AccessService {
     
     var backendURL: String {
         get {
-            UserDefaults.standard.string(forKey: backendURLKey) ?? Constants.defaultBackendURL ?? "https://127.0.0.1/mobile"
+            operatorConfiguration.backendURL
         }
         set {
             if newValue == backendURL { return }
-            UserDefaults.standard.setValue(newValue, forKey: backendURLKey)
+            operatorConfiguration.backendURL = newValue
             backendURLChanged.accept(newValue)
         }
     }
     
     var provider: Provider {
         get {
-            Provider(
-                id: UserDefaults.standard.string(forKey: providerIdKey) ?? "default",
-                name: UserDefaults.standard.string(forKey: providerNameKey) ?? "default"
-            )
+            operatorConfiguration.provider
         }
         set {
             if newValue == provider { return }
-                
-            UserDefaults.standard.setValue(newValue.id, forKey: providerIdKey)
-            UserDefaults.standard.setValue(newValue.name, forKey: providerNameKey)
+
+            operatorConfiguration.provider = newValue
             providerChanged.accept(
                 APIProvider(
                     id: newValue.id,
@@ -191,82 +164,82 @@ final class AccessService {
     
     var showPayments: Bool {
         get {
-            UserDefaults.standard.value(forKey: showPaymentsKey) as? Bool ?? true
+            operatorConfiguration.showPayments
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: showPaymentsKey)
+            operatorConfiguration.showPayments = newValue
         }
     }
     
     var paymentsUrl: String {
         get {
-            UserDefaults.standard.string(forKey: paymentsUrlKey) ?? ""
+            operatorConfiguration.paymentsUrl
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: paymentsUrlKey)
+            operatorConfiguration.paymentsUrl = newValue
         }
     }
     
     var chatUrl: String {
         get {
-            UserDefaults.standard.string(forKey: chatUrlKey) ?? ""
+            operatorConfiguration.chatUrl
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: chatUrlKey)
+            operatorConfiguration.chatUrl = newValue
         }
     }
     
     var supportPhone: String {
         get {
-            UserDefaults.standard.string(forKey: supportPhoneKey) ?? ""
+            operatorConfiguration.supportPhone
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: supportPhoneKey)
+            operatorConfiguration.supportPhone = newValue
         }
     }
     
     var showChat: Bool {
         get {
-            UserDefaults.standard.value(forKey: showChatKey) as? Bool ?? false
+            operatorConfiguration.showChat
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: showChatKey)
+            operatorConfiguration.showChat = newValue
         }
     }
     
     var chatId: String {
         get {
-            UserDefaults.standard.value(forKey: chatIdKey) as? String ?? ""
+            operatorConfiguration.chatId
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: chatIdKey)
+            operatorConfiguration.chatId = newValue
         }
     }
     
     var chatDomain: String {
         get {
-            UserDefaults.standard.value(forKey: chatDomainKey) as? String ?? ""
+            operatorConfiguration.chatDomain
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: chatDomainKey)
+            operatorConfiguration.chatDomain = newValue
         }
     }
     
     var chatToken: String {
         get {
-            UserDefaults.standard.value(forKey: chatTokenKey) as? String ?? ""
+            operatorConfiguration.chatToken
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: chatTokenKey)
+            operatorConfiguration.chatToken = newValue
         }
     }
     
     var showCityCams: Bool {
         get {
-            UserDefaults.standard.value(forKey: showCityCamsKey) as? Bool ?? false
+            operatorConfiguration.showCityCams
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: showCityCamsKey)
+            operatorConfiguration.showCityCams = newValue
         }
     }
     
@@ -281,87 +254,82 @@ final class AccessService {
     
     var phonePrefix: String {
         get {
-            UserDefaults.standard.value(forKey: phonePrefixKey) as? String ?? Constants.defaultPhonePrefix
+            operatorConfiguration.phonePrefix
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: phonePrefixKey)
+            operatorConfiguration.phonePrefix = newValue
         }
     }
     
     var phonePattern: String {
         get {
-            UserDefaults.standard.value(forKey: phonePatternKey) as? String ?? Constants.defaultPhonePattern
+            operatorConfiguration.phonePattern
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: phonePatternKey)
+            operatorConfiguration.phonePattern = newValue
         }
     }
     
     var guestAccessModeOnOnly: Bool {
         get {
-            UserDefaults.standard.value(forKey: guestAccessModeKey) as? Bool ?? true
+            operatorConfiguration.guestAccessModeOnOnly
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: guestAccessModeKey)
+            operatorConfiguration.guestAccessModeOnOnly = newValue
         }
     }
     
     var cctvView: String {
         get {
-            UserDefaults.standard.value(forKey: cctvViewKey) as? String ?? "list"
+            operatorConfiguration.cctvView
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: cctvViewKey)
+            operatorConfiguration.cctvView = newValue
         }
     }
 
     var entrancesView: String {
         get {
-            UserDefaults.standard.value(forKey: entrancesViewKey) as? String ?? APIOptions.EntrancesViewType.list.rawValue
+            operatorConfiguration.entrancesView
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: entrancesViewKey)
+            operatorConfiguration.entrancesView = newValue
         }
     }
     
     var activeTab: String {
         get {
-            UserDefaults.standard.value(forKey: activeTabKey) as? String ?? APIOptions.TabNames.addresses.rawValue
+            operatorConfiguration.activeTab
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: activeTabKey)
+            operatorConfiguration.activeTab = newValue
         }
     }
     
     var timeZone: String {
         get {
-            UserDefaults.standard.value(forKey: timeZoneKey) as? String ?? Constants.defaultTimeZone
+            operatorConfiguration.timeZone
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: timeZoneKey)
+            operatorConfiguration.timeZone = newValue
         }
     }
 
     var stunUrl: String? {
         get {
-            UserDefaults.standard.string(forKey: stunUrlKey)
+            operatorConfiguration.stunUrl
         }
         set {
-            guard let newValue else {
-                UserDefaults.standard.removeObject(forKey: stunUrlKey)
-                return
-            }
-
-            UserDefaults.standard.setValue(newValue, forKey: stunUrlKey)
+            operatorConfiguration.stunUrl = newValue
         }
     }
     
     var issuesVersion: String {
         get {
-            UserDefaults.standard.value(forKey: issuesVersionKey) as? String ?? "1"
+            operatorConfiguration.issuesVersion
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: issuesVersionKey)
+            operatorConfiguration.issuesVersion = newValue
         }
     }
 
@@ -370,19 +338,19 @@ final class AccessService {
 #if DEBUG
             if forceEventsTrackingEnabledForTesting { return true }
 #endif
-            return UserDefaults.standard.value(forKey: eventsTrackingEnabledKey) as? Bool ?? false
+            return operatorConfiguration.eventsTrackingEnabled
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: eventsTrackingEnabledKey)
+            operatorConfiguration.eventsTrackingEnabled = newValue
         }
     }
 
     var showStories: Bool {
         get {
-            UserDefaults.standard.value(forKey: showStoriesKey) as? Bool ?? false
+            operatorConfiguration.showStories
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: showStoriesKey)
+            operatorConfiguration.showStories = newValue
         }
     }
     
@@ -396,55 +364,33 @@ final class AccessService {
     }
     
     var phoneLengthWithoutPrefix: Int {
-        phonePattern.count(of: "#")
+        operatorConfiguration.phoneLengthWithoutPrefix
     }
     
     var phoneLengthWithPrefix: Int {
-        phoneLengthWithoutPrefix + phonePrefix.count + 1
+        operatorConfiguration.phoneLengthWithPrefix
     }
 
     var nameValidationPattern: NameValidationPattern? {
         get {
-            decode(NameValidationPattern.self, from: nameValidationPatternKey)
+            operatorConfiguration.nameValidationPattern
         }
         set {
-            encodeAndSave(newValue, to: nameValidationPatternKey)
+            operatorConfiguration.nameValidationPattern = newValue
         }
     }
 
     var deliveryTabsConfig: DeliveryTabsConfig? {
         get {
-            decode(DeliveryTabsConfig.self, from: deliveryTabsConfigKey)
+            operatorConfiguration.deliveryTabsConfig
         }
         set {
-            encodeAndSave(newValue, to: deliveryTabsConfigKey)
+            operatorConfiguration.deliveryTabsConfig = newValue
         }
     }
 
     func setPhonePattern(_ from: String? = nil) {
-        guard let from = from else {
-            return
-        }
-        
-        let fromRange = NSRange(from.startIndex ..< from.endIndex, in: from)
-        
-        do {
-            let regex = try NSRegularExpression(pattern: #"^\+?(?<prefix>\d+)\s*(?<pattern>.*)$"#)
-            let matches = regex.matches(in: from, range: fromRange)
-            
-            guard let match = matches.first else {
-                return
-            }
-            
-            if let prefixRange = Range(match.range(withName: "prefix"), in: from) {
-                phonePrefix = String(from[prefixRange])
-            }
-            if let patternRange = Range(match.range(withName: "pattern"), in: from) {
-                phonePattern = String(from[patternRange])
-            }
-        } catch _ {
-            return
-        }
+        operatorConfiguration.setPhonePattern(from)
     }
 
     func authorizeSession(token: String, name: APIClientName?, phone: String) {
@@ -457,7 +403,7 @@ final class AccessService {
         sessionStore.clear()
         backendURL = Constants.defaultBackendURL ?? "https://127.0.0.1/mobile"
         appState = Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber
-        provider = Provider(id: "default", name:"default")
+        provider = Provider(id: "default", name: "default")
         showPayments = true
         paymentsUrl = ""
         supportPhone = ""
@@ -481,26 +427,19 @@ final class AccessService {
 }
 
 extension AccessService {
-
-    private func encodeAndSave<T: Encodable>(_ newValue: T?, to key: String) {
-        let defaults = UserDefaults.standard
-        if let value = newValue {
-            let data = try? JSONEncoder().encode(value)
-            defaults.set(data, forKey: key)
-        } else {
-            defaults.removeObject(forKey: key)
-        }
-    }
-
-    private func decode<T: Decodable>(_: T.Type, from key: String) -> T? {
-        guard let data = UserDefaults.standard.data(forKey: key) else {
-            return nil
-        }
-        return try? JSONDecoder().decode(T.self, from: data)
-    }
-
+    var hasValidToken: Bool { sessionStore.hasValidToken }
 }
 
-extension AccessService {
-    var hasValidToken: Bool { sessionStore.hasValidToken }
+extension OperatorConfiguration.DefaultValues {
+    static var live: Self {
+        .init(
+            backendURL: Constants.defaultBackendURL ?? "https://127.0.0.1/mobile",
+            phonePrefix: Constants.defaultPhonePrefix,
+            phonePattern: Constants.defaultPhonePattern,
+            timeZone: Constants.defaultTimeZone,
+            cctvView: APIOptions.CCTVViewType.list.rawValue,
+            entrancesView: APIOptions.EntrancesViewType.list.rawValue,
+            activeTab: APIOptions.TabNames.addresses.rawValue
+        )
+    }
 }

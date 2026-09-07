@@ -1,9 +1,10 @@
 # Codex Project Rules
 
-- Do not run `xcodebuild` unless explicitly requested.
-- If a build check is needed, first ask the user to run the command locally.
-- Verify changes using only static analysis: `git diff`, project search, and reading files.
-- If a build is required, provide a short command and wait for the user's error log.
+- Run `xcodebuild` yourself when build verification is appropriate, unless the user explicitly asks not to build.
+- Never pass `CODE_SIGNING_ALLOWED=NO` when building SmartYard for Simulator. SmartYard targets rely on signed App Group entitlements; disabling signing can make `containerURL(forSecurityApplicationGroupIdentifier:)` return `nil` and crash the app at launch.
+- Do not ask the user to run a build that Codex can run directly.
+- Verify changes with static analysis and an appropriate targeted build.
+- If a build fails, inspect the error and fix issues related to the current task.
 - Push the `Sesame` branch only to the `gitap` remote.
 - Push the `Teledom(OEM-version)` branch only to the `PUBLIC` GitHub remote.
 - Use this commit message format:
@@ -31,6 +32,7 @@
 - In RxSwift subscriptions, prefer `subscribe(with: self) { owner, ... in ... }` over `subscribe(onNext: { [weak self] ... })` when the subscription captures `self`.
 - Prefer ternary operators over `if`/`else` when the expression stays readable and the conditional is simple.
 - Follow the Google Swift Style Guide by default, unless existing project conventions or SwiftLint rules require otherwise.
+- When creating new files with header comments, do not write `Created by Codex`; use `Created by Александр Попов` instead.
 - Treat localization as required whenever user-facing text changes: update the corresponding key in every supported `.lproj`, keep meaning, placeholders, formatting, and paragraph breaks consistent across translations, and never update only one locale unless the user explicitly limits the scope.
 - Follow the project programmatic-layout rules below.
 
@@ -59,4 +61,5 @@
 - Give every page a localized title, message, and SF Symbol. When a feature depends on an operator-provided service, append `*` to its title and provide a localized `footnote` explaining that availability depends on the operator's support and connected services.
 - Generate `What's New` content and translations for every app locale supported by the target build. Operator branches may require different pages and wording; do not copy another operator's release notes without checking its commit range and available services.
 - Keep release-specific `What's New` pages, release versions, and translations as local build-preparation artifacts. Never stage, commit, or push them. Only reusable `What's New` infrastructure belongs in the repository.
+- Before archiving, verify that `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` match between the containing app and every embedded app extension. Do not start the archive while any embedded extension has a different marketing version or build number.
 - Before the release build, verify that the generated release version matches `MARKETING_VERSION` and that every generated page has all required translations. After the build, restore or remove the generated release-specific changes.

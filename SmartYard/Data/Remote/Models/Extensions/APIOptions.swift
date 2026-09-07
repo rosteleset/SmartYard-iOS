@@ -177,16 +177,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
 
 }
 
-struct DeliveryTabs: Codable {
-    let layoutVisible: Bool?
-    let courierVisible: Bool?
-    let officeVisible: Bool?
-}
-
-enum DeliveryTab: String, Codable, CaseIterable {
-    case courier
-    case office
-
+extension DeliveryTab {
     var title: String {
         switch self {
         case .courier: return L10n.Address.Confirmation.Delivery.courierShort
@@ -195,14 +186,11 @@ enum DeliveryTab: String, Codable, CaseIterable {
     }
 }
 
-struct DeliveryTabsConfig: Codable, Equatable {
-    let layoutVisible: Bool
-    let visibleTabs: [DeliveryTab]
-
+extension DeliveryTabsConfig {
     init(deliveryTabs: DeliveryTabs) {
         var tabs: [DeliveryTab] = []
         if deliveryTabs.courierVisible == true { tabs.append(.courier) }
-        if deliveryTabs.officeVisible == true { tabs.append(.office)  }
+        if deliveryTabs.officeVisible == true { tabs.append(.office) }
 
         if tabs.isEmpty {
             Logger.logError("DeliveryTabsConfig: no tabs from server")
