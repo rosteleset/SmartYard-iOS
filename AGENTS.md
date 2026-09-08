@@ -1,6 +1,7 @@
 # Codex Project Rules
 
 - Run `xcodebuild` yourself when build verification is appropriate, unless the user explicitly asks not to build.
+- Do not build the `Teledom(OEM-version)` branch. When the same change is present in both operator branches, verify the build on the `Sesame` branch only.
 - Never pass `CODE_SIGNING_ALLOWED=NO` when building SmartYard for Simulator. SmartYard targets rely on signed App Group entitlements; disabling signing can make `containerURL(forSecurityApplicationGroupIdentifier:)` return `nil` and crash the app at launch.
 - Do not ask the user to run a build that Codex can run directly.
 - Verify changes with static analysis and an appropriate targeted build.
