@@ -14,11 +14,7 @@ import SmartYardSharedDataFramework
 // swiftlint:disable file_length
 // swiftlint:disable:next type_body_length
 final class AddressesListViewModel: BaseViewModel {
-    
-    // MARK: Я в курсе, что это хреновая идея
-    // Но это самый простой способ хранить значение переменной для одной сессии (до перезапуска)
-    static var shouldForceTransitionForCurrentSession = true
-    
+
     private let apiWrapper: APIWrapper
     private let pushNotificationService: PushNotificationService
     private let permissionService: PermissionService
@@ -353,23 +349,7 @@ final class AddressesListViewModel: BaseViewModel {
                 onNext: { [weak self] args in
                     let (newData, _) = args
                     let (approvedAddresses, unapprovedAddresses) = newData
-                    
-                    // MARK: Если хотя бы одно из условий выполняется:
-                    // 1. Список подтвержденных адресов НЕ пустой
-                    // 2. Список неподтвержденных адресов НЕ пустой
-                    // 3. Если мы уже зафорсили транзишен один раз и больше не можем это сделать
-                    // То - просто отображаем список адресов на главном экране
-                    
-                    // Если не выполняется ни одно из них - форсим переход на экран "Добавление адреса"
-                    
-                    guard !approvedAddresses.isEmpty
-                        || !unapprovedAddresses.isEmpty
-                        || !AddressesListViewModel.shouldForceTransitionForCurrentSession else {
-                        AddressesListViewModel.shouldForceTransitionForCurrentSession = false
-                        self?.router.trigger(.inputContract(isManualTrigger: false))
-                        return
-                    }
-                    
+
                     // TODO: Удалить этот workaround, когда сервер перестанет возвращать дубликаты адресов
                     // В редких случаях сервер дважды присылает один и тот же address с одинаковым houseId — это баг на бэке
                     // Временно фильтруем такие дубликаты вручную
