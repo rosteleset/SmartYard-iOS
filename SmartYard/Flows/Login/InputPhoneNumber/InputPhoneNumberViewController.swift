@@ -3,7 +3,7 @@
 //  SmartYard
 //
 //  Created by Mad Brains on 05.02.2020.
-//  Copyright © 2021 LanTa. All rights reserved.
+//  Copyright © 2021 Sesameware. All rights reserved.
 //
 
 import UIKit

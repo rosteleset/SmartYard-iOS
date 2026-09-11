@@ -2,8 +2,8 @@
 //  ProviderCellModel.swift
 //  SmartYard
 //
-//  Created by LanTa on 13.06.2022.
-//  Copyright © 2021 LanTa. All rights reserved.
+//  Created by Sesameware on 13.06.2022.
+//  Copyright © 2021 Sesameware. All rights reserved.
 //
 
 import Foundation

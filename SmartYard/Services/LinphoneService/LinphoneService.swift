@@ -1,9 +1,9 @@
 //
 //  LinphoneService.swift
-//  sip lanta
+//  sip Sesameware
 //
 //  Created by Antol Peshkov on 28/12/2019.
-//  Copyright © 2021 LanTa. All rights reserved.
+//  Copyright © 2021 Sesameware. All rights reserved.
 //
 
 import Foundation

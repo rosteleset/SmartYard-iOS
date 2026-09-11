@@ -3,7 +3,7 @@
 //  SmartYardTests
 //
 //  Created by Александр Попов.
-//  Copyright © 2026 LanTa. All rights reserved.
+//  Copyright © 2026 Sesameware. All rights reserved.
 //
 
 import RxSwift

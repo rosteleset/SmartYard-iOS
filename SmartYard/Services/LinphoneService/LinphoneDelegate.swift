@@ -1,9 +1,9 @@
 //
 //  LinphoneDelegate.swift
-//  sip lanta
+//  sip Sesameware
 //
 //  Created by admin on 27/01/2020.
-//  Copyright © 2020 LanTa. All rights reserved.
+//  Copyright © 2020 Sesameware. All rights reserved.
 //
 
 import linphonesw

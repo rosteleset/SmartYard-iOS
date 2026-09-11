@@ -3,7 +3,7 @@
 //  SmartYard
 //
 //  Created by admin on 06/02/2020.
-//  Copyright © 2020 LanTa. All rights reserved.
+//  Copyright © 2020 Sesameware. All rights reserved.
 //
 
 import XCoordinator

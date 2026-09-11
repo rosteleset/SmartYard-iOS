@@ -3,7 +3,7 @@
 //  SmartYard
 //
 //  Created by Александр Попов on 23.01.2026.
-//  Copyright © 2026 LanTa. All rights reserved.
+//  Copyright © 2026 Sesameware. All rights reserved.
 //
 
 enum OnlineSelectionSource {

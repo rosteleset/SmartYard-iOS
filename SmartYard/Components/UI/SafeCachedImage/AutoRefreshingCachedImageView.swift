@@ -3,7 +3,7 @@
 //  SmartYard
 //
 //  Created by Александр Попов on 29.02.2024.
-//  Copyright © 2024 LanTa. All rights reserved.
+//  Copyright © 2024 Sesameware. All rights reserved.
 //
 
 import Foundation
