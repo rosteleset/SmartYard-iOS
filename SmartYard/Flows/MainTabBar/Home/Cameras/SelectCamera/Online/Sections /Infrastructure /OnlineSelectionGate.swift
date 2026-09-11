@@ -3,7 +3,7 @@
 //  SmartYard
 //
 //  Created by Александр Попов.
-//  Copyright © 2026 LanTa. All rights reserved.
+//  Copyright © 2026 Sesameware. All rights reserved.
 //
 
 /// Coordinates programmatic scrolling and fullscreen restoration without losing center events.
