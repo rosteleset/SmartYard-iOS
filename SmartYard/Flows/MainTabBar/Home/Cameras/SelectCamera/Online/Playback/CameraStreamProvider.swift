@@ -25,6 +25,7 @@ final class CameraStreamProvider: PlayerResourceProviding {
     private let ttl: TimeInterval
     private let transportPolicy: CameraStreamTransportPolicy
     private let iceServers: [String]
+    private let previewImageProvider: ImageProviding = SYImageProvider()
 
     private var cache: [CameraID: CacheEntry] = [:]
     private var inFlight: [CameraID: UUID] = [:]
@@ -57,6 +58,7 @@ final class CameraStreamProvider: PlayerResourceProviding {
 
     func fetch(id: PlayerItemID, completion: @escaping (SYPlayerResource?) -> Void) {
         let cameraId = id
+        prefetchPreview(cameraId: cameraId)
         cleanupExpired()
 
         if let cached = cache[cameraId], cached.expiresAt > Date() {
@@ -79,6 +81,7 @@ final class CameraStreamProvider: PlayerResourceProviding {
 
     func prefetch(id: PlayerItemID) {
         let cameraId = id
+        prefetchPreview(cameraId: cameraId)
         cleanupExpired()
 
         if let cached = cache[cameraId], cached.expiresAt > Date() {
@@ -172,6 +175,30 @@ private extension CameraStreamProvider {
     func touchCache(cameraId: CameraID) {
         guard let cached = cache[cameraId] else { return }
         store(resource: cached.resource, cameraId: cameraId)
+    }
+
+    func prefetchPreview(cameraId: CameraID) {
+        guard let camera = camerasById[cameraId],
+              let url = URL(string: camera.previewURL)
+        else {
+            return
+        }
+
+        let startedAt = Date()
+        Logger.logDebug(
+            "prefetch preview start id=\(cameraId) type=\(url.pathExtension.lowercased())"
+        )
+        previewImageProvider.prefetch(
+            key: OnlineCameraPreviewRequest.key(cameraId: cameraId, url: url),
+            source: OnlineCameraPreviewRequest.source(url: url),
+            cachePolicy: .refresh(after: OnlineCameraPreviewRequest.cacheInterval)
+        ) { image in
+            let elapsed = Date().timeIntervalSince(startedAt)
+            let result = image == nil ? "failed" : "finished"
+            Logger.logDebug(
+                "prefetch preview \(result) id=\(cameraId) elapsed=\(String(format: "%.3f", elapsed))s"
+            )
+        }
     }
 
     func prefetchHls(resource: SYPlayerResource, cameraId: CameraID) {

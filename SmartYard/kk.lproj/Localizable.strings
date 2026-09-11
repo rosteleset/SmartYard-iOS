@@ -657,12 +657,15 @@
 "player.transport.connectedHLS" = "HLS арқылы қосылды";
 "player.transport.connecting" = "Қосылуда…";
 "player.transport.connectingHLS" = "HLS арқылы қосылуда…";
+"player.transport.connectingLowLatencyHLS" = "LL-HLS арқылы қосылуда…";
 "player.transport.connectingWebRTC" = "WebRTC арқылы қосылуда…";
-"player.transport.hlsInfo" = "HLS буферлеуді пайдаланады, бұл желідегі қысқа үзілістерді азайтуы мүмкін. Нақты уақытпен салыстырғанда кідіріс болуы мүмкін.";
-"player.transport.lowLatencyHLSInfo" = "Бейне төмен кідіріспен беріледі.";
+"player.transport.hlsDelay" = "~6–16 с";
+"player.transport.hlsInfo" = "Бейне HLS арқылы беріледі";
+"player.transport.lowLatencyDelay" = "~1 с";
+"player.transport.lowLatencyHLSInfo" = "Бейне LL-HLS арқылы беріледі";
 "player.transport.switchingToHLS" = "WebRTC қолжетімсіз. HLS арқылы қосылуда…";
 "player.transport.videoUnavailable" = "Бейнені жүктеу мүмкін болмады";
-"player.transport.webRTCInfo" = "Бейне WebRTC арқылы беріледі. Бұл әдіс әдетте кідірісті азайтады.";
+"player.transport.webRTCInfo" = "Бейне WebRTC арқылы беріледі";
 /* MARK: - WHAT'S NEW */
 
 "whatsNew.accessibilityPages" = "Жаңа мүмкіндіктер беттері";
@@ -678,3 +681,5 @@
 
 "whatsNew.language.message" = "Тілді жалпы параметрлерден өзгертіңіз. Қолданба интерфейсі бірден ауысады.";
 "whatsNew.language.title" = "Қолданба тілін таңдаңыз";
+"camera.fullscreen.enter" = "Толық экранға өту";
+"camera.fullscreen.exit" = "Толық экраннан шығу";

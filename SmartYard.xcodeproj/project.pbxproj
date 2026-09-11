@@ -366,6 +366,9 @@
 		8B2ACD502E1EE60B0067438F /* LicencePlateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2ACD4F2E1EE6040067438F /* LicencePlateValidator.swift */; };
 		8B32EDF92E3E6B4A0049B9A5 /* DetailGateAccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B32EDF82E3E6B4A0049B9A5 /* DetailGateAccessViewController.xib */; };
 		8B3595C62F2A277000254A9F /* OnlineSelectionNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3595C52F2A277000254A9F /* OnlineSelectionNavigator.swift */; };
+		C0D3E1000000000000000001 /* OnlineSelectionGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3E1000000000000000011 /* OnlineSelectionGate.swift */; };
+		C0D3E1000000000000000002 /* OnlineSelectionGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3E1000000000000000011 /* OnlineSelectionGate.swift */; };
+		C0D3E1000000000000000003 /* OnlineSelectionGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3E1000000000000000012 /* OnlineSelectionGateTests.swift */; };
 		8B3595C82F2A278100254A9F /* OnlinePlaybackBinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3595C72F2A278100254A9F /* OnlinePlaybackBinder.swift */; };
 		8B3ADCF02F51951C002FFED1 /* QuickActionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3ADCEF2F51951C002FFED1 /* QuickActionsService.swift */; };
 		8B3ADCF42F519972002FFED1 /* QuickActionResolverService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3ADCF32F519972002FFED1 /* QuickActionResolverService.swift */; };
@@ -1285,6 +1288,8 @@
 		8B2ACD4F2E1EE6040067438F /* LicencePlateValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicencePlateValidator.swift; sourceTree = "<group>"; };
 		8B32EDF72E3E6B4A0049B9A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DetailGateAccessViewController.xib; sourceTree = "<group>"; };
 		8B3595C52F2A277000254A9F /* OnlineSelectionNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSelectionNavigator.swift; sourceTree = "<group>"; };
+		C0D3E1000000000000000011 /* OnlineSelectionGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSelectionGate.swift; sourceTree = "<group>"; };
+		C0D3E1000000000000000012 /* OnlineSelectionGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineSelectionGateTests.swift; sourceTree = "<group>"; };
 		8B3595C72F2A278100254A9F /* OnlinePlaybackBinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlinePlaybackBinder.swift; sourceTree = "<group>"; };
 		8B3ADCEF2F51951C002FFED1 /* QuickActionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionsService.swift; sourceTree = "<group>"; };
 		8B3ADCF32F519972002FFED1 /* QuickActionResolverService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickActionResolverService.swift; sourceTree = "<group>"; };
@@ -5137,6 +5142,7 @@
 			isa = PBXGroup;
 			children = (
 				8B3595C52F2A277000254A9F /* OnlineSelectionNavigator.swift */,
+				C0D3E1000000000000000011 /* OnlineSelectionGate.swift */,
 				8BF6C5E92F25520A008AA137 /* Binding */,
 				8BF6C5EE2F25520A008AA137 /* Layout */,
 				8BF6C5EF2F25520A008AA137 /* OnlineSectionControllersProvider.swift */,
@@ -5258,6 +5264,7 @@
 				C0D3B1000000000000000008 /* IncomingCallRoutingPolicyTests.swift */,
 				C0D3C1000000000000000012 /* SessionStoreTests.swift */,
 				C0D3D1000000000000000013 /* OperatorConfigurationTests.swift */,
+				C0D3E1000000000000000012 /* OnlineSelectionGateTests.swift */,
 			);
 			path = SmartYardTests;
 			sourceTree = "<group>";
@@ -6652,6 +6659,7 @@
 				8B714DF12EFACCAD0099703B /* GeoCoderResponseData.swift in Sources */,
 				8B714DF22EFACCAD0099703B /* OfficesRequest.swift in Sources */,
 				8B3595C62F2A277000254A9F /* OnlineSelectionNavigator.swift in Sources */,
+				C0D3E1000000000000000001 /* OnlineSelectionGate.swift in Sources */,
 				8B714DF32EFACCAD0099703B /* EmptyDataInitializable.swift in Sources */,
 				8B714DF42EFACCAD0099703B /* GetStreetsResponseData.swift in Sources */,
 				8B714DF52EFACCAD0099703B /* APIWrapper+FRS.swift in Sources */,
@@ -7067,6 +7075,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0D3E1000000000000000002 /* OnlineSelectionGate.swift in Sources */,
+				C0D3E1000000000000000003 /* OnlineSelectionGateTests.swift in Sources */,
 				C0D3D1000000000000000002 /* OperatorConfiguration.swift in Sources */,
 				C0D3D1000000000000000004 /* DeliveryTabsConfig.swift in Sources */,
 				C0D3D1000000000000000005 /* OperatorConfigurationTests.swift in Sources */,

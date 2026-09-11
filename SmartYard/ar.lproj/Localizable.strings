@@ -651,12 +651,15 @@
 "player.transport.connectedHLS" = "تم الاتصال عبر HLS";
 "player.transport.connecting" = "جارٍ الاتصال…";
 "player.transport.connectingHLS" = "جارٍ الاتصال عبر HLS…";
+"player.transport.connectingLowLatencyHLS" = "جارٍ الاتصال عبر LL-HLS…";
 "player.transport.connectingWebRTC" = "جارٍ الاتصال عبر WebRTC…";
-"player.transport.hlsInfo" = "يستخدم HLS التخزين المؤقت، ما قد يخفف انقطاعات الشبكة القصيرة. قد يحدث تأخير مقارنة بالوقت الفعلي.";
-"player.transport.lowLatencyHLSInfo" = "نقل فيديو بزمن انتقال منخفض.";
+"player.transport.hlsDelay" = "~٦–١٦ ث";
+"player.transport.hlsInfo" = "يتم نقل الفيديو عبر HLS";
+"player.transport.lowLatencyDelay" = "~١ ث";
+"player.transport.lowLatencyHLSInfo" = "يتم نقل الفيديو عبر LL-HLS";
 "player.transport.switchingToHLS" = "WebRTC غير متاح. جارٍ الاتصال عبر HLS…";
 "player.transport.videoUnavailable" = "تعذر تحميل الفيديو";
-"player.transport.webRTCInfo" = "يتم نقل الفيديو عبر WebRTC. توفر هذه الطريقة عادةً زمن انتقال أقل.";
+"player.transport.webRTCInfo" = "يتم نقل الفيديو عبر WebRTC";
 /* MARK: - WHAT'S NEW */
 
 "whatsNew.accessibilityPages" = "صفحات الميزات الجديدة";
@@ -672,3 +675,5 @@
 
 "whatsNew.language.message" = "غيّر اللغة من الإعدادات العامة. ستتغير واجهة التطبيق فورًا.";
 "whatsNew.language.title" = "اختر لغة التطبيق";
+"camera.fullscreen.enter" = "ملء الشاشة";
+"camera.fullscreen.exit" = "الخروج من ملء الشاشة";

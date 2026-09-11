@@ -27,5 +27,12 @@ protocol ImageProviding {
         completion: ((UIImage?) -> Void)?
     )
 
+    func prefetch(
+        key: String,
+        source: ImageSource,
+        cachePolicy: ImageCachePolicy,
+        completion: ((UIImage?) -> Void)?
+    )
+
     func cancel(on imageView: UIImageView)
 }

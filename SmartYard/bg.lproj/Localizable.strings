@@ -651,12 +651,15 @@
 "player.transport.connectedHLS" = "Свързано чрез HLS";
 "player.transport.connecting" = "Свързване…";
 "player.transport.connectingHLS" = "Свързване чрез HLS…";
+"player.transport.connectingLowLatencyHLS" = "Свързване чрез LL-HLS…";
 "player.transport.connectingWebRTC" = "Свързване чрез WebRTC…";
-"player.transport.hlsInfo" = "HLS използва буфериране, което може да изглади кратките прекъсвания на мрежата. Възможно е закъснение спрямо реалното време.";
-"player.transport.lowLatencyHLSInfo" = "Предаване на видео с ниско закъснение.";
+"player.transport.hlsDelay" = "~6–16 сек";
+"player.transport.hlsInfo" = "Видеото се предава чрез HLS";
+"player.transport.lowLatencyDelay" = "~1 сек";
+"player.transport.lowLatencyHLSInfo" = "Видеото се предава чрез LL-HLS";
 "player.transport.switchingToHLS" = "WebRTC не е достъпен. Свързване чрез HLS…";
 "player.transport.videoUnavailable" = "Видеото не може да бъде заредено";
-"player.transport.webRTCInfo" = "Видеото се предава чрез WebRTC. Този метод обикновено осигурява по-ниско закъснение.";
+"player.transport.webRTCInfo" = "Видеото се предава чрез WebRTC";
 /* MARK: - WHAT'S NEW */
 
 "whatsNew.accessibilityPages" = "Страници с нови възможности";
@@ -672,3 +675,5 @@
 
 "whatsNew.language.message" = "Сменете езика в общите настройки. Интерфейсът на приложението се превключва веднага.";
 "whatsNew.language.title" = "Изберете езика на приложението";
+"camera.fullscreen.enter" = "На цял екран";
+"camera.fullscreen.exit" = "Изход от цял екран";

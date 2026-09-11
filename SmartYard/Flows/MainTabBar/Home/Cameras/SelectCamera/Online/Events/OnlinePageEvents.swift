@@ -19,6 +19,7 @@ final class OnlinePageEvents {
 
     /// top carousel (cameras)
     let didCenterMainIndex = PublishRelay<Int>()
+    let didRequestFullscreen = PublishRelay<CameraID>()
 
     /// bottom grid (numbers)
     let didTapPreviewIndex = PublishRelay<Int>()

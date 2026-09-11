@@ -651,12 +651,15 @@
 "player.transport.connectedHLS" = "Подключено по HLS";
 "player.transport.connecting" = "Подключение…";
 "player.transport.connectingHLS" = "Подключаемся по HLS…";
+"player.transport.connectingLowLatencyHLS" = "Подключаемся по LL-HLS…";
 "player.transport.connectingWebRTC" = "Подключаемся по WebRTC…";
-"player.transport.hlsInfo" = "HLS использует буферизацию, которая может сглаживать кратковременные перебои сети. Возможна задержка относительно реального времени.";
-"player.transport.lowLatencyHLSInfo" = "Передача видео с низкой задержкой.";
+"player.transport.hlsDelay" = "~6–16 с";
+"player.transport.hlsInfo" = "Видео передаётся по HLS";
+"player.transport.lowLatencyDelay" = "~1 с";
+"player.transport.lowLatencyHLSInfo" = "Видео передаётся по LL-HLS";
 "player.transport.switchingToHLS" = "WebRTC недоступен. Подключаемся по HLS…";
 "player.transport.videoUnavailable" = "Не удалось загрузить видео";
-"player.transport.webRTCInfo" = "Видео передаётся по WebRTC. Этот способ обычно обеспечивает меньшую задержку.";
+"player.transport.webRTCInfo" = "Видео передаётся по WebRTC";
 /* MARK: - WHAT'S NEW */
 
 "whatsNew.accessibilityPages" = "Страницы с новыми возможностями";
@@ -672,3 +675,5 @@
 
 "whatsNew.language.message" = "Сменить язык можно в общих настройках. Интерфейс приложения переключится сразу.";
 "whatsNew.language.title" = "Выбор языка приложения";
+"camera.fullscreen.enter" = "На весь экран";
+"camera.fullscreen.exit" = "Выйти из полноэкранного режима";

@@ -651,12 +651,15 @@
 "player.transport.connectedHLS" = "HLS orqali ulandi";
 "player.transport.connecting" = "Ulanmoqda…";
 "player.transport.connectingHLS" = "HLS orqali ulanmoqda…";
+"player.transport.connectingLowLatencyHLS" = "LL-HLS orqali ulanmoqda…";
 "player.transport.connectingWebRTC" = "WebRTC orqali ulanmoqda…";
-"player.transport.hlsInfo" = "HLS buferlashdan foydalanadi, bu tarmoqdagi qisqa uzilishlarni yumshatishi mumkin. Real vaqtga nisbatan kechikish bo'lishi mumkin.";
-"player.transport.lowLatencyHLSInfo" = "Video past kechikish bilan uzatiladi.";
+"player.transport.hlsDelay" = "~6–16 son";
+"player.transport.hlsInfo" = "Video HLS orqali uzatiladi";
+"player.transport.lowLatencyDelay" = "~1 son";
+"player.transport.lowLatencyHLSInfo" = "Video LL-HLS orqali uzatiladi";
 "player.transport.switchingToHLS" = "WebRTC mavjud emas. HLS orqali ulanmoqda…";
 "player.transport.videoUnavailable" = "Videoni yuklab bo'lmadi";
-"player.transport.webRTCInfo" = "Video WebRTC orqali uzatiladi. Bu usul odatda kamroq kechikishni ta'minlaydi.";
+"player.transport.webRTCInfo" = "Video WebRTC orqali uzatiladi";
 /* MARK: - WHAT'S NEW */
 
 "whatsNew.accessibilityPages" = "Yangi imkoniyatlar sahifalari";
@@ -672,3 +675,5 @@
 
 "whatsNew.language.message" = "Tilni umumiy sozlamalarda o‘zgartiring. Ilova interfeysi darhol almashadi.";
 "whatsNew.language.title" = "Ilova tilini tanlang";
+"camera.fullscreen.enter" = "To‘liq ekranga o‘tish";
+"camera.fullscreen.exit" = "To‘liq ekrandan chiqish";

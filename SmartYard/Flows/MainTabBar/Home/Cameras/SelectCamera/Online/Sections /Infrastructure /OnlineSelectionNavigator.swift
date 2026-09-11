@@ -20,8 +20,8 @@ final class OnlineSelectionNavigator {
     private var didInitialScroll = false
     private var pendingIntent: OnlineSelectionIntent?
 
-    private var isProgrammaticScroll = false
-    private var targetIndex: Int?
+    private var selectionGate = OnlineSelectionGate()
+    private var navigationRevision = 0
 
     // MARK: - Public
 
@@ -40,6 +40,7 @@ final class OnlineSelectionNavigator {
         _ intent: OnlineSelectionIntent,
         in collectionView: UICollectionView
     ) {
+        navigationRevision &+= 1
         guard canApply(intent, in: collectionView) else {
             if pendingIntent != intent {
                 Logger.logDebug(
@@ -50,6 +51,7 @@ final class OnlineSelectionNavigator {
             return
         }
 
+        pendingIntent = nil
         let shouldAnimate = didInitialScroll
 
         switch intent.source {
@@ -106,24 +108,22 @@ final class OnlineSelectionNavigator {
         }
     }
 
+    func suspendCenteredSelectionUntilInteraction() {
+        selectionGate.suspendUntilUserInteraction()
+    }
+
+    func beginUserInteraction() {
+        selectionGate.beginUserInteraction()
+        pendingIntent = nil
+        navigationRevision &+= 1
+        Logger.logDebug("beginUserInteraction: cleared pending programmatic selection")
+    }
+
     /// Вызывается из layout builder (visibleItemsInvalidationHandler).
     /// Возвращает `true`, если нужно форвардить centered index в VM.
     func shouldForwardTopCenteredIndex(_ index: Int) -> Bool {
         guard didInitialScroll else { return false }
-        guard isProgrammaticScroll else { return true }
-
-        guard let targetIndex else {
-            isProgrammaticScroll = false
-            return false
-        }
-
-        if index == targetIndex {
-            // Мы доехали до цели — на следующем centered можно снова пропускать.
-            isProgrammaticScroll = false
-            self.targetIndex = nil
-        }
-
-        return false
+        return selectionGate.shouldForwardCenteredIndex(index)
     }
 }
 
@@ -149,15 +149,15 @@ private extension OnlineSelectionNavigator {
         guard canApply(pendingIntent, in: collectionView) else { return }
         Logger.logDebug("applyPending id=\(pendingIntent.cameraId) index=\(pendingIntent.index)")
         self.pendingIntent = nil
+        let revision = navigationRevision
         DispatchQueue.main.async { [weak self, weak collectionView] in
-            guard let self, let collectionView else { return }
+            guard let self, let collectionView, self.navigationRevision == revision else { return }
             self.apply(pendingIntent, in: collectionView)
         }
     }
 
     func setProgrammaticTarget(_ index: Int) {
-        isProgrammaticScroll = true
-        targetIndex = index
+        selectionGate.waitForProgrammaticScroll(to: index)
     }
 
     func currentTopCenteredIndex(

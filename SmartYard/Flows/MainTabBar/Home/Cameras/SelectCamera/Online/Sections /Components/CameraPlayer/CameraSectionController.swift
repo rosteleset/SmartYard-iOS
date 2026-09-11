@@ -34,6 +34,9 @@ final class CameraSectionController: SectionController {
             for: indexPath
         )
         cell.configure(with: item)
+        cell.onRequestFullscreen = { [weak self] in
+            self?.events.didRequestFullscreen.accept(item.id)
+        }
         return cell
     }
 

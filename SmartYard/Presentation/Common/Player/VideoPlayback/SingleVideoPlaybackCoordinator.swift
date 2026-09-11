@@ -18,6 +18,7 @@ final class SinglePlayerPlaybackCoordinator {
     private var selectedId: PlayerItemID?
     private var selectedIsMuted: Bool = true
     private var loadedResourceId: PlayerItemID?
+    private var presentation: PlayerPresentation = .inline
 
     private weak var visibleSelectedCell: PlayerAttachable?
     private var visibleSelectedCellId: PlayerItemID?
@@ -27,10 +28,12 @@ final class SinglePlayerPlaybackCoordinator {
 
     init(
         playerController: SYPlayerController = SYPlayerController(),
-        resourceProvider: PlayerResourceProviding
+        resourceProvider: PlayerResourceProviding,
+        usesExternalFullscreenButton: Bool = false
     ) {
         self.playerController = playerController
         self.resourceProvider = resourceProvider
+        playerController.setFullscreenButtonHidden(usesExternalFullscreenButton)
     }
 
     // MARK: - Inputs
@@ -58,6 +61,7 @@ final class SinglePlayerPlaybackCoordinator {
 
     func willDisplay(id: PlayerItemID, cell: PlayerAttachable) {
         guard id == selectedId else { return }
+        guard cell.playerPresentation == presentation else { return }
 
         visibleSelectedCell = cell
         visibleSelectedCellId = id
@@ -65,6 +69,9 @@ final class SinglePlayerPlaybackCoordinator {
     }
 
     func didEndDisplay(id: PlayerItemID, cell: PlayerAttachable) {
+        // A presentation change transfers ownership before the destination cell exists.
+        // Late disappearance callbacks from the previous screen must not pause the stream.
+        guard cell.playerPresentation == presentation else { return }
         guard visibleSelectedCell === cell else { return }
         guard visibleSelectedCellId == id else { return }
 
@@ -90,6 +97,7 @@ final class SinglePlayerPlaybackCoordinator {
     }
 
     func setMode(_ mode: SYPlayerUIMode) {
+        presentation = mode == .fullscreen ? .fullscreen : .inline
         playerController.setMode(mode)
     }
 
@@ -121,6 +129,7 @@ final class SinglePlayerPlaybackCoordinator {
     private func tryStartPlaybackIfPossible() {
         guard let id = selectedId else { return }
         guard let cell = visibleSelectedCell else { return }
+        guard cell.playerPresentation == presentation else { return }
 
         if loadedResourceId == id {
             attachPlayer(to: cell)
@@ -133,23 +142,26 @@ final class SinglePlayerPlaybackCoordinator {
         requestId = rid
 
         resourceProvider.fetch(id: id) { [weak self] resource in
-            guard let self else { return }
-            guard self.requestId == rid else { return }
-            guard self.selectedId == id else { return }
             guard let resource else { return }
 
-            DispatchQueue.main.async {
-                guard self.requestId == rid else { return }
-                guard self.selectedId == id else { return }
-                guard let cell = self.visibleSelectedCell else { return }
-
-                self.attachPlayer(to: cell)
-                self.playerController.setMuted(self.selectedIsMuted)
-                self.playerController.set(resource: resource)
-                self.loadedResourceId = id
-                self.playerController.onAppear()
+            DispatchQueue.main.async { [weak self] in
+                self?.apply(resource: resource, for: id, requestId: rid)
             }
         }
+    }
+
+    private func apply(resource: SYPlayerResource, for id: PlayerItemID, requestId: UUID) {
+        // Fetches may complete off-main. Validate UI ownership only after returning to main.
+        guard self.requestId == requestId,
+              selectedId == id,
+              let cell = visibleSelectedCell,
+              cell.playerPresentation == presentation else { return }
+
+        attachPlayer(to: cell)
+        playerController.setMuted(selectedIsMuted)
+        playerController.set(resource: resource)
+        loadedResourceId = id
+        playerController.onAppear()
     }
 
     private func attachPlayer(to cell: PlayerAttachable) {

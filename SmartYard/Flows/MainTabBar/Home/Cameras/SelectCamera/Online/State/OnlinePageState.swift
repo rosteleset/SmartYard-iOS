@@ -29,6 +29,7 @@ extension CameraViewModel {
         return CameraViewCellModel(
             identity: identity,
             id: id,
+            previewURL: resource.previewImage,
             isMuted: isMuted
         )
     }

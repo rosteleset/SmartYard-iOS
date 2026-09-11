@@ -62,6 +62,34 @@ final class SYImageProvider: ImageProviding {
         }
     }
 
+    func prefetch(
+        key: String,
+        source: ImageSource,
+        cachePolicy: ImageCachePolicy,
+        completion: ((UIImage?) -> Void)? = nil
+    ) {
+        let options = kingfisherOptions(for: cachePolicy)
+
+        switch source {
+        case .remoteImage(let url):
+            let resource = KF.ImageResource(downloadURL: url, cacheKey: key)
+            KingfisherManager.shared.retrieveImage(
+                with: resource,
+                options: options
+            ) { result in
+                completion?(try? result.get().image)
+            }
+
+        case .videoThumbnail(let url):
+            prefetchVideoThumbnail(
+                url: url,
+                key: key,
+                options: options,
+                completion: completion
+            )
+        }
+    }
+
     private func setRemoteImage(
         on imageView: UIImageView,
         url: URL,
@@ -115,36 +143,67 @@ final class SYImageProvider: ImageProviding {
 
             if !shouldStart { return }
 
-            let timeoutWork = DispatchWorkItem { [weak inFlight] in
-                inFlight?.complete(key: key, image: nil)
-            }
-            DispatchQueue.global(qos: .utility).asyncAfter(
-                deadline: .now() + self.thumbnailTimeout,
-                execute: timeoutWork
-            )
+            self.startVideoThumbnailLoad(url: url, key: key, options: options)
+        }
+    }
 
-            let cancellable = VideoThumbnailLoader.shared.loadThumbnail(
-                from: url,
-                timeSeconds: 0.0
-            ) { [weak self] image in
-                guard let self else { return }
-                timeoutWork.cancel()
+    private func prefetchVideoThumbnail(
+        url: URL,
+        key: String,
+        options: KingfisherOptionsInfo,
+        completion: ((UIImage?) -> Void)?
+    ) {
+        cache.retrieveImage(forKey: key, options: options) { [weak self] result in
+            guard let self else { return }
 
-                if let image {
-                    self.cache.store(
-                        image,
-                        forKey: key,
-                        options: KingfisherParsedOptionsInfo(options),
-                        toDisk: true
-                    )
-                }
-                self.inFlight.complete(key: key, image: image)
+            if case .success(let value) = result, let image = value.image {
+                DispatchQueue.main.async { completion?(image) }
+                return
             }
 
-            inFlight.setCancel(key: key) {
-                timeoutWork.cancel()
-                cancellable.cancel()
+            let (shouldStart, _) = inFlight.add(key: key) { image in
+                completion?(image)
             }
+            guard shouldStart else { return }
+
+            self.startVideoThumbnailLoad(url: url, key: key, options: options)
+        }
+    }
+
+    private func startVideoThumbnailLoad(
+        url: URL,
+        key: String,
+        options: KingfisherOptionsInfo
+    ) {
+        let timeoutWork = DispatchWorkItem { [weak inFlight] in
+            inFlight?.complete(key: key, image: nil)
+        }
+        DispatchQueue.global(qos: .utility).asyncAfter(
+            deadline: .now() + thumbnailTimeout,
+            execute: timeoutWork
+        )
+
+        let cancellable = VideoThumbnailLoader.shared.loadThumbnail(
+            from: url,
+            timeSeconds: 0.0
+        ) { [weak self] image in
+            guard let self else { return }
+            timeoutWork.cancel()
+
+            if let image {
+                cache.store(
+                    image,
+                    forKey: key,
+                    options: KingfisherParsedOptionsInfo(options),
+                    toDisk: true
+                )
+            }
+            inFlight.complete(key: key, image: image)
+        }
+
+        inFlight.setCancel(key: key) {
+            timeoutWork.cancel()
+            cancellable.cancel()
         }
     }
 

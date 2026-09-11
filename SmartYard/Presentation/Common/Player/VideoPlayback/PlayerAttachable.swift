@@ -8,10 +8,20 @@
 
 import UIKit
 
-protocol PlayerAttachable: AnyObject {
-    var playerContainerView: UIView { get }
+enum PlayerPresentation {
+    case inline
+    case fullscreen
 }
 
 protocol PlayerControlsAttachable: AnyObject {
     var playerControlsContainerView: UIView { get }
+}
+
+protocol PlayerAttachable: AnyObject {
+    var playerContainerView: UIView { get }
+    var playerPresentation: PlayerPresentation { get }
+}
+
+extension PlayerAttachable {
+    var playerPresentation: PlayerPresentation { .inline }
 }

@@ -9,10 +9,14 @@
 import UIKit
 
 final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable, PlayerControlsAttachable {
+    let playerPresentation: PlayerPresentation = .fullscreen
     let playerContainerView = UIView()
     let playerControlsContainerView: UIView = PlayerControlsOverlayView()
 
     private let zoomScrollView = EdgeHandoffZoomScrollView()
+    private let previewImageView = OnlineCameraPreviewView(frame: .zero)
+    private let fullscreenButton = OnlineCameraFullscreenButton(isFullscreen: true)
+    var onRequestExitFullscreen: (() -> Void)?
     private let minZoomScale: CGFloat = 1.0
     private let maxZoomScale: CGFloat = 5.0
     private var lastLayoutBoundsSize: CGSize = .zero
@@ -34,6 +38,8 @@ final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable, 
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        onRequestExitFullscreen = nil
+        previewImageView.reset()
         resetZoom()
     }
 
@@ -62,6 +68,10 @@ final class OnlineFullscreenCameraCell: UICollectionViewCell, PlayerAttachable, 
 
     func setPagingPanGesture(_ panGesture: UIPanGestureRecognizer) {
         zoomScrollView.pagingScrollView = panGesture.view as? UIScrollView
+    }
+
+    func configure(cameraId: CameraID, previewURL: URL?) {
+        previewImageView.configure(cameraId: cameraId, url: previewURL)
     }
 
     @available(*, unavailable)
@@ -97,6 +107,13 @@ private extension OnlineFullscreenCameraCell {
         contentView.addSubview(zoomScrollView)
         contentView.addSubview(playerControlsContainerView)
         zoomScrollView.addSubview(playerContainerView)
+        playerContainerView.pinSubview(previewImageView)
+        fullscreenButton.onTap = { [weak self] in self?.onRequestExitFullscreen?() }
+        contentView.addSubview(fullscreenButton) { make in
+            make.top.equalTo(contentView.safeAreaLayoutGuide)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(10)
+            make.size.equalTo(44)
+        }
 
         zoomScrollView.frame = contentView.bounds
         zoomScrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

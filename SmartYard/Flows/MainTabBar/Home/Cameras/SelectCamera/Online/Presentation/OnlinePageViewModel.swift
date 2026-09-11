@@ -89,23 +89,13 @@ final class OnlinePageViewModel: BaseViewModel {
             })
             .share(replay: 1, scope: .whileConnected)
 
-        let selectedCameraId: Observable<CameraID> = selectionIntent
-            .map { $0.cameraId }
-            .distinctUntilChanged()
-            .share(replay: 1, scope: .whileConnected)
-
-        let selectedIndex: Observable<Int> = selectionIntent
-            .map { $0.index }
-            .distinctUntilChanged()
-            .share(replay: 1, scope: .whileConnected)
-
         let state = Observable
-            .combineLatest(cameras, selectedCameraId, selectedIndex)
-            .map { cams, selectedId, selectedIndex in
+            .combineLatest(cameras, selectionIntent)
+            .map { cams, selection in
                 OnlinePageState(
                     cameras: cams,
-                    selectedCameraId: selectedId,
-                    selectedIndex: selectedIndex
+                    selectedCameraId: selection.cameraId,
+                    selectedIndex: selection.index
                 )
             }
             .asDriverOnErrorJustComplete()

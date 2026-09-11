@@ -6,8 +6,11 @@
 //  Copyright © 2025 Sesameware. All rights reserved.
 //
 
+import Foundation
+
 struct CameraViewCellModel: Equatable {
     let identity: String
     let id: CameraID
+    let previewURL: URL?
     let isMuted: Bool
 }

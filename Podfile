@@ -39,7 +39,7 @@ target 'SmartYard' do
   pod 'Parchment'#, '2.2.0'
   pod 'lottie-ios'
   pod 'NotificationBannerSwift', :git => 'https://github.com/chekmari/NotificationBanner.git', :branch => 'master'
-  pod 'SmartYardVideoPlayer', :git => 'https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git', :tag => '0.2.2'
+  pod 'SmartYardVideoPlayer', :git => 'https://github.com/rosteleset/SmartYard-VideoPlayer-iOS.git', :commit => '42f2c2dd78fc1abaebacc86c1c2ed535d5546245'
 
   # Calendar
   pod 'JTAppleCalendar'

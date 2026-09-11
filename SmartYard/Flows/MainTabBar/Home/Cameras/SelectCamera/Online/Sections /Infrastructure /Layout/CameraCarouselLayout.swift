@@ -45,13 +45,25 @@ struct CameraCarouselLayout {
             trailing: sideInset
         )
         if let onCenteredIndex {
+            var pendingIndex: Int?
+            var isDeliveryScheduled = false
             section.visibleItemsInvalidationHandler = { items, offset, environment in
                 let containerCenterX = offset.x + environment.container.effectiveContentSize.width / 2.0
                 let visibleCells = items.filter { $0.representedElementCategory == .cell }
                 guard let closest = visibleCells.min(by: {
                     abs($0.center.x - containerCenterX) < abs($1.center.x - containerCenterX)
                 }) else { return }
-                onCenteredIndex(closest.indexPath.item)
+                // Selection can attach a player and trigger layout. Deliver it outside
+                // the current layout pass, keeping only the latest visible camera.
+                pendingIndex = closest.indexPath.item
+                guard !isDeliveryScheduled else { return }
+                isDeliveryScheduled = true
+                DispatchQueue.main.async {
+                    isDeliveryScheduled = false
+                    guard let index = pendingIndex else { return }
+                    pendingIndex = nil
+                    onCenteredIndex(index)
+                }
             }
         }
 

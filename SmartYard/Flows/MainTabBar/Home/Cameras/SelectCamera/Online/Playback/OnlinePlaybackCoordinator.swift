@@ -40,7 +40,10 @@ final class OnlinePlaybackCoordinator {
 
     init(provider: PlayerResourceProviding) {
         self.provider = provider
-        self.engine = SinglePlayerPlaybackCoordinator(resourceProvider: provider)
+        self.engine = SinglePlayerPlaybackCoordinator(
+            resourceProvider: provider,
+            usesExternalFullscreenButton: true
+        )
     }
 
     private func prefetchNeighbors(for id: CameraID) {
@@ -74,6 +77,7 @@ extension OnlinePlaybackCoordinator: OnlinePlaybackCoordinating {
     }
 
     func setSelectedCamera(id: CameraID, isMuted: Bool) {
+        guard selectedCameraId != id || selectedIsMuted != isMuted else { return }
         selectedCameraId = id
         selectedIsMuted = isMuted
         Logger.logDebug("setSelectedCamera id=\(id) muted=\(isMuted)")
@@ -83,6 +87,7 @@ extension OnlinePlaybackCoordinator: OnlinePlaybackCoordinating {
     }
 
     func stopHard() {
+        selectedCameraId = nil
         engine.stopHard()
     }
 

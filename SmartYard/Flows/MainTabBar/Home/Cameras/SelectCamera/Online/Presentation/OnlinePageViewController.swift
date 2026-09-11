@@ -24,7 +24,9 @@ final class OnlinePageViewController: BaseViewController {
     private var isTransitioningToFullscreen = false
     private var hasAppearedOnce = false
     private var pendingFullscreenRestoreIndex: Int?
-    private var lockedCenteredIndexAfterFullscreen: Int?
+    private var isInlineSelectionDragging = false
+    private var pendingCenteredIndex: Int?
+    private var centeredSelectionWorkItem: DispatchWorkItem?
 
     private let config = OnlinePageContext(
         cameras: BehaviorRelay<[CameraViewModel]>(value: []),
@@ -43,13 +45,7 @@ final class OnlinePageViewController: BaseViewController {
     private lazy var collectionView: UICollectionView = {
         let layout = OnlinePageLayoutBuilder().makeLayout(
             onTopCenteredIndex: { [weak self] index in
-                guard let self else { return }
-                if let lockedIndex = self.lockedCenteredIndexAfterFullscreen {
-                    Logger.logDebug("ignore centered index=\(index) locked=\(lockedIndex)")
-                    return
-                }
-                guard self.selectionNavigator.shouldForwardTopCenteredIndex(index) else { return }
-                self.events.didCenterMainIndex.accept(index)
+                self?.scheduleCenteredSelection(index)
             }
         )
 
@@ -121,6 +117,9 @@ final class OnlinePageViewController: BaseViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        centeredSelectionWorkItem?.cancel()
+        pendingCenteredIndex = nil
+        isInlineSelectionDragging = false
         Logger.logDebug(
             "viewWillDisappear movingFromParent=\(isMovingFromParent) beingDismissed=\(isBeingDismissed)"
         )
@@ -151,6 +150,11 @@ final class OnlinePageViewController: BaseViewController {
             cameras: cameras,
             ttl: 120,
             transportPolicy: .webRTCPreferred
+        )
+        prefetchInitialCameras(
+            cameras,
+            selectedCameraId: preselectedCameraId,
+            provider: streamProvider
         )
 
         // Playback coordinator
@@ -253,6 +257,13 @@ private extension OnlinePageViewController {
                 owner.selectionNavigator.onCollectionLayout(owner.collectionView)
             }
             .disposed(by: disposeBag)
+
+        events.didRequestFullscreen
+            .subscribe(with: self) { owner, cameraId in
+                guard let index = owner.latestState?.cameras.firstIndex(where: { $0.id == cameraId }) else { return }
+                owner.presentFullscreen(startingAt: index)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -270,6 +281,21 @@ extension OnlinePageViewController: UIGestureRecognizerDelegate {
 // MARK: - Resource
 
 private extension OnlinePageViewController {
+
+    func prefetchInitialCameras(
+        _ cameras: [CameraObject],
+        selectedCameraId: CameraID,
+        provider: PlayerResourceProviding
+    ) {
+        guard let selectedIndex = cameras.firstIndex(where: { $0.id == selectedCameraId }) else {
+            return
+        }
+
+        [selectedIndex, selectedIndex - 1, selectedIndex + 1]
+            .filter(cameras.indices.contains)
+            .map { cameras[$0].id }
+            .forEach { provider.prefetch(id: $0) }
+    }
 
     func makeResource(from camera: CameraObject) -> SYPlayerResource {
         let preview = URL(string: camera.previewURL)
@@ -337,7 +363,8 @@ private extension OnlinePageViewController {
         logCameraFullscreenOpened()
 
         isTransitioningToFullscreen = true
-        lockedCenteredIndexAfterFullscreen = index
+        centeredSelectionWorkItem?.cancel()
+        selectionNavigator.suspendCenteredSelectionUntilInteraction()
 
         let vc = OnlineFullscreenViewController(
             cameras: state.cameras,
@@ -346,13 +373,13 @@ private extension OnlinePageViewController {
             onDismiss: { [weak self] selectedIndex in
                 guard let self else { return }
                 Logger.logDebug("fullscreen onDismiss index=\(selectedIndex)")
+                // Transfer ownership before scrolling/layout can emit cell lifecycle callbacks.
+                self.playbackCoordinator?.setMode(.default)
                 self.pendingFullscreenRestoreIndex = selectedIndex
                 self.restoreInlineSelection(index: selectedIndex)
                 // триггерим обычный путь: events -> VM -> selectionIntent -> navigator
                 self.events.didTapPreviewIndex.accept(selectedIndex)
 
-                // меняем режим на обычный
-                self.playbackCoordinator?.setMode(.default)
                 self.configureInlinePlaybackControls()
 
                 // чуть поможем attach-у (на всякий)
@@ -378,7 +405,7 @@ private extension OnlinePageViewController {
             return
         }
 
-        lockedCenteredIndexAfterFullscreen = index
+        selectionNavigator.suspendCenteredSelectionUntilInteraction()
         selectionNavigator.apply(
             OnlineSelectionIntent(index: index, cameraId: state.cameras[index].id, source: .numberTap),
             in: collectionView
@@ -394,8 +421,42 @@ private extension OnlinePageViewController {
     }
 
     @objc func handleInlineSelectionPan(_ recognizer: UIPanGestureRecognizer) {
-        guard recognizer.state == .began else { return }
-        lockedCenteredIndexAfterFullscreen = nil
+        switch recognizer.state {
+        case .began:
+            selectionNavigator.beginUserInteraction()
+            pendingFullscreenRestoreIndex = nil
+            pendingCenteredIndex = nil
+            isInlineSelectionDragging = true
+            centeredSelectionWorkItem?.cancel()
+        case .ended, .cancelled, .failed:
+            isInlineSelectionDragging = false
+            if let index = pendingCenteredIndex { scheduleCenteredSelection(index) }
+        default:
+            break
+        }
+    }
+
+    func scheduleCenteredSelection(_ index: Int) {
+        pendingCenteredIndex = index
+        centeredSelectionWorkItem?.cancel()
+        // Acknowledge programmatic completion even while fullscreen/dragging blocks selection.
+        let shouldForward = selectionNavigator.shouldForwardTopCenteredIndex(index)
+        guard !isInlineSelectionDragging, shouldForward else { return }
+
+        // Orthogonal compositional scrolling has no public end-deceleration delegate.
+        // Wait for offsets to settle; never tear down/start a player during the drag.
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self,
+                  !isInlineSelectionDragging,
+                  !isTransitioningToFullscreen,
+                  presentedViewController == nil,
+                  view.window != nil,
+                  selectionNavigator.shouldForwardTopCenteredIndex(index)
+            else { return }
+            events.didCenterMainIndex.accept(index)
+        }
+        centeredSelectionWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08, execute: workItem)
     }
 
     func logCameraFullscreenOpened() {

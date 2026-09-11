@@ -12,6 +12,7 @@ import FirebaseMessaging
 import PushKit
 import MapboxMaps
 import NotificationBannerSwift
+import RxCocoa
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        URLSession.rx.shouldLogRequest = { _ in false }
         _ = SharedWebKit.warmWebView
 
 #if DEBUG
@@ -74,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appCoordinator.markAllMessagesAsDelivered()
 
-        mainWindow.tintColor = UIColor.SmartYard.blue
+         mainWindow.tintColor = UIColor.SmartYard.blue
         mainWindow.tintAdjustmentMode = .dimmed
         
         // MARK: - Настройка темы приложения
@@ -84,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ThemeManager.shared.setTheme(.light)
         }
 
-        PlayerThemeManager.shared.logs = false
+        PlayerThemeManager.shared.logs = true
         PlayerThemeManager.shared.applyToSharedPlayerConfig()
 
         subscribeToQuickActionUpdates()

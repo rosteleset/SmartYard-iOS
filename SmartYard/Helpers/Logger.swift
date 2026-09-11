@@ -31,6 +31,49 @@ var currentLogMode: LogMode = .errorsOnly
 
 enum Logger {
 
+    private static let sensitiveLogRedactionRules: [
+        (expression: NSRegularExpression, template: String)
+    ] = {
+        let rules = [
+            (
+                #"(\"(?:[a-z0-9_-]*token|password|passcode|secret|api[_-]?key|authorization|cookie|wmsauthsign|doorcode|accesscode|pin|sid)\"\s*:\s*\")[^\"]*(\")"#,
+                "$1<redacted>$2"
+            ),
+            (
+                #"((?:authorization|proxy-authorization)\s*[:=]\s*bearer\s+)[^,\]\s\"]+"#,
+                "$1<redacted>"
+            ),
+            (
+                #"((?:authorization|proxy-authorization|cookie|set-cookie|x-api-key)\s*[:=]\s*)(?!bearer\b)[^,\]\s\"]+"#,
+                "$1<redacted>"
+            ),
+            (
+                #"((?:[a-z0-9_-]*token|password|passcode|secret|api[_-]?key|wmsauthsign|doorcode|accesscode|pin|sid)\s*[:=]\s*(?:optional\()?['\"]?)[^,'\"\)\]\s&]+(['\"]?\)?)"#,
+                "$1<redacted>$2"
+            ),
+            (
+                #"([?&](?:[a-z0-9_-]*token|password|passcode|secret|api[_-]?key|auth|signature|wmsauthsign|doorcode|accesscode|pin|sid)=)[^&\s\"'\\]*"#,
+                "$1<redacted>"
+            ),
+            (
+                #"((?:got new token|registration token:|register with voip token)\s*(?:optional\()?)[^)\s,]+(\)?)"#,
+                "$1<redacted>$2"
+            ),
+            (#"(token\s+for\s+[^:]+:\s*)\S+"#, "$1<redacted>")
+        ]
+
+        return rules.compactMap { rule in
+            let (pattern, template) = rule
+            guard let expression = try? NSRegularExpression(
+                pattern: pattern,
+                options: [.caseInsensitive]
+            ) else {
+                return nil
+            }
+            return (expression, template)
+        }
+    }()
+
     // MARK: - Public methods
 
     /// Логирует информационные сообщения для отслеживания выполнения программы.
@@ -86,8 +129,20 @@ enum Logger {
         guard shouldLog(level) else { return }
         let fileName = (file as NSString).lastPathComponent
         let time = timestamp()
-        let output = "\(level.rawValue) \(time) [\(fileName):\(line)] \(function) → \(message)"
+        let safeMessage = redactSensitiveData(in: message)
+        let output = "\(level.rawValue) \(time) [\(fileName):\(line)] \(function) → \(safeMessage)"
         print(output)
+    }
+
+    private static func redactSensitiveData(in message: String) -> String {
+        sensitiveLogRedactionRules.reduce(message) { result, rule in
+            let range = NSRange(result.startIndex..., in: result)
+            return rule.expression.stringByReplacingMatches(
+                in: result,
+                range: range,
+                withTemplate: rule.template
+            )
+        }
     }
 
     private static func shouldLog(_ level: LogLevel) -> Bool {

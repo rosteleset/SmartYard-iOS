@@ -191,6 +191,9 @@ extension OnlineFullscreenViewController: UICollectionViewDataSource {
             withClass: OnlineFullscreenCameraCell.self,
             for: indexPath
         )
+        let camera = cameras[indexPath.item]
+        cell.configure(cameraId: camera.id, previewURL: camera.resource.previewImage)
+        cell.onRequestExitFullscreen = { [weak self] in self?.dismiss(animated: true) }
         cell.setPagingPanGesture(collectionView.panGestureRecognizer)
         cell.onPagingHandoffStateChanged = { [weak self] isActive in
             self?.setPagingHandoffActive(isActive)
@@ -509,11 +512,8 @@ private extension OnlineFullscreenViewController {
         Logger.logDebug("notifyDismiss id=\(cameraId) index=\(currentIndex)")
         logCameraFullscreenClosed()
         onDismiss(currentIndex)
-
-        let indexPath = IndexPath(item: currentIndex, section: 0)
-        if let cell = collectionView.cellForItem(at: indexPath) as? OnlineFullscreenCameraCell {
-            playback.didEndDisplay(cameraId: cameraId, cell: cell)
-        }
+        // The inline screen now owns playback. Its cell may arrive after dismissal;
+        // keep the current session alive until willDisplay moves the player view.
     }
 
     func setPagingHandoffActive(_ isActive: Bool) {
