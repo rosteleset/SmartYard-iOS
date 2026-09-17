@@ -103,6 +103,11 @@ Setup instructions: [https://firebase.google.com/docs/ios/setup](https://firebas
 Send your request to: **sesameware@gmail.com**  
 or contact us on Telegram: [https://t.me/+39S-IGTfmMdmZDJi](https://t.me/+39S-IGTfmMdmZDJi)
 
+## Developer Mode
+This feature is intended for backend developers who want to test their API against a real iOS app without building it themselves — just install the app via TestFlight.
+
+To enable backend server selection, set `provListURL` in the app configuration to a URL pointing to a file with the list of available backend servers. In Debug and TestFlight builds, the backend selection screen is always shown on launch, even if `defaultBackendURL` is configured. In App Store builds, this screen is hidden and the app uses the default server.
+
 ## License and Terms of Use  
 This project is released under the [GNU GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.html).  
 You may modify and use the code in your own (including commercial) projects, provided that you also publish your source code.  
