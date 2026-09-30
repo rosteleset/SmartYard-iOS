@@ -270,8 +270,8 @@
 "history.event.missedCall" = "Неотвеченный вызов";
 "history.event.openingFromApp" = "Открытие из приложения";
 "history.event.openingWithCode" = "Открытие по коду";
-"history.event.openingWithFaceID" = "Открывание по лицу";
-"history.event.openingWithKey" = "Открывание ключом";
+"history.event.openingWithFaceID" = "Открытие по лицу";
+"history.event.openingWithKey" = "Открытие ключом";
 "history.event.unknown" = "Неизвестное событие";
 
 "history.eventTracking.comment.placeholderFormat" = "До %d символов";
