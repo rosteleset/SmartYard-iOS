@@ -21,6 +21,7 @@ struct APISettingsAddress: Decodable {
     let doorCode: String?
     let address: String
     let services: [String]
+    let availableServices: [APIServiceModel]?
     let lcab: String?
     let roommates: [APIRoommate]
     
@@ -35,6 +36,17 @@ struct APISettingsAddress: Decodable {
             .gsm: services.contains("gsm")
         ]
     }
+
+    var controlPanelServiceStates: [SettingsServiceType: Bool] {
+        let supportedServices: Set<SettingsServiceType> = [.internet, .iptv, .phone, .domophone, .cctv]
+        let visibleServices = availableServices.map { services in
+            Set(services.compactMap { SettingsServiceType(rawValue: $0.icon) })
+        }
+
+        return servicesAvailability.filter { serviceType, _ in
+            supportedServices.contains(serviceType) && (visibleServices?.contains(serviceType) ?? true)
+        }
+    }
     
     var uniqueId: String {
         return (clientId ?? "") + (flatId ?? "")
@@ -42,7 +54,7 @@ struct APISettingsAddress: Decodable {
     
     private enum CodingKeys: String, CodingKey {
         case clientId, clientName, contractName, flatOwner, contractOwner, hasGates, houseId, flatId, flatNumber, address
-        case services, lcab, roommates, hasPlog, doorCode
+        case services, availableServices, lcab, roommates, hasPlog, doorCode
     }
     
     init(from decoder: Decoder) throws {
@@ -88,6 +100,7 @@ struct APISettingsAddress: Decodable {
         flatNumber = try? container.decode(String.self, forKey: .flatNumber)
         address = try container.decode(String.self, forKey: .address)
         services = try container.decode([String].self, forKey: .services)
+        availableServices = try container.decodeIfPresent([APIServiceModel].self, forKey: .availableServices)
         lcab = try? container.decode(String.self, forKey: .lcab)
         doorCode = (try? container.decode(String.self, forKey: .doorCode)) ?? nil
         roommates = (try? container.decode([APIRoommate].self, forKey: .roommates)) ?? []

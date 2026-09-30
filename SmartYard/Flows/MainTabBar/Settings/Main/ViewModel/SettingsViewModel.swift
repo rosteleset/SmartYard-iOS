@@ -186,7 +186,7 @@ final class SettingsViewModel: BaseViewModel {
                     
                     guard case let .controlPanel(uniqueId) = identity,
                         let match = (loadedData.first { $0.uniqueId == uniqueId }),
-                        let isActivated = match.servicesAvailability[serviceType] else {
+                        let isActivated = match.controlPanelServiceStates[serviceType] else {
                         return
                     }
                     
@@ -225,6 +225,16 @@ final class SettingsViewModel: BaseViewModel {
                 }
                 
                 let (serviceType, apiSettingsAddress) = args
+
+                if let availableServices = apiSettingsAddress.availableServices {
+                    return .just(
+                        ServiceUnactivatedResponsePayload(
+                            serviceType: serviceType,
+                            apiSettingsAddress: apiSettingsAddress,
+                            availableServices: availableServices
+                        )
+                    )
+                }
                 
                 return self.apiWrapper.getServicesByHouseId(houseId: apiSettingsAddress.houseId)
                     .trackError(errorTracker)
@@ -522,13 +532,15 @@ final class SettingsViewModel: BaseViewModel {
                 }
                 
                 let controlPanel: SettingsDataItem? = {
-                    guard (item.contractOwner ?? false) || (item.flatOwner ?? false) else {
+                    let serviceStates = item.controlPanelServiceStates
+                    guard (item.contractOwner ?? false) || (item.flatOwner ?? false),
+                          !serviceStates.isEmpty else {
                         return nil
                     }
                     
                     return .controlPanel(
                         identity: .controlPanel(uniqueId: item.uniqueId),
-                        serviceStates: item.servicesAvailability
+                        serviceStates: serviceStates
                     )
                 }()
                 

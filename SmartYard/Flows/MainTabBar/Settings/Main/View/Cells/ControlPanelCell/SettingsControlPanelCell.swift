@@ -52,18 +52,23 @@ final class SettingsControlPanelCell: CustomBorderCollectionViewCell, HasDispose
     func configure(with serviceStates: [SettingsServiceType: Bool]) {
         wifiButton.isSelected = serviceStates[.internet] == true
         wifiButton.isEnabled = serviceStates[.internet] != nil
+        wifiButton.isHidden = serviceStates[.internet] == nil
         
         monitorButton.isSelected = serviceStates[.iptv] == true
         monitorButton.isEnabled = serviceStates[.iptv] != nil
+        monitorButton.isHidden = serviceStates[.iptv] == nil
         
         callButton.isSelected = serviceStates[.phone] == true
         callButton.isEnabled = serviceStates[.phone] != nil
+        callButton.isHidden = serviceStates[.phone] == nil
         
         keyButton.isSelected = serviceStates[.domophone] == true
         keyButton.isEnabled = serviceStates[.domophone] != nil
+        keyButton.isHidden = serviceStates[.domophone] == nil
         
         eyeButton.isSelected = serviceStates[.cctv] == true
         eyeButton.isEnabled = serviceStates[.cctv] != nil
+        eyeButton.isHidden = serviceStates[.cctv] == nil
     }
     
     private func configureUI() {
