@@ -25,7 +25,7 @@
                 <outlet property="gradientContainer" destination="Okv-jz-w6U" id="rbB-hg-Qu0"/>
                 <outlet property="ignoreButton" destination="tRW-3Q-kU7" id="gyA-Wk-eA5"/>
                 <outlet property="imageView" destination="EfU-kc-f8C" id="P6R-fT-Mfa"/>
-                <outlet property="imageViewActivityIndicator" destination="6e5-xr-23n" id="E1e-6G-hjX"/>
+                <outlet property="imageLoadingAnimationView" destination="6e5-xr-23n" id="E1e-6G-hjX"/>
                 <outlet property="openButton" destination="Z5B-sy-vf8" id="o22-Kt-6YP"/>
                 <outlet property="previewButton" destination="R3Y-6F-XSG" id="vZf-1j-ogl"/>
                 <outlet property="speakerButton" destination="Vew-EI-wre" id="T2D-af-O7g"/>
@@ -56,9 +56,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                     <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </imageView>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="6e5-xr-23n">
-                    <rect key="frame" x="265.5" y="141.5" width="37" height="37"/>
-                </activityIndicatorView>
+                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="6e5-xr-23n" customClass="LottieAnimationView" customModule="Lottie">
+                    <rect key="frame" x="244" y="120" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="pzS-7e-WkL"/>
+                        <constraint firstAttribute="height" constant="80" id="nRu-9t-BcM"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5QR-r3-utk" userLabel="Video Preview">
                     <rect key="frame" x="-356" y="-200" width="1280" height="720"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

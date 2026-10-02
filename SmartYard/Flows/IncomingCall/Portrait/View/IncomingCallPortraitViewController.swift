@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import TouchAreaInsets
+import Lottie
 
 final class IncomingCallPortraitViewController: BaseViewController {
     
@@ -35,7 +36,7 @@ final class IncomingCallPortraitViewController: BaseViewController {
     @IBOutlet private weak var webRTCView: UIView!
     
     @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var imageViewActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var imageLoadingAnimationView: LottieAnimationView!
     
     @IBOutlet private weak var fullscreenButton: UIButton!
     @IBOutlet private weak var answerButtonLabel: UILabel!
@@ -71,6 +72,10 @@ final class IncomingCallPortraitViewController: BaseViewController {
     }
     
     private func configureUI() {
+        imageLoadingAnimationView.animation = LottieAnimation.named("LoaderAnimation")
+        imageLoadingAnimationView.loopMode = .loop
+        imageLoadingAnimationView.backgroundBehavior = .pauseAndRestore
+
         titleLabel.text = L10n.Intercom.Incoming.title
         subtitleLabel.text = L10n.Intercom.Incoming.addressPlaceholder
         previewButtonLabel.text = L10n.Intercom.Incoming.previewAction
@@ -108,7 +113,7 @@ final class IncomingCallPortraitViewController: BaseViewController {
         let callTrigger = callButton.rx.tap
             .do(
                 onNext: { [weak self] _ in
-                    self?.imageViewActivityIndicator.stopAnimating()
+                    self?.updateImageLoader(isLoading: false)
                 }
             )
         
@@ -138,23 +143,14 @@ final class IncomingCallPortraitViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.image
-            .do(
-                onNext: { [weak self] image in
-                    image == nil ?
-                        self?.imageViewActivityIndicator.startAnimating() :
-                        self?.imageViewActivityIndicator.stopAnimating()
-                }
-            )
             .drive(imageView.rx.image)
             .disposed(by: disposeBag)
         
-        output.state
-            .withLatestFrom(output.image) { ($0, $1) }
-            .drive(
-                onNext: { [weak self] state, image in
-                    self?.applyState(state, hasImage: image != nil)
-                }
-            )
+        Driver.combineLatest(output.state, output.image)
+            .drive(with: self) { owner, values in
+                let (state, image) = values
+                owner.applyState(state, hasImage: image != nil)
+            }
             .disposed(by: disposeBag)
         
         output.isDoorBeingOpened
@@ -173,6 +169,18 @@ final class IncomingCallPortraitViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
+    }
+
+    private func updateImageLoader(isLoading: Bool) {
+        imageLoadingAnimationView.isHidden = !isLoading
+
+        if isLoading {
+            if !imageLoadingAnimationView.isAnimationPlaying {
+                imageLoadingAnimationView.play()
+            }
+        } else {
+            imageLoadingAnimationView.stop()
+        }
     }
     
     private func applyState(_ state: IncomingCallStateContainer, hasImage: Bool) {
@@ -201,7 +209,7 @@ final class IncomingCallPortraitViewController: BaseViewController {
         
         // Image view visibility
         imageView.isHidden = !(previewState == .staticImage || isNotWebRTCAndNotInband)
-        imageViewActivityIndicator.isHidden = shouldShowVideo || hasImage
+        updateImageLoader(isLoading: callState == .callReceived && !shouldShowVideo && !hasImage)
         
         // Button containers visibility
         callButtonContainer.isHidden = [.callActive, .callFinished].contains(callState)
