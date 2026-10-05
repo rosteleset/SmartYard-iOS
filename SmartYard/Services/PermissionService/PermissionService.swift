@@ -54,7 +54,7 @@ final class PermissionService {
     func requestAccessToMic() -> Single<Void?> {
         return Single.create(
             subscribe: { single in
-                AVAudioSession.sharedInstance().requestRecordPermission { isPermissionGranted in
+                AVAudioApplication.requestRecordPermission { isPermissionGranted in
                     guard isPermissionGranted else {
                         single(.failure(NSError.PermissionError.noMicPermission))
                         return
