@@ -137,17 +137,15 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         var webScrollView: UIView?
         var contentView: UIView?
         
-        if #available(iOS 11.0, *) {
-            guard let noDragWebView = webView else {
-                return
-            }
-            webScrollView = noDragWebView.subviews.compactMap { $0 as? UIScrollView }.first
-            contentView = webScrollView?.subviews.first(where: { $0.interactions.count > 1 })
-            guard let dragInteraction = (contentView?.interactions.compactMap { $0 as? UIDragInteraction }.first) else {
-                return
-            }
-            contentView?.removeInteraction(dragInteraction)
+        guard let noDragWebView = webView else {
+            return
         }
+        webScrollView = noDragWebView.subviews.compactMap { $0 as? UIScrollView }.first
+        contentView = webScrollView?.subviews.first(where: { $0.interactions.count > 1 })
+        guard let dragInteraction = (contentView?.interactions.compactMap { $0 as? UIDragInteraction }.first) else {
+            return
+        }
+        contentView?.removeInteraction(dragInteraction)
     }
     
     fileprivate func configureUserContentController() {

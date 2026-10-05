@@ -206,16 +206,14 @@ extension LicencePlateKeyboardView {
         countryButton.titleLabel?.font = .systemFont(ofSize: 20)
         countryButton.setTitleColorForAllStates(UIColor.SYKeyboard.textKeyColor)
 
-        if #available(iOS 14.0, *) {
-            let russianAction = UIAction(
-                title: L10n.LicensePlate.Keyboard.Language.russian,
-                state: .on
-            ) { [weak self] _ in
-                self?.currentCountryMode = .russia
-            }
-            countryButton.menu = UIMenu(title: "", children: [russianAction])
-            countryButton.showsMenuAsPrimaryAction = true
+        let russianAction = UIAction(
+            title: L10n.LicensePlate.Keyboard.Language.russian,
+            state: .on
+        ) { [weak self] _ in
+            self?.currentCountryMode = .russia
         }
+        countryButton.menu = UIMenu(title: "", children: [russianAction])
+        countryButton.showsMenuAsPrimaryAction = true
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

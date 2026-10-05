@@ -170,11 +170,7 @@ final class FullscreenPlayerViewController: UIViewController, HasDisposeBag {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if #available(iOS 16.0, *) {
-            setNeedsUpdateOfSupportedInterfaceOrientations()
-        } else {
-            UIViewController.attemptRotationToDeviceOrientation()
-        }
+        setNeedsUpdateOfSupportedInterfaceOrientations()
         
         if self.timer == nil {
             self.showControls()

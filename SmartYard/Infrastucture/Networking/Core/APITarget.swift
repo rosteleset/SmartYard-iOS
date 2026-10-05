@@ -400,11 +400,7 @@ extension APITarget: TargetType {
     var sampleData: Data { Data() }
 
     func currentLanguage() -> String {
-        if #available(iOS 16, *) {
-            return (Locale.current.language.languageCode ?? .russian).identifier
-        } else {
-            return Locale.current.languageCode ?? "ru"
-        }
+        return (Locale.current.language.languageCode ?? .russian).identifier
     }
     
     func currentDevice() -> String {

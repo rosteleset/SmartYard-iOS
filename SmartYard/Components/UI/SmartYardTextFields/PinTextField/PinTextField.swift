@@ -104,9 +104,7 @@ final class PinTextField: PMNibLinkableView, HasDisposeBag {
         fakeTextField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         fakeTextField.keyboardType = .numberPad
         
-        if #available(iOS 12.0, *) {
-            fakeTextField.textContentType = .oneTimeCode
-        }
+        fakeTextField.textContentType = .oneTimeCode
     }
     
 }

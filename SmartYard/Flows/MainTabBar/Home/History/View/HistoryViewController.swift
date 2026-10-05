@@ -93,9 +93,7 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
         tableView.estimatedSectionHeaderHeight = 0
         tableView.estimatedSectionFooterHeight = 0
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.backgroundView = emptyStateView
        
         dataSource = RxTableViewSectionedAnimatedDataSource<HistorySectionModel>(

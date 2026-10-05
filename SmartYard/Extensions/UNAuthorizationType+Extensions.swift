@@ -13,9 +13,7 @@ extension UNAuthorizationStatus {
     var hasAccess: Bool {
         var allowedStatuses: [UNAuthorizationStatus] = [.authorized]
         
-        if #available(iOS 12.0, *) {
-            allowedStatuses.append(.provisional)
-        }
+        allowedStatuses.append(.provisional)
         
         return allowedStatuses.contains(self)
     }

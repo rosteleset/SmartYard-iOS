@@ -50,11 +50,7 @@ class NotificationService: UNNotificationServiceExtension {
         bestAttemptContent.body += "\n\n" + L10n.Notification.IncomingDoorCall.quickReplyHint
         bestAttemptContent.sound = .default
         bestAttemptContent.categoryIdentifier = "INCOMING_DOOR_CALL"
-        if #available(iOS 15.0, *) {
-            bestAttemptContent.interruptionLevel = .timeSensitive
-        } else {
-            // Fallback on earlier versions
-        }
+        bestAttemptContent.interruptionLevel = .timeSensitive
         
         self.bestAttemptContent = bestAttemptContent
         

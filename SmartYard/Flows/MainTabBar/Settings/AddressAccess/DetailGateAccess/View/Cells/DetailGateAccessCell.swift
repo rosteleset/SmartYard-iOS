@@ -65,34 +65,30 @@ final class DetailGateAccessCell: UICollectionViewCell, HasDisposeBag {
     // MARK: - Actions
     
     private func setupMenu(for type: CellType) {
-        if #available(iOS 14.0, *) {
-            var actions: [UIAction] = []
+        var actions: [UIAction] = []
 
-            if type == .person {
-                let smsAction = UIAction(
-                    title: "SMS",
-                    image: UIImage(systemName: "message")
-                ) { [weak self] _ in
-                    self?.smsButtonTappedRelay.accept(())
-                }
-                actions.append(smsAction)
-            }
-
-            let deleteAction = UIAction(
-                title: L10n.Common.delete,
-                image: UIImage(systemName: "trash"),
-                attributes: .destructive
+        if type == .person {
+            let smsAction = UIAction(
+                title: "SMS",
+                image: UIImage(systemName: "message")
             ) { [weak self] _ in
-                self?.deleteButtonTappedRelay.accept(())
+                self?.smsButtonTappedRelay.accept(())
             }
-            actions.append(deleteAction)
-
-            let menu = UIMenu(title: "", children: actions)
-            menuButton.menu = menu
-            menuButton.showsMenuAsPrimaryAction = true
-        } else {
-            menuButton.rx.tap.bind(to: deleteButtonTappedRelay).disposed(by: disposeBag)
+            actions.append(smsAction)
         }
+
+        let deleteAction = UIAction(
+            title: L10n.Common.delete,
+            image: UIImage(systemName: "trash"),
+            attributes: .destructive
+        ) { [weak self] _ in
+            self?.deleteButtonTappedRelay.accept(())
+        }
+        actions.append(deleteAction)
+
+        let menu = UIMenu(title: "", children: actions)
+        menuButton.menu = menu
+        menuButton.showsMenuAsPrimaryAction = true
     }
 
 }

@@ -75,9 +75,7 @@ final class PaymentPopupController: BaseViewController {
                     self.sumTextField.resignFirstResponder()
                     var paymentNetworks: [PKPaymentNetwork] = [.masterCard, .visa]
                     
-                    if #available(iOS 14.5, *) {
-                        paymentNetworks.append(.mir)
-                    }
+                    paymentNetworks.append(.mir)
                     
                     guard PKPaymentAuthorizationViewController.canMakePayments(usingNetworks: paymentNetworks) else {
                         return
@@ -233,14 +231,8 @@ final class PaymentPopupController: BaseViewController {
         view.backgroundColor = .clear
         successView.isHidden = true
         
-        if #available(iOS 14.5, *) {
-            if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard, .mir]) {
-                payButton.removeFromSuperview()
-            }
-        } else {
-            if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard]) {
-                payButton.removeFromSuperview()
-            }
+        if !PKPaymentAuthorizationController.canMakePayments(usingNetworks: [.visa, .masterCard, .mir]) {
+            payButton.removeFromSuperview()
         }
     }
     

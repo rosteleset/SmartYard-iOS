@@ -11,7 +11,6 @@ import SmartYardSharedDataFramework
 import Intents
 import SwifterSwift
 
-@available(iOSApplicationExtension 14.0, *)
 class SYOpenDoorIntentHandler: NSObject, SYOpenDoorIntentHandling {
     
     func resolveAddress(

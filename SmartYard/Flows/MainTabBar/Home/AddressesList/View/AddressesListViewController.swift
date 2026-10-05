@@ -501,9 +501,7 @@ final class AddressesListViewController: BaseViewController, LoaderPresentable {
 private extension AddressesListViewController {
 
     func configureAddButton() {
-        if #available(iOS 15.0, *) {
-            addButton.configuration = nil
-        }
+        addButton.configuration = nil
         addButton.imageForNormal = UIImage(named: "AddButtonIcon")
         addButton.imageForHighlighted = UIImage(named: "AddButtonIcon")?.darkened()
     }

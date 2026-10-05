@@ -18,11 +18,9 @@ final class SmartYardSegmentedControl: UIView {
         control.backgroundColor = .clear
         control.tintColor = .SmartYard.secondBackgroundColor
         
-        if #available(iOS 13.0, *) {
-            control.backgroundColor = .clear
-            control.selectedSegmentTintColor = .clear
-            control.layer.borderWidth = 0
-        }
+        control.backgroundColor = .clear
+        control.selectedSegmentTintColor = .clear
+        control.layer.borderWidth = 0
         
         let selectedControlFont = UIFont.SourceSansPro.semibold(size: 18)
         let unselectedControlFont = UIFont.SourceSansPro.regular(size: 18)
@@ -199,14 +197,12 @@ final class SmartYardSegmentedControl: UIView {
     }
     
     func fixBackgroundSegmentControl( _ segmentControl: UISegmentedControl) {
-        if #available(iOS 13.0, *) {
-            // just to be sure it is full loaded
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                for i in 0...(segmentControl.numberOfSegments - 1) {
-                    let backgroundSegmentView = segmentControl.subviews[i]
-                    // it is not enogh changing the background color. It has some kind of shadow layer
-                    backgroundSegmentView.isHidden = true
-                }
+        // just to be sure it is full loaded
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            for i in 0...(segmentControl.numberOfSegments - 1) {
+                let backgroundSegmentView = segmentControl.subviews[i]
+                // it is not enogh changing the background color. It has some kind of shadow layer
+                backgroundSegmentView.isHidden = true
             }
         }
     }
