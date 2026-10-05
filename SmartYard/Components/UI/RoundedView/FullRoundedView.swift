@@ -11,6 +11,24 @@ import UIKit
 
 final class FullRoundedView: UIView {
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
             
@@ -23,9 +41,7 @@ final class FullRoundedView: UIView {
 
 extension FullRoundedView {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         self.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
     

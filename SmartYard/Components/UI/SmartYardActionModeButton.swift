@@ -56,23 +56,25 @@ final class SmartYardActionModeButton: UIButton {
         isOn = false
         super.init(frame: frame)
         prepareUI()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     required init?(coder aDecoder: NSCoder) {
         isOn = false
         super.init(coder: aDecoder)
         prepareUI()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        guard previousTraitCollection?
-            .hasDifferentColorAppearance(comparedTo: traitCollection) == true
-        else {
-            return
-        }
-
+    @objc private func handleColorAppearanceChange() {
         prepareUI()
     }
     

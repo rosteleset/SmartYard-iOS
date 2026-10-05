@@ -47,6 +47,11 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         configureUI()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -254,9 +259,7 @@ extension FacesSettingsViewController: UICollectionViewDataSource {
 
 extension FacesSettingsViewController {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
+    @objc private func handleColorAppearanceChange() {
         scrollView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
     

@@ -90,6 +90,11 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         
         configureUI()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     fileprivate func removeUserContentController() {
@@ -125,12 +130,8 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         super.viewWillAppear(animated)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
-            webView.notifySmartYardThemeChanged()
-        }
+    @objc private func handleColorAppearanceChange() {
+        webView.notifySmartYardThemeChanged()
     }
     
     fileprivate func disableDragAndDropInteraction() {

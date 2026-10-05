@@ -30,6 +30,11 @@ final class AccessView: PMNibLinkableView, HasDisposeBag {
         
         configureTableView()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     private func bind() {
@@ -154,9 +159,7 @@ extension AccessView: UITableViewDelegate {
 
 extension AccessView {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         tableView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
     

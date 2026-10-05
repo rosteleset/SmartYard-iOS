@@ -50,6 +50,11 @@ final class CircleIconControl: UIControl {
 
         isAccessibilityElement = true
         accessibilityTraits = .button
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
 
     private func setup(with style: CircleIconStyle) {
@@ -61,13 +66,8 @@ final class CircleIconControl: UIControl {
         imageView.tintColor = style.iconColor.resolvedColor(with: traitCollection)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        guard
-            let previousTraitCollection,
-            previousTraitCollection.hasDifferentColorAppearance(comparedTo: traitCollection),
-            let style
-        else {
+    @objc private func handleColorAppearanceChange() {
+        guard let style else {
             return
         }
 

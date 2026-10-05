@@ -64,7 +64,11 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         configureMapBox()
         bind()
-        
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
 
     fileprivate func updateAnnotations(_ cameras: [CameraObject]) {
@@ -151,9 +155,7 @@ class YardMapViewController: BaseViewController, LoaderPresentable {
 
 extension YardMapViewController {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         updateMapStyle()
     }
     

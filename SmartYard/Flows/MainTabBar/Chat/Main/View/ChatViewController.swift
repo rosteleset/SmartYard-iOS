@@ -34,14 +34,15 @@ final class ChatViewController: ChatController, LoaderPresentable, HasDisposeBag
         
         chatView.addSmartYardThemeBridgeScript()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
-            chatView.notifySmartYardThemeChanged()
-        }
+    @objc private func handleColorAppearanceChange() {
+        chatView.notifySmartYardThemeChanged()
     }
     
     private func bind() {

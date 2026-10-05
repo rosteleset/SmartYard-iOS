@@ -33,6 +33,11 @@ final class ServiceFromOfficeView: PMNibLinkableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     fileprivate func configureUI() {
@@ -163,9 +168,7 @@ extension Reactive where Base: ServiceFromOfficeView {
 
 extension ServiceFromOfficeView {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         updateMapStyle()
     }
     

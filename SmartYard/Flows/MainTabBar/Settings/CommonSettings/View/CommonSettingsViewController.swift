@@ -118,6 +118,11 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
         super.viewDidLoad()
         configureUI()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -463,9 +468,7 @@ private extension CommonSettingsViewController {
 
 extension CommonSettingsViewController {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
+    @objc private func handleColorAppearanceChange() {
         [
             nameContainerView,
             notificationsContainerView,

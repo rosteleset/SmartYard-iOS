@@ -255,6 +255,8 @@ final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute>, HasDispos
             // Fallback on earlier versions
         }
 
+        // UNUserNotificationCenter provides a setter but no getter for the system badge.
+        // Keep this read so background pushes are reflected in the initial tab badge.
         updateNotificationsTab(shouldShowBadge: UIApplication.shared.applicationIconBadgeNumber > 0)
 
         bind()

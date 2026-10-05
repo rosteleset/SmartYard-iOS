@@ -26,15 +26,25 @@ class CustomBorderCollectionViewCell: UICollectionViewCell {
     private var separatorInset: CGFloat?
     private var customBorderColor: UIColor?
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
-        guard previousTraitCollection?
-            .hasDifferentColorAppearance(comparedTo: traitCollection) == true
-        else {
-            return
-        }
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
+    }
 
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
+    }
+
+    @objc private func handleColorAppearanceChange() {
         updateLayerColors()
     }
     

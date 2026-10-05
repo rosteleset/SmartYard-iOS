@@ -29,10 +29,20 @@ final class SmartYardSearchTextField: SearchTextField {
         super.init(frame: .zero)
         
         configureUI()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     func setPlaceholder(string: String, isRequiredField: Bool = false, isSemiBold: Bool = false) {
@@ -79,9 +89,7 @@ final class SmartYardSearchTextField: SearchTextField {
 
 extension SmartYardSearchTextField {
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         configureUI()
     }
     

@@ -37,14 +37,15 @@ final class NotificationsViewController: BaseViewController, LoaderPresentable {
         
         configureUI()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
-            webView.notifySmartYardThemeChanged()
-        }
+    @objc private func handleColorAppearanceChange() {
+        webView.notifySmartYardThemeChanged()
     }
     
     private func configureUI() {

@@ -91,6 +91,11 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         videoPlayerViewContainer.addGestureRecognizer(doubleTap)
         descriptionContainer.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
         setupTrackingView()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     override func prepareForReuse() {
@@ -451,9 +456,7 @@ private extension HistoryCollectionViewCell {
 
 extension HistoryCollectionViewCell {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         descriptionContainer.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
     

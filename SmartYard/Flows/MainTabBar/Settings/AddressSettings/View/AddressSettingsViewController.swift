@@ -93,6 +93,11 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
         super.viewDidLoad()
         configureUI()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -365,15 +370,12 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
 
 extension AddressSettingsViewController {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         [
             addressContainerView,
             notificationsContainerView,
             deleteAddressButton
         ].forEach { $0.addBorder(dynamicColor: UIColor.SmartYard.grayBorder) }
-        
     }
     
 }

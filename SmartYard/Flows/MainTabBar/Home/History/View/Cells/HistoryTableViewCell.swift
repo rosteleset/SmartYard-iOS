@@ -33,6 +33,11 @@ final class HistoryTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -153,9 +158,7 @@ final class HistoryTableViewCell: UITableViewCell {
 
 extension HistoryTableViewCell {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
+    @objc private func handleColorAppearanceChange() {
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
         

@@ -56,6 +56,11 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     // MARK: - Public Methods
@@ -216,9 +221,7 @@ extension LicencePlateKeyboardView {
         countryButton.showsMenuAsPrimaryAction = true
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         updateAppearance()
     }
 

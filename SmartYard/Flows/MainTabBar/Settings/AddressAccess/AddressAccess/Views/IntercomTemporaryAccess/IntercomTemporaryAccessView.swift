@@ -50,6 +50,11 @@ final class IntercomTemporaryAccessView: PMNibLinkableView, HasDisposeBag {
         openButton.mode = AccessService.shared.guestAccessModeOnOnly ? .open : .enable
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
         waitingGuestsQuestionMark.apply(style: .Others.question)
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
 }
@@ -72,9 +77,7 @@ extension Reactive where Base: IntercomTemporaryAccessView {
 
 extension IntercomTemporaryAccessView {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
     

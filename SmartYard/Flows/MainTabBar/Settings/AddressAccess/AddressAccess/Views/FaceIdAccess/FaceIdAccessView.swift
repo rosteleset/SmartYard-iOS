@@ -41,6 +41,11 @@ final class FaceIdAccessView: PMNibLinkableView, HasDisposeBag {
         super.awakeFromNib()
         configureUI()
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
 }
@@ -55,9 +60,7 @@ extension Reactive where Base: FaceIdAccessView {
 
 extension FaceIdAccessView {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
+    @objc private func handleColorAppearanceChange() {
         containerView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
     

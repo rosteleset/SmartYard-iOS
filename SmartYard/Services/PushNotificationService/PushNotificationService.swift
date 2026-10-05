@@ -174,7 +174,7 @@ final class PushNotificationService: HasDisposeBag {
             .ignoreNil()
             .drive(
                 onNext: { response in
-                    UIApplication.shared.applicationIconBadgeNumber = response.count + response.chat
+                    UNUserNotificationCenter.current().setBadgeCount(response.count + response.chat)
                     
                     NotificationCenter.default.post(
                         // swiftlint:disable:next empty_count

@@ -20,6 +20,11 @@ final class TrackedEventCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
         setupConstraints()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
 
     @available(*, unavailable)
@@ -44,8 +49,7 @@ final class TrackedEventCell: UITableViewCell {
         commentsLabel.isHidden = comments.isEmpty
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+    @objc private func handleColorAppearanceChange() {
         cardView.addBorder(dynamicColor: .SmartYard.grayBorder)
     }
 

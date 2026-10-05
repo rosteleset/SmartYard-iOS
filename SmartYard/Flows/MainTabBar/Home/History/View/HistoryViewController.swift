@@ -136,6 +136,11 @@ final class HistoryViewController: BaseViewController, LoaderPresentable, UIAdap
         setupShadows()
         setupTableView()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
 
     override func viewDidLayoutSubviews() {
@@ -553,9 +558,7 @@ extension HistoryViewController: UITableViewDelegate {
 
 extension HistoryViewController {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
+    @objc private func handleColorAppearanceChange() {
         filterPanelView.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
         updateFilterPanelColors()
     }

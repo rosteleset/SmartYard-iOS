@@ -72,6 +72,11 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
         configureUI()
         configureMapBox()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     private func getCityCamImage() -> UIImage {
@@ -169,13 +174,7 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
 
 extension CityMapViewController {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        guard previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true else {
-            return
-        }
-
+    @objc private func handleColorAppearanceChange() {
         updateMapStyle()
         updateAnnotations(cameras)
     }

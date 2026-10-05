@@ -59,6 +59,11 @@ final class WebPopupController: BaseViewController, LoaderPresentable {
         super.viewDidLoad()
         configureUI()
         bind()
+
+        registerForTraitChanges(
+            UITraitCollection.systemTraitsAffectingColorAppearance,
+            action: #selector(handleColorAppearanceChange)
+        )
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,12 +71,8 @@ final class WebPopupController: BaseViewController, LoaderPresentable {
         swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if previousTraitCollection?.hasDifferentColorAppearance(comparedTo: traitCollection) == true {
-            webView.notifySmartYardThemeChanged()
-        }
+    @objc private func handleColorAppearanceChange() {
+        webView.notifySmartYardThemeChanged()
     }
     
     private func bind() {
