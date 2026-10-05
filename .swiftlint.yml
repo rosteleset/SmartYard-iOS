@@ -63,7 +63,7 @@ class_delegate_protocol:
   severity: error
 
 deployment_target:
-  iOS_deployment_target: 10
+  iOS_deployment_target: 17
 
 multiline_arguments:  
   first_argument_location: next_line
