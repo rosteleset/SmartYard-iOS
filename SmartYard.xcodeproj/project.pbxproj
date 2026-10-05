@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C38E4F876D34E6C8651256F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150AF1E658C3438CA91DF55C /* SceneDelegate.swift */; };
 		3A003CE625E0466D002F193B /* RequestRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003CE525E0466C002F193B /* RequestRecordViewModel.swift */; };
 		3A003CF225E04EE3002F193B /* RequestRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003CF025E04EE3002F193B /* RequestRecordViewController.swift */; };
 		3A0275662707000B00FD7854 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A4D47B23EC19110070A591 /* Constants.swift */; };
@@ -891,6 +892,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		150AF1E658C3438CA91DF55C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		297C4C1274F6636BA2F4B75B /* Pods_SmartYardIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A7BA6D3CA5EBA045CB5F988 /* Pods-SmartYardWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.debug.xcconfig"; sourceTree = "<group>"; };
 		34C6D37942B34574D4AE47BF /* GetStoriesResponseData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetStoriesResponseData.swift; sourceTree = "<group>"; };
@@ -3710,6 +3712,7 @@
 			children = (
 				E9A4D47B23EC19110070A591 /* Constants.swift */,
 				84F840D523E07DA5008DBE50 /* AppDelegate.swift */,
+				150AF1E658C3438CA91DF55C /* SceneDelegate.swift */,
 				9C0D5E122F9A000000C0D001 /* AppLaunchStateStore.swift */,
 				9A0F5A1A2F75218900C0D001 /* AppDependencies.swift */,
 			);
@@ -7017,6 +7020,7 @@
 				8B3ADCFB2F5199A4002FFED1 /* QuickActionResolution.swift in Sources */,
 				84AADD2E24334DF70056994A /* ChatConfiguration.swift in Sources */,
 				84F840D623E07DA5008DBE50 /* AppDelegate.swift in Sources */,
+				7C38E4F876D34E6C8651256F /* SceneDelegate.swift in Sources */,
 				E94B6C3223FD723A00FD9F65 /* AllowedPersonType.swift in Sources */,
 				3AC5C61B2608F18B008D74DE /* HistoryViewController.swift in Sources */,
 				843FB12224C1AE850060ACEC /* AddressesHeaderCell.swift in Sources */,

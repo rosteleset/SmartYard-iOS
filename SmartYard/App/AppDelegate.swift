@@ -17,22 +17,16 @@ import RxCocoa
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private let mainWindow: UIWindow
-    private let appCoordinator: AppCoordinator
+    let appCoordinator: AppCoordinator
     private let telemetryService: AppTelemetryServicing
     private let appLaunchStateStore = AppLaunchStateStore()
-    private lazy var quickActionsService = QuickActionsService()
 
     override init() {
-        mainWindow = UIWindow()
         telemetryService = AppTelemetryService.shared
         let dependencies = DefaultAppDependencies(
             telemetryService: telemetryService
         )
-        appCoordinator = AppCoordinator(
-            mainWindow: mainWindow,
-            dependencies: dependencies
-        )
+        appCoordinator = AppCoordinator(dependencies: dependencies)
         super.init()
     }
 
@@ -62,121 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         MapboxOptions.accessToken = Constants.mapBoxPublicKey
         
-        appCoordinator.setRoot(for: mainWindow)
-        appCoordinator.presentPendingParanoidPushIfNeeded()
-        appCoordinator.presentWhatsNewIfNeeded()
-        
-        // MARK: При запуске приложения запрашиваем количество непрочитанных сообщений
-        // Пуши - вещь ненадежная, чисто в теории нам мог не дойти пуш с актуальным badge
-        
-        appCoordinator.syncBadgeNumber()
-        
-        // MARK: При запуске приложения помечаем все сообщения как доставленные
-        // То, что мы можем пометить одно и то же сообщение много раз - пофиг. Главное - пометить
-        
-        appCoordinator.markAllMessagesAsDelivered()
-
-         mainWindow.tintColor = UIColor.SmartYard.blue
-        mainWindow.tintAdjustmentMode = .dimmed
-        
-        // MARK: - Настройка темы приложения
-        // Если есть поддержка темной темы, то тогда узнаем какая тема была сохранена в настройках.
-        // В противном случае строго ставим .light
-        if Constants.isDarkModeEnabled { ThemeManager.shared.applySavedTheme() } else {
-            ThemeManager.shared.setTheme(.light)
-        }
-
         PlayerThemeManager.shared.logs = true
         PlayerThemeManager.shared.applyToSharedPlayerConfig()
 
-        subscribeToQuickActionUpdates()
-        quickActionsService.updateShortcutItems(for: application)
-
-        if let shortcutItem = launchOptions?[.shortcutItem] as? UIApplicationShortcutItem {
-            quickActionsService.storePendingShortcutItem(shortcutItem)
-            return false
-        }
-
         return true
     }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        logLifecycleEvent(AppAnalyticsEvent.appBecameActive)
 
-        appCoordinator.syncBadgeNumber()
-        appCoordinator.markAllMessagesAsDelivered()
-
-        VPNBannerHelper.showIfNeeded()
-
-        quickActionsService.updateShortcutItems(for: application)
-        quickActionsService.processPendingShortcutIfNeeded { [weak self] shortcutType in
-            self?.openTab(for: shortcutType)
-        }
-        appCoordinator.presentPendingParanoidPushIfNeeded()
-        appCoordinator.presentWhatsNewIfNeeded()
-    }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        quickActionsService.updateShortcutItems(for: application)
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        logLifecycleEvent(AppAnalyticsEvent.appEnteredBackground)
-    }
-
-    func application(
-        _ application: UIApplication,
-        performActionFor shortcutItem: UIApplicationShortcutItem,
-        completionHandler: @escaping (Bool) -> Void
-    ) {
-        completionHandler(
-            quickActionsService.handle(shortcutItem) { [weak self] shortcutType in
-                self?.openTab(for: shortcutType)
-            }
-        )
-    }
-    
-    func application(
-        _ application: UIApplication,
-        continue userActivity: NSUserActivity,
-        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
-    ) -> Bool {
-        switch userActivity.activityType {
-        case "INStartVideoCallIntent":
-            NotificationCenter.default.post(name: .videoRequestedByCallKit, object: nil)
-        case NSUserActivityTypeBrowsingWeb:
-            // Обработка deeplinks
-            guard
-                let incomingURL = userActivity.webpageURL,
-                let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
-                return false
-            }
-            
-            // обрабатываем только url вида - см. regex
-            if components.host == "isdn.lanta.me",
-               components.scheme == "https",
-               let path = components.path {
-                    if path.matches(pattern: "/[A-Za-z0-9]{10,}") {
-                        appCoordinator.trigger(.registerQRCode(code: incomingURL.absoluteString))
-                        return true
-                    }
-                    if path == "/open_app.html" {
-                        NotificationCenter.default.post(name: .refreshVisibleWebVC, object: nil)
-                        return true
-                    }
-                    return false
-            } else {
-                // в противном случае даём OS обработать это событие самостоятельно
-                return false
-            }
-            
-        default:
-            break
-        }
-        
-        return true
-    }
-    
     func application(
         _ application: UIApplication,
         supportedInterfaceOrientationsFor window: UIWindow?
@@ -200,34 +85,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.synchronize()
     }
 
-    private func openTab(for shortcutType: AppShortcutType) {
-        switch shortcutType {
-        case .firstAddressCameras:
-            appCoordinator.openFirstAddressCameras()
-        case .firstAddressEvents:
-            appCoordinator.openFirstAddressEvents()
-        case .firstAddressAccess:
-            appCoordinator.openFirstAddressAccess()
-        case .payments:
-            appCoordinator.openPaymentsTab()
-        case .settings:
-            appCoordinator.openSettingsTab()
-        }
-    }
-
-    private func subscribeToQuickActionUpdates() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleUserLoggedOut),
-            name: .init("UserLoggedOut"),
-            object: nil
-        )
-    }
-
-    @objc private func handleUserLoggedOut() {
-        quickActionsService.updateShortcutItems(for: UIApplication.shared)
-    }
-
     private func logAppOpened(isFirstLaunch: Bool) {
         logLifecycleEvent(AppAnalyticsEvent.appOpened)
 
@@ -238,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         logLifecycleEvent(AppAnalyticsEvent.appFirstOpened)
     }
 
-    private func logLifecycleEvent(
+    func logLifecycleEvent(
         _ eventFactory: (String, String, String) -> AnalyticsEvent
     ) {
         AppAnalytics.log(

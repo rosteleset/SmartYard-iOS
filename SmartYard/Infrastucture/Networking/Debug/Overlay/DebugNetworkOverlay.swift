@@ -16,17 +16,19 @@ final class DebugNetworkOverlay {
         self.controller = controller
     }
 
-    func toggle() { window == nil ? show() : hide() }
+    func toggle(in windowScene: UIWindowScene) {
+        window == nil ? show(in: windowScene) : hide()
+    }
 
-    private func show() {
-        let window = PassthroughWindow(frame: UIScreen.main.bounds)
+    private func show(in windowScene: UIWindowScene) {
+        let window = PassthroughWindow(windowScene: windowScene)
         window.windowLevel = .statusBar + 1
         window.rootViewController = DebugNetworkPanelViewController(controller: controller)
         window.isHidden = false
         self.window = window
     }
 
-    private func hide() {
+    func hide() {
         window?.isHidden = true
         window = nil
     }

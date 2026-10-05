@@ -27,9 +27,12 @@ final class ThemeManager: HasDisposeBag {
         currentTheme
             .distinctUntilChanged()
             .subscribe(onNext: { style in
-                UIApplication.shared.windows.forEach { window in
-                    window.overrideUserInterfaceStyle = style
-                }
+                UIApplication.shared.connectedScenes
+                    .compactMap { $0 as? UIWindowScene }
+                    .flatMap { $0.windows }
+                    .forEach { window in
+                        window.overrideUserInterfaceStyle = style
+                    }
             })
             .disposed(by: disposeBag)
     }
@@ -52,9 +55,12 @@ final class ThemeManager: HasDisposeBag {
 
     private func applyTheme(_ style: UIUserInterfaceStyle) {
         Logger.logInfo("Применение темы: \(style).")
-        UIApplication.shared.windows.forEach { window in
-            window.overrideUserInterfaceStyle = style
-        }
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .forEach { window in
+                window.overrideUserInterfaceStyle = style
+            }
     }
 
     private func saveTheme(_ style: UIUserInterfaceStyle) {

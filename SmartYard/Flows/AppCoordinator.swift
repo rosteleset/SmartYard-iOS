@@ -76,9 +76,10 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
     
     private var currentCallPreviewData: Data?
     
-    private let mainWindow: UIWindow
+    private weak var mainWindow: UIWindow?
     
     private var incomingCallWindow: UIWindow?
+    private var shouldPresentIncomingCallWindow = false
     private var incomingCallLandscapeVC: IncomingCallLandscapeViewController?
     private var incomingCallPortraitVC: IncomingCallPortraitViewController?
     
@@ -95,7 +96,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
     private var pendingParanoidPushPayload: ParanoidPushPayload?
     private var isWhatsNewPresented = false
 
-    init(mainWindow: UIWindow, dependencies: AppDependencies) {
+    init(dependencies: AppDependencies) {
         self.linphoneService = dependencies.linphoneService
         self.providerProxy = dependencies.providerProxy
         self.accessService = dependencies.accessService
@@ -114,7 +115,6 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         self.supportCallActionsPresenter = dependencies.supportCallActionsPresenter
         self.requestSupportCallbackUseCase = dependencies.requestSupportCallbackUseCase
         self.phoneDialer = dependencies.phoneDialer
-        self.mainWindow = mainWindow
 
         super.init(initialRoute: accessService.routeForCurrentState)
 
@@ -134,6 +134,41 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         observeAccessService()
     }
     
+    func connect(to window: UIWindow) {
+        mainWindow = window
+        setRoot(for: window)
+        configureIncomingCallWindowIfNeeded()
+    }
+
+    func disconnect(from window: UIWindow) {
+        guard mainWindow === window else { return }
+        mainWindow = nil
+        incomingCallWindow?.isHidden = true
+        incomingCallWindow?.windowScene = nil
+        incomingCallWindow = nil
+#if DEBUG
+        debugOverlay.hide()
+#endif
+    }
+
+    private func configureIncomingCallWindowIfNeeded() {
+        guard let windowScene = mainWindow?.windowScene,
+              let portraitVC = incomingCallPortraitVC else { return }
+
+        if incomingCallWindow == nil {
+            incomingCallWindow = UIWindow(windowScene: windowScene)
+        }
+
+        incomingCallWindow?.overrideUserInterfaceStyle = Constants.isDarkModeEnabled
+            ? ThemeManager.shared.currentTheme.value
+            : .light
+
+        if shouldPresentIncomingCallWindow {
+            incomingCallWindow?.rootViewController = portraitVC
+            incomingCallWindow?.makeKeyAndVisible()
+        }
+    }
+
     // swiftlint:disable cyclomatic_complexity function_body_length
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
         switch route {
@@ -246,12 +281,9 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
                 .asDriverOnErrorJustComplete()
                 .drive(
                     onNext: { [weak self] _ in
-                        guard let self = self,
-                              let vc = self.incomingCallPortraitVC else {
-                            return
-                        }
-                        self.incomingCallWindow?.rootViewController = vc
-                        self.incomingCallWindow?.makeKeyAndVisible()
+                        guard let self, incomingCallPortraitVC != nil else { return }
+                        shouldPresentIncomingCallWindow = true
+                        configureIncomingCallWindowIfNeeded()
                     }
                 )
                 .disposed(by: disposeBag)
@@ -277,41 +309,10 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
             portraitVC.loadViewIfNeeded()
             self.incomingCallPortraitVC = portraitVC
             
-            incomingCallWindow = UIWindow()
+            shouldPresentIncomingCallWindow =
+                IncomingCallRoutingPolicy.presentation(useCallKit: isCallKitUsed) == .immediately
+            configureIncomingCallWindowIfNeeded()
 
-            if Constants.isDarkModeEnabled {
-                let currentTheme = ThemeManager.shared.currentTheme.value
-                let userInterfaceStyle: UIUserInterfaceStyle
-
-                switch currentTheme {
-                case .unspecified:
-                    switch UITraitCollection.current.userInterfaceStyle {
-                    case .dark:
-                        userInterfaceStyle = .dark
-                    case .light:
-                        userInterfaceStyle = .light
-                    default:
-                        userInterfaceStyle = .unspecified
-                    }
-                case .light:
-                    userInterfaceStyle = .light
-                case .dark:
-                    userInterfaceStyle = .dark
-                @unknown default:
-                    userInterfaceStyle = .unspecified
-                }
-
-                incomingCallWindow?.overrideUserInterfaceStyle = userInterfaceStyle
-            } else {
-                incomingCallWindow?.overrideUserInterfaceStyle = .light
-            }
-
-            // MARK: Если вызов пришёл обычным пуш-уведомлением, то показываем экран входящего вызова
-            if IncomingCallRoutingPolicy.presentation(useCallKit: isCallKitUsed) == .immediately {
-                incomingCallWindow?.rootViewController = portraitVC
-                incomingCallWindow?.makeKeyAndVisible()
-            }
-            
             return .none()
          
         case .closeIncomingCall:
@@ -319,13 +320,15 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
                 incomingCallWindow?.switchRootViewController(to: portraitVC)
             }
             
+            incomingCallWindow?.isHidden = true
             incomingCallWindow = nil
+            shouldPresentIncomingCallWindow = false
             incomingCallPortraitVC = nil
             incomingCallLandscapeVC = nil
             temporarilyIgnoredOrientation = nil
             
             DispatchQueue.main.async { [weak self] in
-                self?.mainWindow.makeKeyAndVisible()
+                self?.mainWindow?.makeKeyAndVisible()
             }
             
             return .none()
@@ -610,7 +613,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
 
     func presentPendingParanoidPushIfNeeded() {
         guard let payload = pendingParanoidPushPayload else { return }
-        guard mainWindow.rootViewController != nil else { return }
+        guard mainWindow?.rootViewController != nil else { return }
 
         pendingParanoidPushPayload = nil
 
@@ -977,6 +980,9 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         rootViewController.view.addGestureRecognizer(gesture)
     }
 
-    @objc private func toggleDebug() { debugOverlay.toggle() }
+    @objc private func toggleDebug() {
+        guard let windowScene = mainWindow?.windowScene else { return }
+        debugOverlay.toggle(in: windowScene)
+    }
 #endif
 }

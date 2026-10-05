@@ -35,6 +35,14 @@ import UIKit
 class AlertService {
     
     private var priorities = [UIAlertController: Int]()
+
+    private var keyWindow: UIWindow? {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .filter { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }
+    }
     
     func showAlert(title: String, message: String?, priority: Int) {
         let okAction = UIAlertAction(title: "OK", style: .cancel)
@@ -45,7 +53,7 @@ class AlertService {
     func showDialog(title: String, message: String?, preferredStyle: UIAlertController.Style = .alert, actions: [UIAlertAction], priority: Int) {
         // MARK: Проверяем, есть ли вообще VC, от которого можно показать alert
         
-        guard let topVc = UIApplication.shared.keyWindow?.rootViewController?.topViewController else {
+        guard let topVc = keyWindow?.rootViewController?.topViewController else {
             return
         }
         
@@ -76,7 +84,7 @@ class AlertService {
         }
         
         topAlert.dismiss(animated: false) { [weak self] in
-            let newTopVc = UIApplication.shared.keyWindow?.rootViewController?.topViewController
+            let newTopVc = self?.keyWindow?.rootViewController?.topViewController
             
             self?.priorities[newAlert] = priority
             

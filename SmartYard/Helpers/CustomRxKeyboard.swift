@@ -54,7 +54,7 @@ public class RxKeyboard: NSObject, RxKeyboardType, HasDisposeBag {
         let keyboardWillChangeFrame = UIResponder.keyboardWillChangeFrameNotification
         let keyboardWillHide = UIResponder.keyboardWillHideNotification
         let keyboardFrameEndKey = UIResponder.keyboardFrameEndUserInfoKey
-        let applicationDidFinishLaunching = UIApplication.didFinishLaunchingNotification
+        let sceneDidActivate = UIScene.didActivateNotification
         
         let defaultFrame = CGRect(
             x: 0,
@@ -132,7 +132,7 @@ public class RxKeyboard: NSObject, RxKeyboardType, HasDisposeBag {
             .withLatestFrom(frameVariable.asObservable()) { ($0, $1) }
             .flatMap { (gestureRecognizer, frame) -> Observable<CGRect> in
                 guard case .changed = gestureRecognizer.state,
-                    let window = UIApplication.shared.windows.first,
+                    let window = gestureRecognizer.view as? UIWindow,
                     frame.origin.y < UIScreen.main.bounds.height
                     else { return .empty() }
                 let origin = gestureRecognizer.location(in: window)
@@ -148,12 +148,12 @@ public class RxKeyboard: NSObject, RxKeyboardType, HasDisposeBag {
         
         // gesture recognizer
         self.panRecognizer.delegate = self
-        NotificationCenter.default.rx.notification(applicationDidFinishLaunching)
-            .map { _ in Void() }
-            .startWith(Void()) // when RxKeyboard is initialized before UIApplication.window is created
-            .subscribe(onNext: { _ in
-                UIApplication.shared.windows.first?.addGestureRecognizer(self.panRecognizer)
-            })
+        NotificationCenter.default.rx.notification(sceneDidActivate)
+            .map { $0.object as? UIWindowScene }
+            .startWith(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+            .subscribe(with: self) { owner, windowScene in
+                windowScene?.windows.first?.addGestureRecognizer(owner.panRecognizer)
+            }
             .disposed(by: self.disposeBag)
     }
     
