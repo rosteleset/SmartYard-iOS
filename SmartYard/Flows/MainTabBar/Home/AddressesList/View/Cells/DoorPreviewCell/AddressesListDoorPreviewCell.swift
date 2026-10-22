@@ -16,11 +16,27 @@ private enum EntrancePreviewRefresh {
     static let transitionDuration: TimeInterval = 0.2
 }
 
+private enum EntrancePreviewPlaceholder {
+    case loading
+    case failed
+    case noSource
+
+    var image: UIImage? {
+        let imageName: String
+        switch self {
+        case .loading: imageName = "CameraIcon"
+        case .failed: imageName = "CameraErrorIcon"
+        case .noSource: imageName = "CameraUnavailableIcon"
+        }
+        return UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate)
+    }
+}
+
 final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDisposeBag {
 
     private let previewImageView = UIImageView()
     private let pendingPreviewImageView = UIImageView()
-    private let placeholderIconView = UIImageView(image: UIImage(named: "CameraIcon")?.withRenderingMode(.alwaysTemplate))
+    private let placeholderIconView = UIImageView(image: EntrancePreviewPlaceholder.loading.image)
     private let entranceIconView = UIImageView()
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
@@ -33,6 +49,7 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
 
     private let imageProvider: ImageProviding = SYImageProvider()
     private var previewSource: AddressesListDoorPreviewSource?
+    private var previewRequestID: UUID?
     private var previewRefreshDisposable: Disposable?
 
     override init(frame: CGRect) {
@@ -62,6 +79,7 @@ final class AddressesListDoorPreviewCell: CustomBorderCollectionViewCell, HasDis
         resetDisposeBag()
         previewRefreshDisposable?.dispose()
         previewRefreshDisposable = nil
+        previewRequestID = nil
         imageProvider.cancel(on: pendingPreviewImageView)
         resetPendingPreview()
     }
@@ -178,20 +196,29 @@ private extension AddressesListDoorPreviewCell {
         _ previewSource: AddressesListDoorPreviewSource?,
         keepingCurrentImage: Bool = false
     ) {
+        let requestID = UUID()
+        previewRequestID = requestID
         imageProvider.cancel(on: pendingPreviewImageView)
         resetPendingPreview()
 
         if !keepingCurrentImage {
             previewImageView.image = nil
-            placeholderIconView.isHidden = false
         }
 
-        guard
-            let previewSource,
-            let url = URL(string: previewSource.urlString)
-        else {
+        guard let previewSource else {
+            updatePlaceholder(.noSource)
             return
         }
+
+        guard let url = URL(string: previewSource.urlString),
+              ["http", "https"].contains(url.scheme?.lowercased() ?? ""),
+              url.host?.isEmpty == false
+        else {
+            updatePlaceholder(.failed)
+            return
+        }
+
+        updatePlaceholder(.loading)
 
         let source: ImageSource = {
             switch previewSource {
@@ -206,32 +233,41 @@ private extension AddressesListDoorPreviewCell {
             source: source,
             cachePolicy: .refresh(after: EntrancePreviewRefresh.interval)
         ) { [weak self] image in
-            guard let self, self.previewSource == previewSource else {
+            guard let self, self.previewRequestID == requestID else {
                 return
             }
 
             guard let image else {
-                self.placeholderIconView.isHidden = self.previewImageView.image != nil
+                self.updatePlaceholder(.failed)
                 return
             }
 
-            UIView.animate(
-                withDuration: UIAccessibility.isReduceMotionEnabled
-                    ? 0
-                    : EntrancePreviewRefresh.transitionDuration
-            ) {
-                self.pendingPreviewImageView.alpha = 1
-                self.placeholderIconView.alpha = 0
-            } completion: { [weak self] finished in
-                guard let self, finished, self.previewSource == previewSource else {
-                    return
-                }
-
-                self.previewImageView.image = image
-                self.placeholderIconView.isHidden = true
-                self.resetPendingPreview()
-            }
+            self.showPreviewImage(image, requestID: requestID)
         }
+    }
+
+    func showPreviewImage(_ image: UIImage, requestID: UUID) {
+        UIView.animate(
+            withDuration: UIAccessibility.isReduceMotionEnabled
+                ? 0
+                : EntrancePreviewRefresh.transitionDuration
+        ) {
+            self.pendingPreviewImageView.alpha = 1
+            self.placeholderIconView.alpha = 0
+        } completion: { [weak self] finished in
+            guard let self, finished, self.previewRequestID == requestID else {
+                return
+            }
+
+            self.previewImageView.image = image
+            self.placeholderIconView.isHidden = true
+            self.resetPendingPreview()
+        }
+    }
+
+    func updatePlaceholder(_ state: EntrancePreviewPlaceholder) {
+        placeholderIconView.image = state.image
+        placeholderIconView.isHidden = previewImageView.image != nil
     }
 
     func resetPendingPreview() {
