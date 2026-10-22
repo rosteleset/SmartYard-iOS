@@ -26,6 +26,7 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
     private let cameraSelectedTrigger = PublishSubject<Int>()
     private var annotationManager: PointAnnotationManager!
     private var cameras: [CityCameraObject] = []
+    private var styleLoadedSubscription: AnyCancelable?
     
     init(viewModel: CityMapViewModel) {
         self.viewModel = viewModel
@@ -61,10 +62,24 @@ final class CityMapViewController: BaseViewController, LoaderPresentable {
             styleURI: styleURI
         )
         mapView = MapView(frame: containerView.bounds, mapInitOptions: options)
+        styleLoadedSubscription = mapView.mapboxMap.onStyleLoaded.observe { [weak self] _ in
+            self?.localizeMapLabels()
+        }
         annotationManager = mapView.annotations.makePointAnnotationManager()
         mapView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(mapView)
         mapView.alignToView(containerView)
+    }
+
+    private func localizeMapLabels() {
+        let language = Bundle.main.preferredLocalizations.first ?? "ru"
+
+        do {
+            // Reapply after every style load, preserving the style's fallback to local names.
+            try mapView.mapboxMap.localizeLabels(into: Locale(identifier: language))
+        } catch {
+            print("Mapbox label localization failed for \(language): \(error)")
+        }
     }
     
     override func viewDidLoad() {
