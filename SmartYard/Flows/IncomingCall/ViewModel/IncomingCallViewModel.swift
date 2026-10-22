@@ -59,6 +59,7 @@ final class IncomingCallViewModel: BaseViewModel {
     /// Выполняется, когда надо уведомить iOS, что мы закончили выполнять команду
     /// и приложение можно обратно усыпить.
     private var completionHandler: (() -> Void)?
+    private var didFinishCall = false
     
     init(
         providerProxy: CXProviderProxy,
@@ -240,6 +241,7 @@ final class IncomingCallViewModel: BaseViewModel {
                     let (firstPack, previewMode) = args
                     let (callInfo, currentState) = firstPack
                     let (call, callParams) = callInfo
+                    guard let core = call.core, self.isCurrentSIPCall(call, from: core) else { return }
                     
                     do {
                         try call.acceptWithParams(params: callParams)
@@ -275,10 +277,8 @@ final class IncomingCallViewModel: BaseViewModel {
                             videoState: videoState
                         )
                     } catch {
-                        self.providerProxy.endCall(uuid: self.callPayload.uuid)
-                        self.completionHandler?()
-                        self.completionHandler = nil
-                        self.router.trigger(.closeIncomingCall)
+                        let reason = self.callKitEndReason(for: call, state: call.state) ?? .failed
+                        self.finishSIPCall(call, from: core, reason: reason, dismissImmediately: true)
                     }
                 }
             )
@@ -841,7 +841,7 @@ final class IncomingCallViewModel: BaseViewModel {
     }
 
     private func safeTerminate(call: Call) {
-        guard call.state != .End, call.state != .Error else {
+        guard call.state != .End, call.state != .Error, call.state != .Released else {
             Logger.logDebug("Call already ended, skip terminate")
             return
         }
@@ -857,7 +857,14 @@ final class IncomingCallViewModel: BaseViewModel {
         }
     }
     
-    private func finishCallAndClose(doorState: IncomingCallDoorState = .notDetermined) {
+    private func finishCallAndClose(
+        doorState: IncomingCallDoorState = .notDetermined,
+        callKitReason: CXCallEndedReason = .declinedElsewhere,
+        dismissImmediately: Bool = false
+    ) {
+        guard !didFinishCall else { return }
+        didFinishCall = true
+
         updateState(
             callState: .callFinished,
             doorState: doorState,
@@ -865,11 +872,16 @@ final class IncomingCallViewModel: BaseViewModel {
             soundOutputState: .disabled
         )
 
-        providerProxy.endCall(uuid: callPayload.uuid)
+        providerProxy.endCall(uuid: callPayload.uuid, reason: callKitReason)
 
         webRTCService = nil
         completionHandler?()
         completionHandler = nil
+
+        if dismissImmediately {
+            router.trigger(.closeIncomingCall)
+            return
+        }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             self?.router.trigger(.closeIncomingCall)
@@ -890,49 +902,101 @@ extension IncomingCallViewModel: LinphoneDelegate {
         }
     }
     
-    func onCallStateChanged(lc: Core, call: Call, cstate: Call.State, message: String) {
+    func onCallStateChanged(lc core: Core, call: Call, cstate: Call.State, message: String) {
+        guard core === linphoneService.core else { return }
         Logger.logDebug("CALL STATE: \(cstate)")
-        // the remote side (server / panel) ended or cancelled the call - e.g. an unanswered call timing out -
-        // liblinphone reports .End/.Released/.Error; close the screen, otherwise it stays with dead buttons
-        if cstate == .End || cstate == .Released || cstate == .Error {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self,
-                      let state = try? self.currentStateSubject.value(),
-                      state.callState != .callFinished else {
-                    return
-                }
-                self.finishCallAndClose()
-            }
+
+        if cstate == .IncomingReceived {
+            receiveSIPCall(call, from: core)
+            return
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            self?.callStateIsStreamRunning.onNext(cstate == .StreamsRunning ? true : false)
+
+        guard isCurrentSIPCall(call, from: core) else { return }
+
+        if let reason = callKitEndReason(for: call, state: cstate) {
+            finishSIPCall(call, from: core, reason: reason)
+        } else {
+            updateSIPStreams(for: call, from: core, isRunning: cstate == .StreamsRunning)
         }
-        
-        if cstate == .StreamsRunning,
-           let shouldMute = try? shouldMuteCall.value() {
-            if shouldMute {
-                call.speakerMuted = true
-                call.microphoneMuted = true
-                shouldMuteCall.onNext(false)
-            }
+    }
+
+    private func receiveSIPCall(_ call: Call, from core: Core) {
+        guard (try? incomingCall.value()) == nil,
+              let state = try? currentStateSubject.value(),
+              state.callState != .callFinished,
+              let params = try? core.createCallParams(call: call) else { return }
+
+        params.videoEnabled = true
+        params.audioEnabled = true
+        incomingCall.onNext((call, params))
+    }
+
+    private func isCurrentSIPCall(_ call: Call, from core: Core) -> Bool {
+        guard core === linphoneService.core,
+              let (currentCall, _) = try? incomingCall.value(),
+              let state = try? currentStateSubject.value() else { return false }
+
+        // Linphone reuses the same Swift wrapper while incomingCall holds it.
+        return currentCall === call && state.callState != .callFinished
+    }
+
+    private func callKitEndReason(for call: Call, state: Call.State) -> CXCallEndedReason? {
+        guard state == .End || state == .Released || state == .Error else { return nil }
+
+        switch call.callLog?.status {
+        case .AcceptedElsewhere:
+            return .answeredElsewhere
+        case .DeclinedElsewhere:
+            return .declinedElsewhere
+        default:
+            break
         }
-        
-        // обновляем режим вывода звука согласно текущего состояния, т.к. оно затирается при снятии трубки linphone-ом
-        Logger.logInfo("Call streams running. Updating sound output state...")
-        if cstate == .StreamsRunning,
-           let state = try? currentStateSubject.value() {
+
+        // The call log can also mark an explicit SIP cancellation as missed.
+        switch call.reason {
+        case .NotAnswered:
+            return .unanswered
+        case .IOError, .NoResponse, .ServerTimeout:
+            return .failed
+        default:
+            return state == .Error ? .failed : .remoteEnded
+        }
+    }
+
+    private func finishSIPCall(
+        _ call: Call,
+        from core: Core,
+        reason: CXCallEndedReason,
+        dismissImmediately: Bool = false
+    ) {
+        DispatchQueue.main.async { [weak self, weak call, weak core] in
+            guard let self, let call, let core, self.isCurrentSIPCall(call, from: core) else { return }
+
+            self.callStateIsStreamRunning.onNext(false)
+            self.finishCallAndClose(callKitReason: reason, dismissImmediately: dismissImmediately)
+        }
+    }
+
+    private func updateSIPStreams(for call: Call, from core: Core, isRunning: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self, weak call, weak core] in
+            guard let self, let call, let core, self.isCurrentSIPCall(call, from: core) else { return }
+            self.callStateIsStreamRunning.onNext(isRunning)
+        }
+
+        guard isRunning else { return }
+
+        if (try? shouldMuteCall.value()) == true {
+            call.speakerMuted = true
+            call.microphoneMuted = true
+            shouldMuteCall.onNext(false)
+        }
+
+        // Linphone can reset the selected output when the call is answered.
+        if let state = try? currentStateSubject.value() {
             setSpeakerEnabled(state.soundOutputState == .speaker)
         }
-        
-        if cstate == .IncomingReceived, let params = try? lc.createCallParams(call: call) {
-            params.videoEnabled = true
-            params.audioEnabled = true
-            
-            incomingCall.onNext((call, params))
-        }
-        
     }
-    
+
 }
 
 extension IncomingCallViewModel: CXProviderProxyDelegate {

@@ -86,8 +86,8 @@ final class CXProviderProxy: NSObject {
         provider.reportCall(with: uuid, updated: update)
     }
     
-    func endCall(uuid: UUID) {
-        provider.reportCall(with: uuid, endedAt: .init(), reason: .declinedElsewhere)
+    func endCall(uuid: UUID, reason: CXCallEndedReason = .declinedElsewhere) {
+        provider.reportCall(with: uuid, endedAt: .init(), reason: reason)
     }
     
 }
