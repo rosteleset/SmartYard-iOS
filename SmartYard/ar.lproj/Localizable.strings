@@ -269,6 +269,8 @@
 "history.event.guestAllowedHint" = "إذا اخترت \"سماح\"، سنضيف صورة من هذا الحدث لتحسين التعرف على الزائر بالوجه.\nيمكن العثور على جميع الوجوه المسجلة في النظام ضمن: إعدادات العنوان -> إدارة الوصول -> الدخول بالوجه بدون مفتاح.";
 "history.event.guestDeniedHint" = "إذا اخترت \"رفض\"، سنحذف وجهك المسجل الذي تسبب في استجابة خاطئة لخوارزمياتنا.\nيمكن العثور على جميع الوجوه المسجلة في النظام ضمن: إعدادات العنوان -> إدارة الوصول -> الدخول بالوجه بدون مفتاح.";
 "history.event.imageMissing" = "لا توجد صورة";
+"history.event.muteSound" = "كتم الصوت";
+"history.event.unmuteSound" = "تشغيل الصوت";
 "history.event.missedCall" = "مكالمة فائتة";
 "history.event.openingFromApp" = "فتح من التطبيق";
 "history.event.openingWithCode" = "فتح بالرمز";

@@ -18,6 +18,8 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
     
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
+    private var playbackRequestID: UUID?
+    private let soundControl = HistoryVideoSoundControl()
     private var timeShift: Double = 0.0
     
     private var doubleTap: UITapGestureRecognizer!
@@ -72,6 +74,10 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         return questionMark.rx.tap.asDriver()
     }
 
+    var soundToggleTrigger: Driver<Void> {
+        return soundControl.button.rx.tap.asDriver()
+    }
+
     var trackingToggleChanged: Driver<(APIPlog, Bool)> {
         return trackingSwitch.rx.controlEvent(.valueChanged)
             .map { [weak self] _ -> (APIPlog, Bool)? in
@@ -87,8 +93,10 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         // Initialization code
         doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapOnVideo))
         doubleTap.numberOfTapsRequired = 2
+        doubleTap.delegate = self
         videoPlayerViewContainer.addGestureRecognizer(doubleTap)
         descriptionContainer.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
+        soundControl.install(in: videoPlayerViewContainer)
         setupTrackingView()
 
         registerForTraitChanges(
@@ -99,10 +107,20 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        stopVideo()
         resetDisposeBag()
         trackingContainerView.isHidden = true
         trackingCommentsLabel.text = nil
         trackingCommentsLabel.isHidden = true
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer?.frame = videoPlayerViewContainer.bounds
+    }
+
+    func setSoundEnabled(_ isEnabled: Bool) {
+        soundControl.setSoundEnabled(isEnabled)
     }
     
     @objc func doubleTapOnVideo(_ sender: UITapGestureRecognizer) {
@@ -151,6 +169,9 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
     }
     
     func playVideo(eventDate: Date? = nil) {
+        if eventDate == nil, player != nil || playbackRequestID != nil { return }
+
+        stopVideo()
         if eventDate == nil { timeShift = 0 }
         
         guard let eventDate = eventDate ?? event?.date, let camera = self.camera else {
@@ -159,39 +180,45 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         
         let startDate = camera.seekable ? eventDate.adding(.minute, value: -5) : eventDate
         let endDate = eventDate.adding(.minute, value: 5)
+        let requestID = UUID()
+        playbackRequestID = requestID
         
         camera.getArchiveVideo(startDate: startDate, endDate: endDate, speed: 1.0) { [weak self] videoURL in
             // по умолчанию грузим 10 минутный интервал по 5 минут туда-сюда от события
             DispatchQueue.main.async { [weak self] in
-                guard let self = self,
-                      let url = URL(string: videoURL) else {
+                guard let self = self, self.playbackRequestID == requestID else {
                     return
                 }
-                self.player = AVPlayer(url: url)
+                self.playbackRequestID = nil
+                guard let url = URL(string: videoURL) else { return }
+
+                let item = AVPlayerItem(url: url)
+                let player = AVPlayer()
+                player.isMuted = true
+                self.player = player
+                player.replaceCurrentItem(with: item)
+                self.soundControl.observe(item, in: player, fallbackHasAudio: camera.hasSound)
                 if camera.seekable {
-                    self.player?.seek(to: CMTime(seconds: 5 * 60, preferredTimescale: 1))
+                    player.seek(to: CMTime(seconds: 5 * 60, preferredTimescale: 1))
                 }
-                
-                if self.playerLayer != nil {
-                    self.playerLayer?.removeFromSuperlayer()
-                }
-                
-                self.playerLayer = AVPlayerLayer(player: self.player)
-                self.videoPlayerViewContainer.layer.addSublayer(self.playerLayer!)
-                self.playerLayer?.frame = self.videoPlayerViewContainer.frame
-                self.playerLayer?.backgroundColor = UIColor.clear.cgColor
-                
-                self.player?.play()
+
+                let playerLayer = AVPlayerLayer(player: player)
+                self.playerLayer = playerLayer
+                self.videoPlayerViewContainer.layer.insertSublayer(playerLayer, at: 0)
+                playerLayer.frame = self.videoPlayerViewContainer.bounds
+                playerLayer.backgroundColor = UIColor.clear.cgColor
+
+                player.play()
             }
         }
     }
     
     func stopVideo() {
+        playbackRequestID = nil
+        soundControl.resetPlayback()
         player?.pause()
-        if playerLayer != nil {
-            playerLayer?.removeFromSuperlayer()
-            playerLayer = nil
-        }
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = nil
         player = nil
     }
     
@@ -326,6 +353,7 @@ extension HistoryCollectionViewCell {
         trackedEvent: APITrackedEvent? = nil,
         isEventTrackingEnabled: Bool = false
     ) {
+        stopVideo()
         self.event = value
 
         if let camera = camera {
@@ -349,12 +377,6 @@ extension HistoryCollectionViewCell {
 
         denyAccessButton.setTitleForAllStates(denyTitle)
         openAccessButton.setTitleForAllStates(openTitle)
-
-        if playerLayer != nil {
-            playerLayer?.removeFromSuperlayer()
-            playerLayer = nil
-        }
-        player = nil
 
         scrollView.contentOffset = .zero
 
@@ -465,5 +487,11 @@ extension HistoryCollectionViewCell {
             titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
             return .red
         }
+    }
+}
+
+extension HistoryCollectionViewCell: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view?.isDescendant(of: soundControl.button) != true
     }
 }

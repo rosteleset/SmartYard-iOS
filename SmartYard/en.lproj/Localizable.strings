@@ -269,6 +269,8 @@
 "history.event.guestAllowedHint" = "If you select 'Allow', we will add a photo from this event for further face recognition of a visitor.\nAll faces registered in the system can be found in Address Settings -> Access Control -> Face Keyless Entry.";
 "history.event.guestDeniedHint" = "If you select 'Deny', we will delete your registered face that our algorithms falsely triggered.\nAll faces registered in the system can be found in Address Settings -> Access Control -> Face Keyless Entry.";
 "history.event.imageMissing" = "Image missing";
+"history.event.muteSound" = "Mute sound";
+"history.event.unmuteSound" = "Unmute sound";
 "history.event.missedCall" = "Missed call";
 "history.event.openingFromApp" = "Opening from the app";
 "history.event.openingWithCode" = "Opening with code";

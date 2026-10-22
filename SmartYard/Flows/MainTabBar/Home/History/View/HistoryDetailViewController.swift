@@ -48,6 +48,7 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     
     private let loadDayTriger = PublishSubject<Date>()
     private var availableDays = BehaviorRelay<AvailableDays>(value: [:])
+    private let isSoundOn = BehaviorRelay<Bool>(value: false)
     
     /// дни, которые есть в sectionModels, т.е. в таблице
     private var days: [Date] = []
@@ -117,9 +118,8 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        if  let focusedCellIndexPath = focusedCellIndexPath {
-            let cell = collectionView.cellForItem(at: focusedCellIndexPath) as? HistoryCollectionViewCell
-            cell?.stopVideo()
+        for case let cell as HistoryCollectionViewCell in collectionView.visibleCells {
+            cell.stopVideo()
         }
         super.viewDidDisappear(animated)
     }
@@ -197,6 +197,8 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                 cell.displayHintTrigger
                     .drive(displayHintTrigger)
                     .disposed(by: cell.disposeBag)
+
+                self.bindSound(to: cell)
 
                 cell.trackingToggleChanged
                     .drive(
@@ -319,6 +321,22 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
 }
 
 private extension HistoryDetailViewController {
+    func bindSound(to cell: HistoryCollectionViewCell) {
+        isSoundOn
+            .distinctUntilChanged()
+            .subscribe(with: cell) { owner, isSoundOn in
+                owner.setSoundEnabled(isSoundOn)
+            }
+            .disposed(by: cell.disposeBag)
+
+        cell.soundToggleTrigger
+            .asObservable()
+            .subscribe(with: self) { owner, _ in
+                owner.isSoundOn.accept(!owner.isSoundOn.value)
+            }
+            .disposed(by: cell.disposeBag)
+    }
+
     func handleTrackingToggle(event: APIPlog, isOn: Bool) {
         if isOn {
             showTrackingCommentDialog(for: event)
@@ -440,8 +458,15 @@ extension HistoryDetailViewController: UICollectionViewDelegateFlowLayout {
                 onItemLostFocus(indexPath: focusedCellIndexPath)
             }
             focusedCellIndexPath = indexPath
-            onItemFocused(indexPath: indexPath)
         }
-        
+        onItemFocused(indexPath: indexPath)
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplaying cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        (cell as? HistoryCollectionViewCell)?.stopVideo()
     }
 }

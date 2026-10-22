@@ -269,6 +269,8 @@
 "history.event.guestAllowedHint" = "Егер Сіз Рұқсат ету дегенді таңдасаңыз...";
 "history.event.guestDeniedHint" = "Егер Сіз Жоқ дегенді таңдасаңыз...";
 "history.event.imageMissing" = "Сурет жоқ";
+"history.event.muteSound" = "Дыбысты өшіру";
+"history.event.unmuteSound" = "Дыбысты қосу";
 "history.event.missedCall" = "Қақты қоңырау";
 "history.event.openingFromApp" = "Қолданбадан ашу";
 "history.event.openingWithCode" = "Код пен ашу";

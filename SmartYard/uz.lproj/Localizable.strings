@@ -269,6 +269,8 @@
 "history.event.guestAllowedHint" = "«‎O'zim» tanlovi tanlansa, biz ushbu voqeadan olingan suratni qo'shamiz, foydalanuvchini yuzi orqali keyingi tanib olish uchun.\nTizimda ro'yxatdan o'tgan barcha yuzlarni Manzillar sozlamalari -> Kirishni boshqarish -> Kalitsiz yuz orqali kirish bo'limida topishingiz mumkin.";
 "history.event.guestDeniedHint" = "«Chet el fuqarosi» tanlansa, biz algoritmimiz noto'g'ri ishlagan sizning ro'yxatdan o'tgan yuzingizni o'chiramiz.\nTizimdagi barcha yuzlar Manzil sozlamalari -> Kirishni boshqarish -> Kalitsiz yuz orqali kirish bo'limida topilishi mumkin.";
 "history.event.imageMissing" = "Rasm yo'q";
+"history.event.muteSound" = "Ovozni o'chirish";
+"history.event.unmuteSound" = "Ovozni yoqish";
 "history.event.missedCall" = "Javob berilmagan qo'ng'iroq";
 "history.event.openingFromApp" = "Ilovadan ochish";
 "history.event.openingWithCode" = "Kod bilan ochish";

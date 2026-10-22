@@ -269,6 +269,8 @@
 "history.event.guestAllowedHint" = "Ако изберете Разреши...";
 "history.event.guestDeniedHint" = "Ако изберете Откажи...";
 "history.event.imageMissing" = "Липсва изображение";
+"history.event.muteSound" = "Изключване на звука";
+"history.event.unmuteSound" = "Включване на звука";
 "history.event.missedCall" = "Пропуснато обаждане";
 "history.event.openingFromApp" = "Отваряне от приложението";
 "history.event.openingWithCode" = "Отваряне с код";

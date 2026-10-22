@@ -269,6 +269,8 @@
 "history.event.guestAllowedHint" = "Եթե ընտրեք «Թույլատրել», մենք այս իրադարձությունից կավելացնենք լուսանկար՝ այցելուի դեմքի հետագա ճանաչման համար։\nՀամակարգում գրանցված բոլոր դեմքերը կարող եք գտնել Address Settings -> Access Control -> Face Keyless Entry բաժնում։";
 "history.event.guestDeniedHint" = "Եթե ընտրեք «Մերժել», մենք կջնջենք ձեր գրանցված դեմքը, որի վրա մեր ալգորիթմները սխալ են արձագանքել։\nՀամակարգում գրանցված բոլոր դեմքերը կարող եք գտնել Address Settings -> Access Control -> Face Keyless Entry բաժնում։";
 "history.event.imageMissing" = "Պատկերը բացակայում է";
+"history.event.muteSound" = "Անջատել ձայնը";
+"history.event.unmuteSound" = "Միացնել ձայնը";
 "history.event.missedCall" = "Բաց թողնված զանգ";
 "history.event.openingFromApp" = "Բացում հավելվածից";
 "history.event.openingWithCode" = "Բացում կոդով";

@@ -369,11 +369,13 @@ extension L10n {
             static let guestDeniedHint = tr("history.event.guestDeniedHint")
             static let imageMissing = tr("history.event.imageMissing")
             static let missedCall = tr("history.event.missedCall")
+            static let muteSound = tr("history.event.muteSound")
             static let openingFromApp = tr("history.event.openingFromApp")
             static let openingWithCode = tr("history.event.openingWithCode")
             static let openingWithFaceID = tr("history.event.openingWithFaceID")
             static let openingWithKey = tr("history.event.openingWithKey")
             static let unknown = tr("history.event.unknown")
+            static let unmuteSound = tr("history.event.unmuteSound")
         }
 
         enum EventTracking {
