@@ -49,6 +49,8 @@ final class OperatorConfiguration {
         static let nameValidationPattern = "nameValidationPatternKey"
         static let deliveryTabsConfig = "deliveryTabsConfigKey"
         static let eventsTrackingEnabled = "eventsTrackingEnabledKey"
+        static let faceGroupsEnabled = "faceGroupsEnabledKey"
+        static let faceClusteringEnabled = "faceClusteringEnabledKey"
         static let stunURL = "stunUrlKey"
         static let showStories = "showStoriesKey"
     }
@@ -175,6 +177,16 @@ final class OperatorConfiguration {
     var eventsTrackingEnabled: Bool {
         get { storage.value(forKey: Key.eventsTrackingEnabled) as? Bool ?? false }
         set { storage.set(newValue, forKey: Key.eventsTrackingEnabled) }
+    }
+
+    var faceGroupsEnabled: Bool {
+        get { storage.value(forKey: Key.faceGroupsEnabled) as? Bool ?? false }
+        set { storage.set(newValue, forKey: Key.faceGroupsEnabled) }
+    }
+
+    var faceClusteringEnabled: Bool {
+        get { storage.value(forKey: Key.faceClusteringEnabled) as? Bool ?? false }
+        set { storage.set(newValue, forKey: Key.faceClusteringEnabled) }
     }
 
     var showStories: Bool {

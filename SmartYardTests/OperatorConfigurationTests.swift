@@ -58,6 +58,21 @@ final class OperatorConfigurationTests: XCTestCase {
         XCTAssertNil(configuration.deliveryTabsConfig)
     }
 
+    func testFaceFeaturesDefaultToDisabledAndPersistIndependently() {
+        let configuration = makeConfiguration()
+        XCTAssertFalse(configuration.faceGroupsEnabled)
+        XCTAssertFalse(configuration.faceClusteringEnabled)
+        configuration.faceGroupsEnabled = true
+        XCTAssertTrue(makeConfiguration().faceGroupsEnabled)
+        XCTAssertFalse(makeConfiguration().faceClusteringEnabled)
+        configuration.faceClusteringEnabled = true
+        XCTAssertTrue(makeConfiguration().faceClusteringEnabled)
+        configuration.faceGroupsEnabled = false
+        configuration.faceClusteringEnabled = false
+        XCTAssertFalse(makeConfiguration().faceGroupsEnabled)
+        XCTAssertFalse(makeConfiguration().faceClusteringEnabled)
+    }
+
     func testReadsValuesStoredUnderExistingKeys() {
         let namePattern = NameValidationPattern(
             validationNamePattern: "name",

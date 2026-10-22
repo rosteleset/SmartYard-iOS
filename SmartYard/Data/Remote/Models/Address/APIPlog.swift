@@ -55,6 +55,8 @@ struct DetailX: Decodable, Equatable, Hashable {
     let phone: String?
     let code: String?
     let faceId: String?
+    let groupId: Int?
+    let groupName: String?
     let vehicle: Vehicle?
     
     private enum CodingKeys: String, CodingKey {
@@ -64,6 +66,8 @@ struct DetailX: Decodable, Equatable, Hashable {
         case phone
         case code
         case faceId
+        case groupId
+        case groupName
         case vehicle
     }
     
@@ -75,7 +79,10 @@ struct DetailX: Decodable, Equatable, Hashable {
         flags = try? container.decode([String].self, forKey: .flags)
         phone = try? container.decode(String.self, forKey: .phone)
         code = try? container.decode(String.self, forKey: .code)
-        faceId = try? container.decode(String.self, forKey: .faceId)
+        faceId = (try? container.decode(String.self, forKey: .faceId))
+            ?? (try? container.decode(Int.self, forKey: .faceId)).map(String.init)
+        groupId = try? container.decodePositiveIdentifierIfPresent(forKey: .groupId)
+        groupName = try? container.decode(String.self, forKey: .groupName)
         vehicle = try? container.decode(Vehicle.self, forKey: .vehicle)
      }
     
@@ -87,7 +94,9 @@ struct DetailX: Decodable, Equatable, Hashable {
         phone: String?,
         code: String?,
         faceId: String?,
-        vehicle: Vehicle? = nil
+        vehicle: Vehicle? = nil,
+        groupId: Int? = nil,
+        groupName: String? = nil
     ) {
         self.key = key
         self.face = face
@@ -96,6 +105,22 @@ struct DetailX: Decodable, Equatable, Hashable {
         self.code = code
         self.faceId = faceId
         self.vehicle = vehicle
+        self.groupId = groupId
+        self.groupName = groupName
+    }
+
+    func updatingFace(faceId: String?, groupId: Int?, groupName: String?, flags: [String]? = nil) -> DetailX {
+        DetailX(
+            key: key,
+            face: face,
+            flags: flags ?? self.flags,
+            phone: phone,
+            code: code,
+            faceId: faceId,
+            vehicle: vehicle,
+            groupId: groupId,
+            groupName: groupName
+        )
     }
 }
 
@@ -129,8 +154,11 @@ enum ParanoidEventTracking {
         APIPlog.EventType.plate.rawValue
     ]
 
-    static func isSupported(_ event: APIPlog) -> Bool {
+    static func isSupported(_ event: APIPlog, faceGroupsEnabled: Bool = false) -> Bool {
         guard event.flatId != nil else { return false }
+        if event.event == .face {
+            return faceGroupsEnabled && (event.detailX?.groupId ?? 0) > 0
+        }
         return supportedEventTypes.contains(event.event.rawValue)
     }
 
@@ -144,7 +172,9 @@ enum ParanoidEventTracking {
             return ""
         case .plate:
             return event.detailX?.vehicle?.plateNumber ?? ""
-        case .unanswered, .answered, .face, .call, .reserved, .unknown:
+        case .face:
+            return event.detailX?.groupId.map(String.init) ?? ""
+        case .unanswered, .answered, .call, .reserved, .unknown:
             return ""
         }
     }
@@ -155,6 +185,7 @@ enum ParanoidEventTracking {
 
     static func key(for event: APIPlog) -> String? {
         guard let flatId = event.flatId else { return nil }
+        if event.event == .face && (event.detailX?.groupId ?? 0) <= 0 { return nil }
         return key(
             flatId: flatId,
             eventType: event.event.rawValue,
@@ -168,6 +199,8 @@ enum ParanoidEventTracking {
             return L10n.History.Event.openingWithKey
         case APIPlog.EventType.app.rawValue:
             return L10n.History.Event.openingFromApp
+        case APIPlog.EventType.face.rawValue:
+            return L10n.History.Event.openingWithFaceID
         case APIPlog.EventType.passcode.rawValue:
             return L10n.History.Event.openingWithCode
         case APIPlog.EventType.plate.rawValue:
@@ -310,12 +343,20 @@ struct APIPlog: Decodable, Equatable, Hashable {
         self.previewImage = previewImage
     }
 
+    func withDetailX(_ detailX: DetailX?) -> APIPlog {
+        copying(flatId: flatId, detailX: detailX)
+    }
+
     func withFallbackFlatId(_ fallbackFlatId: Int) -> APIPlog {
+        copying(flatId: flatId ?? fallbackFlatId, detailX: detailX)
+    }
+
+    private func copying(flatId: Int?, detailX: DetailX?) -> APIPlog {
         return APIPlog(
             date: date,
             uuid: uuid,
             imageUuid: imageUuid,
-            flatId: flatId ?? fallbackFlatId,
+            flatId: flatId,
             objectId: objectId,
             objectType: objectType,
             objectMechanizma: objectMechanizma,

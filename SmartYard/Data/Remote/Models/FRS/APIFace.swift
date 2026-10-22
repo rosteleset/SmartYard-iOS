@@ -12,26 +12,26 @@ import UIKit
 struct APIFace: Decodable, Hashable {
     let faceId: Int
     let image: String
+    let groupId: Int?
     
     private enum CodingKeys: String, CodingKey {
         case faceId
         case image
+        case groupId
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        let rawFaceIdString = try? container.decode(String.self, forKey: .faceId)
-        let rawFaceIdInt = try? container.decode(Int.self, forKey: .faceId)
-        
-        if let rawFaceIdInt = rawFaceIdInt {
-            self.faceId = rawFaceIdInt
-        } else if let rawFaceIdString = rawFaceIdString, let faceId = Int(rawFaceIdString) {
-            self.faceId = faceId
-        } else {
-            throw NSError.APIWrapperError.noDataError
-        }
+        faceId = try container.decodePositiveIdentifier(forKey: .faceId)
         
         image = try container.decode(String.self, forKey: .image)
+        groupId = try container.decodePositiveIdentifierIfPresent(forKey: .groupId)
+    }
+
+    init(faceId: Int, image: String, groupId: Int? = nil) {
+        self.faceId = faceId
+        self.image = image
+        self.groupId = groupId.flatMap { $0 > 0 ? $0 : nil }
     }
 }

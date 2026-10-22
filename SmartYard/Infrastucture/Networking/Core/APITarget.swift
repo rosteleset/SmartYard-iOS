@@ -82,6 +82,7 @@ enum APITarget {
     case payRegister(request: PayRegisterRequest)
     
     case getPersonFaces(request: GetPersonFacesRequest)
+    case faceGroup(request: FaceGroupRequest)
     case removePersonFace(request: RemovePersonFaceRequest)
     case likePersonFace(request: LikePersonFaceRequest)
     case disLikePersonFace(request: DisLikePersonFaceRequest)
@@ -181,6 +182,7 @@ extension APITarget: TargetType {
         case .payRegister: return "pay/register"
             
         case .getPersonFaces: return "frs/listFaces"
+        case .faceGroup(let request): return request.path
         case .disLikePersonFace: return "frs/disLike"
         case .likePersonFace: return "frs/like"
         case .removePersonFace: return "frs/disLike"
@@ -274,6 +276,7 @@ extension APITarget: TargetType {
             case .payProcess(let request): return (request.accessToken, false)
                 
             case .getPersonFaces(let request): return (request.accessToken, request.forceRefresh)
+            case .faceGroup(let request): return (request.accessToken, request.forceRefresh)
             case .removePersonFace(let request): return (request.accessToken, false)
             case .likePersonFace(let request): return (request.accessToken, false)
             case .disLikePersonFace(let request): return (request.accessToken, false)
@@ -388,6 +391,7 @@ extension APITarget: TargetType {
         case .payRegister(let request): return request.requestParameters
         
         case .getPersonFaces(let request): return request.requestParameters
+        case .faceGroup(let request): return request.requestParameters
         case .removePersonFace(let request): return request.requestParameters
         case .likePersonFace(let request): return request.requestParameters
         case .disLikePersonFace(let request): return request.requestParameters

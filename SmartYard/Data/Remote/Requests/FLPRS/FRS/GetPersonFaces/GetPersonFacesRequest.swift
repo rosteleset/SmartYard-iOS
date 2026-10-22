@@ -11,13 +11,16 @@ struct GetPersonFacesRequest {
     let accessToken: String
     let forceRefresh: Bool
     let flatId: Int
+    var groupId: Int?
     
 }
 
 extension GetPersonFacesRequest {
     
     var requestParameters: [String: Any] {
-        return ["flatId": flatId]
+        var parameters: [String: Any] = ["flatId": flatId]
+        if let groupId, groupId > 0 { parameters["groupId"] = groupId }
+        return parameters
     }
     
 }

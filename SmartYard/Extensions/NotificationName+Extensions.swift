@@ -47,6 +47,7 @@ extension Notification.Name {
     static let popupDimissed = Notification.Name("PopUpDimissed")
     
     static let updateFaces = Notification.Name("UpdateFaces")
+    static let trackedEventsChanged = Notification.Name("TrackedEventsChanged")
     static let updateEvent = Notification.Name("UpdateEvent")
     
     static let refreshVisibleWebVC = Notification.Name("RefreshVisibleWebVC")

@@ -76,6 +76,8 @@ final class HistoryViewModel: BaseViewModel {
 
     /// таблица лиц по квартирам
     var listFaces: [FlatId: GetPersonFacesResponseData] = [:]
+    var faceGroups: [FlatId: [APIFaceGroup]] = [:]
+    let trackedEventsLoading = SerialDisposable()
 
     /// таблица отслеживаемых событий: "\(flatId)_\(eventType)_\(eventDetail)" -> watcher.
     let trackedEvents = BehaviorRelay<[String: APITrackedEvent]>(value: [:])
@@ -438,7 +440,29 @@ extension HistoryViewModel {
 }
 
 extension HistoryViewModel {
+    func faceStateIdentity(for event: APIPlog) -> String {
+        let flags = (event.detailX?.flags ?? []).joined(separator: ":")
+        let group = event.detailX?.groupId.map(String.init) ?? ""
+        return (flags + "|" + group + "|" + (event.detailX?.groupName ?? "")).md5
+    }
+
+    func resolvingFaceGroup(in event: APIPlog) -> APIPlog {
+        guard apiWrapper.accessService.faceGroupsEnabled, let flatId = event.flatId,
+              event.event == .face, let detail = event.detailX else { return event }
+        let metadata = FaceGroupMetadata.resolve(
+            faceId: detail.faceId.flatMap(Int.init),
+            groupId: detail.groupId,
+            groupName: detail.groupName,
+            faces: listFaces[flatId],
+            groups: faceGroups[flatId]
+        )
+        return event.withDetailX(detail.updatingFace(
+            faceId: detail.faceId, groupId: metadata.groupId, groupName: metadata.groupName
+        ))
+    }
+
     func loadTrackedEvents(for flatIds: [Int]) {
+        trackedEventsLoading.disposable = Disposables.create()
         guard apiWrapper.accessService.eventsTrackingEnabled else {
             trackedEvents.accept([:])
             return
@@ -457,7 +481,7 @@ extension HistoryViewModel {
                 .catchAndReturn(nil)
         }
 
-        Observable.zip(requests)
+        trackedEventsLoading.disposable = Observable.zip(requests)
             .map { responses -> [String: APITrackedEvent] in
                 responses
                     .flatMap { $0 ?? [] }
@@ -466,6 +490,5 @@ extension HistoryViewModel {
                     }
             }
             .bind(to: trackedEvents)
-            .disposed(by: disposeBag)
     }
 }

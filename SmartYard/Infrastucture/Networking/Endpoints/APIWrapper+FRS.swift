@@ -13,7 +13,7 @@ import Foundation
 
 extension APIWrapper {
     
-    func getPersonFaces(flatId: Int, forceRefresh: Bool = false) -> Single<GetPersonFacesResponseData?> {
+    func getPersonFaces(flatId: Int, forceRefresh: Bool = false, groupId: Int? = nil) -> Single<GetPersonFacesResponseData?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -24,7 +24,8 @@ extension APIWrapper {
         let request = GetPersonFacesRequest(
             accessToken: accessToken,
             forceRefresh: forceRefresh,
-            flatId: flatId
+            flatId: flatId,
+            groupId: groupId
         )
         Logger.logDebug("Request data: \(String(describing: request))")
 
@@ -75,7 +76,12 @@ extension APIWrapper {
             .mapToOptional()
     }
     
+    // Keep the legacy UI contract: a successful response without faceId is still success.
     func likePersonFace(event uuid: String) -> Single<Void?> {
+        registerPersonFace(event: uuid).map { _ in Optional(()) }
+    }
+
+    func registerPersonFace(event uuid: String) -> Single<Int?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
         }
@@ -90,8 +96,14 @@ extension APIWrapper {
             .request(.likePersonFace(request: request))
             .convertNoConnectionError()
             .trackBackend(backend, internet)
-            .mapAsVoidResponse()
-            .mapToOptional()
+            .map { response -> Int? in
+                guard 200...299 ~= response.statusCode else {
+                    throw response.extractBaseAPIResponseError()
+                }
+                // Older operators return 204 or no data. Registration still succeeded;
+                // never retry `like` just because a legacy response has no identifier.
+                return try? response.map(BaseAPIResponse<LikeFaceResponse>.self).data?.faceId
+            }
     }
     
 }

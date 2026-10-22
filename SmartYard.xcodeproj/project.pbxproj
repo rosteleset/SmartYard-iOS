@@ -734,6 +734,26 @@
 		C0D3D1000000000000000003 /* DeliveryTabsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3D1000000000000000012 /* DeliveryTabsConfig.swift */; };
 		C0D3D1000000000000000004 /* DeliveryTabsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3D1000000000000000012 /* DeliveryTabsConfig.swift */; };
 		C0D3D1000000000000000005 /* OperatorConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3D1000000000000000013 /* OperatorConfigurationTests.swift */; };
+		C0D3F5000000000000000002 /* FaceGroupsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F5000000000000000001 /* FaceGroupsStore.swift */; };
+		C0D3F5000000000000000003 /* FaceGroupsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F5000000000000000001 /* FaceGroupsStore.swift */; };
+		C0D3F5000000000000000005 /* FaceGroupsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F5000000000000000004 /* FaceGroupsStoreTests.swift */; };
+		C0D3F4000000000000000002 /* FacesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F4000000000000000001 /* FacesRepository.swift */; };
+		C0D3F4000000000000000004 /* ServerFacesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F4000000000000000003 /* ServerFacesRepository.swift */; };
+		C0D3F4000000000000000006 /* MockFacesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F4000000000000000005 /* MockFacesRepository.swift */; };
+		C0D3F4000000000000000010 /* MockFacesRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F4000000000000000009 /* MockFacesRepositoryTests.swift */; };
+		C0D3F4000000000000000011 /* FacesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F4000000000000000001 /* FacesRepository.swift */; };
+		C0D3F4000000000000000012 /* MockFacesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F4000000000000000005 /* MockFacesRepository.swift */; };
+		C0D3F3000000000000000002 /* APIFaceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000001 /* APIFaceGroup.swift */; };
+		C0D3F3000000000000000004 /* FaceGroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000003 /* FaceGroupRequest.swift */; };
+		C0D3F3000000000000000006 /* APIWrapper+FaceGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000005 /* APIWrapper+FaceGroups.swift */; };
+		C0D3F3000000000000000016 /* FaceRegistrationWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000015 /* FaceRegistrationWorkflow.swift */; };
+		C0D3F3000000000000000017 /* FaceRegistrationWorkflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000015 /* FaceRegistrationWorkflow.swift */; };
+		C0D3F3000000000000000019 /* FaceGroupsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000018 /* FaceGroupsTests.swift */; };
+		C0D3F3000000000000000021 /* FaceRegistrationWorkflowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000020 /* FaceRegistrationWorkflowTests.swift */; };
+		C0D3F3000000000000000022 /* APIFaceGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000001 /* APIFaceGroup.swift */; };
+		C0D3F3000000000000000023 /* APIFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714CCE2EFACCAD0099703B /* APIFace.swift */; };
+		C0D3F3000000000000000024 /* FaceGroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D3F3000000000000000003 /* FaceGroupRequest.swift */; };
+		C0D3F3000000000000000025 /* GetPersonFacesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D242EFACCAD0099703B /* GetPersonFacesRequest.swift */; };
 		C0D3D1000000000000000006 /* NameValidationPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9658B22E81702200C9F9DA /* NameValidationPattern.swift */; };
 		E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9004C5E23FABF2200B59976 /* IntercomTemporaryAccessView.swift */; };
 		E917244B2410E2B300F2B810 /* SmartYardSearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E917244A2410E2B300F2B810 /* SmartYardSearchTextField.swift */; };
@@ -1710,6 +1730,18 @@
 		C0D3D1000000000000000011 /* OperatorConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorConfiguration.swift; sourceTree = "<group>"; };
 		C0D3D1000000000000000012 /* DeliveryTabsConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryTabsConfig.swift; sourceTree = "<group>"; };
 		C0D3D1000000000000000013 /* OperatorConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatorConfigurationTests.swift; sourceTree = "<group>"; };
+		C0D3F5000000000000000001 /* FaceGroupsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceGroupsStore.swift; sourceTree = "<group>"; };
+		C0D3F5000000000000000004 /* FaceGroupsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceGroupsStoreTests.swift; sourceTree = "<group>"; };
+		C0D3F4000000000000000001 /* FacesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesRepository.swift; sourceTree = "<group>"; };
+		C0D3F4000000000000000003 /* ServerFacesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerFacesRepository.swift; sourceTree = "<group>"; };
+		C0D3F4000000000000000005 /* MockFacesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFacesRepository.swift; sourceTree = "<group>"; };
+		C0D3F4000000000000000009 /* MockFacesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFacesRepositoryTests.swift; sourceTree = "<group>"; };
+		C0D3F3000000000000000001 /* APIFaceGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIFaceGroup.swift"; sourceTree = "<group>"; };
+		C0D3F3000000000000000003 /* FaceGroupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceGroupRequest.swift"; sourceTree = "<group>"; };
+		C0D3F3000000000000000005 /* APIWrapper+FaceGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "APIWrapper+FaceGroups.swift"; sourceTree = "<group>"; };
+		C0D3F3000000000000000015 /* FaceRegistrationWorkflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceRegistrationWorkflow.swift"; sourceTree = "<group>"; };
+		C0D3F3000000000000000018 /* FaceGroupsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceGroupsTests.swift"; sourceTree = "<group>"; };
+		C0D3F3000000000000000020 /* FaceRegistrationWorkflowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceRegistrationWorkflowTests.swift"; sourceTree = "<group>"; };
 		D6B9C3BE1BDB9EDBCEBCEFA5 /* GetStoriesRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetStoriesRequest.swift; sourceTree = "<group>"; };
 		E2747C08EF399AF3014899F8 /* Pods_SmartYardWidget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardWidget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55C74937714AE9E4DD06B3B /* Pods-SmartYardWidget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.release.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.release.xcconfig"; sourceTree = "<group>"; };
@@ -2199,6 +2231,10 @@
 		3AEFB43C264C0845000F37D0 /* FacesSettings */ = {
 			isa = PBXGroup;
 			children = (
+				C0D3F4000000000000000001 /* FacesRepository.swift */,
+				C0D3F5000000000000000001 /* FaceGroupsStore.swift */,
+				C0D3F4000000000000000003 /* ServerFacesRepository.swift */,
+				C0D3F4000000000000000005 /* MockFacesRepository.swift */,
 				3AEFB467264C2C4D000F37D0 /* Cells */,
 				3AEFB43D264C086D000F37D0 /* View */,
 				3AEFB43E264C0884000F37D0 /* ViewModel */,
@@ -2238,6 +2274,7 @@
 			isa = PBXGroup;
 			children = (
 				3A2881B02665093100F42097 /* AddFaceViewController.swift */,
+				C0D3F3000000000000000015 /* FaceRegistrationWorkflow.swift */,
 				3A8FC6C82B06608600F90D73 /* AddFaceViewController.xib */,
 				3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */,
 				3A8FC6CD2B0660A000F90D73 /* DeleteFaceViewController.xib */,
@@ -3911,6 +3948,7 @@
 			isa = PBXGroup;
 			children = (
 				8B714CCE2EFACCAD0099703B /* APIFace.swift */,
+				C0D3F3000000000000000001 /* APIFaceGroup.swift */,
 			);
 			path = FRS;
 			sourceTree = "<group>";
@@ -4233,6 +4271,7 @@
 			children = (
 				8B714D232EFACCAD0099703B /* DisLikePersonFace */,
 				8B714D262EFACCAD0099703B /* GetPersonFaces */,
+				C0D3F3000000000000000003 /* FaceGroupRequest.swift */,
 				8B714D282EFACCAD0099703B /* LikePersonFace */,
 				8B714D2A2EFACCAD0099703B /* RemovePersonFace */,
 			);
@@ -4689,6 +4728,7 @@
 				8B714D9A2EFACCAD0099703B /* ApiWrapper+CCTV.swift */,
 				8B714D9B2EFACCAD0099703B /* APIWrapper+Extensions.swift */,
 				8B714D9C2EFACCAD0099703B /* APIWrapper+FRS.swift */,
+				C0D3F3000000000000000005 /* APIWrapper+FaceGroups.swift */,
 				8B714D9D2EFACCAD0099703B /* APIWrapper+Geo.swift */,
 				8B714D9E2EFACCAD0099703B /* APIWrapper+Inbox.swift */,
 				8B714D9F2EFACCAD0099703B /* APIWrapper+Issues.swift */,
@@ -5358,6 +5398,10 @@
 				C0D3B1000000000000000008 /* IncomingCallRoutingPolicyTests.swift */,
 				C0D3C1000000000000000012 /* SessionStoreTests.swift */,
 				C0D3D1000000000000000013 /* OperatorConfigurationTests.swift */,
+				C0D3F4000000000000000009 /* MockFacesRepositoryTests.swift */,
+				C0D3F5000000000000000004 /* FaceGroupsStoreTests.swift */,
+				C0D3F3000000000000000018 /* FaceGroupsTests.swift */,
+				C0D3F3000000000000000020 /* FaceRegistrationWorkflowTests.swift */,
 				C0D3E1000000000000000012 /* OnlineSelectionGateTests.swift */,
 				52C45EC3A30BD0089FCCAC19 /* OnboardingStoreTests.swift */,
 				1E4FAF44AD3C4F605AB41840 /* LicensePlateAccessTests.swift */,
@@ -6931,6 +6975,10 @@
 				8B714E4E2EFACCAD0099703B /* AppVersionRequest.swift in Sources */,
 				8B714E4F2EFACCAD0099703B /* GetAddressListResponseData.swift in Sources */,
 				8B714E502EFACCAD0099703B /* APIFace.swift in Sources */,
+				C0D3F3000000000000000002 /* APIFaceGroup.swift in Sources */,
+				C0D3F3000000000000000004 /* FaceGroupRequest.swift in Sources */,
+				C0D3F3000000000000000006 /* APIWrapper+FaceGroups.swift in Sources */,
+				C0D3F3000000000000000016 /* FaceRegistrationWorkflow.swift in Sources */,
 				8B714E512EFACCAD0099703B /* DebugInternetMonitoring.swift in Sources */,
 				8B714E522EFACCAD0099703B /* PlogResponseData.swift in Sources */,
 				8B714E532EFACCAD0099703B /* GetServicesResponseData.swift in Sources */,
@@ -7174,6 +7222,10 @@
 				84D6446423F6AD3F00AD87EF /* AddressDeletionViewModel.swift in Sources */,
 				84D6446723F6AF5100AD87EF /* AddressDeletionReason.swift in Sources */,
 				3AEFB45F264C12F0000F37D0 /* FacesSettingsViewModel.swift in Sources */,
+				C0D3F4000000000000000002 /* FacesRepository.swift in Sources */,
+				C0D3F5000000000000000002 /* FaceGroupsStore.swift in Sources */,
+				C0D3F4000000000000000004 /* ServerFacesRepository.swift in Sources */,
+				C0D3F4000000000000000006 /* MockFacesRepository.swift in Sources */,
 				3A003CF225E04EE3002F193B /* RequestRecordViewController.swift in Sources */,
 				3A9E72412A4C7F8900ECDD18 /* SYImageType.swift in Sources */,
 				84CC15E523EC999700A1CB95 /* AddressesListSectionUpdateKind.swift in Sources */,
@@ -7233,6 +7285,18 @@
 				C0D3D1000000000000000002 /* OperatorConfiguration.swift in Sources */,
 				C0D3D1000000000000000004 /* DeliveryTabsConfig.swift in Sources */,
 				C0D3D1000000000000000005 /* OperatorConfigurationTests.swift in Sources */,
+				C0D3F4000000000000000010 /* MockFacesRepositoryTests.swift in Sources */,
+				C0D3F5000000000000000003 /* FaceGroupsStore.swift in Sources */,
+				C0D3F5000000000000000005 /* FaceGroupsStoreTests.swift in Sources */,
+				C0D3F4000000000000000011 /* FacesRepository.swift in Sources */,
+				C0D3F4000000000000000012 /* MockFacesRepository.swift in Sources */,
+				C0D3F3000000000000000017 /* FaceRegistrationWorkflow.swift in Sources */,
+				C0D3F3000000000000000019 /* FaceGroupsTests.swift in Sources */,
+				C0D3F3000000000000000021 /* FaceRegistrationWorkflowTests.swift in Sources */,
+				C0D3F3000000000000000022 /* APIFaceGroup.swift in Sources */,
+				C0D3F3000000000000000023 /* APIFace.swift in Sources */,
+				C0D3F3000000000000000024 /* FaceGroupRequest.swift in Sources */,
+				C0D3F3000000000000000025 /* GetPersonFacesRequest.swift in Sources */,
 				C0D3D1000000000000000006 /* NameValidationPattern.swift in Sources */,
 				C0D3A1000000000000000082 /* DoorOpeningDecision.swift in Sources */,
 				C0D3A1000000000000000083 /* DoorOpeningDecisionTests.swift in Sources */,

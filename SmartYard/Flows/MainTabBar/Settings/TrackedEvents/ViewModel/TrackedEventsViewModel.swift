@@ -121,6 +121,7 @@ final class TrackedEventsViewModel: BaseViewModel {
                     guard let self else { return }
 
                     events.accept(events.value.filter { $0.watcherId != watcherId })
+                    NotificationCenter.default.post(name: .trackedEventsChanged, object: self)
                 }
             )
             .disposed(by: disposeBag)
@@ -135,7 +136,7 @@ private extension TrackedEventsViewModel {
     ) {
         trigger
             .flatMapLatest { [weak self] event, comments -> Driver<APITrackedEvent?> in
-                guard let self else { return .empty() }
+                guard let self, event.eventType != APIPlog.EventType.face.rawValue else { return .empty() }
 
                 return self.apiWrapper
                     .untrackEvent(watcherId: event.watcherId)
@@ -171,6 +172,7 @@ private extension TrackedEventsViewModel {
                             $0.key == updatedEvent.key ? updatedEvent : $0
                         }
                     )
+                    NotificationCenter.default.post(name: .trackedEventsChanged, object: self)
                 }
             )
             .disposed(by: disposeBag)

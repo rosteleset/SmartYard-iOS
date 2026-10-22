@@ -28,6 +28,8 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let validationPattern: NameValidationPattern?
     let deliveryTabsConfig: DeliveryTabsConfig?
     let eventsTracking: Bool?
+    let faceGroups: Bool?
+    let faceClustering: Bool?
     let stories: Bool?
     let stunUrl: String?
     let privacyPolicy: String?
@@ -54,6 +56,8 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case addressVerificationTab1Visible
         case addressVerificationTab2Visible
         case eventsTracking
+        case faceGroups
+        case faceClustering
         case stories
         case stunUrl
         case privacyPolicy
@@ -105,6 +109,8 @@ struct APIOptions: Decodable, EmptyDataInitializable {
             lprsVersion = (try? container.decode(Int.self, forKey: .lprsVersion)).map(String.init)
         }
         eventsTracking = Self.decodeFlag(.eventsTracking, from: container)
+        faceGroups = Self.decodeFlag(.faceGroups, from: container)
+        faceClustering = Self.decodeFlag(.faceClustering, from: container)
         stories = Self.decodeFlag(.stories, from: container)
         stunUrl = try? container.decode(String.self, forKey: .stunUrl)
         privacyPolicy = try? container.decode(String.self, forKey: .privacyPolicy)
@@ -140,6 +146,8 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         deliveryTabsConfig = nil
         validationPattern = nil
         eventsTracking = nil
+        faceGroups = nil
+        faceClustering = nil
         stories = nil
         stunUrl = nil
         privacyPolicy = nil

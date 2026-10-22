@@ -7,6 +7,12 @@ import RxCocoa
 import CoreLocation
 import RxDataSources
 
+private struct FaceMetadata {
+    let flatId: Int
+    let faces: [APIFace]
+    let groups: [APIFaceGroup]
+}
+
 extension HistoryViewModel {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     func bind() {
@@ -108,6 +114,7 @@ extension HistoryViewModel {
                                 // отрезаем нам не нужные лишние поля даты и квартиры
                                 // и объединяем массивы данных от разных квартир в один общий
                                     .flatMap { $0.items }
+                                    .map { self.resolvingFaceGroup(in: $0) }
                                 // удаляем записи с одинаковым uuid, которые одновременно могли присутствовать
                                 // в разных квартирах
                                     .withoutDuplicates()
@@ -155,7 +162,7 @@ extension HistoryViewModel {
                                     .map { // RxDataSource отслеживает изменения данных по identity, поэтому,
                                         // чтобы при изменении flags данные обновлялись, пришлось замиксовать uuid и flags в идентификатор
                                         HistoryDataItem(
-                                            identity: $0.element.uuid + String(($0.element.detailX?.flags ?? []).joined(separator: ":")).md5,
+                                            identity: $0.element.uuid + self.faceStateIdentity(for: $0.element),
                                             order: self.orderOf(row: $0.offset, count: items.count),
                                             value: $0.element
                                         )
@@ -208,41 +215,31 @@ extension HistoryViewModel {
             .bind(to: availableDaysForFlat)
             .disposed(by: disposeBag)
 
-        // обновляем список лиц по тому же самому событию
-        updateAvailableDays // аргумент - forceRefresh
-            .asDriverOnErrorJustComplete()
-            .flatMap { [weak self] forceRefresh -> Driver<[FlatId: GetPersonFacesResponseData]?> in
-                guard let self else { return .just(nil) }
-
-                self.listFaces = [:]
-                let results = PublishSubject<[FlatId: GetPersonFacesResponseData]?>()
-
-                // запрашиваем список дней, имеющих логи для каждой квартиры, а результат каждого запроса отправляем,
-                // как отдельный элемент в текущую последовательность
-                self.apptsFilter.value.forEach { flatId in
-                    self.apiWrapper.getPersonFaces(flatId: flatId, forceRefresh: forceRefresh)
-                        .trackError(self.errorTracker)
-                    // поскольку ответ не содержит flatId, то мы сами пробрасываем flatId из запроса
-                        .map { $0 == nil ? nil : [flatId: $0!] }
-                        .asDriver(onErrorJustReturn: [flatId: []])
-                        .drive { result in
-                            results.onNext(result)
-                        }
-                        .disposed(by: self.disposeBag)
+        // Latest apartment selection wins; requests are cancelled together on refresh.
+        updateAvailableDays
+            .flatMapLatest { [weak self] forceRefresh -> Observable<[FaceMetadata]> in
+                guard let self, !self.apptsFilter.value.isEmpty else { return .just([]) }
+                let requests = self.apptsFilter.value.map { flatId -> Single<FaceMetadata?> in
+                    let groups = self.apiWrapper.accessService.faceGroupsEnabled
+                        ? self.apiWrapper.getFaceGroups(flatId: flatId) : .just([])
+                    return Single.zip(
+                        self.apiWrapper.getPersonFaces(flatId: flatId, forceRefresh: forceRefresh), groups
+                    )
+                    .map { FaceMetadata(flatId: flatId, faces: $0.0 ?? [], groups: $0.1) as FaceMetadata? }
+                    .trackError(self.errorTracker)
+                    .asSingle()
+                    .catchAndReturn(nil)
                 }
-
-                return results.asDriver(onErrorJustReturn: nil)
+                return Single.zip(requests).map { $0.compactMap { $0 } }.asObservable()
             }
-            .trackError(errorTracker)
-            .ignoreNil()
-            .asDriver(onErrorJustReturn: [:])
-            .drive(
-                onNext: { [weak self] result in
-                    guard let self else { return }
-
-                    self.listFaces.merge(result) { _, new in new }
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self) { owner, results in
+                for result in results {
+                    owner.listFaces[result.flatId] = result.faces
+                    owner.faceGroups[result.flatId] = result.groups
                 }
-            )
+                owner.updateSections.onNext(())
+            }
             .disposed(by: disposeBag)
 
         // мы знаем только id дома, а логи запрашиваются для id квартиры,
@@ -305,6 +302,25 @@ extension HistoryViewModel {
                 .disposed(by: disposeBag)
         }
 
+        trackedEventsLoading.disposed(by: disposeBag)
+        NotificationCenter.default.rx.notification(.updateFaces)
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self) { owner, _ in owner.updateAvailableDays.onNext(true) }
+            .disposed(by: disposeBag)
+        NotificationCenter.default.rx.notification(.trackedEventsChanged)
+            .observe(on: MainScheduler.instance)
+            .subscribe(with: self) { owner, notification in
+                guard notification.object as? HistoryViewModel !== owner else { return }
+                owner.loadTrackedEvents(for: owner.flatIds)
+            }
+            .disposed(by: disposeBag)
+        apiWrapper.accessService.optionsUpdated
+            .subscribe(with: self) { owner, _ in
+                owner.updateAvailableDays.onNext(true)
+                owner.loadTrackedEvents(for: owner.flatIds)
+            }
+            .disposed(by: disposeBag)
+
         // если события изменились, то обновляем данные (dataCache не обнуляется при этом, а вот список лиц при этом обновится с сервера)
         NotificationCenter.default.rx.notification(.updateEvent)
             .asDriverOnErrorJustComplete()
@@ -323,7 +339,7 @@ extension HistoryViewModel {
                         return DayFlatItemsData(day: entry.day, items: newItems, flatId: entry.flatId)
                     }
 
-                    self.updateAvailableDays.onNext(true)
+                    self.updateSections.onNext(())
 
                 }
             )
@@ -332,12 +348,14 @@ extension HistoryViewModel {
 
     func bindEventUntracking(_ input: InputDetail) {
         input.untrackEventTrigger
-            .flatMapLatest { [weak self] event -> Driver<String?> in
+            .flatMapFirst { [weak self] event -> Driver<String?> in
                 guard let self,
                       let key = ParanoidEventTracking.key(for: event),
                       let trackedEvent = trackedEvents.value[key] else {
                     return .empty()
                 }
+
+                self.trackedEventsLoading.disposable = Disposables.create()
 
                 return self.apiWrapper
                     .untrackEvent(watcherId: trackedEvent.watcherId)
@@ -354,6 +372,7 @@ extension HistoryViewModel {
                     var events = trackedEvents.value
                     events.removeValue(forKey: key)
                     trackedEvents.accept(events)
+                    NotificationCenter.default.post(name: .trackedEventsChanged, object: self)
                 }
             )
             .disposed(by: disposeBag)
@@ -361,20 +380,25 @@ extension HistoryViewModel {
 
     func bindEventTracking(_ input: InputDetail) {
         input.trackEventTrigger
-            .flatMapLatest { [weak self] event, comments -> Driver<APITrackedEvent?> in
+            .flatMapFirst { [weak self] event, comments -> Driver<APITrackedEvent?> in
                 guard let self,
+                      self.apiWrapper.accessService.eventsTrackingEnabled,
+                      ParanoidEventTracking.isSupported(
+                        event, faceGroupsEnabled: self.apiWrapper.accessService.faceGroupsEnabled
+                      ),
                       let flatId = event.flatId else {
                     return .empty()
                 }
 
                 let eventDetail = ParanoidEventTracking.eventDetail(from: event)
+                self.trackedEventsLoading.disposable = Disposables.create()
 
                 return self.apiWrapper
                     .trackEvent(
                         flatId: flatId,
                         eventType: event.event.rawValue,
                         eventDetail: eventDetail,
-                        comments: comments
+                        comments: event.event == .face ? "" : comments
                     )
                     .trackActivity(self.activityTracker)
                     .trackError(self.errorTracker)
@@ -385,7 +409,7 @@ extension HistoryViewModel {
                             flatId: flatId,
                             eventType: event.event.rawValue,
                             eventDetail: eventDetail,
-                            comments: comments
+                            comments: event.event == .face ? event.detailX?.groupName : comments
                         )
                     }
                     .asDriver(onErrorJustReturn: nil)
@@ -398,6 +422,7 @@ extension HistoryViewModel {
                     var events = trackedEvents.value
                     events[trackedEvent.key] = trackedEvent
                     trackedEvents.accept(events)
+                    NotificationCenter.default.post(name: .trackedEventsChanged, object: self)
                 }
             )
             .disposed(by: disposeBag)

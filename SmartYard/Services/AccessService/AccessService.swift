@@ -350,6 +350,16 @@ final class AccessService {
         }
     }
 
+    var faceGroupsEnabled: Bool {
+        get { operatorConfiguration.faceGroupsEnabled }
+        set { operatorConfiguration.faceGroupsEnabled = newValue }
+    }
+
+    var faceClusteringEnabled: Bool {
+        get { operatorConfiguration.faceClusteringEnabled }
+        set { operatorConfiguration.faceClusteringEnabled = newValue }
+    }
+
     var showStories: Bool {
         get {
             operatorConfiguration.showStories
@@ -421,6 +431,8 @@ final class AccessService {
         showCityCams = false
         eventsTrackingEnabled = false
         lprsVersion = .legacy
+        faceGroupsEnabled = false
+        faceClusteringEnabled = false
         showStories = false
         userPreferredAddressOrder = []
         phonePrefix = Constants.defaultPhonePrefix
