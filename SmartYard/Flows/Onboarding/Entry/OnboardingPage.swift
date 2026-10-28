@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 enum OnboardingPage: Int, CaseIterable {
     
@@ -15,11 +14,11 @@ enum OnboardingPage: Int, CaseIterable {
     case fullControl
     case smartYard
     
-    var image: UIImage? {
+    var imageName: String {
         switch self {
-        case .cctv: return UIImage(named: "FirstOnboardingPageIcon")
-        case .fullControl: return UIImage(named: "SecondOnboardingPageIcon")
-        case .smartYard: return UIImage(named: "ThirdOnboardingPageIcon")
+        case .cctv: return "FirstOnboardingPageIcon"
+        case .fullControl: return "SecondOnboardingPageIcon"
+        case .smartYard: return "ThirdOnboardingPageIcon"
         }
     }
     

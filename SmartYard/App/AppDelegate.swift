@@ -70,6 +70,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return .portrait
         }
         
+        if topVc is OnboardingViewController, UIDevice.current.userInterfaceIdiom == .pad,
+           !topVc.isBeingDismissed {
+            return .all
+        }
+
         if topVc is FullscreenPlayerViewController || topVc is OnlineFullscreenViewController,
             !topVc.isBeingDismissed {
             return .allButUpsideDown

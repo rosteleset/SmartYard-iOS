@@ -65,3 +65,9 @@
 - Keep release-specific `What's New` pages, release versions, and translations as local build-preparation artifacts. Never stage, commit, or push them. Only reusable `What's New` infrastructure belongs in the repository.
 - Before archiving, verify that `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` match between the containing app and every embedded app extension. Do not start the archive while any embedded extension has a different marketing version or build number.
 - Before the release build, verify that the generated release version matches `MARKETING_VERSION` and that every generated page has all required translations. After the build, restore or remove the generated release-specific changes.
+
+## Incremental SwiftUI migration
+
+- Use the SY prefix for new shared components. Place screen views in Flows/<Feature>/Views and observable screen state in Stores; connect existing Rx ViewModels through a Store.
+- Follow Docs/SwiftUIBestPractices.md: use intrinsic sizing and native adaptive containers, shared iPhone/iPad composition, and safe-area footers. Dynamic Type is excluded by user decision (2026-10-28); use fixed design typography without scaling controls or illustrations with the system text setting.
+- Adapt each migrated screen for iPad alongside iPhone using the available window size. Verify portrait, landscape, and narrow/short windows while preserving state and the iPhone baseline. Only onboarding has been adapted so far; universal device family does not verify the remaining UIKit screens.
