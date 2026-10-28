@@ -5153,7 +5153,7 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
-		8BF6C5F12F25520A008AA137 /* Infrastructure  */ = {
+		8BF6C5F12F25520A008AA137 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
 				8B3595C52F2A277000254A9F /* OnlineSelectionNavigator.swift */,
@@ -5163,16 +5163,16 @@
 				8BF6C5EF2F25520A008AA137 /* OnlineSectionControllersProvider.swift */,
 				8BF6C5F02F25520A008AA137 /* OnlineSectionModel.swift */,
 			);
-			path = "Infrastructure ";
+			path = Infrastructure;
 			sourceTree = "<group>";
 		};
-		8BF6C5F22F25520A008AA137 /* Sections  */ = {
+		8BF6C5F22F25520A008AA137 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
 				8BF6C5E52F25520A008AA137 /* Components */,
-				8BF6C5F12F25520A008AA137 /* Infrastructure  */,
+				8BF6C5F12F25520A008AA137 /* Infrastructure */,
 			);
-			path = "Sections ";
+			path = Sections;
 			sourceTree = "<group>";
 		};
 		8BF6C5F42F25520A008AA137 /* State */ = {
@@ -5192,7 +5192,7 @@
 				8BF6C5D52F25520A008AA137 /* Playback */,
 				8BF6C5D82F25520A008AA137 /* Presentation */,
 				B0A1C2D3E4F50617283940A1 /* Fullscreen */,
-				8BF6C5F22F25520A008AA137 /* Sections  */,
+				8BF6C5F22F25520A008AA137 /* Sections */,
 			);
 			path = Online;
 			sourceTree = "<group>";
