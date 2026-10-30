@@ -14,6 +14,7 @@ final class NewAllowedCarViewController: BaseViewController {
 
     private enum PickerTarget { case startDate, startTime, endDate, endTime }
 
+    private let dismissTap = UITapGestureRecognizer()
     private let availableArea = UIView()
     private let scrollView = UIScrollView()
     private let content = UIStackView.vertical(spacing: 20)
@@ -334,8 +335,8 @@ extension NewAllowedCarViewController {
             .subscribe(with: self) { owner, _ in owner.revealSelectedField() }
             .disposed(by: disposeBag)
 
-        let dismissTap = UITapGestureRecognizer()
-        backgroundView.addGestureRecognizer(dismissTap)
+        dismissTap.delegate = self
+        view.addGestureRecognizer(dismissTap)
         let confirm = Driver.merge(confirmButton.rx.tap.asDriver(), textField.shareButtonTapped)
         let output = viewModel.transform(.init(
             closeTrigger: dismissTap.rx.event.mapToVoid().asDriver(onErrorJustReturn: ()),
@@ -449,6 +450,9 @@ extension NewAllowedCarViewController {
 
 extension NewAllowedCarViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if gestureRecognizer === dismissTap {
+            return !(touch.view?.isDescendant(of: card) ?? false)
+        }
         var candidate = touch.view
         while let view = candidate {
             if view is UIControl { return false }
