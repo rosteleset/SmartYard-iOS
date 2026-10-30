@@ -36,6 +36,10 @@ class SmartYardLicensePlateTextField: UITextField, HasDisposeBag {
         )
     }
 
+    func setKeyboardActionTitle(_ title: String) {
+        licencePlateKeyboard.actionButton.setTitleForAllStates(title)
+    }
+
     func setFormConfirmationAllowed(_ allowed: Bool) {
         formConfirmationAllowed = allowed
         updateKeyboardKeys(for: LicencePlateFormatter.unformat(text: text ?? ""))

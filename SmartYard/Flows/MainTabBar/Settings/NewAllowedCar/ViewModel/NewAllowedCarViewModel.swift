@@ -59,36 +59,53 @@ final class NewAllowedCarViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
 
+        let optionsUpdated = apiWrapper.accessService.optionsUpdated
+            .asDriverOnErrorJustComplete().startWith(())
+        let timedAccess = optionsUpdated.map { [weak self] in self?.supportsTimedAccess ?? false }
+            .distinctUntilChanged()
+        let trackingSupported = optionsUpdated.map { [weak self] in self?.supportsTracking ?? false }
+            .distinctUntilChanged()
         let formatsUnavailable = BehaviorRelay(value: false)
-        let formats: Driver<[APILicensePlateFormat]?> = supportsTimedAccess
-            ? input.retryFormatsTrigger.startWith(())
-                .flatMapLatest { [weak self] _ -> Driver<[APILicensePlateFormat]?> in
-                    guard let self else { return .empty() }
-                    return self.apiWrapper.getLicensePlateFormats()
-                        .map { Optional($0) }
-                        .trackError(self.errorTracker)
-                        .asDriver(onErrorJustReturn: nil)
-                        .do(onNext: { formatsUnavailable.accept($0?.isEmpty ?? true) })
+        let formats: Driver<[APILicensePlateFormat]?> = timedAccess
+            .flatMapLatest { [weak self] timed -> Driver<[APILicensePlateFormat]?> in
+                guard let self else { return .empty() }
+                guard timed else {
+                    formatsUnavailable.accept(false)
+                    return .just([])
                 }
-                .startWith(nil)
-            : .just([])
+                return input.retryFormatsTrigger.startWith(())
+                    .flatMapLatest { [weak self] _ -> Driver<[APILicensePlateFormat]?> in
+                        guard let self else { return .empty() }
+                        return self.apiWrapper.getLicensePlateFormats()
+                            .map { Optional($0) }
+                            .trackError(self.errorTracker)
+                            .asDriver(onErrorJustReturn: nil)
+                            .do(onNext: { formatsUnavailable.accept($0?.isEmpty ?? true) })
+                    }
+                    .startWith(nil)
+            }
 
-        let unsupportedNumber = Driver.combineLatest(input.car, formats)
-            .map { [weak self] car, formats in
-                guard let self, self.supportsTimedAccess, let car, let formats, !formats.isEmpty else { return false }
+        let unsupportedNumber = Driver.combineLatest(input.car, formats, timedAccess)
+            .map { car, formats, timed in
+                guard timed, let car, let formats, !formats.isEmpty else { return false }
                 return !formats.contains {
                     $0.countryCode.lowercased() == car.countryCode && $0.matches(car.apiNumber)
                 }
             }
 
-        let canConfirm = Driver.combineLatest(input.car, formats, activityTracker.asDriver(), hasSaved.asDriver())
-            .map { [weak self] car, formats, loading, saved in
-                guard let self, let car, car.validity.isValid, !loading, !saved else { return false }
-                guard self.supportsTimedAccess else { return true }
+        let canContinue = Driver.combineLatest(
+            input.car, formats, timedAccess, activityTracker.asDriver(), hasSaved.asDriver()
+        )
+            .map { car, formats, timed, loading, saved in
+                guard let car, !loading, !saved else { return false }
+                guard timed else { return true }
                 return formats?.contains {
                     $0.countryCode.lowercased() == car.countryCode && $0.matches(car.apiNumber)
                 } ?? false
             }
+            .distinctUntilChanged()
+        let canConfirm = Driver.combineLatest(canContinue, input.car)
+            .map { allowed, car in allowed && (car?.validity.isValid ?? false) }
             .distinctUntilChanged()
 
         input.closeTrigger.withLatestFrom(activityTracker.asDriver())
@@ -119,7 +136,8 @@ final class NewAllowedCarViewModel: BaseViewModel {
             .disposed(by: disposeBag)
 
         return Output(
-            canConfirm: canConfirm, isLoading: activityTracker.asDriver(),
+            canContinue: canContinue, canConfirm: canConfirm, isLoading: activityTracker.asDriver(),
+            supportsTimedAccess: timedAccess, supportsTracking: trackingSupported,
             formatsUnavailable: formatsUnavailable.asDriver(), unsupportedNumber: unsupportedNumber
         )
     }
@@ -135,8 +153,11 @@ extension NewAllowedCarViewModel {
     }
 
     struct Output {
+        let canContinue: Driver<Bool>
         let canConfirm: Driver<Bool>
         let isLoading: Driver<Bool>
+        let supportsTimedAccess: Driver<Bool>
+        let supportsTracking: Driver<Bool>
         let formatsUnavailable: Driver<Bool>
         let unsupportedNumber: Driver<Bool>
     }

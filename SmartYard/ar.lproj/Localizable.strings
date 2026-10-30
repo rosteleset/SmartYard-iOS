@@ -698,3 +698,4 @@
 "settings.vehiclePass.validFrom" = "من %@";
 "settings.vehiclePass.validUntil" = "حتى %@";
 "settings.vehiclePass.unsupportedNumber" = "لا يدعم المشغل تنسيق هذه اللوحة.";
+"settings.vehiclePass.continueButton" = "متابعة";

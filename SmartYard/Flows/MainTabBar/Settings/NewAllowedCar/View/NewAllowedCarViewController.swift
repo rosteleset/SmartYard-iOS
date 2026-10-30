@@ -47,6 +47,10 @@ final class NewAllowedCarViewController: BaseViewController {
     private let pickerToolbar = UIToolbar()
     private let confirmButton = BlueButton(frame: .zero)
     private let draftCar = BehaviorRelay<AllowedCar?>(value: nil)
+    private let showsSettings = BehaviorRelay(value: false)
+    private let continueTrigger = PublishRelay<Void>()
+    private let saveTrigger = PublishRelay<Void>()
+    private var isAdvancingToSettings = false
     private let retryFormatsButton = UIButton(type: .system)
     private let loadingIndicator = UIActivityIndicatorView(style: .medium)
     private var card: UIView!
@@ -56,7 +60,7 @@ final class NewAllowedCarViewController: BaseViewController {
     private var manualEndDate: Date
     private var hasStartBoundary = true
     private var hasEndBoundary = true
-    private let calendar: Calendar
+    private var calendar: Calendar
     private let viewModel: NewAllowedCarViewModel
 
     init(viewModel: NewAllowedCarViewModel) {
@@ -86,6 +90,7 @@ final class NewAllowedCarViewController: BaseViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
+        showsSettings.accept(viewModel.originalCar != nil)
         bind()
         if let car = viewModel.originalCar {
             if car.countryCode == "ru" {
@@ -116,6 +121,7 @@ extension NewAllowedCarViewController {
         carNumberHintLabel.numberOfLines = 0
         textField.placeholder = L10n.Settings.ShareCar.platePlaceholder
         textField.accessibilityIdentifier = "vehicle-pass.number"
+        textField.setKeyboardActionTitle(L10n.Settings.VehiclePass.continueButton)
 
         unlimitedTitle.text = L10n.Settings.VehiclePass.unlimited
         automaticEndTitle.text = L10n.Settings.VehiclePass.automaticEnd
@@ -307,7 +313,13 @@ extension NewAllowedCarViewController {
         return row
     }
 
+}
+
+extension NewAllowedCarViewController {
     private func bind() {
+        textField.rx.controlEvent(.editingDidBegin)
+            .subscribe(with: self) { owner, _ in owner.setSettingsVisible(false) }
+            .disposed(by: disposeBag)
         textField.rx.controlEvent(.editingChanged)
             .subscribe(with: self) { owner, _ in owner.updateDraft() }
             .disposed(by: disposeBag)
@@ -337,16 +349,45 @@ extension NewAllowedCarViewController {
 
         dismissTap.delegate = self
         view.addGestureRecognizer(dismissTap)
-        let confirm = Driver.merge(confirmButton.rx.tap.asDriver(), textField.shareButtonTapped)
         let output = viewModel.transform(.init(
             closeTrigger: dismissTap.rx.event.mapToVoid().asDriver(onErrorJustReturn: ()),
             car: draftCar.asDriver(), trackingEnabled: trackingSwitch.rx.isOn.asDriver(),
-            addAccessTrigger: confirm, retryFormatsTrigger: retryFormatsButton.rx.tap.asDriver()
+            addAccessTrigger: saveTrigger.asDriverOnErrorJustComplete(), retryFormatsTrigger: retryFormatsButton.rx.tap.asDriver()
         ))
-        output.canConfirm.drive(with: self) { owner, allowed in
-            owner.confirmButton.isEnabled = allowed
-            owner.textField.setFormConfirmationAllowed(allowed)
+        showsSettings.asDriver().drive(with: self) { owner, visible in
+            let title = visible
+                ? (owner.viewModel.originalCar == nil ? L10n.Common.share : L10n.Common.save)
+                : L10n.Settings.VehiclePass.continueButton
+            owner.confirmButton.setTitle(title, for: .normal)
         }.disposed(by: disposeBag)
+        Driver.combineLatest(showsSettings.asDriver(), output.canContinue, output.canConfirm)
+            .drive(with: self) { owner, values in
+                let (visible, canContinue, canConfirm) = values
+                owner.confirmButton.isEnabled = visible ? canConfirm : canContinue
+                owner.textField.setFormConfirmationAllowed(canContinue)
+            }
+            .disposed(by: disposeBag)
+        Driver.combineLatest(showsSettings.asDriver(), output.supportsTimedAccess, output.supportsTracking)
+            .drive(with: self) { owner, values in
+                let (visible, timed, tracking) = values
+                owner.periodGroup.isHidden = !timed
+                owner.trackingGroup.isHidden = !tracking
+                owner.scrollView.isHidden = !visible || (!timed && !tracking)
+                owner.updatePeriod()
+            }
+            .disposed(by: disposeBag)
+        confirmButton.rx.tap.subscribe(with: self) { owner, _ in
+            owner.showsSettings.value ? owner.saveTrigger.accept(()) : owner.continueTrigger.accept(())
+        }.disposed(by: disposeBag)
+        Driver.merge(continueTrigger.asDriverOnErrorJustComplete(), textField.shareButtonTapped)
+            .withLatestFrom(output.canContinue).filter { $0 }
+            .drive(with: self) { owner, _ in owner.continueToSettings() }
+            .disposed(by: disposeBag)
+        NotificationCenter.default.rx.notification(UIResponder.keyboardDidHideNotification)
+            .subscribe(with: self) { owner, _ in
+                if owner.isAdvancingToSettings { owner.showSettings() }
+            }
+            .disposed(by: disposeBag)
         output.isLoading.drive(with: self) { owner, loading in
             if loading { owner.hideKeyboard() }
             loading ? owner.loadingIndicator.startAnimating() : owner.loadingIndicator.stopAnimating()
@@ -360,6 +401,40 @@ extension NewAllowedCarViewController {
         output.formatsUnavailable.drive(with: self) { owner, unavailable in
             owner.retryFormatsButton.isHidden = !unavailable
         }.disposed(by: disposeBag)
+    }
+
+    private func continueToSettings() {
+        guard !isAdvancingToSettings else { return }
+        if textField.isFirstResponder {
+            isAdvancingToSettings = true
+            textField.resignFirstResponder()
+        } else {
+            showSettings()
+        }
+    }
+
+    private func showSettings() {
+        isAdvancingToSettings = false
+        calendar.timeZone = viewModel.timeZone
+        datePicker.calendar = calendar
+        datePicker.timeZone = calendar.timeZone
+        scrollView.setContentOffset(.zero, animated: false)
+        setSettingsVisible(true)
+    }
+
+    private func setSettingsVisible(_ visible: Bool) {
+        guard showsSettings.value != visible else { return }
+        view.layoutIfNeeded()
+        if visible { scrollView.alpha = 0 }
+        UIView.animate(
+            withDuration: UIAccessibility.isReduceMotionEnabled ? 0 : 0.28,
+            delay: 0,
+            options: [.curveEaseInOut, .beginFromCurrentState]
+        ) {
+            self.showsSettings.accept(visible)
+            self.scrollView.alpha = visible ? 1 : 0
+            self.view.layoutIfNeeded()
+        }
     }
 
     private var validity: LicensePlateValidity {

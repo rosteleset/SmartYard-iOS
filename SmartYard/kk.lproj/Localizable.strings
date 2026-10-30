@@ -704,3 +704,4 @@
 "settings.vehiclePass.validFrom" = "%@ бастап";
 "settings.vehiclePass.validUntil" = "%@ дейін";
 "settings.vehiclePass.unsupportedNumber" = "Оператор нөмірдің бұл пішімін қолдамайды.";
+"settings.vehiclePass.continueButton" = "Жалғастыру";

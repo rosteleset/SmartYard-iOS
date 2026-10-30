@@ -698,3 +698,4 @@
 "settings.vehiclePass.validFrom" = "%@ dan";
 "settings.vehiclePass.validUntil" = "%@ gacha";
 "settings.vehiclePass.unsupportedNumber" = "Operator bu raqam formatini qoʻllab-quvvatlamaydi.";
+"settings.vehiclePass.continueButton" = "Davom etish";

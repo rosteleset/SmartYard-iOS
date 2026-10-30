@@ -698,3 +698,4 @@
 "settings.vehiclePass.validFrom" = "с %@";
 "settings.vehiclePass.validUntil" = "до %@";
 "settings.vehiclePass.unsupportedNumber" = "Формат номера не поддерживается оператором.";
+"settings.vehiclePass.continueButton" = "Продолжить";

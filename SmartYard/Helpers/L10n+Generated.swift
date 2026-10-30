@@ -884,6 +884,7 @@ extension L10n {
         }
 
         enum VehiclePass {
+            static let continueButton = tr("settings.vehiclePass.continueButton")
             static let unsupportedNumber = tr("settings.vehiclePass.unsupportedNumber")
             static let unlimited = tr("settings.vehiclePass.unlimited")
             static let automaticEnd = tr("settings.vehiclePass.automaticEnd")

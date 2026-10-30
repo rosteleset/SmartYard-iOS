@@ -698,3 +698,4 @@
 "settings.vehiclePass.validFrom" = "from %@";
 "settings.vehiclePass.validUntil" = "until %@";
 "settings.vehiclePass.unsupportedNumber" = "This plate format is not supported by your operator.";
+"settings.vehiclePass.continueButton" = "Continue";

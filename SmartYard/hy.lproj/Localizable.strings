@@ -698,3 +698,4 @@
 "settings.vehiclePass.validFrom" = "սկսած %@";
 "settings.vehiclePass.validUntil" = "մինչև %@";
 "settings.vehiclePass.unsupportedNumber" = "Օպերատորը չի աջակցում համարանիշի այս ձևաչափին։";
+"settings.vehiclePass.continueButton" = "Շարունակել";

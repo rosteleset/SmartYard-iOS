@@ -90,7 +90,7 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
         
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.actionButton.backgroundColor = enabled ? .SmartYard.blue : UIColor.SYKeyboard.keyColor.withAlphaComponent(0.4)
-            self?.actionButton.setTitleColorForAllStates(enabled ? UIColor.SYKeyboard.textKeyColor : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4))
+            self?.actionButton.setTitleColorForAllStates(enabled ? UIColor.white : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4))
         }
     }
     
