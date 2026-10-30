@@ -194,8 +194,8 @@ final class TrackedEventsView: UIView {
             mainContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             mainContainerView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor, constant: -76),
 
-            addButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 32),
-            addButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -32),
+            addButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            addButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             addButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16),
             addButton.heightAnchor.constraint(equalToConstant: 60),
 
