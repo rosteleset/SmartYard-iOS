@@ -150,6 +150,7 @@ final class OptionsService: OptionsServicing, HasDisposeBag {
 
         accessService.guestAccessModeOnOnly = response.guestAccessOnOnly
         accessService.issuesVersion = response.issuesVersion ?? "1"
+        accessService.lprsVersion = LicensePlateAPIVersion(serverValue: response.lprsVersion)
         accessService.cctvView = response.cctvView.rawValue
         accessService.entrancesView = response.entrancesView.rawValue
 

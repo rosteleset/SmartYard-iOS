@@ -883,6 +883,28 @@ extension L10n {
             }
         }
 
+        enum VehiclePass {
+            static let unsupportedNumber = tr("settings.vehiclePass.unsupportedNumber")
+            static let unlimited = tr("settings.vehiclePass.unlimited")
+            static let automaticEnd = tr("settings.vehiclePass.automaticEnd")
+            static let tracking = tr("settings.vehiclePass.tracking")
+            static let trackingHint = tr("settings.vehiclePass.trackingHint")
+            static let start = tr("settings.vehiclePass.start")
+            static let end = tr("settings.vehiclePass.end")
+            static let periodInvalid = tr("settings.vehiclePass.periodInvalid")
+            static let expirationFormat = tr("settings.vehiclePass.expirationFormat")
+            static let noBoundary = tr("settings.vehiclePass.noBoundary")
+            static let editTitle = tr("settings.vehiclePass.editTitle")
+            static let retryFormats = tr("settings.vehiclePass.retryFormats")
+            static let savedTitle = tr("settings.vehiclePass.savedTitle")
+            static let trackingFailed = tr("settings.vehiclePass.trackingFailed")
+            static let originalRemovalFailed = tr("settings.vehiclePass.originalRemovalFailed")
+            static let refreshFailed = tr("settings.vehiclePass.refreshFailed")
+            static let countryRemovalUnavailable = tr("settings.vehiclePass.countryRemovalUnavailable")
+            static let validFrom = tr("settings.vehiclePass.validFrom")
+            static let validUntil = tr("settings.vehiclePass.validUntil")
+        }
+
         enum ShareCar {
             static let platePlaceholder = tr("settings.shareCar.platePlaceholder")
             static let shareAccess = tr("settings.shareCar.shareAccess")

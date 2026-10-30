@@ -20,14 +20,17 @@ extension GateAccessDataItem {
     
     var identity: GateAccessDataItemIdentity {
         switch self {
-        case .car(let car): return .plateNumber(car.apiNumber)
+        case .car(let car): return .plateNumber(car.identity)
         case .person(let person): return .phoneNumber(person.apiNumber)
         case .shortcut: return .shortcut
         }
     }
     
     static func == (lhs: GateAccessDataItem, rhs: GateAccessDataItem) -> Bool {
-        lhs.identity == rhs.identity
+        switch (lhs, rhs) {
+        case let (.car(left), .car(right)): return left == right
+        default: return lhs.identity == rhs.identity
+        }
     }
     
 }

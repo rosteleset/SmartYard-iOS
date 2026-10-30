@@ -24,6 +24,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let entrancesView: EntrancesViewType
     let activeTab: TabNames
     let issuesVersion: String?
+    let lprsVersion: String?
     let validationPattern: NameValidationPattern?
     let deliveryTabsConfig: DeliveryTabsConfig?
     let eventsTracking: Bool?
@@ -44,6 +45,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case entrancesView
         case activeTab
         case issuesVersion
+        case lprsVersion
         case validationNamePattern
         case validationPatronymicPattern
         case validationLastPattern
@@ -124,6 +126,11 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         entrancesView = (try? container.decode(EntrancesViewType.self, forKey: .entrancesView)) ?? .list
         activeTab = (try? container.decode(TabNames.self, forKey: .activeTab)) ?? .addresses
         issuesVersion = try? container.decode(String.self, forKey: .issuesVersion)
+        if let version = try? container.decode(String.self, forKey: .lprsVersion) {
+            lprsVersion = version
+        } else {
+            lprsVersion = (try? container.decode(Int.self, forKey: .lprsVersion)).map(String.init)
+        }
         eventsTracking = boolFromTF(.eventsTracking)
         stories = boolFromTF(.stories)
         stunUrl = try? container.decode(String.self, forKey: .stunUrl)
@@ -143,6 +150,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         entrancesView = .list
         activeTab = .addresses
         issuesVersion = nil
+        lprsVersion = nil
         deliveryTabsConfig = nil
         validationPattern = nil
         eventsTracking = nil

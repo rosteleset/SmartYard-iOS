@@ -123,6 +123,7 @@ extension LicencePlateKeyboardView {
             )
         }
         
+        actionButton.accessibilityIdentifier = "vehicle-pass.keyboard.share"
         actionButton.setTitleColor(.SYKeyboard.textKeyColor, for: .disabled)
         actionButton.setTitleColor(.white, for: .normal)
         actionButton.setTitle(L10n.Common.share, for: .normal)
@@ -206,6 +207,7 @@ extension LicencePlateKeyboardView {
     }
 
     private func configureCountryButton() {
+        countryButton.accessibilityIdentifier = "vehicle-pass.keyboard.country"
         countryButton.backgroundColor = UIColor.SYKeyboard.keyColor
         countryButton.setTitle("🇷🇺", for: .normal)
         countryButton.titleLabel?.font = .systemFont(ofSize: 20)

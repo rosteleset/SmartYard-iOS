@@ -333,6 +333,11 @@ final class AccessService {
         }
     }
 
+    var lprsVersion: LicensePlateAPIVersion {
+        get { LicensePlateAPIVersion(serverValue: operatorConfiguration.lprsVersion) }
+        set { operatorConfiguration.lprsVersion = String(newValue.rawValue) }
+    }
+
     var eventsTrackingEnabled: Bool {
         get {
 #if DEBUG
@@ -415,6 +420,7 @@ final class AccessService {
         chatToken = ""
         showCityCams = false
         eventsTrackingEnabled = false
+        lprsVersion = .legacy
         showStories = false
         userPreferredAddressOrder = []
         phonePrefix = Constants.defaultPhonePrefix

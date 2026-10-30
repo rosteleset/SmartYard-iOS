@@ -30,6 +30,7 @@ final class DetailGateAccessViewController: BaseViewController, UIScrollViewDele
     // MARK: - Properties
     
     private let addButtonTappedRelay = PublishRelay<Void>()
+    private let editCarTappedRelay = PublishRelay<AllowedCar>()
     private let deleteCarTappedRelay = PublishRelay<AllowedCar>()
     private let sendSMSToPersonTappedRelay = PublishRelay<AllowedPerson>()
     private let deletePersonTappedRelay = PublishRelay<AllowedPerson>()
@@ -93,6 +94,7 @@ final class DetailGateAccessViewController: BaseViewController, UIScrollViewDele
             segmentControlTrigger: segmentControlValueChangedRelay.asDriver(),
             deleteAccessContactTrigger: deletePersonTappedRelay.asDriverOnErrorJustComplete(),
             smsToContactTrigger: sendSMSToPersonTappedRelay.asDriverOnErrorJustComplete(),
+            editLicensePlateTrigger: editCarTappedRelay.asDriverOnErrorJustComplete(),
             deleteAccessLicensePlateTrigger: deleteCarTappedRelay.asDriverOnErrorJustComplete(),
             addAccessTrigger: addButtonTappedRelay.asDriverOnErrorJustComplete(),
             backTrigger: fakeNavBar.rx.backButtonTap.asDriver()
@@ -191,6 +193,11 @@ extension DetailGateAccessViewController {
                         for: indexPath
                     )
                     cell.configure(with: licencePlate)
+                    cell.editButtonTappedRelay
+                        .subscribe(with: self) { owner, _ in
+                            owner.editCarTappedRelay.accept(licencePlate)
+                        }
+                        .disposed(by: cell.disposeBag)
                     
                     cell.deleteButtonTappedRelay
                         .bind { [weak self] in

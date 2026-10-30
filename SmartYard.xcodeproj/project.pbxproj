@@ -816,6 +816,24 @@
 		F88DA305DA780CBDDD5F0B9D /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C99C722426BA4EC3BF0BA60 /* OnboardingScreen.swift */; };
 		C73DD1ED02594BEFA76CC87C /* SYFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C846CA43C48DC8C796DB0 /* SYFont.swift */; };
 		382DE8FBA2AB40388C02F823 /* SYColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA68004467AF4709A413833F /* SYColor.swift */; };
+		02F46593859B9164AED5C5D9 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9A1D32F79E10000C0D001 /* L10n.swift */; };
+		0F892902529AFC01A7464E8C /* LicensePlateAPITestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B72E12DBA26E45F551EA9D /* LicensePlateAPITestSupport.swift */; };
+		13689FB1031120614E0ACBA9 /* LicensePlateAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A72738A5DCE0C6BF0087A20 /* LicensePlateAccess.swift */; };
+		2A863845CB883FAD31CEB66A /* LicensePlateAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A72738A5DCE0C6BF0087A20 /* LicensePlateAccess.swift */; };
+		4442E89977744B70A24512C3 /* L10n+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF9A1D42F79E10000C0D001 /* L10n+Generated.swift */; };
+		5853448F6F73637F005BCA3C /* LicensePlateAccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAF44AD3C4F605AB41840 /* LicensePlateAccessTests.swift */; };
+		5CA03CAF7EDFB5A441A2D212 /* AllowedCar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */; };
+		62F5BBA5EC0C41EC94E983F6 /* LicensePlateSaveResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9121DD7E1EEA67220F38CA5 /* LicensePlateSaveResult.swift */; };
+		693048AA434ED4B2214D3CC3 /* GetLicensePlateFormatsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463660C78988E9D52BCEF80 /* GetLicensePlateFormatsRequest.swift */; };
+		6A8CCF55E6FE1ECB04B280ED /* LicensePlateSaveResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9121DD7E1EEA67220F38CA5 /* LicensePlateSaveResult.swift */; };
+		6E2DF2278CC9F259C35AF606 /* GetLicensePlatesResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D2F2EFACCAD0099703B /* GetLicensePlatesResponseData.swift */; };
+		A84B336CB637F57A69EA2EC3 /* RemoveLicensePlateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D312EFACCAD0099703B /* RemoveLicensePlateRequest.swift */; };
+		ACE427A54E5DC021FB2651C5 /* GetLicensePlateFormatsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463660C78988E9D52BCEF80 /* GetLicensePlateFormatsRequest.swift */; };
+		ADBF2E7E6BFE5518A3958D93 /* String+LicensePlate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F934237CD01E105184766C9 /* String+LicensePlate.swift */; };
+		B62C9ECA5413CE6C276416D6 /* GetLicensePlatesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D2E2EFACCAD0099703B /* GetLicensePlatesRequest.swift */; };
+		BAEBF34CA111B8D5916B4042 /* APIWrapper+LPRS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714DA02EFACCAD0099703B /* APIWrapper+LPRS.swift */; };
+		D5D14787815DFD0FD0594AF6 /* AddLicensePlateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D2C2EFACCAD0099703B /* AddLicensePlateRequest.swift */; };
+		D74A9B0CEF0A14A2B86F5735 /* String+LicensePlate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F934237CD01E105184766C9 /* String+LicensePlate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1763,6 +1781,12 @@
 		B234F21CE8F098C86776CF44 /* OnboardingStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = OnboardingStore.swift; sourceTree = "<group>"; };
 		210C846CA43C48DC8C796DB0 /* SYFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYFont.swift; sourceTree = "<group>"; };
 		BA68004467AF4709A413833F /* SYColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYColor.swift; sourceTree = "<group>"; };
+		1E4FAF44AD3C4F605AB41840 /* LicensePlateAccessTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LicensePlateAccessTests.swift; sourceTree = "<group>"; };
+		6A72738A5DCE0C6BF0087A20 /* LicensePlateAccess.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LicensePlateAccess.swift; sourceTree = "<group>"; };
+		8463660C78988E9D52BCEF80 /* GetLicensePlateFormatsRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetLicensePlateFormatsRequest.swift; sourceTree = "<group>"; };
+		84B72E12DBA26E45F551EA9D /* LicensePlateAPITestSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LicensePlateAPITestSupport.swift; sourceTree = "<group>"; };
+		8F934237CD01E105184766C9 /* String+LicensePlate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+LicensePlate.swift"; sourceTree = "<group>"; };
+		C9121DD7E1EEA67220F38CA5 /* LicensePlateSaveResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LicensePlateSaveResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3113,6 +3137,7 @@
 				E94B6C4423FFFF5D00FD9F65 /* Date+Conversion.swift */,
 				8496394F247BFAE20086B6E9 /* UIViewController+Top.swift */,
 				3AFBA7B8263984E000C7DEB6 /* AVPlayer+Extensions.swift */,
+				8F934237CD01E105184766C9 /* String+LicensePlate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3886,6 +3911,7 @@
 				8B714CD52EFACCAD0099703B /* Geo */,
 				8B714CD82EFACCAD0099703B /* Issues */,
 				8B714CE12EFACCAD0099703B /* User */,
+				3964DA7366ADFBACAD979765 /* LPRS */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -4176,6 +4202,7 @@
 			children = (
 				8B714D2E2EFACCAD0099703B /* GetLicensePlatesRequest.swift */,
 				8B714D2F2EFACCAD0099703B /* GetLicensePlatesResponseData.swift */,
+				8463660C78988E9D52BCEF80 /* GetLicensePlateFormatsRequest.swift */,
 			);
 			path = GetLicensePlate;
 			sourceTree = "<group>";
@@ -5025,6 +5052,7 @@
 			children = (
 				8BA6EA5B2DF9A86000CDA2DA /* AllowedCar.swift */,
 				E9BB83CE23F69FE80071F91E /* AllowedPerson.swift */,
+				C9121DD7E1EEA67220F38CA5 /* LicensePlateSaveResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5281,6 +5309,8 @@
 				C0D3D1000000000000000013 /* OperatorConfigurationTests.swift */,
 				C0D3E1000000000000000012 /* OnlineSelectionGateTests.swift */,
 				52C45EC3A30BD0089FCCAC19 /* OnboardingStoreTests.swift */,
+				1E4FAF44AD3C4F605AB41840 /* LicensePlateAccessTests.swift */,
+				84B72E12DBA26E45F551EA9D /* LicensePlateAPITestSupport.swift */,
 			);
 			path = SmartYardTests;
 			sourceTree = "<group>";
@@ -5812,6 +5842,15 @@
 				B234F21CE8F098C86776CF44 /* OnboardingStore.swift */,
 			);
 			path = Stores;
+			sourceTree = "<group>";
+		};
+		3964DA7366ADFBACAD979765 /* LPRS */ = {
+			isa = PBXGroup;
+			children = (
+				6A72738A5DCE0C6BF0087A20 /* LicensePlateAccess.swift */,
+			);
+			name = LPRS;
+			path = LPRS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -7100,6 +7139,10 @@
 				C9753894E40E549E52EA91F3 /* SYPrimaryButtonStyle.swift in Sources */,
 				382DE8FBA2AB40388C02F823 /* SYColor.swift in Sources */,
 				C73DD1ED02594BEFA76CC87C /* SYFont.swift in Sources */,
+				2A863845CB883FAD31CEB66A /* LicensePlateAccess.swift in Sources */,
+				693048AA434ED4B2214D3CC3 /* GetLicensePlateFormatsRequest.swift in Sources */,
+				6A8CCF55E6FE1ECB04B280ED /* LicensePlateSaveResult.swift in Sources */,
+				ADBF2E7E6BFE5518A3958D93 /* String+LicensePlate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7143,6 +7186,20 @@
 				C0D3A1000000000000000063 /* LogoutWorkflowTests.swift in Sources */,
 				5E6CB6F7366D86F21BE3C327 /* OnboardingStore.swift in Sources */,
 				D159777F5AD02E2552ED0A9D /* OnboardingStoreTests.swift in Sources */,
+				13689FB1031120614E0ACBA9 /* LicensePlateAccess.swift in Sources */,
+				D5D14787815DFD0FD0594AF6 /* AddLicensePlateRequest.swift in Sources */,
+				ACE427A54E5DC021FB2651C5 /* GetLicensePlateFormatsRequest.swift in Sources */,
+				B62C9ECA5413CE6C276416D6 /* GetLicensePlatesRequest.swift in Sources */,
+				6E2DF2278CC9F259C35AF606 /* GetLicensePlatesResponseData.swift in Sources */,
+				A84B336CB637F57A69EA2EC3 /* RemoveLicensePlateRequest.swift in Sources */,
+				5CA03CAF7EDFB5A441A2D212 /* AllowedCar.swift in Sources */,
+				62F5BBA5EC0C41EC94E983F6 /* LicensePlateSaveResult.swift in Sources */,
+				D74A9B0CEF0A14A2B86F5735 /* String+LicensePlate.swift in Sources */,
+				BAEBF34CA111B8D5916B4042 /* APIWrapper+LPRS.swift in Sources */,
+				02F46593859B9164AED5C5D9 /* L10n.swift in Sources */,
+				4442E89977744B70A24512C3 /* L10n+Generated.swift in Sources */,
+				5853448F6F73637F005BCA3C /* LicensePlateAccessTests.swift in Sources */,
+				0F892902529AFC01A7464E8C /* LicensePlateAPITestSupport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

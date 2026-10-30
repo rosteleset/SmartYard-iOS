@@ -677,3 +677,24 @@
 "whatsNew.language.title" = "اختر لغة التطبيق";
 "camera.fullscreen.enter" = "ملء الشاشة";
 "camera.fullscreen.exit" = "الخروج من ملء الشاشة";
+
+// Vehicle pass validity and license plate tracking
+"settings.vehiclePass.unlimited" = "دون انتهاء";
+"settings.vehiclePass.automaticEnd" = "ينتهي بعد 24 ساعة";
+"settings.vehiclePass.tracking" = "التتبع";
+"settings.vehiclePass.trackingHint" = "إشعاري بدخول السيارة وخروجها حسب رقم اللوحة.";
+"settings.vehiclePass.start" = "بداية الصلاحية";
+"settings.vehiclePass.end" = "نهاية الصلاحية";
+"settings.vehiclePass.periodInvalid" = "لا يمكن أن تكون النهاية قبل البداية.";
+"settings.vehiclePass.expirationFormat" = "صالح حتى %@";
+"settings.vehiclePass.noBoundary" = "غير محدد";
+"settings.vehiclePass.editTitle" = "تعديل التصريح";
+"settings.vehiclePass.retryFormats" = "إعادة تحميل تنسيقات اللوحات";
+"settings.vehiclePass.savedTitle" = "تم حفظ التصريح";
+"settings.vehiclePass.trackingFailed" = "تم حفظ التصريح، لكن تعذر تحديث إعدادات التتبع. افتح التصريح واحفظه مرة أخرى.";
+"settings.vehiclePass.originalRemovalFailed" = "تم حفظ التصريح الجديد، لكن تعذر حذف التصريح السابق. تحقق من قائمة السيارات.";
+"settings.vehiclePass.refreshFailed" = "تم حفظ التصريح، لكن تعذر تحديث قائمة السيارات. افتح الشاشة مرة أخرى.";
+"settings.vehiclePass.countryRemovalUnavailable" = "لا يدعم الخادم حذف تصاريح هذا البلد حتى الآن.";
+"settings.vehiclePass.validFrom" = "من %@";
+"settings.vehiclePass.validUntil" = "حتى %@";
+"settings.vehiclePass.unsupportedNumber" = "لا يدعم المشغل تنسيق هذه اللوحة.";

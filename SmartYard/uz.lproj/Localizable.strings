@@ -677,3 +677,24 @@
 "whatsNew.language.title" = "Ilova tilini tanlang";
 "camera.fullscreen.enter" = "To‘liq ekranga o‘tish";
 "camera.fullscreen.exit" = "To‘liq ekrandan chiqish";
+
+// Vehicle pass validity and license plate tracking
+"settings.vehiclePass.unlimited" = "Muddatsiz";
+"settings.vehiclePass.automaticEnd" = "24 soatdan keyin tugaydi";
+"settings.vehiclePass.tracking" = "Kuzatish";
+"settings.vehiclePass.trackingHint" = "Davlat raqami boʻyicha avtomobilning kirishi va chiqishi haqida xabar berish.";
+"settings.vehiclePass.start" = "Amal qilish boshlanishi";
+"settings.vehiclePass.end" = "Amal qilish tugashi";
+"settings.vehiclePass.periodInvalid" = "Tugash vaqti boshlanish vaqtidan oldin boʻlishi mumkin emas.";
+"settings.vehiclePass.expirationFormat" = "%@ gacha amal qiladi";
+"settings.vehiclePass.noBoundary" = "Belgilanmagan";
+"settings.vehiclePass.editTitle" = "Ruxsatnomani oʻzgartirish";
+"settings.vehiclePass.retryFormats" = "Raqam formatlarini qayta yuklash";
+"settings.vehiclePass.savedTitle" = "Ruxsatnoma saqlandi";
+"settings.vehiclePass.trackingFailed" = "Ruxsatnoma saqlandi, ammo kuzatish sozlamalari yangilanmadi. Ruxsatnomani oching va qayta saqlang.";
+"settings.vehiclePass.originalRemovalFailed" = "Yangi ruxsatnoma saqlandi, ammo oldingisini oʻchirib boʻlmadi. Avtomobillar roʻyxatini tekshiring.";
+"settings.vehiclePass.refreshFailed" = "Ruxsatnoma saqlandi, ammo avtomobillar roʻyxati yangilanmadi. Ekranni qayta oching.";
+"settings.vehiclePass.countryRemovalUnavailable" = "Server bu mamlakat ruxsatnomalarini oʻchirishni hali qoʻllab-quvvatlamaydi.";
+"settings.vehiclePass.validFrom" = "%@ dan";
+"settings.vehiclePass.validUntil" = "%@ gacha";
+"settings.vehiclePass.unsupportedNumber" = "Operator bu raqam formatini qoʻllab-quvvatlamaydi.";

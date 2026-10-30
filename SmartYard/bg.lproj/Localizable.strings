@@ -677,3 +677,24 @@
 "whatsNew.language.title" = "Изберете езика на приложението";
 "camera.fullscreen.enter" = "На цял екран";
 "camera.fullscreen.exit" = "Изход от цял екран";
+
+// Vehicle pass validity and license plate tracking
+"settings.vehiclePass.unlimited" = "Безсрочно";
+"settings.vehiclePass.automaticEnd" = "Край след 24 часа";
+"settings.vehiclePass.tracking" = "Проследяване";
+"settings.vehiclePass.trackingHint" = "Известяване при влизане и излизане на автомобила по регистрационен номер.";
+"settings.vehiclePass.start" = "Начало на валидност";
+"settings.vehiclePass.end" = "Край на валидност";
+"settings.vehiclePass.periodInvalid" = "Краят не може да е преди началото.";
+"settings.vehiclePass.expirationFormat" = "Валиден до %@";
+"settings.vehiclePass.noBoundary" = "Не е зададено";
+"settings.vehiclePass.editTitle" = "Промяна на пропуск";
+"settings.vehiclePass.retryFormats" = "Повторно зареждане на форматите";
+"settings.vehiclePass.savedTitle" = "Пропускът е запазен";
+"settings.vehiclePass.trackingFailed" = "Пропускът е запазен, но настройките за проследяване не са обновени. Отворете пропуска и го запазете отново.";
+"settings.vehiclePass.originalRemovalFailed" = "Новият пропуск е запазен, но предишният не е изтрит. Проверете списъка с автомобили.";
+"settings.vehiclePass.refreshFailed" = "Пропускът е запазен, но списъкът с автомобили не е обновен. Отворете екрана отново.";
+"settings.vehiclePass.countryRemovalUnavailable" = "Сървърът все още не поддържа изтриване на пропуски за тази държава.";
+"settings.vehiclePass.validFrom" = "от %@";
+"settings.vehiclePass.validUntil" = "до %@";
+"settings.vehiclePass.unsupportedNumber" = "Този формат на регистрационен номер не се поддържа от оператора.";

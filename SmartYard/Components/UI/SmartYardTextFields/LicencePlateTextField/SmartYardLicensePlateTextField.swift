@@ -25,6 +25,29 @@ class SmartYardLicensePlateTextField: UITextField, HasDisposeBag {
         licencePlateKeyboard.rx.shareButtonTapped.asDriver()
     }
     
+    private var formConfirmationAllowed = true
+
+    var countryCode: String { licencePlateKeyboard.currentCountryMode.countryCode }
+
+    var hasCompleteNumber: Bool {
+        LicencePlateValidator.isCompleteInput(
+            LicencePlateFormatter.unformat(text: text ?? ""),
+            format: licencePlateKeyboard.currentCountryMode
+        )
+    }
+
+    func setFormConfirmationAllowed(_ allowed: Bool) {
+        formConfirmationAllowed = allowed
+        updateKeyboardKeys(for: LicencePlateFormatter.unformat(text: text ?? ""))
+    }
+
+    func configure(number: String) {
+        let rawText = LicencePlateFormatter.unformat(text: number.displayCarNumber)
+        text = LicencePlateFormatter.format(text: rawText, format: licencePlateKeyboard.currentCountryMode)
+        updateKeyboardKeys(for: rawText)
+        sendActions(for: .editingChanged)
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         bind()
@@ -41,7 +64,7 @@ class SmartYardLicensePlateTextField: UITextField, HasDisposeBag {
             .bind { [weak self] text in
                 guard let self else { return }
                 guard LicencePlateValidator.isValidPartialInput(
-                    text,
+                    LicencePlateFormatter.unformat(text: text),
                     format: self.licencePlateKeyboard.currentCountryMode
                 ) else {
                     self.text = String(text.dropLast())
@@ -67,6 +90,7 @@ class SmartYardLicensePlateTextField: UITextField, HasDisposeBag {
                 self.text = formattedText
                 
                 self.updateKeyboardKeys(for: newRawText)
+                self.sendActions(for: .editingChanged)
             }
         }
 
@@ -85,6 +109,7 @@ class SmartYardLicensePlateTextField: UITextField, HasDisposeBag {
             self.text = formattedText
             
             self.updateKeyboardKeys(for: newRawText)
+            self.sendActions(for: .editingChanged)
         }
         
     }
@@ -100,7 +125,7 @@ class SmartYardLicensePlateTextField: UITextField, HasDisposeBag {
             rawText,
             format: licencePlateKeyboard.currentCountryMode
         )
-        licencePlateKeyboard.setShareButton(enabled: isComplete)
+        licencePlateKeyboard.setShareButton(enabled: isComplete && formConfirmationAllowed)
     }
 
 }

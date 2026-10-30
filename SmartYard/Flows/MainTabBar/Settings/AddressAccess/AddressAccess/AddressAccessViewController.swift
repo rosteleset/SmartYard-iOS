@@ -127,6 +127,7 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
             smsToGateAccessContactTrigger: gateAccessView.sendSMSToPersonTappedRelay.asDriverOnErrorJustComplete(),
             deletePermanentContactTrigger: addressPermanentAccessView.deletePressedSubject.asDriverOnErrorJustComplete(),
             deleteGateAccessContactTrigger: gateAccessView.deleteGateAccessPersonRelay.asDriverOnErrorJustComplete(),
+            editLicensePlateTrigger: gateAccessView.editGateAccessCarRelay.asDriverOnErrorJustComplete(),
             deleteGateAccessLicensePlateTrigger: gateAccessView.deleteGateAccessCarRelay.asDriverOnErrorJustComplete(),
             addNewPermanentContact: addressPermanentAccessView.addNewPersonSubject.asDriverOnErrorJustComplete(),
             addNewGateAccessContact: gateAccessAddButton.rx.tap.asDriverOnErrorJustComplete(),

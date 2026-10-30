@@ -13,3 +13,16 @@ enum LicensePlateFormat {
     case uzbekistan   // 01A123AA
     case bulgaria     // CA1234AB
 }
+
+
+extension LicensePlateFormat {
+    var countryCode: String {
+        switch self {
+        case .russia: return "ru"
+        case .belarus: return "by"
+        case .kazakhstan: return "kz"
+        case .uzbekistan: return "uz"
+        case .bulgaria: return "bg"
+        }
+    }
+}

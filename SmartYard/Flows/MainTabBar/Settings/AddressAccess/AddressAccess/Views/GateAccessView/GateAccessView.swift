@@ -28,6 +28,7 @@ final class GateAccessView: PMNibLinkableView, UICollectionViewDelegate, HasDisp
     
     let goToGateAccessDetailRelay = PublishRelay<Void>()
     let segmentControlValueChangedRelay = PublishRelay<GateAccessSegmentType?>()
+    let editGateAccessCarRelay = PublishRelay<AllowedCar>()
     let deleteGateAccessCarRelay = PublishRelay<AllowedCar>()
     let deleteGateAccessPersonRelay = PublishRelay<AllowedPerson>()
     let sendSMSToPersonTappedRelay = PublishRelay<AllowedPerson>()
@@ -115,6 +116,12 @@ extension GateAccessView {
                         for: indexPath
                     )
                     cell.configure(with: licencePlate)
+
+                    cell.editButtonTappedRelay
+                        .subscribe(with: self) { owner, _ in
+                            owner.editGateAccessCarRelay.accept(licencePlate)
+                        }
+                        .disposed(by: cell.disposeBag)
                     
                     cell.deleteButtonTappedRelay
                         .bind { [weak self] in

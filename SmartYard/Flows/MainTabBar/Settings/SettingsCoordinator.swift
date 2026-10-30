@@ -26,7 +26,7 @@ enum SettingsRoute: Route {
     case addressAccess(address: String, flatId: String, clientId: String?)
     case detailGateAccess(address: String, flatId: String, clientId: String?, segmentType: GateAccessSegmentType?)
     case newAllowedPerson(delegate: NewAllowedPersonViewModelDelegate, personType: AllowedPersonType)
-    case newAllowedCar(delegate: NewAllowedCarViewModelDelegate)
+    case newAllowedCar(delegate: NewAllowedCarViewModelDelegate, car: AllowedCar? = nil)
     case safariPage(url: URL)
     case editName
     case facesSettings(flatId: Int, address: String, canAddFace: Bool)
@@ -201,10 +201,13 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
             
             return .present(vc)
             
-        case let .newAllowedCar(delegate):
+        case let .newAllowedCar(delegate, car):
             let vm = NewAllowedCarViewModel(
                 router: weakRouter,
-                delegate: delegate
+                delegate: delegate,
+                apiWrapper: apiWrapper,
+                logoutHelper: logoutHelper,
+                originalCar: car
             )
             
             let vc = NewAllowedCarViewController(viewModel: vm)

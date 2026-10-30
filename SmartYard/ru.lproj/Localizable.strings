@@ -677,3 +677,24 @@
 "whatsNew.language.title" = "Выбор языка приложения";
 "camera.fullscreen.enter" = "На весь экран";
 "camera.fullscreen.exit" = "Выйти из полноэкранного режима";
+
+// Vehicle pass validity and license plate tracking
+"settings.vehiclePass.unlimited" = "Бессрочно";
+"settings.vehiclePass.automaticEnd" = "Окончание через 24 ч.";
+"settings.vehiclePass.tracking" = "Отслеживание";
+"settings.vehiclePass.trackingHint" = "Уведомлять о въезде и выезде автомобиля по госномеру.";
+"settings.vehiclePass.start" = "Начало действия";
+"settings.vehiclePass.end" = "Окончание действия";
+"settings.vehiclePass.periodInvalid" = "Окончание не может быть раньше начала.";
+"settings.vehiclePass.expirationFormat" = "Действует до %@";
+"settings.vehiclePass.noBoundary" = "Не задано";
+"settings.vehiclePass.editTitle" = "Изменить пропуск";
+"settings.vehiclePass.retryFormats" = "Повторить загрузку форматов";
+"settings.vehiclePass.savedTitle" = "Пропуск сохранён";
+"settings.vehiclePass.trackingFailed" = "Пропуск сохранён, но настройки отслеживания обновить не удалось. Откройте пропуск и повторите сохранение.";
+"settings.vehiclePass.originalRemovalFailed" = "Новый пропуск сохранён, но прежний удалить не удалось. Проверьте список автомобилей.";
+"settings.vehiclePass.refreshFailed" = "Пропуск сохранён, но список автомобилей обновить не удалось. Откройте экран заново.";
+"settings.vehiclePass.countryRemovalUnavailable" = "Сервер пока не поддерживает удаление пропуска для этой страны.";
+"settings.vehiclePass.validFrom" = "с %@";
+"settings.vehiclePass.validUntil" = "до %@";
+"settings.vehiclePass.unsupportedNumber" = "Формат номера не поддерживается оператором.";

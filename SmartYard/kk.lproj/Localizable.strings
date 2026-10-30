@@ -683,3 +683,24 @@
 "whatsNew.language.title" = "Қолданба тілін таңдаңыз";
 "camera.fullscreen.enter" = "Толық экранға өту";
 "camera.fullscreen.exit" = "Толық экраннан шығу";
+
+// Vehicle pass validity and license plate tracking
+"settings.vehiclePass.unlimited" = "Мерзімсіз";
+"settings.vehiclePass.automaticEnd" = "24 сағаттан кейін аяқталады";
+"settings.vehiclePass.tracking" = "Бақылау";
+"settings.vehiclePass.trackingHint" = "Мемлекеттік нөмірі бойынша көліктің кіргені және шыққаны туралы хабарлау.";
+"settings.vehiclePass.start" = "Қолданылу басталуы";
+"settings.vehiclePass.end" = "Қолданылу аяқталуы";
+"settings.vehiclePass.periodInvalid" = "Аяқталу уақыты басталу уақытынан ерте болмауы керек.";
+"settings.vehiclePass.expirationFormat" = "%@ дейін жарамды";
+"settings.vehiclePass.noBoundary" = "Белгіленбеген";
+"settings.vehiclePass.editTitle" = "Рұқсатнаманы өзгерту";
+"settings.vehiclePass.retryFormats" = "Нөмір пішімдерін қайта жүктеу";
+"settings.vehiclePass.savedTitle" = "Рұқсатнама сақталды";
+"settings.vehiclePass.trackingFailed" = "Рұқсатнама сақталды, бірақ бақылау параметрлерін жаңарту мүмкін болмады. Рұқсатнаманы ашып, қайта сақтаңыз.";
+"settings.vehiclePass.originalRemovalFailed" = "Жаңа рұқсатнама сақталды, бірақ алдыңғысын жою мүмкін болмады. Көліктер тізімін тексеріңіз.";
+"settings.vehiclePass.refreshFailed" = "Рұқсатнама сақталды, бірақ көліктер тізімін жаңарту мүмкін болмады. Экранды қайта ашыңыз.";
+"settings.vehiclePass.countryRemovalUnavailable" = "Сервер бұл елдің рұқсатнамаларын жоюды әлі қолдамайды.";
+"settings.vehiclePass.validFrom" = "%@ бастап";
+"settings.vehiclePass.validUntil" = "%@ дейін";
+"settings.vehiclePass.unsupportedNumber" = "Оператор нөмірдің бұл пішімін қолдамайды.";

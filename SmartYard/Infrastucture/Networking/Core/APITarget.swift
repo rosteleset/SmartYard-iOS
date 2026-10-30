@@ -87,6 +87,8 @@ enum APITarget {
     case disLikePersonFace(request: DisLikePersonFaceRequest)
     
     case getLicensePlates(request: GetLicensePlatesRequest)
+    case getLicensePlatesV2(request: GetLicensePlatesRequest)
+    case getLicensePlateFormats(request: GetLicensePlateFormatsRequest)
     case addLicensePlate(request: AddLicensePlateRequest)
     case removeLicensePlate(request: RemoveLicensePlateRequest)
 }
@@ -184,6 +186,8 @@ extension APITarget: TargetType {
         case .removePersonFace: return "frs/disLike"
             
         case .getLicensePlates: return "lprs/listNumbers"
+        case .getLicensePlatesV2: return "lprs/listNumbersV2"
+        case .getLicensePlateFormats: return "lprs/listSupportedPlateNumberFormats"
         case .addLicensePlate: return "lprs/addNumber"
         case .removeLicensePlate: return "lprs/removeNumber"
             
@@ -274,7 +278,9 @@ extension APITarget: TargetType {
             case .likePersonFace(let request): return (request.accessToken, false)
             case .disLikePersonFace(let request): return (request.accessToken, false)
                 
-            case .getLicensePlates(let request): return (request.accessToken, false)
+            case .getLicensePlates(let request), .getLicensePlatesV2(let request):
+                return (request.accessToken, false)
+            case .getLicensePlateFormats(let request): return (request.accessToken, false)
             case .addLicensePlate(let request): return (request.accessToken, false)
             case .removeLicensePlate(let request): return (request.accessToken, false)
                 
@@ -386,7 +392,9 @@ extension APITarget: TargetType {
         case .likePersonFace(let request): return request.requestParameters
         case .disLikePersonFace(let request): return request.requestParameters
             
-        case .getLicensePlates(let request): return request.requestParameters
+        case .getLicensePlates(let request), .getLicensePlatesV2(let request):
+            return request.requestParameters
+        case .getLicensePlateFormats(let request): return request.requestParameters
         case .addLicensePlate(let request): return request.requestParameters
         case .removeLicensePlate(let request): return request.requestParameters
         

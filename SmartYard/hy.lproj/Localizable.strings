@@ -677,3 +677,24 @@
 "whatsNew.language.title" = "Ընտրեք հավելվածի լեզուն";
 "camera.fullscreen.enter" = "Ամբողջ էկրանով";
 "camera.fullscreen.exit" = "Դուրս գալ ամբողջ էկրանից";
+
+// Vehicle pass validity and license plate tracking
+"settings.vehiclePass.unlimited" = "Անժամկետ";
+"settings.vehiclePass.automaticEnd" = "Ավարտը՝ 24 ժամից";
+"settings.vehiclePass.tracking" = "Հետևում";
+"settings.vehiclePass.trackingHint" = "Ծանուցել պետհամարանիշով մեքենայի մուտքի և ելքի մասին։";
+"settings.vehiclePass.start" = "Գործողության սկիզբ";
+"settings.vehiclePass.end" = "Գործողության ավարտ";
+"settings.vehiclePass.periodInvalid" = "Ավարտը չի կարող լինել սկզբից շուտ։";
+"settings.vehiclePass.expirationFormat" = "Գործում է մինչև %@";
+"settings.vehiclePass.noBoundary" = "Սահմանված չէ";
+"settings.vehiclePass.editTitle" = "Փոխել անցագիրը";
+"settings.vehiclePass.retryFormats" = "Կրկին բեռնել համարանիշի ձևաչափերը";
+"settings.vehiclePass.savedTitle" = "Անցագիրը պահպանված է";
+"settings.vehiclePass.trackingFailed" = "Անցագիրը պահպանված է, բայց հետևման կարգավորումները չհաջողվեց թարմացնել։ Բացեք անցագիրը և կրկին պահպանեք։";
+"settings.vehiclePass.originalRemovalFailed" = "Նոր անցագիրը պահպանված է, բայց նախորդը չհաջողվեց ջնջել։ Ստուգեք մեքենաների ցանկը։";
+"settings.vehiclePass.refreshFailed" = "Անցագիրը պահպանված է, բայց մեքենաների ցանկը չհաջողվեց թարմացնել։ Կրկին բացեք էկրանը։";
+"settings.vehiclePass.countryRemovalUnavailable" = "Սերվերը դեռ չի աջակցում այս երկրի անցագրերի ջնջմանը։";
+"settings.vehiclePass.validFrom" = "սկսած %@";
+"settings.vehiclePass.validUntil" = "մինչև %@";
+"settings.vehiclePass.unsupportedNumber" = "Օպերատորը չի աջակցում համարանիշի այս ձևաչափին։";

@@ -253,26 +253,24 @@ final class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
 
-        isLprsAvailable
-            .asDriver(onErrorJustReturn: false)
-            .distinctUntilChanged()
+        Driver.merge(
+            isLprsAvailable.asDriver(onErrorJustReturn: false).distinctUntilChanged(),
+            input.viewDidAppearTrigger.skip(1)
+                .withLatestFrom(isLprsAvailable.asDriver(onErrorJustReturn: false))
+        )
             .flatMapLatest { [weak self] available -> Driver<[AllowedCar]> in
                 guard let self = self else { return .empty() }
 
                 if available {
                     let id = Int(self.flatId) ?? -1 // тут значение 100% будет
-                    return self.apiWrapper.getLicensePlates(forFlatId: id)
+                    return self.apiWrapper.getAllowedCars(forFlatId: id)
                         .trackError(errorTracker)
-                        .asDriver(onErrorJustReturn: nil)
+                        .asDriver(onErrorJustReturn: [])
                         .do(
                             onNext: { _ in
                                 isGateStateLoadingFinishedSubject.onNext(true)
                             }
                         )
-                        .map { data -> [AllowedCar] in
-                            guard let data, !data.isEmpty else { return [] }
-                            return data.map { AllowedCar(rawNumber: $0) }
-                        }
                 } else {
                     isGateStateLoadingFinishedSubject.onNext(true)
                     return .just([])
@@ -433,6 +431,12 @@ final class AddressAccessViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        input.editLicensePlateTrigger
+            .drive(with: self) { owner, car in
+                owner.router.trigger(.newAllowedCar(delegate: owner, car: car))
+            }
+            .disposed(by: disposeBag)
+
         input.deleteGateAccessLicensePlateTrigger
             .drive(
                 onNext: { [weak self] licensePlate in
@@ -701,8 +705,8 @@ final class AddressAccessViewModel: BaseViewModel {
     
     private func deleteGateAccessCar(licensePlate: AllowedCar) {
         apiWrapper
-            .removeLicensePlate(
-                withNumber: licensePlate.apiNumber,
+            .removeAllowedCar(
+                licensePlate,
                 forFlatId: Int(flatId) ?? 0
             )
             .trackError(errorTracker)
@@ -822,6 +826,7 @@ extension AddressAccessViewModel {
         let smsToGateAccessContactTrigger: Driver<AllowedPerson>
         let deletePermanentContactTrigger: Driver<Int?>
         let deleteGateAccessContactTrigger: Driver<AllowedPerson>
+        let editLicensePlateTrigger: Driver<AllowedCar>
         let deleteGateAccessLicensePlateTrigger: Driver<AllowedCar>
         let addNewPermanentContact: Driver<Void>
         let addNewGateAccessContact: Driver<Void>
@@ -942,44 +947,19 @@ extension AddressAccessViewModel: NewAllowedPersonViewModelDelegate {
 
 extension AddressAccessViewModel: NewAllowedCarViewModelDelegate {
     
-    func newAllowedCarViewModelDidAdd(
-        _ viewModel: NewAllowedCarViewModel,
-        allowedCar: AllowedCar
-    ) {
-        router.rx
-            .trigger(.dismiss)
-            .asDriverOnErrorJustComplete()
-            .flatMapLatest { [weak self] _ -> Driver<Void?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                                
-                return apiWrapper
-                    .addLicensePlate(
-                        withNumber: allowedCar.apiNumber,
-                        forFlatId: Int(flatId) ?? -1
-                    )
-                    .trackError(errorTracker)
-                    .trackActivity(activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
-            .withLatestFrom(gateAccessLicensePlatesSubject.asDriver(onErrorJustReturn: []))
-            .filter { cars in
-                if cars.contains(where: { $0.apiNumber == allowedCar.apiNumber }) {
-                    return false
-                }
-                return true
-            }
-            .map { cars -> [AllowedCar] in
-                [allowedCar] + cars 
-            }
-            .drive(
-                onNext: { [weak self] in
-                    self?.gateAccessLicensePlatesSubject.onNext($0)
-                }
-            )
-            .disposed(by: disposeBag)
+    func newAllowedCarViewModel(
+        _ viewModel: NewAllowedCarViewModel, save car: AllowedCar,
+        trackingEnabled: Bool, replacing original: AllowedCar?
+    ) -> Single<LicensePlateSaveResult> {
+        apiWrapper.saveAllowedCar(
+            car, trackingEnabled: trackingEnabled, replacing: original, flatId: Int(flatId) ?? -1
+        )
+        .observe(on: MainScheduler.instance)
+        .do(onSuccess: { [weak self] result in
+            guard let self else { return }
+            let existing = (try? self.gateAccessLicensePlatesSubject.value()) ?? []
+            self.gateAccessLicensePlatesSubject.onNext(result.updating(existing, original: original))
+        })
     }
     
 }

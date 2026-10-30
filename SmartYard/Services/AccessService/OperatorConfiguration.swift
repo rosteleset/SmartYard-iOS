@@ -45,6 +45,7 @@ final class OperatorConfiguration {
         static let entrancesView = "entrancesViewKey"
         static let activeTab = "activeTabKey"
         static let issuesVersion = "issuesVersionKey"
+        static let lprsVersion = "lprsVersionKey"
         static let nameValidationPattern = "nameValidationPatternKey"
         static let deliveryTabsConfig = "deliveryTabsConfigKey"
         static let eventsTrackingEnabled = "eventsTrackingEnabledKey"
@@ -164,6 +165,11 @@ final class OperatorConfiguration {
     var issuesVersion: String {
         get { storage.value(forKey: Key.issuesVersion) as? String ?? "1" }
         set { storage.set(newValue, forKey: Key.issuesVersion) }
+    }
+
+    var lprsVersion: String {
+        get { storage.value(forKey: Key.lprsVersion) as? String ?? "1" }
+        set { storage.set(newValue, forKey: Key.lprsVersion) }
     }
 
     var eventsTrackingEnabled: Bool {

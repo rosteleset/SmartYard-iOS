@@ -677,3 +677,24 @@
 "whatsNew.language.title" = "Choose the app language";
 "camera.fullscreen.enter" = "Enter fullscreen";
 "camera.fullscreen.exit" = "Exit fullscreen";
+
+// Vehicle pass validity and license plate tracking
+"settings.vehiclePass.unlimited" = "Unlimited";
+"settings.vehiclePass.automaticEnd" = "Ends after 24 hours";
+"settings.vehiclePass.tracking" = "Tracking";
+"settings.vehiclePass.trackingHint" = "Notify me when this license plate is detected entering or leaving.";
+"settings.vehiclePass.start" = "Valid from";
+"settings.vehiclePass.end" = "Valid until";
+"settings.vehiclePass.periodInvalid" = "The end cannot be earlier than the start.";
+"settings.vehiclePass.expirationFormat" = "Valid until %@";
+"settings.vehiclePass.noBoundary" = "Not set";
+"settings.vehiclePass.editTitle" = "Edit pass";
+"settings.vehiclePass.retryFormats" = "Retry loading plate formats";
+"settings.vehiclePass.savedTitle" = "Pass saved";
+"settings.vehiclePass.trackingFailed" = "The pass was saved, but tracking settings could not be updated. Open the pass and save again.";
+"settings.vehiclePass.originalRemovalFailed" = "The new pass was saved, but the previous pass could not be removed. Check the vehicle list.";
+"settings.vehiclePass.refreshFailed" = "The pass was saved, but the vehicle list could not be refreshed. Reopen this screen.";
+"settings.vehiclePass.countryRemovalUnavailable" = "The server does not yet support deleting passes for this country.";
+"settings.vehiclePass.validFrom" = "from %@";
+"settings.vehiclePass.validUntil" = "until %@";
+"settings.vehiclePass.unsupportedNumber" = "This plate format is not supported by your operator.";
