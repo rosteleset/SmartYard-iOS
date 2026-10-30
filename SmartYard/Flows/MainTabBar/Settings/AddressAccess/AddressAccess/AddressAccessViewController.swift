@@ -93,6 +93,7 @@ final class AddressAccessViewController: BaseViewController, LoaderPresentable {
         gateAccessView.translatesAutoresizingMaskIntoConstraints = false
         addressPermanentAccessView.translatesAutoresizingMaskIntoConstraints = false
         
+        scrollView.alwaysBounceVertical = true
         scrollView.isHidden = true
         skeletonView.isHidden = false
         skeletonView.showSkeletonAsynchronously(with: UIColor.SmartYard.secondBackgroundColor)
