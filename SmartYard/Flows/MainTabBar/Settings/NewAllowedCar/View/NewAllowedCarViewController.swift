@@ -27,6 +27,9 @@ final class NewAllowedCarViewController: BaseViewController {
     private let periodGroup = UIStackView.vertical(spacing: 12)
     private let limitedContent = UIStackView.vertical(spacing: 12)
     private let manualEndContent = UIStackView.vertical(spacing: 8)
+    private let endContent = UIView()
+    private var automaticEndHeight: Constraint!
+    private var manualEndHeight: Constraint!
     private let unlimitedSwitch = UISwitch()
     private let automaticEndSwitch = UISwitch()
     private let trackingSwitch = UISwitch()
@@ -201,7 +204,7 @@ extension NewAllowedCarViewController {
         confirmButton.accessibilityIdentifier = "vehicle-pass.confirm"
         confirmButton.isEnabled = false
         scrollView.contentInsetAdjustmentBehavior = .never
-        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = true
     }
 
     private func setupConstraints() {
@@ -272,11 +275,22 @@ extension NewAllowedCarViewController {
             startTitle
             dateRow(date: startDateField, time: startTimeField)
         }
+        endContent.clipsToBounds = true
+        endContent.addSubview(expirationLabel) { make in
+            make.top.leading.trailing.equalToSuperview()
+        }
+        endContent.addSubview(manualEndContent) { make in
+            make.top.leading.trailing.equalToSuperview()
+        }
+        endContent.snp.makeConstraints { make in
+            automaticEndHeight = make.height.equalTo(expirationLabel.snp.height).constraint
+            manualEndHeight = make.height.equalTo(manualEndContent.snp.height).constraint
+        }
+        manualEndHeight.deactivate()
         limitedContent.add {
             startContent
             optionRow(label: automaticEndTitle, control: automaticEndSwitch)
-            expirationLabel
-            manualEndContent
+            endContent
             periodError
         }
         periodGroup.add {
@@ -328,7 +342,7 @@ extension NewAllowedCarViewController {
                 owner.hasStartBoundary = true
                 owner.hasEndBoundary = true
             }
-            owner.updatePeriod()
+            owner.updatePeriod(animated: true)
         }.disposed(by: disposeBag)
         automaticEndSwitch.rx.isOn.asDriver().drive(with: self) { owner, automatic in
             if automatic {
@@ -338,7 +352,7 @@ extension NewAllowedCarViewController {
                 owner.manualEndDate = owner.startDate.addingTimeInterval(24 * 60 * 60)
             }
             owner.automaticWasEnabled = automatic
-            owner.updatePeriod()
+            owner.updatePeriod(animated: true)
         }.disposed(by: disposeBag)
         datePicker.rx.date.skip(1).subscribe(with: self) { owner, date in
             owner.applyPickerDate(date)
@@ -354,12 +368,6 @@ extension NewAllowedCarViewController {
             car: draftCar.asDriver(), trackingEnabled: trackingSwitch.rx.isOn.asDriver(),
             addAccessTrigger: saveTrigger.asDriverOnErrorJustComplete(), retryFormatsTrigger: retryFormatsButton.rx.tap.asDriver()
         ))
-        showsSettings.asDriver().drive(with: self) { owner, visible in
-            let title = visible
-                ? (owner.viewModel.originalCar == nil ? L10n.Common.share : L10n.Common.save)
-                : L10n.Settings.VehiclePass.continueButton
-            owner.confirmButton.setTitle(title, for: .normal)
-        }.disposed(by: disposeBag)
         Driver.combineLatest(showsSettings.asDriver(), output.canContinue, output.canConfirm)
             .drive(with: self) { owner, values in
                 let (visible, canContinue, canConfirm) = values
@@ -367,12 +375,12 @@ extension NewAllowedCarViewController {
                 owner.textField.setFormConfirmationAllowed(canContinue)
             }
             .disposed(by: disposeBag)
-        Driver.combineLatest(showsSettings.asDriver(), output.supportsTimedAccess, output.supportsTracking)
+        Driver.combineLatest(output.supportsTimedAccess, output.supportsTracking)
             .drive(with: self) { owner, values in
-                let (visible, timed, tracking) = values
+                let (timed, tracking) = values
                 owner.periodGroup.isHidden = !timed
                 owner.trackingGroup.isHidden = !tracking
-                owner.scrollView.isHidden = !visible || (!timed && !tracking)
+                owner.applySettingsVisibility()
                 owner.updatePeriod()
             }
             .disposed(by: disposeBag)
@@ -432,9 +440,19 @@ extension NewAllowedCarViewController {
             options: [.curveEaseInOut, .beginFromCurrentState]
         ) {
             self.showsSettings.accept(visible)
+            self.applySettingsVisibility()
             self.scrollView.alpha = visible ? 1 : 0
             self.view.layoutIfNeeded()
         }
+    }
+
+    private func applySettingsVisibility() {
+        let visible = showsSettings.value
+        scrollView.isHidden = !visible || (!viewModel.supportsTimedAccess && !viewModel.supportsTracking)
+        let title = visible
+            ? (viewModel.originalCar == nil ? L10n.Common.share : L10n.Common.save)
+            : L10n.Settings.VehiclePass.continueButton
+        confirmButton.setTitle(title, for: .normal)
     }
 
     private var validity: LicensePlateValidity {
@@ -461,10 +479,40 @@ extension NewAllowedCarViewController {
         ))
     }
 
-    private func updatePeriod() {
-        limitedContent.isHidden = unlimitedSwitch.isOn
-        manualEndContent.isHidden = automaticEndSwitch.isOn
-        expirationLabel.isHidden = !automaticEndSwitch.isOn
+    private func updatePeriod(animated: Bool = false) {
+        let hidesAllDates = unlimitedSwitch.isOn && dateFields.contains { $0.isFirstResponder }
+        let hidesEndDate = automaticEndSwitch.isOn && [endDateField, endTimeField].contains { $0.isFirstResponder }
+        if hidesAllDates || hidesEndDate { hideKeyboard() }
+        let updateVisibility = {
+            self.limitedContent.isHidden = self.unlimitedSwitch.isOn
+            self.limitedContent.alpha = self.unlimitedSwitch.isOn ? 0 : 1
+            let automatic = self.automaticEndSwitch.isOn
+            if automatic {
+                self.manualEndHeight.deactivate()
+                self.automaticEndHeight.activate()
+            } else {
+                self.automaticEndHeight.deactivate()
+                self.manualEndHeight.activate()
+            }
+            self.manualEndContent.alpha = automatic ? 0 : 1
+            self.manualEndContent.isUserInteractionEnabled = !automatic
+            self.manualEndContent.accessibilityElementsHidden = automatic
+            self.expirationLabel.alpha = automatic ? 1 : 0
+            self.expirationLabel.accessibilityElementsHidden = !automatic
+        }
+        view.layoutIfNeeded()
+        if animated, view.window != nil {
+            UIView.animate(
+                withDuration: UIAccessibility.isReduceMotionEnabled ? 0 : 0.28,
+                delay: 0,
+                options: [.curveEaseInOut, .beginFromCurrentState]
+            ) {
+                updateVisibility()
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            updateVisibility()
+        }
         startDateField.text = hasStartBoundary
             ? formatted(startDate, pattern: "d MMM yyyy") : L10n.Settings.VehiclePass.noBoundary
         startTimeField.text = hasStartBoundary ? formatted(startDate, pattern: "HH:mm") : "—"
