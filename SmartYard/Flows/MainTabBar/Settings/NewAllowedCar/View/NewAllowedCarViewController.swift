@@ -149,7 +149,7 @@ extension NewAllowedCarViewController {
         trackingHint.text = L10n.Settings.VehiclePass.trackingHint
 
         let validity = viewModel.originalCar?.validity
-        unlimitedSwitch.setOn(validity?.isUnlimited ?? false, animated: false)
+        unlimitedSwitch.setOn(validity?.isUnlimited ?? true, animated: false)
         automaticEndSwitch.setOn(validity?.lasts24Hours ?? true, animated: false)
         automaticWasEnabled = automaticEndSwitch.isOn
         hasStartBoundary = viewModel.originalCar == nil || validity?.validFrom != nil
