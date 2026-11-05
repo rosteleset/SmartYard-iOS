@@ -17,12 +17,12 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var nameTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var middleNameTextField: SmartYardBorderedTextField!
     @IBOutlet private weak var continueButton: UIButton!
+    @IBOutlet private weak var agreementContainerView: UIView!
     @IBOutlet private weak var agreementCheckBoxView: SmartYardCheckBoxView!
     @IBOutlet private weak var agreementTextView: UITextView!
     
     @IBOutlet private var mainContainerBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private var continueButtonAgreementCheckBoxTopConstraint: NSLayoutConstraint!
-    @IBOutlet private var continueButtonAgreementTextTopConstraint: NSLayoutConstraint!
+    @IBOutlet private var continueButtonAgreementTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabel: UILabel!
     private let viewModel: UserNameViewModel
     private let preloadedName: APIClientName?
@@ -32,12 +32,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         equalTo: middleNameTextField.bottomAnchor,
         constant: 24
     )
-    private let agreementLinkColor = UIColor(
-        red: 0.1607843137,
-        green: 0.5450980392,
-        blue: 1,
-        alpha: 1
-    )
+    private let agreementLinkColor = UIColor.SmartYard.blue
     private var isAgreementAccepted = true {
         didSet {
             agreementAcceptedRelay.accept(isAgreementAccepted)
@@ -60,6 +55,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupConstraints()
         configureUI()
         configureRxKeyboard()
         bind()
@@ -76,6 +72,15 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         updateAgreementCheckBoxAppearance()
     }
     
+    private func setupConstraints() {
+        let agreementStackView = UIStackView.horizontal(spacing: 10, alignment: .center)
+        agreementStackView.add {
+            agreementCheckBoxView!
+            agreementTextView!
+        }
+        agreementContainerView.pinSubview(agreementStackView)
+    }
+
     private func configureUI() {
         titleLabel.text = L10n.Auth.UserName.howCanICallYou
         continueButton.setTitle(L10n.Common.next, for: .normal)
@@ -190,8 +195,6 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
 
     private func configureAgreementView() {
         guard let links = makeAgreementLinks() else {
-            agreementCheckBoxView.isHidden = true
-            agreementTextView.isHidden = true
             setAgreementLayoutVisible(false)
             isAgreementAccepted = true
             return
@@ -202,6 +205,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         agreementTextView.delegate = self
         agreementTextView.isEditable = false
         agreementTextView.isScrollEnabled = false
+        agreementTextView.setContentHuggingPriority(.required, for: .vertical)
         agreementTextView.setContentCompressionResistancePriority(.required, for: .vertical)
         agreementTextView.tintColor = agreementLinkColor
         agreementTextView.textContainerInset = .zero
@@ -226,49 +230,49 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
     }
 
     private func setAgreementLayoutVisible(_ isVisible: Bool) {
-        continueButtonAgreementCheckBoxTopConstraint.isActive = isVisible
-        continueButtonAgreementTextTopConstraint.isActive = isVisible
+        agreementContainerView.isHidden = !isVisible
+        continueButtonAgreementTopConstraint.isActive = isVisible
         continueButtonCompactTopConstraint.isActive = !isVisible
     }
 
     private func makeAgreementLinks() -> [(substring: String, url: URL)]? {
-        guard
-            let personalDataURLString = Constants.personalDataProcessingAgreementURL,
-            let privacyPolicyURLString = Constants.privacyPolicyURL,
-            let userAgreementURLString = Constants.userAgreementURL,
-            !personalDataURLString.isEmpty,
-            !privacyPolicyURLString.isEmpty,
-            !userAgreementURLString.isEmpty,
-            let personalDataURL = URL(string: personalDataURLString),
-            let privacyPolicyURL = URL(string: privacyPolicyURLString),
-            let userAgreementURL = URL(string: userAgreementURLString)
-        else {
-            return nil
+        let documents: [(key: String, urlString: String?)] = [
+            ("auth.userName.agreement.personalDataLinkText", Constants.personalDataProcessingAgreementURL),
+            ("auth.userName.agreement.privacyPolicyLinkText", Constants.privacyPolicyURL),
+            ("auth.userName.agreement.userAgreementLinkText", Constants.userAgreementURL)
+        ]
+        let links = documents.compactMap { document -> (substring: String, url: URL)? in
+            guard
+                let urlString = document.urlString?.trimmed,
+                !urlString.isEmpty,
+                let url = URL(string: urlString)
+            else {
+                return nil
+            }
+
+            return (NSLocalizedString(document.key, comment: ""), url)
         }
 
-        return [
-            (
-                NSLocalizedString("auth.userName.agreement.personalDataLinkText", comment: ""),
-                personalDataURL
-            ),
-            (
-                NSLocalizedString("auth.userName.agreement.privacyPolicyLinkText", comment: ""),
-                privacyPolicyURL
-            ),
-            (
-                NSLocalizedString("auth.userName.agreement.userAgreementLinkText", comment: ""),
-                userAgreementURL
-            )
-        ]
+        return links.isEmpty ? nil : links
     }
 
     private func makeAgreementText(links: [(substring: String, url: URL)]) -> NSAttributedString {
-        let text = NSLocalizedString("auth.userName.agreement.text", comment: "")
+        let listFormatter = ListFormatter()
+        listFormatter.locale = Locale(identifier: Bundle.main.preferredLocalizations.first ?? "ru")
+        let linkTexts = links.map(\.substring)
+        let text = String(
+            format: NSLocalizedString("auth.userName.agreement.text", comment: ""),
+            listFormatter.string(from: linkTexts) ?? linkTexts.joined(separator: ", ")
+        )
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .natural
+        paragraphStyle.lineSpacing = 2
         let attributedString = NSMutableAttributedString(
             string: text,
             attributes: [
                 .font: UIFont.SourceSansPro.regular(size: 14),
-                .foregroundColor: UIColor.SmartYard.semiBlack
+                .foregroundColor: UIColor.SmartYard.semiBlack,
+                .paragraphStyle: paragraphStyle
             ]
         )
 

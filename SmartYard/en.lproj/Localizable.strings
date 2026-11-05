@@ -123,10 +123,10 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "How can I call you?";
-"auth.userName.agreement.text" = "I consent to the processing of personal data in accordance with the privacy policy and the user agreement";
-"auth.userName.agreement.personalDataLinkText" = "processing of personal data";
-"auth.userName.agreement.privacyPolicyLinkText" = "privacy policy";
-"auth.userName.agreement.userAgreementLinkText" = "user agreement";
+"auth.userName.agreement.text" = "I agree to the terms of %@";
+"auth.userName.agreement.personalDataLinkText" = "personal data processing";
+"auth.userName.agreement.privacyPolicyLinkText" = "the privacy policy";
+"auth.userName.agreement.userAgreementLinkText" = "the user agreement";
 "auth.userName.agreement.accessibilityLabel" = "Agreement consent";
 
 /* MARK: - CAMERA */

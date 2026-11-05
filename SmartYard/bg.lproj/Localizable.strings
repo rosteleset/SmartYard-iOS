@@ -123,7 +123,7 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "Как да се обърнем към вас?";
-"auth.userName.agreement.text" = "Съгласен(на) съм с обработката на лични данни в съответствие с политиката за поверителност и с потребителското споразумение";
+"auth.userName.agreement.text" = "Приемам условията на %@";
 "auth.userName.agreement.personalDataLinkText" = "обработката на лични данни";
 "auth.userName.agreement.privacyPolicyLinkText" = "политиката за поверителност";
 "auth.userName.agreement.userAgreementLinkText" = "потребителското споразумение";

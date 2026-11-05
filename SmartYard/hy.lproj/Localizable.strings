@@ -123,8 +123,8 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "Ինչպե՞ս կարող եմ Ձեզ դիմել։";
-"auth.userName.agreement.text" = "Ես համաձայն եմ անձնական տվյալների մշակմանը՝ գաղտնիության քաղաքականության և օգտատիրոջ համաձայնագրի համաձայն";
-"auth.userName.agreement.personalDataLinkText" = "անձնական տվյալների մշակմանը";
+"auth.userName.agreement.text" = "Համաձայն եմ %@ պայմաններին";
+"auth.userName.agreement.personalDataLinkText" = "անձնական տվյալների մշակման";
 "auth.userName.agreement.privacyPolicyLinkText" = "գաղտնիության քաղաքականության";
 "auth.userName.agreement.userAgreementLinkText" = "օգտատիրոջ համաձայնագրի";
 "auth.userName.agreement.accessibilityLabel" = "Համաձայնություն պայմաններին";

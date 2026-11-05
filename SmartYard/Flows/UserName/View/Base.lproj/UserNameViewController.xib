@@ -23,10 +23,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserNameViewController" customModule="SmartYard" customModuleProvider="target">
             <connections>
                 <outlet property="agreementCheckBoxView" destination="agc-vw-box" id="acb-ow-let"/>
+                <outlet property="agreementContainerView" destination="agr-row-container" id="agr-container-outlet"/>
                 <outlet property="agreementTextView" destination="agt-tv-txt" id="atv-ow-let"/>
                 <outlet property="continueButton" destination="MyO-ec-zrb" id="CKS-Kd-iua"/>
-                <outlet property="continueButtonAgreementCheckBoxTopConstraint" destination="btn-below-checkbox" id="btn-acb-top-out"/>
-                <outlet property="continueButtonAgreementTextTopConstraint" destination="REd-9J-Wig" id="btn-agt-top-out"/>
+                <outlet property="continueButtonAgreementTopConstraint" destination="REd-9J-Wig" id="btn-agt-top-out"/>
                 <outlet property="mainContainerBottomConstraint" destination="mzc-29-aat" id="amC-Ja-cMV"/>
                 <outlet property="middleNameTextField" destination="PoY-jf-rQZ" id="CcG-Xw-0E2"/>
                 <outlet property="nameTextField" destination="EEN-Gu-xjS" id="ap6-iP-yBt"/>
@@ -84,24 +84,35 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </textField>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agc-vw-box" customClass="SmartYardCheckBoxView" customModule="SmartYard" customModuleProvider="target">
-                                    <rect key="frame" x="16" y="180" width="48" height="48"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agr-row-container" userLabel="Agreement Row">
+                                    <rect key="frame" x="16" y="176" width="350" height="28"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agc-vw-box" customClass="SmartYardCheckBoxView" customModule="SmartYard" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="28" id="acb-height"/>
+                                                <constraint firstAttribute="width" constant="28" id="acb-width"/>
+                                            </constraints>
+                                        </view>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="agt-tv-txt">
+                                            <rect key="frame" x="38" y="0.0" width="312" height="28"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" name="semiBlack"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="48" id="acb-height"/>
-                                        <constraint firstAttribute="width" constant="48" id="acb-width"/>
+                                        <constraint firstAttribute="height" constant="28" placeholder="YES" id="agr-preview-height"/>
+                                        <constraint firstItem="agc-vw-box" firstAttribute="leading" secondItem="agr-row-container" secondAttribute="leading" placeholder="YES" id="agr-preview-checkbox-leading"/>
+                                        <constraint firstItem="agc-vw-box" firstAttribute="top" secondItem="agr-row-container" secondAttribute="top" placeholder="YES" id="agr-preview-checkbox-top"/>
+                                        <constraint firstItem="agt-tv-txt" firstAttribute="leading" secondItem="agc-vw-box" secondAttribute="trailing" constant="10" placeholder="YES" id="agr-preview-text-leading"/>
+                                        <constraint firstItem="agt-tv-txt" firstAttribute="top" secondItem="agr-row-container" secondAttribute="top" placeholder="YES" id="agr-preview-text-top"/>
+                                        <constraint firstAttribute="trailing" secondItem="agt-tv-txt" secondAttribute="trailing" placeholder="YES" id="agr-preview-text-trailing"/>
+                                        <constraint firstAttribute="bottom" secondItem="agt-tv-txt" secondAttribute="bottom" placeholder="YES" id="agr-preview-text-bottom"/>
                                     </constraints>
                                 </view>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Я согласен(на) на обработку персональных данных в соответствии с политикой конфиденциальности и с пользовательским соглашением" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="agt-tv-txt">
-                                    <rect key="frame" x="72" y="180" width="294" height="81.5"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="82" id="agt-min-height"/>
-                                    </constraints>
-                                    <color key="textColor" name="semiBlack"/>
-                                    <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="13"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                </textView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MyO-ec-zrb" customClass="BlueButton" customModule="SmartYard" customModuleProvider="target">
                                     <rect key="frame" x="16" y="285.5" width="350" height="60"/>
                                     <color key="backgroundColor" red="0.16078431372549018" green="0.54509803921568623" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -126,13 +137,10 @@
                                 <constraint firstItem="PoY-jf-rQZ" firstAttribute="top" secondItem="EEN-Gu-xjS" secondAttribute="bottom" constant="16" id="93e-cj-TGm"/>
                                 <constraint firstAttribute="trailing" secondItem="MyO-ec-zrb" secondAttribute="trailing" constant="16" id="CNZ-e8-pvU"/>
                                 <constraint firstItem="MyO-ec-zrb" firstAttribute="leading" secondItem="D3e-Hb-KU7" secondAttribute="leading" constant="16" id="Cj5-pr-x7k"/>
-                                <constraint firstItem="MyO-ec-zrb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="agc-vw-box" secondAttribute="bottom" constant="24" id="btn-below-checkbox"/>
-                                <constraint firstItem="MyO-ec-zrb" firstAttribute="top" secondItem="agt-tv-txt" secondAttribute="bottom" constant="24" id="REd-9J-Wig"/>
-                                <constraint firstItem="agc-vw-box" firstAttribute="leading" secondItem="D3e-Hb-KU7" secondAttribute="leading" constant="16" id="acb-leading"/>
-                                <constraint firstItem="agc-vw-box" firstAttribute="top" secondItem="PoY-jf-rQZ" secondAttribute="bottom" constant="28" id="acb-top"/>
-                                <constraint firstItem="agt-tv-txt" firstAttribute="leading" secondItem="agc-vw-box" secondAttribute="trailing" constant="8" id="agt-leading"/>
-                                <constraint firstItem="agt-tv-txt" firstAttribute="top" secondItem="agc-vw-box" secondAttribute="top" id="agt-top"/>
-                                <constraint firstAttribute="trailing" secondItem="agt-tv-txt" secondAttribute="trailing" constant="16" id="agt-trailing"/>
+                                <constraint firstItem="MyO-ec-zrb" firstAttribute="top" secondItem="agr-row-container" secondAttribute="bottom" constant="24" id="REd-9J-Wig"/>
+                                <constraint firstItem="agr-row-container" firstAttribute="leading" secondItem="D3e-Hb-KU7" secondAttribute="leading" constant="16" id="agr-leading"/>
+                                <constraint firstItem="agr-row-container" firstAttribute="top" secondItem="PoY-jf-rQZ" secondAttribute="bottom" constant="24" id="agr-top"/>
+                                <constraint firstAttribute="trailing" secondItem="agr-row-container" secondAttribute="trailing" constant="16" id="agr-trailing"/>
                                 <constraint firstItem="EEN-Gu-xjS" firstAttribute="leading" secondItem="D3e-Hb-KU7" secondAttribute="leading" constant="16" id="hu3-C4-r0p"/>
                                 <constraint firstItem="EEN-Gu-xjS" firstAttribute="top" secondItem="D3e-Hb-KU7" secondAttribute="top" constant="24" id="jPt-mE-IAg"/>
                                 <constraint firstAttribute="trailing" secondItem="PoY-jf-rQZ" secondAttribute="trailing" constant="16" id="ucO-rN-cqY"/>
