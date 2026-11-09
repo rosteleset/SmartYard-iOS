@@ -10,6 +10,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import JGProgressHUD
+import SwifterSwift
 
 final class AddressConfirmationViewController: BaseViewController, LoaderPresentable {
 
@@ -56,27 +57,20 @@ final class AddressConfirmationViewController: BaseViewController, LoaderPresent
             segmentControlView = SmartYardUnderlineSegmentedControlView()
         }
 
-        var titles: [String] = []
-        config.visibleTabs.forEach { titles.append($0.title) }
-        segmentControlView.titles = titles
+        let tabs = config.visibleTabs
+        segmentControlView.titles = tabs.map(\.title)
 
         segmentControlView.translatesAutoresizingMaskIntoConstraints = false
         segmentControlContainerView.addSubview(segmentControlView)
         segmentControlView.alignToView(segmentControlContainerView)
 
         segmentControlView.segmentControl.rx.selectedSegmentIndex.asDriver()
-            .drive(
-                onNext: { [weak self] index in
-                    self?.applyTab(index: index)
-                }
-            )
+            .map { tabs[safe: $0] ?? tabs.first ?? .office }
+            .drive(with: self) { owner, tab in
+                owner.courierView.isHidden = tab != .courier
+                owner.officeView.isHidden = tab != .office
+            }
             .disposed(by: disposeBag)
-    }
-
-    private func applyTab(index: Int) {
-        let isCourier = (index == 0)
-        courierView.isHidden = !isCourier
-        officeView.isHidden = isCourier
     }
 
     private func bind() {
