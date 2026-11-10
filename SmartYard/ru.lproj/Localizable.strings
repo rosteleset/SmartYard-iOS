@@ -80,6 +80,8 @@
 "auth.contractLogin.subtitle" = "Введите номер и пароль договора, привязанного к данному адресу,  и управляйте услугами из этого приложения.";
 
 "auth.flashCall.enterLastDigitsTitleFormat" = "Введите последние 4 цифры номера,\nс которого поступит звонок на номер +%@";
+"auth.flashCall.resendButton" = "Запросить звонок";
+"auth.flashCall.resendHint" = "Повторный звонок можно запросить через";
 
 "auth.passwordRecovery.chooseMethodButton" = "Получить доступные методы";
 "auth.passwordRecovery.codeSentMessage" = "Пароль от указанной записи отправлен на указанный";

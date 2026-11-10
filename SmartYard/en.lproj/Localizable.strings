@@ -80,6 +80,8 @@
 "auth.contractLogin.subtitle" = "Enter the number and password of the contract associated with this address and manage services from this application.";
 
 "auth.flashCall.enterLastDigitsTitleFormat" = "Enter the last 4 digits of the number\nfrom which the call will come to the number +%@";
+"auth.flashCall.resendButton" = "Request a call";
+"auth.flashCall.resendHint" = "You can request another call in";
 
 "auth.passwordRecovery.chooseMethodButton" = "Get available methods";
 "auth.passwordRecovery.codeSentMessage" = "The password for the specified entry has been sent to the specified";

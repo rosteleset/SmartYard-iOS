@@ -80,6 +80,8 @@
 "auth.contractLogin.subtitle" = "Берілген мекенжайға байланыстырылған келісімнің нөмірін және күйгі парольді енгізіңіз және осы қосымшадан қызметтерді басқарыңыз.";
 
 "auth.flashCall.enterLastDigitsTitleFormat" = "Қоңыраудың келетін нөміріне жіберілетін соңғы 4 цифрді енгізіңіз\n%@ нөміріне.";
+"auth.flashCall.resendButton" = "Қоңырау сұрау";
+"auth.flashCall.resendHint" = "Қайта қоңырау сұрауға дейін қалған уақыт";
 
 "auth.passwordRecovery.chooseMethodButton" = "Қол жетімді әдістерді алу";
 "auth.passwordRecovery.codeSentMessage" = "Көрсетілген енгізу үшін құпия сөз көрсетілгенге жіберілді";

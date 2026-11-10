@@ -80,6 +80,8 @@
 "auth.contractLogin.subtitle" = "Ushbu manzilga bog'langan shartnoma raqami va parolini kiriting va ushbu ilovadan xizmatlarni boshqaring.";
 
 "auth.flashCall.enterLastDigitsTitleFormat" = "Qo'ng'iroq keladigan raqamning oxirgi 4 raqamini kiriting\n+%@ raqamiga";
+"auth.flashCall.resendButton" = "Qo‘ng‘iroq so‘rash";
+"auth.flashCall.resendHint" = "Qayta qo‘ng‘iroq so‘rashgacha qolgan vaqt";
 
 "auth.passwordRecovery.chooseMethodButton" = "Mavjud usullarni olish";
 "auth.passwordRecovery.codeSentMessage" = "Ko'rsatilgan yozuv uchun parol ko'rsatilgan";

@@ -80,6 +80,8 @@
 "auth.contractLogin.subtitle" = "Մուտքագրեք այս հասցեի հետ կապված պայմանագրի համարը և գաղտնաբառը և կառավարեք ծառայությունները այս հավելվածից։";
 
 "auth.flashCall.enterLastDigitsTitleFormat" = "Մուտքագրեք համարի վերջին 4 թվանշանը,\nորից զանգ կգա +%@ համարին";
+"auth.flashCall.resendButton" = "Զանգ խնդրել";
+"auth.flashCall.resendHint" = "Մինչև նոր զանգ խնդրելը մնացել է";
 
 "auth.passwordRecovery.chooseMethodButton" = "Ստանալ հասանելի եղանակները";
 "auth.passwordRecovery.codeSentMessage" = "Նշված մուտքի գաղտնաբառը ուղարկվել է նշված";

@@ -72,7 +72,13 @@ final class PinCodeViewController: BaseViewController, LoaderPresentable {
     
     private func configureUI() {
         hintInputPhoneLabel.text = L10n.Auth.SMSCode.sentToPhoneTitle
-        resendHintLabel.text = L10n.Auth.SMSCode.resendHint
+        resendHintLabel.text = useFlashCall ? L10n.Auth.FlashCall.resendHint : L10n.Auth.SMSCode.resendHint
+        if useFlashCall {
+            let originalTitle = sendCodeAgainButton.attributedTitle(for: .normal) ?? NSAttributedString(string: "")
+            let title = NSMutableAttributedString(attributedString: originalTitle)
+            title.mutableString.setString(L10n.Auth.FlashCall.resendButton)
+            sendCodeAgainButton.setAttributedTitle(title, for: .normal)
+        }
         timerLabel.text = L10n.Auth.SMSCode.timerValue
         pinInputFieldView.reset()
         sendCodeAgainLabelView.isHidden = true

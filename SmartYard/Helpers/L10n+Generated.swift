@@ -105,6 +105,8 @@ extension L10n {
 
         enum FlashCall {
             static let enterLastDigitsTitleFormat = tr("auth.flashCall.enterLastDigitsTitleFormat")
+            static let resendButton = tr("auth.flashCall.resendButton")
+            static let resendHint = tr("auth.flashCall.resendHint")
         }
 
         enum PasswordRecovery {

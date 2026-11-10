@@ -80,6 +80,8 @@
 "auth.contractLogin.subtitle" = "أدخل رقم العقد وكلمة المرور المرتبطين بهذا العنوان وقم بإدارة الخدمات من خلال هذا التطبيق.";
 
 "auth.flashCall.enterLastDigitsTitleFormat" = "أدخل آخر 4 أرقام من الرقم\nالذي ستأتي منه المكالمة إلى الرقم +%@";
+"auth.flashCall.resendButton" = "طلب مكالمة";
+"auth.flashCall.resendHint" = "يمكنك طلب مكالمة أخرى بعد";
 
 "auth.passwordRecovery.chooseMethodButton" = "عرض الطرق المتاحة";
 "auth.passwordRecovery.codeSentMessage" = "تم إرسال كلمة المرور للإدخال المحدد إلى الجهة المحددة";
