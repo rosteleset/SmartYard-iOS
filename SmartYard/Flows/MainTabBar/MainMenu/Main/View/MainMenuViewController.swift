@@ -22,6 +22,7 @@ final class MainMenuViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var skeletonContainer: UIView!
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var titleLabel: UILabel!
+
     init(viewModel: MainMenuViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -95,9 +96,11 @@ final class MainMenuViewController: BaseViewController, LoaderPresentable {
                     self?.collectionView.isHidden = shouldBlockInteraction
                     self?.skeletonContainer.isHidden = !shouldBlockInteraction
                     
-                    shouldBlockInteraction ?
-                        self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.secondBackgroundColor) :
+                    if shouldBlockInteraction {
+                        self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.secondBackgroundColor)
+                    } else {
                         self?.skeletonContainer.hideSkeleton()
+                    }
                 }
             )
             .disposed(by: disposeBag)

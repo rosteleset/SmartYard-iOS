@@ -16,8 +16,11 @@ struct AllowedCar: Hashable {
     let watcherId: Int?
 
     init(
-        rawNumber: String, countryCode: String = "ru",
-        validFrom: Date? = nil, validTo: Date? = nil, watcherId: Int? = nil
+        rawNumber: String,
+        countryCode: String = "ru",
+        validFrom: Date? = nil,
+        validTo: Date? = nil,
+        watcherId: Int? = nil
     ) {
         self.rawNumber = rawNumber
         self.countryCode = countryCode.lowercased()
@@ -34,8 +37,11 @@ struct AllowedCar: Hashable {
 
     func withWatcher(_ watcherId: Int?) -> AllowedCar {
         AllowedCar(
-            rawNumber: rawNumber, countryCode: countryCode,
-            validFrom: validFrom, validTo: validTo, watcherId: watcherId
+            rawNumber: rawNumber,
+            countryCode: countryCode,
+            validFrom: validFrom,
+            validTo: validTo,
+            watcherId: watcherId
         )
     }
 

@@ -99,7 +99,7 @@ enum AppState: Codable, Equatable {
             try container.encode(phoneNumber, forKey: .smsCode)
         case .flashCall(let phoneNumber):
             try container.encode(phoneNumber, forKey: .flashCall)
-        case .authByOutgoingCall(let phoneNumber, let confirmNumber):
+        case let .authByOutgoingCall(phoneNumber, confirmNumber):
             try container.encode(phoneNumber, forKey: .outgoingCall)
             try container.encode(confirmNumber, forKey: .confirmPhoneNumber)
         case .userName:

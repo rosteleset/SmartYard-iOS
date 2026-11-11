@@ -13,9 +13,9 @@ extension NSRegularExpression {
     /// - Parameter pattern: строка с regex (может быть nil или пустая).
     /// - Returns: скомпилированный NSRegularExpression или nil, если строка некорректна.
     static func make(_ pattern: String?) -> NSRegularExpression? {
-        guard let p = pattern, !p.isEmpty else {
-            return nil 
+        guard let pattern, !pattern.isEmpty else {
+            return nil
         }
-        return try? NSRegularExpression(pattern: p)
+        return try? NSRegularExpression(pattern: pattern)
     }
 }

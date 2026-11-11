@@ -8,6 +8,18 @@
 
 import Foundation
 
+enum LicensePlateAccessError: LocalizedError {
+    case unsupportedCountryRemoval
+    case invalidPeriod
+
+    var errorDescription: String? {
+        switch self {
+        case .unsupportedCountryRemoval: return L10n.Settings.VehiclePass.countryRemovalUnavailable
+        case .invalidPeriod: return L10n.Settings.VehiclePass.periodInvalid
+        }
+    }
+}
+
 struct LicensePlateSaveResult {
     var car: AllowedCar
     var cars: [AllowedCar]?
@@ -36,17 +48,5 @@ struct LicensePlateSaveResult {
         if removedOriginal, let original { updated.removeAll { $0.identity == original.identity } }
         updated.append(car)
         return updated
-    }
-}
-
-enum LicensePlateAccessError: LocalizedError {
-    case unsupportedCountryRemoval
-    case invalidPeriod
-
-    var errorDescription: String? {
-        switch self {
-        case .unsupportedCountryRemoval: return L10n.Settings.VehiclePass.countryRemovalUnavailable
-        case .invalidPeriod: return L10n.Settings.VehiclePass.periodInvalid
-        }
     }
 }

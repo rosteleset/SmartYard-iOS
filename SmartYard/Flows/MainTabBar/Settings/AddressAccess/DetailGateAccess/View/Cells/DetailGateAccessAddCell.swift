@@ -23,7 +23,6 @@ final class DetailGateAccessAddCell: UICollectionViewCell, HasDisposeBag {
     
     // MARK: - Properties
 
-    
     // MARK: - Lifecycle
     
     override func awakeFromNib() {

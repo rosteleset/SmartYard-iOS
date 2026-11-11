@@ -12,6 +12,114 @@ import FirebaseMessaging
 
 private let ignoredCallIdsKey = "ignoredCallIds"
 
+#if DEBUG
+enum ParanoidFeatureChecks {
+    private static var hasRun = false
+
+    static func run() {
+        guard !hasRun else { return }
+        hasRun = true
+
+        let keyDetail = DetailX(
+            key: "rfid-key",
+            face: nil,
+            flags: nil,
+            phone: nil,
+            code: nil,
+            faceId: nil
+        )
+        let appDetail = DetailX(
+            key: nil,
+            face: nil,
+            flags: nil,
+            phone: "+79990000000",
+            code: nil,
+            faceId: nil
+        )
+        let plateDetail = DetailX(
+            key: nil,
+            face: nil,
+            flags: nil,
+            phone: nil,
+            code: nil,
+            faceId: nil,
+            vehicle: .init(vehicleBox: nil, plateKeyPoints: nil, plateNumber: "A123AA")
+        )
+
+        let keyEvent = makeEvent(flatId: 7, event: .rfid, detailX: keyDetail)
+        let appEvent = makeEvent(flatId: 7, event: .app, detailX: appDetail)
+        let codeEvent = makeEvent(flatId: 7, event: .passcode, detailX: nil)
+        let plateEvent = makeEvent(flatId: 7, event: .plate, detailX: plateDetail)
+
+        assert(ParanoidEventTracking.eventDetail(from: keyEvent) == "rfid-key")
+        assert(ParanoidEventTracking.eventDetail(from: appEvent) == "+79990000000")
+        assert(ParanoidEventTracking.eventDetail(from: codeEvent).isEmpty)
+        assert(ParanoidEventTracking.eventDetail(from: plateEvent) == "A123AA")
+        assert(ParanoidEventTracking.key(for: plateEvent) == "7_9_A123AA")
+
+        checkRequestAndPayload()
+    }
+
+    private static func checkRequestAndPayload() {
+        let trackRequest = TrackEventRequest(
+            accessToken: "token",
+            flatId: 7,
+            eventType: 9,
+            eventDetail: "A123AA",
+            comments: "comment"
+        )
+        assert(trackRequest.requestParameters["flatId"] as? Int == 7)
+        assert(trackRequest.requestParameters["eventType"] as? Int == 9)
+        assert(trackRequest.requestParameters["eventDetail"] as? String == "A123AA")
+        assert(trackRequest.requestParameters["comments"] as? String == "comment")
+
+        let payload = ParanoidPushPayload(
+            userInfo: [
+                "action": "paranoid",
+                "timestamp": "1700000000",
+                "hash": "hash",
+                "aps": ["alert": ["title": "Title", "body": "Body"]]
+            ],
+            notificationTitle: nil,
+            notificationBody: nil,
+            providerBaseURL: "https://example.com/mobile/",
+            serverTimeZone: "Europe/Moscow",
+            now: Date(timeIntervalSince1970: 0)
+        )
+
+        assert(payload?.title == "Title")
+        assert(payload?.body == "Body")
+        assert(payload?.date == "15.11.2023, 01:13:20")
+        assert(payload?.imageUrl == "https://example.com/mobile/call/camshot/hash")
+    }
+
+    private static func makeEvent(
+        flatId: Int,
+        event: APIPlog.EventType,
+        detailX: DetailX?
+    ) -> APIPlog {
+        return APIPlog(
+            date: Date(timeIntervalSince1970: 0),
+            uuid: UUID().uuidString,
+            imageUuid: nil,
+            flatId: flatId,
+            objectId: 1,
+            objectType: 0,
+            objectMechanizma: 0,
+            mechanizmaDescription: "",
+            houseId: nil,
+            entranceId: nil,
+            cameraId: nil,
+            event: event,
+            detail: "",
+            detailX: detailX,
+            previewURL: nil,
+            previewImage: nil
+        )
+    }
+}
+#endif
+
 final class PushNotificationService: HasDisposeBag {
     
     private let apiWrapper: APIWrapper
@@ -192,107 +300,3 @@ final class PushNotificationService: HasDisposeBag {
     }
     
 }
-
-#if DEBUG
-enum ParanoidFeatureChecks {
-    private static var hasRun = false
-
-    static func run() {
-        guard !hasRun else { return }
-        hasRun = true
-
-        let keyDetail = DetailX(
-            key: "rfid-key",
-            face: nil,
-            flags: nil,
-            phone: nil,
-            code: nil,
-            faceId: nil
-        )
-        let appDetail = DetailX(
-            key: nil,
-            face: nil,
-            flags: nil,
-            phone: "+79990000000",
-            code: nil,
-            faceId: nil
-        )
-        let plateDetail = DetailX(
-            key: nil,
-            face: nil,
-            flags: nil,
-            phone: nil,
-            code: nil,
-            faceId: nil,
-            vehicle: .init(vehicleBox: nil, plateKeyPoints: nil, plateNumber: "A123AA")
-        )
-
-        let keyEvent = makeEvent(flatId: 7, event: .rfid, detailX: keyDetail)
-        let appEvent = makeEvent(flatId: 7, event: .app, detailX: appDetail)
-        let codeEvent = makeEvent(flatId: 7, event: .passcode, detailX: nil)
-        let plateEvent = makeEvent(flatId: 7, event: .plate, detailX: plateDetail)
-
-        assert(ParanoidEventTracking.eventDetail(from: keyEvent) == "rfid-key")
-        assert(ParanoidEventTracking.eventDetail(from: appEvent) == "+79990000000")
-        assert(ParanoidEventTracking.eventDetail(from: codeEvent) == "")
-        assert(ParanoidEventTracking.eventDetail(from: plateEvent) == "A123AA")
-        assert(ParanoidEventTracking.key(for: plateEvent) == "7_9_A123AA")
-
-        let trackRequest = TrackEventRequest(
-            accessToken: "token",
-            flatId: 7,
-            eventType: 9,
-            eventDetail: "A123AA",
-            comments: "comment"
-        )
-        assert(trackRequest.requestParameters["flatId"] as? Int == 7)
-        assert(trackRequest.requestParameters["eventType"] as? Int == 9)
-        assert(trackRequest.requestParameters["eventDetail"] as? String == "A123AA")
-        assert(trackRequest.requestParameters["comments"] as? String == "comment")
-
-        let payload = ParanoidPushPayload(
-            userInfo: [
-                "action": "paranoid",
-                "timestamp": "1700000000",
-                "hash": "hash",
-                "aps": ["alert": ["title": "Title", "body": "Body"]]
-            ],
-            notificationTitle: nil,
-            notificationBody: nil,
-            providerBaseURL: "https://example.com/mobile/",
-            serverTimeZone: "Europe/Moscow",
-            now: Date(timeIntervalSince1970: 0)
-        )
-
-        assert(payload?.title == "Title")
-        assert(payload?.body == "Body")
-        assert(payload?.date == "15.11.2023, 01:13:20")
-        assert(payload?.imageUrl == "https://example.com/mobile/call/camshot/hash")
-    }
-
-    private static func makeEvent(
-        flatId: Int,
-        event: APIPlog.EventType,
-        detailX: DetailX?
-    ) -> APIPlog {
-        return APIPlog(
-            date: Date(timeIntervalSince1970: 0),
-            uuid: UUID().uuidString,
-            imageUuid: nil,
-            flatId: flatId,
-            objectId: 1,
-            objectType: 0,
-            objectMechanizma: 0,
-            mechanizmaDescription: "",
-            houseId: nil,
-            entranceId: nil,
-            cameraId: nil,
-            event: event,
-            detail: "",
-            detailX: detailX,
-            previewURL: nil,
-            previewImage: nil
-        )
-    }
-}
-#endif

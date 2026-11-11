@@ -49,8 +49,12 @@ final class AddFaceViewController: BaseViewController {
         )
         .disposed(by: disposeBag)
         
+        bindAddFace(activityTracker: activityTracker, errorTracker: errorTracker)
+    }
+
+    private func bindAddFace(activityTracker: ActivityTracker, errorTracker: ErrorTracker) {
         addButton.rx.tap.asDriver()
-            .flatMapLatest {
+            .flatMapLatest { [apiWrapper, event] in
                 apiWrapper.likePersonFace(event: event.uuid)
                     .trackError(errorTracker)
                     .trackActivity(activityTracker)
@@ -58,7 +62,7 @@ final class AddFaceViewController: BaseViewController {
             }
             .ignoreNil()
             .drive(
-                onNext: { [weak self] in
+                onNext: { [weak self, event] in
                     self?.apiWrapper.forceUpdateFaces = true
                     
                     // создаю копию события, в котором меняю доступные для пользователя действия
@@ -105,7 +109,6 @@ final class AddFaceViewController: BaseViewController {
                 }
             )
             .disposed(by: disposeBag)
-        
     }
     
     private func configureUI() {
@@ -123,11 +126,6 @@ final class AddFaceViewController: BaseViewController {
         }
         
         imageView.loadImageUsingUrlString(urlString: url, cache: imagesCache, rect: rect, rectColor: .red)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // imageView.sizeToFit()
     }
 
 }

@@ -8,6 +8,22 @@
 
 import Foundation
 
+struct ActionIssueV2Request: Codable {
+
+    let accessToken: String
+    let key: String
+    let action: String
+    let deliveryType: String?
+
+    init(accessToken: String, key: String, action: ActionTypeIssue, deliveryType: IssueDeliveryType? = nil) {
+        self.accessToken = accessToken
+        self.key = key
+        self.action = action.rawValue
+        self.deliveryType = deliveryType?.rawValue
+    }
+
+}
+
 struct ActionIssueRequest: Codable {
     
     let accessToken: String
@@ -30,22 +46,6 @@ extension ActionIssueRequest {
         }
 
         return params
-    }
-    
-}
-
-struct ActionIssueV2Request: Codable {
-    
-    let accessToken: String
-    let key: String
-    let action: String
-    let deliveryType: String?
-    
-    init(accessToken: String, key: String, action: ActionTypeIssue, deliveryType: IssueDeliveryType? = nil) {
-        self.accessToken = accessToken
-        self.key = key
-        self.action = action.rawValue
-        self.deliveryType = deliveryType?.rawValue
     }
     
 }

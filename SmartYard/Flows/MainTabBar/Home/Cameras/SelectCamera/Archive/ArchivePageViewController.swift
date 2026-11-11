@@ -265,10 +265,10 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         headerViewForDateRange range: (start: Date, end: Date),
         at indexPath: IndexPath
     ) -> JTACMonthReusableView {
-        // swiftlint:disable force_cast
         return calendar.dequeueReusableJTAppleSupplementaryView(
             withReuseIdentifier: "WhiteSectionHeaderView",
             for: indexPath
+        // swiftlint:disable:next force_cast
         ) as! WhiteSectionHeaderView
     }
 
@@ -292,10 +292,10 @@ extension ArchivePageViewController: JTACMonthViewDataSource, JTACMonthViewDeleg
         cellState: CellState,
         indexPath: IndexPath
     ) -> JTACDayCell {
-        // swiftlint: force_cast
         let cell = calendar.dequeueReusableJTAppleCell(
             withReuseIdentifier: "CustomDayCell",
             for: indexPath
+        // swiftlint:disable:next force_cast
         ) as! CustomDayCell
 
         configureCell(view: cell, cellState: cellState)

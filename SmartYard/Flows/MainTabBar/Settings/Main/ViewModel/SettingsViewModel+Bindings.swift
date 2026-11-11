@@ -1,0 +1,466 @@
+// Created by Александр Попов. Copyright © 2026 Sesameware.
+
+import RxSwift
+import RxCocoa
+import XCoordinator
+
+extension SettingsViewModel {
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    func transform(_ input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        let activityTracker = ActivityTracker()
+
+        errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(
+                        .alert(
+                            title: L10n.Common.error,
+                            message: error.localizedDescription
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+
+        let hasNetworkBecomeReachable = networkStateProvider.state
+            .asDriver(onErrorDriveWith: .empty())
+            .distinctUntilChanged()
+            .filter { $0 == .online }
+            .mapToVoid()
+            .skip(1)
+
+        // MARK: Запрос на обновление, который должен скрывать все происходящее за скелетоном
+
+        let interactionBlockingRequestTracker = ActivityTracker()
+
+        let blockingRefresh = Driver
+            .merge(
+                NotificationCenter.default.rx.notification(.addressDeleted).asDriverOnErrorJustComplete().mapToTrue(),
+                NotificationCenter.default.rx.notification(.addressAdded).asDriverOnErrorJustComplete().mapToTrue(),
+                hasNetworkBecomeReachable.mapToFalse(),
+                .just(false)
+            )
+            .flatMapLatest { [weak self] forceRefresh -> Driver<GetSettingsListResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+
+                return self.apiWrapper.getSettingsAddresses(forceRefresh: forceRefresh)
+                    .trackError(errorTracker)
+                    .trackActivity(interactionBlockingRequestTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+
+        // MARK: Запрос на обновление, который вызван рефреш контролом
+
+        let reloadingFinishedSubject = PublishSubject<Void>()
+        let reloadingFinished = reloadingFinishedSubject.asDriverOnErrorJustComplete()
+
+        let nonBlockingRefresh = input.updateDataTrigger
+            .asDriver()
+            .delay(.milliseconds(1000))
+            .flatMapLatest { [weak self] _ -> Driver<GetSettingsListResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+
+                return self.apiWrapper.getSettingsAddresses(forceRefresh: true)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .do(
+                onNext: { _ in
+                    reloadingFinishedSubject.onNext(())
+                }
+            )
+
+        let mergedRefresh = Driver
+            .merge(blockingRefresh, nonBlockingRefresh)
+            .ignoreNil()
+
+        mergedRefresh
+            .drive(
+                onNext: { [weak self] result in
+                    self?.loadedData.onNext(result)
+                }
+            )
+            .disposed(by: self.disposeBag)
+
+        mergedRefresh
+            .withLatestFrom(areSectionsExpanded.asDriver(onErrorJustReturn: [:])) { (data: $0, expanded: $1) }
+            .flatMap { data, expanded -> Driver<[String: Bool]> in
+                guard expanded.isEmpty, let firstUniqueId = data.first?.uniqueId else {
+                    return Driver.empty()
+                }
+
+                var newDict = [String: Bool]()
+                newDict[firstUniqueId] = true
+                return Driver.just(newDict)
+            }
+            .delay(.milliseconds(200))
+            .drive(onNext: { [weak self] newDict in
+                self?.areSectionsExpanded.onNext(newDict)
+            })
+            .disposed(by: disposeBag)
+
+        // MARK: Обработчик кнопки Назад
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+        /*
+        // MARK: Обработка нажатия на иконку настроек
+        input.advancedSettingsTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.advancedSettings)
+                }
+            )
+            .disposed(by: disposeBag)
+        */
+
+        // MARK: Обработка нажатия на кнопку сервиса
+
+        let serviceActivatedTrigger = PublishSubject<(SettingsServiceType, APISettingsAddress)>()
+        let serviceUnactivatedTrigger = PublishSubject<(SettingsServiceType, APISettingsAddress)>()
+
+        input.serviceSelected
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { args in
+                    let (serviceSelected, loadedData) = args
+                    let (identity, serviceType) = serviceSelected
+
+                    guard case let .controlPanel(uniqueId) = identity,
+                        let match = (loadedData.first { $0.uniqueId == uniqueId }),
+                        let isActivated = match.controlPanelServiceStates[serviceType] else {
+                        return
+                    }
+
+                    guard isActivated else {
+                        serviceUnactivatedTrigger.onNext((serviceType, match))
+                        return
+                    }
+
+                    serviceActivatedTrigger.onNext((serviceType, match))
+                }
+            )
+            .disposed(by: disposeBag)
+
+        serviceActivatedTrigger
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] args in
+                    let (service, apiSettingsAddress) = args
+
+                    self?.router.trigger(
+                        .serviceIsActivated(
+                            service: service,
+                            contractName: apiSettingsAddress.contractName,
+                            address: apiSettingsAddress.address
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+
+        serviceUnactivatedTrigger
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest { [weak self] args -> Driver<ServiceUnactivatedResponsePayload?> in
+                guard let self = self else {
+                    return .empty()
+                }
+
+                let (serviceType, apiSettingsAddress) = args
+
+                if let availableServices = apiSettingsAddress.availableServices {
+                    return .just(
+                        ServiceUnactivatedResponsePayload(
+                            serviceType: serviceType,
+                            apiSettingsAddress: apiSettingsAddress,
+                            availableServices: availableServices
+                        )
+                    )
+                }
+
+                return self.apiWrapper.getServicesByHouseId(houseId: apiSettingsAddress.houseId)
+                    .trackError(errorTracker)
+                    .map { response -> ServiceUnactivatedResponsePayload? in
+                        guard let response = response else {
+                            return nil
+                        }
+
+                        return ServiceUnactivatedResponsePayload(
+                            serviceType: serviceType,
+                            apiSettingsAddress: apiSettingsAddress,
+                            availableServices: response
+                        )
+                    }
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .map { payload -> SettingsRoute in
+                let isServiceAvailable = payload.availableServices.contains {
+                    $0.icon == payload.serviceType.rawValue
+                }
+
+                switch isServiceAvailable {
+                case true:
+                    return .serviceIsNotActivated(
+                        service: payload.serviceType,
+                        contractName: payload.apiSettingsAddress.contractName,
+                        address: payload.apiSettingsAddress.address
+                    )
+                case false:
+                    return .serviceUnavailable(
+                        service: payload.serviceType,
+                        address: payload.apiSettingsAddress.address,
+                        contractName: payload.apiSettingsAddress.contractName
+                    )
+                }
+            }
+            .drive(
+                onNext: { [weak self] route in
+                    self?.router.trigger(route)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        // MARK: Обработка нажатия на настройки адреса
+
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .action(uniqueId, type) = identity, type == .openAddressSettings else {
+                    return .empty()
+                }
+
+                return .just(uniqueId)
+            }
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (uniqueId, loadedData) = args
+
+                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }), let flatId = match.flatId else {
+                        return
+                    }
+
+                    self?.router.trigger(
+                        .addressSettings(
+                            flatId: flatId,
+                            clientId: match.clientId,
+                            address: match.address,
+                            isContractOwner: match.contractOwner ?? false,
+                            hasDomophone: match.servicesAvailability[.domophone] == true
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+
+        // MARK: Обработка нажатия на отслеживаемые события
+
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .action(uniqueId, type) = identity, type == .trackedEvents else {
+                    return .empty()
+                }
+
+                return .just(uniqueId)
+            }
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (uniqueId, loadedData) = args
+
+                    guard let match = loadedData.first(where: { $0.uniqueId == uniqueId }),
+                          let rawFlatId = match.flatId,
+                          let flatId = Int(rawFlatId),
+                          self?.accessService.eventsTrackingEnabled == true else {
+                        return
+                    }
+
+                    self?.router.trigger(
+                        .trackedEvents(flatId: flatId, address: match.address)
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+
+        // MARK: Обработка нажатия на предоставление доступа
+
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .action(uniqueId, type) = identity, type == .grantAccess else {
+                    return .empty()
+                }
+
+                return .just(uniqueId)
+            }
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (uniqueId, loadedData) = args
+
+                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }), let flatId = match.flatId else {
+                        return
+                    }
+
+                    self?.router.trigger(
+                        .addressAccess(
+                            address: match.address,
+                            flatId: flatId,
+                            clientId: match.clientId
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+
+        // MARK: Обработка нажатия на веб-версию ЛК
+
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .action(uniqueId, type) = identity, type == .openWebVersion else {
+                    return .empty()
+                }
+
+                return .just(uniqueId)
+            }
+            .withLatestFrom(loadedData.asDriver(onErrorJustReturn: [])) { ($0, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    let (uniqueId, loadedData) = args
+
+                    guard let match = (loadedData.first { $0.uniqueId == uniqueId }),
+                        let lcab = match.lcab,
+                        let lcabUrl = URL(string: lcab) else {
+                        return
+                    }
+
+                    self?.router.trigger(.safariPage(url: lcabUrl))
+                }
+            )
+            .disposed(by: disposeBag)
+
+        // MARK: Обработка нажатия на добавление адреса
+
+        input.addAddressTrigger
+            .drive(
+                onNext: { _ in
+                    NotificationCenter.default.post(.init(name: .addAddressFromSettings, object: nil))
+                }
+            )
+            .disposed(by: disposeBag)
+
+        // MARK: При скрытии / раскрытии секций передаем информацию о секции, чтобы View могла выполнить скроллинг
+
+        let updateKindSubject = PublishSubject<SettingsSectionUpdateKind>()
+        let updateKind = updateKindSubject.asDriverOnErrorJustComplete()
+
+        // MARK: При нажатии на Header, обновляем состояние раскрытости для этой секции
+        // Это приведет к обновлению секций
+
+        input.itemSelected
+            .flatMap { identity -> Driver<String> in
+                guard case let .header(uniqueId) = identity else {
+                    return .empty()
+                }
+
+                return .just(uniqueId)
+            }
+            .withLatestFrom(areSectionsExpanded.asDriverOnErrorJustComplete()) { ($0, $1) }
+            .map { args -> ((String, Bool), [String: Bool]) in
+                var (uniqueId, dict) = args
+
+                let newState = !dict[uniqueId, default: false]
+                dict[uniqueId] = newState
+
+                return ((uniqueId, newState), dict)
+            }
+
+            // MARK: Вынес в блок do, чтобы не делать сайд-эффектов в map
+
+            .do(
+                onNext: { args in
+                    let (updatedSectionInfo, _) = args
+                    let (uniqueId, newState) = updatedSectionInfo
+
+                    let identity = SettingsDataItemIdentity.header(uniqueId: uniqueId)
+
+                    updateKindSubject.onNext(
+                        newState ?
+                            .expand(sectionWithIdentity: identity) :
+                            .collapse(sectionWithIdentity: identity)
+                    )
+                }
+            )
+            .map { args in
+                let (_, dict) = args
+                return dict
+            }
+            .drive(
+                onNext: { [weak self] newDict in
+                    self?.areSectionsExpanded.onNext(newDict)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        // MARK: Создание моделей секций
+
+        let isEventsTrackingEnabled = Driver
+            .merge(
+                .just(accessService.eventsTrackingEnabled),
+                accessService.optionsUpdated
+                    .asDriverOnErrorJustComplete()
+                    .map { [accessService] in accessService.eventsTrackingEnabled }
+            )
+            .distinctUntilChanged()
+
+        let sectionModels: Driver<[SettingsSectionModel]> = Driver
+            .combineLatest(
+                loadedData.asDriver(onErrorJustReturn: []),
+                areSectionsExpanded.asDriver(onErrorJustReturn: [:]),
+                isEventsTrackingEnabled
+            )
+            .map { [weak self] args in
+                let (data, expansionStateDict, isEventsTrackingEnabled) = args
+
+                return self?.createSections(
+                    data: data,
+                    expansionStateDict: expansionStateDict,
+                    isEventsTrackingEnabled: isEventsTrackingEnabled
+                ) ?? []
+            }
+
+        let shouldBlockInteraction = interactionBlockingRequestTracker.asDriver()
+            .startWith(true)
+            .flatMapLatest { isBlocking -> Driver<Bool> in
+                isBlocking ? .just(true) : .just(false).delay(.milliseconds(150))
+            }
+
+        return Output(
+            sectionModels: sectionModels,
+            updateKind: updateKind,
+            reloadingFinished: reloadingFinished,
+            shouldBlockInteraction: shouldBlockInteraction,
+            isLoading: activityTracker.asDriver()
+        )
+    }
+}

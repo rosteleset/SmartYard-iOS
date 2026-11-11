@@ -55,7 +55,7 @@ final class OnlineSelectionNavigator {
         let shouldAnimate = didInitialScroll
 
         switch intent.source {
-        case .preselected:
+        case .preselected, .numberTap:
             let didScrollTop = scrollTopCarousel(
                 collectionView,
                 index: intent.index,
@@ -69,7 +69,7 @@ final class OnlineSelectionNavigator {
                 animated: shouldAnimate
             )
 
-            if (didScrollTop || didScrollBottom), collectionView.window != nil {
+            if didScrollTop || didScrollBottom, collectionView.window != nil {
                 didInitialScroll = true
             }
             didInitialScroll = true
@@ -85,25 +85,6 @@ final class OnlineSelectionNavigator {
             if didScrollBottom, collectionView.window != nil {
                 didInitialScroll = true
             }
-            selectBottomItem(collectionView, index: intent.index)
-
-        case .numberTap:
-            let didScrollTop = scrollTopCarousel(
-                collectionView,
-                index: intent.index,
-                animated: shouldAnimate,
-                checkCentered: true,
-                markProgrammatic: true
-            )
-            let didScrollBottom = scrollBottomCarouselToPage(
-                collectionView,
-                index: intent.index,
-                animated: shouldAnimate
-            )
-            if (didScrollTop || didScrollBottom), collectionView.window != nil {
-                didInitialScroll = true
-            }
-            didInitialScroll = true
             selectBottomItem(collectionView, index: intent.index)
         }
     }

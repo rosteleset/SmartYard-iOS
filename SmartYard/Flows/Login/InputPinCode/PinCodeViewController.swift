@@ -167,6 +167,10 @@ final class PinCodeViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        bindSubmission(output)
+    }
+
+    private func bindSubmission(_ output: PinCodeViewModel.Output) {
         output.isLoading
             .debounce(.milliseconds(25))
             .drive(

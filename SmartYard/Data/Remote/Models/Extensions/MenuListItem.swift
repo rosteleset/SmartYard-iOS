@@ -34,19 +34,19 @@ enum MenuListItem {
     
     var iconName: String? {
         switch self {
-            case .essential(label: _, iconName: let iconName, route: _, order: _):
-                return iconName
-            case .optional:
-                return nil
+        case .essential(label: _, iconName: let iconName, route: _, order: _):
+            return iconName
+        case .optional:
+            return nil
         }
     }
     
     var icon: UIImage? {
         switch self {
-            case .essential:
-                return nil
+        case .essential:
+            return nil
         case .optional(label: _, icon: let icon, extId: _, order: _):
-                return icon
+            return icon
         }
     }
 }

@@ -74,6 +74,27 @@ final class ChatViewController: ChatController, LoaderPresentable, HasDisposeBag
             )
             .disposed(by: disposeBag)
         
+        bindChatProfile(output)
+
+        output.isLoggingOut
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        ThemeManager.shared.currentTheme
+            .distinctUntilChanged()
+            .skip(1)
+            .subscribe(with: self) { owner, _ in
+                owner.chatView.notifySmartYardThemeChanged()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func bindChatProfile(_ output: ChatViewModel.Output) {
         Driver.combineLatest(output.phone, output.name)
             .debounce(.milliseconds(100))
             .drive(
@@ -95,23 +116,6 @@ final class ChatViewController: ChatController, LoaderPresentable, HasDisposeBag
                     self?.callJsSetClientInfo(finalString)
                 }
             )
-            .disposed(by: disposeBag)
-        
-        output.isLoggingOut
-            .debounce(.milliseconds(25))
-            .drive(
-                onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
-                }
-            )
-            .disposed(by: disposeBag)
-
-        ThemeManager.shared.currentTheme
-            .distinctUntilChanged()
-            .skip(1)
-            .subscribe(with: self) { owner, _ in
-                owner.chatView.notifySmartYardThemeChanged()
-            }
             .disposed(by: disposeBag)
     }
     

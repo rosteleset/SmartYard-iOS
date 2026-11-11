@@ -11,14 +11,20 @@ import RxSwift
 import RxCocoa
 
 extension IncomingCallViewModel {
-    
+
+    struct VideoViews {
+        let preview: UIView
+        let webRTC: UIView
+        let camera: UIView
+    }
+
     struct Input {
         let previewTrigger: Driver<Void>
         
         // MARK: Ну я хз, придется либо прокидывать вьюхи сюда, либо UnsafeRawPointer. И то, и то - говно
         
         let callTrigger: Driver<Void>
-        let videoViewsTrigger: Driver<(UIView, UIView, UIView)>
+        let videoViewsTrigger: Driver<VideoViews>
         let ignoreTrigger: Driver<Void>
         let openTrigger: Driver<Void>
         let speakerTrigger: Driver<Void>

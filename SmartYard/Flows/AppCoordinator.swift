@@ -47,54 +47,53 @@ enum AppRoute: Route {
 // swiftlint:disable:next type_body_length
 final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
     
+    let linphoneService: LinphoneService
+    let providerProxy: CXProviderProxy
     
-    private let linphoneService: LinphoneService
-    private let providerProxy: CXProviderProxy
-    
-    private let accessService: AccessService
-    private let permissionService: PermissionService
-    private let apiWrapper: APIWrapper
-    private let issueService: IssueService
-    private let pushNotificationService: PushNotificationService
-    private let alertService: AlertService
+    let accessService: AccessService
+    let permissionService: PermissionService
+    let apiWrapper: APIWrapper
+    let issueService: IssueService
+    let pushNotificationService: PushNotificationService
+    let alertService: AlertService
     private let telemetryService: AppTelemetryServicing
-    private let logoutHelper: LogoutHelper
+    let logoutHelper: LogoutHelper
     private let debugNetwork: DebugNetworkController
-    private let networkEnv: NetworkEnvironment
-    private let networkStateProvider: NetworkStateProviding
-    private let offlineAddressListDataSource: OfflineAddressListDataSource
-    private let optionsService: OptionsServicing
-    private let supportCallActionsPresenter: SupportCallActionsPresenting
-    private let requestSupportCallbackUseCase: RequestSupportCallbackUseCase
-    private let phoneDialer: PhoneDialing
+    let networkEnv: NetworkEnvironment
+    let networkStateProvider: NetworkStateProviding
+    let offlineAddressListDataSource: OfflineAddressListDataSource
+    let optionsService: OptionsServicing
+    let supportCallActionsPresenter: SupportCallActionsPresenting
+    let requestSupportCallbackUseCase: RequestSupportCallbackUseCase
+    let phoneDialer: PhoneDialing
 
 #if DEBUG
     private lazy var debugOverlay = DebugNetworkOverlay(controller: debugNetwork)
 #endif
 
-    private var mainTabBarCoordinator: MainTabBarCoordinator?
+    var mainTabBarCoordinator: MainTabBarCoordinator?
     
     private var currentCallPreviewData: Data?
     
-    private weak var mainWindow: UIWindow?
+    weak var mainWindow: UIWindow?
     
-    private var incomingCallWindow: UIWindow?
-    private var shouldPresentIncomingCallWindow = false
-    private var incomingCallLandscapeVC: IncomingCallLandscapeViewController?
-    private var incomingCallPortraitVC: IncomingCallPortraitViewController?
+    var incomingCallWindow: UIWindow?
+    var shouldPresentIncomingCallWindow = false
+    var incomingCallLandscapeVC: IncomingCallLandscapeViewController?
+    var incomingCallPortraitVC: IncomingCallPortraitViewController?
     
-    private var temporarilyIgnoredOrientation: UIDeviceOrientation?
+    var temporarilyIgnoredOrientation: UIDeviceOrientation?
     
     var selectedTabPresentable: Presentable? {
         mainTabBarCoordinator?.selectedPresentable
     }
 
-    private var webViewCoordinator: WebViewCoordinator?
-    private var isOfflinePresented = false
+    var webViewCoordinator: WebViewCoordinator?
+    var isOfflinePresented = false
     private var didLoadOptionsOnce = false
     private var isLoadingOptions = false
     private var pendingParanoidPushPayload: ParanoidPushPayload?
-    private var isWhatsNewPresented = false
+    var isWhatsNewPresented = false
 
     init(dependencies: AppDependencies) {
         self.linphoneService = dependencies.linphoneService
@@ -151,7 +150,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
 #endif
     }
 
-    private func configureIncomingCallWindowIfNeeded() {
+    func configureIncomingCallWindowIfNeeded() {
         guard let windowScene = mainWindow?.windowScene,
               let portraitVC = incomingCallPortraitVC else { return }
 
@@ -169,272 +168,8 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         }
     }
 
-    // swiftlint:disable cyclomatic_complexity function_body_length
     override func prepareTransition(for route: AppRoute) -> NavigationTransition {
-        switch route {
-        case .main:
-            configureBackendMonitoring()
-            let coordinator = MainTabBarCoordinator(
-                accessService: accessService,
-                pushNotificationService: pushNotificationService,
-                apiWrapper: apiWrapper,
-                issueService: issueService,
-                permissionService: permissionService,
-                alertService: alertService,
-                logoutHelper: logoutHelper,
-                offlineAddressListDataSource: offlineAddressListDataSource,
-                networkStateProvider: networkStateProvider,
-                optionsService: optionsService,
-                supportCallActionsPresenter: supportCallActionsPresenter,
-                requestSupportCallbackUseCase: requestSupportCallbackUseCase,
-                phoneDialer: phoneDialer
-            )
-        
-            mainTabBarCoordinator = coordinator
-            
-            return .set([coordinator], animation: .fade)
-            
-        case .dismiss:
-            return .dismiss()
-
-        case let .webView(url):
-            let coordinator = WebViewCoordinator(
-                rootVC: rootViewController,
-                apiWrapper: apiWrapper,
-                networkStateProvider: networkStateProvider,
-                url: url,
-                backButtonLabel: L10n.Common.back,
-                push: true,
-                version: 2
-            )
-
-            webViewCoordinator = coordinator
-            addChild(coordinator)
-            return .none()
-            
-        case let .userName(preloadedName):
-            let vm = UserNameViewModel(
-                accessService: accessService,
-                apiWrapper: apiWrapper,
-                logoutHelper: logoutHelper,
-                alertService: alertService,
-                router: weakRouter
-            )
-            
-            let vc = UserNameViewController(viewModel: vm, preloadedName: preloadedName)
-            return .set([vc], animation: .fade)
-            
-        case .phoneNumber:
-            let vm = InputPhoneNumberViewModel(
-                accessService: accessService,
-                apiWrapper: apiWrapper,
-                router: weakRouter
-            )
-            
-            let vc = InputPhoneNumberViewController(viewModel: vm)
-            return .set([vc], animation: .fade)
-            
-        case let .pinCode(phoneNumber, isInitial, useFlashCall):
-            let vm = PinCodeViewModel(
-                accessService: accessService,
-                alertService: alertService,
-                apiWrapper: apiWrapper,
-                router: weakRouter,
-                phoneNumber: phoneNumber
-            )
-            
-            let vc = PinCodeViewController(viewModel: vm, isInitial: isInitial, useFlashCall: useFlashCall)
-            return .set([vc], animation: .fade)
-        
-        case let .authByOutgoingCall(phoneNumber: phoneNumber, confirmPhoneNumber: confirmPhone):
-            let vm = OutgoingCallViewModel(
-                accessService: accessService,
-                alertService: alertService,
-                apiWrapper: apiWrapper,
-                router: weakRouter,
-                phoneNumber: phoneNumber,
-                confirmPhone: confirmPhone
-            )
-            
-            let vc = OutgoingCallViewController(viewModel: vm)
-            return .set([vc], animation: .fade)
-            
-        case let .alert(title, message):
-            return .alertTransition(title: title, message: message)
-
-        case let .dialog(title, message, actions):
-            return .dialogTransition(title: title, message: message, actions: actions)
-
-        case .onboarding:
-            let vm = OnboardingViewModel(router: weakRouter, accessService: accessService)
-            let vc = OnboardingViewController(viewModel: vm)
-            return .set([vc], animation: .fade)
-            
-        case let .appSettings(title, message):
-            return .appSettingsTransition(title: title, message: message)
-            
-        case let .incomingCall(callPayload, isCallKitUsed, actionIdentifier, completionHandler):
-            // MARK: чтобы окно входящего вызова не показывалось до того, как пользователь
-            // ответит на вызов в CallKit, показываем экран входящего вызова только после ответа.
-            NotificationCenter.default.rx
-                .notification(.answeredByCallKit, object: nil)
-                .asDriverOnErrorJustComplete()
-                .drive(
-                    onNext: { [weak self] _ in
-                        guard let self, incomingCallPortraitVC != nil else { return }
-                        shouldPresentIncomingCallWindow = true
-                        configureIncomingCallWindowIfNeeded()
-                    }
-                )
-                .disposed(by: disposeBag)
-            
-            let vm = IncomingCallViewModel(
-                providerProxy: providerProxy,
-                linphoneService: linphoneService,
-                permissionService: permissionService,
-                apiWrapper: apiWrapper,
-                pushNotificationService: pushNotificationService,
-                router: weakRouter,
-                callPayload: callPayload,
-                isCallKitUsed: isCallKitUsed,
-                actionIdentifier: actionIdentifier,
-                completionHandler: completionHandler
-            )
-            
-            let landscapeVC = IncomingCallLandscapeViewController(viewModel: vm)
-            landscapeVC.loadViewIfNeeded()
-            self.incomingCallLandscapeVC = landscapeVC
-            
-            let portraitVC = IncomingCallPortraitViewController(viewModel: vm)
-            portraitVC.loadViewIfNeeded()
-            self.incomingCallPortraitVC = portraitVC
-            
-            shouldPresentIncomingCallWindow =
-                IncomingCallRoutingPolicy.presentation(useCallKit: isCallKitUsed) == .immediately
-            configureIncomingCallWindowIfNeeded()
-
-            return .none()
-         
-        case .closeIncomingCall:
-            if let portraitVC = incomingCallPortraitVC {
-                incomingCallWindow?.switchRootViewController(to: portraitVC)
-            }
-            
-            incomingCallWindow?.isHidden = true
-            incomingCallWindow = nil
-            shouldPresentIncomingCallWindow = false
-            incomingCallPortraitVC = nil
-            incomingCallLandscapeVC = nil
-            temporarilyIgnoredOrientation = nil
-            
-            DispatchQueue.main.async { [weak self] in
-                self?.mainWindow?.makeKeyAndVisible()
-            }
-            
-            return .none()
-
-        case let .paranoidPush(payload):
-            let vc = ModalViewController(
-                dismissCallback: { [weak self] in self?.trigger(.dismiss) },
-                content: .paranoid(payload)
-            )
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalTransitionStyle = .crossDissolve
-
-            return .present(vc)
-
-        case let .whatsNew(release):
-            let vc = ModalViewController(
-                dismissCallback: { [weak self] in
-                    guard let self else { return }
-                    WhatsNewPresentationStore.markPresented(version: release.version)
-                    isWhatsNewPresented = false
-                    trigger(.dismiss)
-                },
-                content: .whatsNew(release)
-            )
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalTransitionStyle = .crossDissolve
-
-            return .present(vc)
-            
-        case .registerQRCode(code: let code):
-            let qrType = AnalyticsValue.qrType(from: code)
-            logQRCodeScannedFromDeeplink(qrType: qrType)
-            
-            switch accessService.appState {
-            case .main:
-                break
-            default:
-                logQRCodeGrantFailedFromDeeplink(qrType: qrType, errorCode: "login_required")
-                self.trigger(.alert(
-                    title: L10n.Address.QRCode.loginRequiredMessage,
-                    message: nil
-                ))
-                return .none()
-            }
-            
-            let activityTracker = ActivityTracker()
-            let errorTracker = ErrorTracker()
-            
-            self.apiWrapper
-                .registerQR(qr: code)
-                .do(
-                    onSuccess: { [weak self] _ in
-                        self?.logQRCodeGrantSuccessFromDeeplink(qrType: qrType)
-                    },
-                    onError: { [weak self] error in
-                        self?.logQRCodeGrantFailedFromDeeplink(
-                            qrType: qrType,
-                            errorCode: AnalyticsError.code(from: error)
-                        )
-                    }
-                )
-                .trackActivity(activityTracker)
-                .trackError(errorTracker)
-                .asDriverOnErrorJustComplete()
-                .drive()
-                .disposed(by: disposeBag)
-            
-            errorTracker
-                .asDriver()
-                .drive { [weak self] error in
-                    self?.trigger(.alert(title: error.localizedDescription, message: nil))
-                    self?.apiWrapper.forceUpdateAddress = true
-                    self?.apiWrapper.forceUpdateSettings = true
-                    self?.apiWrapper.forceUpdatePayments = true
-                    NotificationCenter.default.post(name: .addressAdded, object: nil)
-                }
-                .disposed(by: disposeBag)
-
-            return .none()
-            
-        case .selectProvider:
-            let vm = SelectProviderViewModel(
-                apiWrapper: apiWrapper,
-                alertService: alertService,
-                accessService: accessService,
-                router: weakRouter
-            )
-            let vc = SelectProviderViewController(viewModel: vm)
-            return .set([vc], animation: .fade)
-
-        case .offline:
-            let vm = HomeOfflineViewModel(
-                accessService: accessService,
-                offlineAddressListDataSource: offlineAddressListDataSource,
-                networkStateProvider: networkStateProvider,
-                router: weakRouter
-            )
-            let vc = HomeOfflineViewController(viewModel: vm)
-
-            return .present(vc, animation: .default)
-
-        case .dismissOffline:
-            isOfflinePresented = false
-            accessService.appState = .main
-            return .dismiss()
-        }
+        makeTransition(for: route)
     }
     
     func processIncomingCallRequest(
@@ -673,284 +408,13 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         }
     }
 
-    private func observeLogout() {
-        NotificationCenter.default.rx.notification(.init("UserLoggedOut"))
-            .subscribe(
-                onNext: { [weak self] _ in
-                    if let mainTabBarCoordinator = self?.mainTabBarCoordinator {
-                        self?.removeChild(mainTabBarCoordinator)
-                        self?.mainTabBarCoordinator = nil
-                    }
+    enum AlertNetworkState: Equatable { case online, offline }
 
-                    self?.networkEnv.backend.setEnabled(false)
-                    self?.networkEnv.backend.updateHealthURL(nil)
-                    try? self?.offlineAddressListDataSource.wipeCache()
-
-                    ImageCache.default.clearMemoryCache()
-                    ImageCache.default.clearDiskCache()
-                    
-                    self?.trigger(Constants.defaultBackendURL.isNilOrEmpty ? .selectProvider : .phoneNumber)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    // swiftlint:disable:next function_body_length
-    private func observeOrientationChanges() {
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        
-        NotificationCenter.default.rx
-            .notification(UIDevice.orientationDidChangeNotification)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self,
-                        UIDevice.current.orientation != self.temporarilyIgnoredOrientation,
-                        let incomingCallWindow = self.incomingCallWindow,
-                        let landscapeVC = self.incomingCallLandscapeVC,
-                        let portraitVC = self.incomingCallPortraitVC else {
-                        return
-                    }
-                    
-                    self.temporarilyIgnoredOrientation = nil
-                    
-                    if UIDevice.current.orientation == .portrait,
-                        incomingCallWindow.rootViewController === landscapeVC {
-                        incomingCallWindow.switchRootViewController(to: portraitVC, animated: false)
-                        return
-                    }
-                    
-                    if [.landscapeLeft, .landscapeRight].contains(UIDevice.current.orientation),
-                        incomingCallWindow.rootViewController === portraitVC {
-                        incomingCallWindow.switchRootViewController(to: landscapeVC, animated: false)
-                        return
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        NotificationCenter.default.rx
-            .notification(.incomingCallForceLandscape)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self,
-                        let incomingCallWindow = self.incomingCallWindow,
-                        let landscapeVC = self.incomingCallLandscapeVC else {
-                        return
-                    }
-                    
-                    self.temporarilyIgnoredOrientation = UIDevice.current.orientation
-                    
-                    incomingCallWindow.switchRootViewController(to: landscapeVC, animated: false)
-                }
-            )
-            .disposed(by: disposeBag)
-
-        NotificationCenter.default.rx
-            .notification(.incomingCallForcePortrait)
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self,
-                        let incomingCallWindow = self.incomingCallWindow,
-                        let portraitVC = self.incomingCallPortraitVC else {
-                        return
-                    }
-                    
-                    self.temporarilyIgnoredOrientation = UIDevice.current.orientation
-                    
-                    incomingCallWindow.switchRootViewController(to: portraitVC, animated: false)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-
-    private func observeAccessService() {
-        accessService.providerChanged
-            .subscribe { [weak self] _ in
-                self?.setAnalyticsOperatorID()
-            }
-            .disposed(by: disposeBag)
-    
-        accessService.backendURLChanged
-            .subscribe { [weak self] _ in
-                self?.optionsService.forceReload(reason: .backendChanged)
-            }
-            .disposed(by: disposeBag)
-    
-        accessService.sessionAuthorized
-            .subscribe(with: self) { owner, _ in
-                owner.setCrashlyticsUserID()
-                owner.optionsService.forceReload(reason: .didAuthorize)
-                owner.presentWhatsNewIfNeeded()
-            }
-            .disposed(by: disposeBag)
-    }
-
-    private enum AlertNetworkState: Equatable { case online, offline }
-
-    private func observeNetworkEvents() {
-        Logger.logDebug("<<< observeNetworkEvents: subscribed")
-
-        networkStateProvider.state
-            .do(onNext: { state in
-                Logger.logDebug("<<< networkStateProvider.state emitted: \(state)")
-            })
-            .map { $0 == .online ? AlertNetworkState.online : .offline }
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] state in
-                Logger.logDebug("<<< AlertNetworkState: \(state)")
-                DispatchQueue.main.async { [weak self] in
-                    self?.handleNetworkAlert(state)
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func handleNetworkAlert(_ state: AlertNetworkState) {
-        Logger.logDebug("<<< Network alert: \(state) appState=\(accessService.appState) route=\(accessService.routeForCurrentState)")
-
-        switch state {
-        case .online: showOnlineAlert()
-        case .offline: showOfflineAlert()
-        }
-    }
-
-    private func showOfflineAlert() {
-        guard accessService.appState == .main else { return }
-
-        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-            self?.showOffline()
-        }
-
-        alertService.showDialog(
-            title: L10n.Offline.Alert.noConnectionTitle,
-            message: L10n.Offline.Message.connectionLost,
-            preferredStyle: .alert,
-            actions: [okAction],
-            priority: 1000
-        )
-    }
-
-    private func showOnlineAlert() {
-        guard accessService.appState == .offline else { return }
-
-        let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
-            guard let self else { return }
-            isOfflinePresented = false
-            accessService.appState = .main
-            trigger(.dismissOffline)
-            presentWhatsNewIfNeeded()
-        }
-        let cancelAction = UIAlertAction(
-            title: L10n.Common.cancel,
-            style: .destructive
-        )
-
-        alertService.showDialog(
-            title: L10n.Offline.Message.connectionRestored,
-            message: L10n.Offline.Alert.switchMode,
-            preferredStyle: .alert,
-            actions: [okAction, cancelAction],
-            priority: 1000
-        )
-    }
-
-    private func showOffline() {
-        guard accessService.appState == .main else { return }
-        guard !isOfflinePresented else { return }
-
-        isOfflinePresented = true
-        accessService.appState = .offline
-        trigger(.offline)
-    }
-
-    private func syncOfflinePresentationOnLaunch() {
-        guard accessService.hasValidToken else { return }
-
-        networkStateProvider.state
-            .debounce(.milliseconds(250), scheduler: MainScheduler.instance)
-            .take(1)
-            .subscribe(onNext: { [weak self] state in
-                guard let self else { return }
-
-                if state != .online {
-                    accessService.appState = .offline
-                    presentOfflineIfNeeded()
-                } else {
-                    if accessService.appState == .offline { accessService.appState = .main }
-                    isOfflinePresented = false
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-
-    private func presentOfflineIfNeeded() {
-        guard !isOfflinePresented else { return }
-        isOfflinePresented = true
-        trigger(.offline)
-    }
-
-    private func configureBackendMonitoring() {
-        guard accessService.hasValidToken else {
-            networkEnv.backend.setEnabled(false)
-            networkEnv.backend.updateHealthURL(nil)
-            return
-        }
-
-        guard let url = makeHealthURL() else {
-            networkEnv.backend.setEnabled(false)
-            networkEnv.backend.updateHealthURL(nil)
-            return
-        }
-
-        networkEnv.backend.updateHealthURL(url)
-        networkEnv.backend.setEnabled(true)
-    }
-
-    private func makeHealthURL() -> URL? {
-        guard let base = URL(string: accessService.backendURL) else { return nil }
-        return base.appendingPathComponent("ext/options")
-    }
-
-    private func resolveBaseURLIfNeeded() {
-        guard Constants.defaultBackendURL.isNilOrEmpty else { return }
-
-        switch accessService.appState {
-        case .onboarding, .selectProvider: return
-        default: break
-        }
-
-        apiWrapper.getProvidersList()
-            .timeout(.seconds(3), scheduler: MainScheduler.instance)
-            .observe(on: MainScheduler.instance)
-            .subscribe(
-                onSuccess: { [weak self] response in
-                    guard
-                        let self,
-                        let provList = response,
-                        let prov = provList.first(where: { $0.id == self.accessService.provider.id })
-                    else {
-                        Logger.logWarning("BaseURL not resolved")
-                        return
-                    }
-
-                    self.updateBackendURL(prov.baseUrl)
-                    Logger.logDebug("BaseURL resolved -> \(prov.baseUrl)")
-                },
-                onFailure: { error in
-                    Logger.logWarning("BaseURL fetch failed: \(error)")
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-
-    private func logQRCodeScannedFromDeeplink(qrType: String) {
+    func logQRCodeScannedFromDeeplink(qrType: String) {
         AppAnalytics.log(AppAnalyticsEvent.qrScanSuccess(qrType: qrType, source: "deeplink"))
     }
 
-    private func logQRCodeGrantSuccessFromDeeplink(qrType: String) {
+    func logQRCodeGrantSuccessFromDeeplink(qrType: String) {
         AppAnalytics.log(
             AppAnalyticsEvent.qrAccessGrantSuccess(
                 qrType: qrType,
@@ -959,7 +423,7 @@ final class AppCoordinator: NavigationCoordinator<AppRoute>, HasDisposeBag {
         )
     }
 
-    private func logQRCodeGrantFailedFromDeeplink(qrType: String, errorCode: String?) {
+    func logQRCodeGrantFailedFromDeeplink(qrType: String, errorCode: String?) {
         AppAnalytics.log(
             AppAnalyticsEvent.qrAccessGrantFailed(
                 qrType: qrType,

@@ -9,6 +9,17 @@
 import UserNotifications
 import SmartYardSharedDataFramework
 
+private enum L10n {
+    enum IncomingDoorCall {
+        static let quickReplyHint = tr("notification.incomingDoorCall.quickReplyHint")
+        static let title = tr("notification.incomingDoorCall.title")
+    }
+
+    static func tr(_ key: String) -> String {
+        NSLocalizedString(key, comment: "")
+    }
+}
+
 class NotificationService: UNNotificationServiceExtension {
 
     private var contentHandler: ((UNNotificationContent) -> Void)?
@@ -45,9 +56,9 @@ class NotificationService: UNNotificationServiceExtension {
             return
         }
         
-        bestAttemptContent.title = L10n.Notification.IncomingDoorCall.title
+        bestAttemptContent.title = L10n.IncomingDoorCall.title
         bestAttemptContent.body = request.content.userInfo["callerId"] as? String ?? ""
-        bestAttemptContent.body += "\n\n" + L10n.Notification.IncomingDoorCall.quickReplyHint
+        bestAttemptContent.body += "\n\n" + L10n.IncomingDoorCall.quickReplyHint
         bestAttemptContent.sound = .default
         bestAttemptContent.categoryIdentifier = "INCOMING_DOOR_CALL"
         bestAttemptContent.interruptionLevel = .timeSensitive
@@ -199,18 +210,5 @@ extension Data {
         default:
             return ""
         }
-    }
-}
-
-private enum L10n {
-    enum Notification {
-        enum IncomingDoorCall {
-            static let quickReplyHint = tr("notification.incomingDoorCall.quickReplyHint")
-            static let title = tr("notification.incomingDoorCall.title")
-        }
-    }
-
-    static func tr(_ key: String) -> String {
-        NSLocalizedString(key, comment: "")
     }
 }

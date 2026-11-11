@@ -15,7 +15,7 @@ final class SmartYardBannerColors: BannerColorsProtocol {
         case .danger: return .SmartYard.incorrectDataRed
         case .info: return .SmartYard.grayBorder
         case .success: return .SmartYard.darkGreen
-        default : return UIColor.clear
+        default: return UIColor.clear
         }
     }
 

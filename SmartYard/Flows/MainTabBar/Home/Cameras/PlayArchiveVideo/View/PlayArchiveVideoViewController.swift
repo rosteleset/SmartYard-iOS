@@ -66,7 +66,6 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
     private var isInFullscreen = false
     private var hasSound = false
     
-    
     private var preferredPlaybackSpeedConfig: ArchiveVideoPlaybackSpeed = .normal {
         didSet {
             guard let player = realVideoPlayer else {
@@ -313,7 +312,6 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
             .bind(to: isSoundOn)
             .disposed(by: disposeBag)
     }
-    
     
     private func configurePeriodicTimeObserver(_ player: AVQueuePlayer) {
         // проверяем, что periodicTimeObserver не был уже создан
@@ -606,7 +604,6 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
             )
             .disposed(by: disposeBag)
         
-        
         isSoundOn
             .asDriver(onErrorJustReturn: false)
             .drive(
@@ -624,7 +621,11 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
                 onNext: { [weak self] isLoading in
                     if !(self?.isInFullscreen ?? false) {
                         self?.videoLoadingAnimationView.isHidden = !isLoading
-                        isLoading ? self?.videoLoadingAnimationView.play() : self?.videoLoadingAnimationView.stop()
+                        if isLoading {
+                            self?.videoLoadingAnimationView.play()
+                        } else {
+                            self?.videoLoadingAnimationView.stop()
+                        }
                     }
                     guard !isLoading else {
                         return
@@ -674,7 +675,6 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
         
         Logger.logDebug("updateUI — mode: \(mode), isVideoValid: \(isVideoValid)")
 
-        
         fullscreenButton.isHidden = mode == .edit || !isVideoValid
         progressSlider.isHidden = mode == .edit // || !isVideoValid
         playButton.isEnabled = mode == .preview && isVideoValid
@@ -729,44 +729,8 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
             .drive(previewDateLabel.rx.text)
             .disposed(by: disposeBag)
         
-        let currentPlaybackTimeDistinctSeconds = currentPlaybackTime
-            .asDriverOnErrorJustComplete()
-            .map { $0.seconds }
-            .distinctUntilChanged { lhs, rhs in
-                abs(lhs - rhs) < 0.001
-            }
-        
-        Driver
-            .combineLatest(
-                output.rangeBounds,
-                periodSelectedTrigger.asDriverOnErrorJustComplete()
-            )
-            .withLatestFrom(currentPlaybackTimeDistinctSeconds) { ($0.0, $0.1, $1) }
-            .drive(
-                onNext: { [weak self] args in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    let (rangeBounds, period, playbackTime) = args
-                    
-                    guard let uPeriod = period else {
-                        return
-                    }
-                    
-                    let visibleTimelineEndDate = uPeriod.startDate
-                        .addingTimeInterval(playbackTime)
-                        .adding(.minute, value: 30)
-                    
-                    self.rangeSlider.setTimelineConfiguration(
-                        visibleTimelineEndDate: visibleTimelineEndDate,
-                        lowerBound: rangeBounds?.lower,
-                        upperBound: rangeBounds?.upper
-                    )
-                }
-            )
-            .disposed(by: disposeBag)
-        
+        bindTimeline(output)
+
         output.isVideoLoading
             .drive(
                 onNext: { [weak self] videoLoading in
@@ -878,47 +842,8 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
             )
             .disposed(by: disposeBag)
         
-        Driver
-            .combineLatest(
-                currentMode.asDriverOnErrorJustComplete(),
-                output.screenshotURL
-            )
-            .filter { args in
-                let (mode, _) = args
-                
-                return mode == .edit
-            }
-            .map { args -> (url: URL?, imageType: SYImageType) in
-                let (_, (url, imageType)) = args
-                
-                return (url, imageType)
-            }
-            .distinctUntilChanged { $0.url == $1.url }
-            .drive(
-                onNext: { [weak self] args in
-                    let (screenshotUrl, imageType) = args
-                    
-                    guard let screenshotUrl = screenshotUrl else {
-                        return
-                    }
-                    
-                    ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
-                        url: screenshotUrl,
-                        forTime: .zero,
-                        imageType: imageType
-                    ) { cgImage in
-                        guard let cgImage = cgImage else {
-                            return
-                        }
-                        
-                        DispatchQueue.main.async {
-                            self?.screenshotImageView.image = UIImage(cgImage: cgImage)
-                        }
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-        
+        bindScreenshot(output)
+
         output.periodConfiguration
             .drive(
                 onNext: { [weak self] in
@@ -995,6 +920,89 @@ final class PlayArchiveVideoViewController: BaseViewController, LoaderPresentabl
             .drive(
                 onNext: { [weak self] _ in
                     self?.realVideoPlayer?.play()
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+    private func bindScreenshot(_ output: PlayArchiveVideoViewModel.Output) {
+        Driver
+            .combineLatest(
+                currentMode.asDriverOnErrorJustComplete(),
+                output.screenshotURL
+            )
+            .filter { args in
+                let (mode, _) = args
+
+                return mode == .edit
+            }
+            .map { args -> (url: URL?, imageType: SYImageType) in
+                let (_, (url, imageType)) = args
+
+                return (url, imageType)
+            }
+            .distinctUntilChanged { $0.url == $1.url }
+            .drive(
+                onNext: { [weak self] args in
+                    let (screenshotUrl, imageType) = args
+
+                    guard let screenshotUrl = screenshotUrl else {
+                        return
+                    }
+
+                    ScreenshotHelper.generateThumbnailFromVideoUrlAsync(
+                        url: screenshotUrl,
+                        forTime: .zero,
+                        imageType: imageType
+                    ) { cgImage in
+                        guard let cgImage = cgImage else {
+                            return
+                        }
+
+                        DispatchQueue.main.async {
+                            self?.screenshotImageView.image = UIImage(cgImage: cgImage)
+                        }
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+    private func bindTimeline(_ output: PlayArchiveVideoViewModel.Output) {
+        let currentPlaybackTimeDistinctSeconds = currentPlaybackTime
+            .asDriverOnErrorJustComplete()
+            .map { $0.seconds }
+            .distinctUntilChanged { lhs, rhs in
+                abs(lhs - rhs) < 0.001
+            }
+
+        Driver
+            .combineLatest(
+                output.rangeBounds,
+                periodSelectedTrigger.asDriverOnErrorJustComplete()
+            )
+            .withLatestFrom(currentPlaybackTimeDistinctSeconds) { ($0.0, $0.1, $1) }
+            .drive(
+                onNext: { [weak self] args in
+                    guard let self = self else {
+                        return
+                    }
+
+                    let (rangeBounds, period, playbackTime) = args
+
+                    guard let uPeriod = period else {
+                        return
+                    }
+
+                    let visibleTimelineEndDate = uPeriod.startDate
+                        .addingTimeInterval(playbackTime)
+                        .adding(.minute, value: 30)
+
+                    self.rangeSlider.setTimelineConfiguration(
+                        visibleTimelineEndDate: visibleTimelineEndDate,
+                        lowerBound: rangeBounds?.lower,
+                        upperBound: rangeBounds?.upper
+                    )
                 }
             )
             .disposed(by: disposeBag)
@@ -1239,6 +1247,21 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
         guard let currentIndex = self.assetArray.firstIndex(of: asset) else {
             return
         }
+        updateQueue(from: destIndex, currentIndex: currentIndex)
+
+        realVideoPlayer.seek(
+            to: CMTime(seconds: setPosition, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
+            toleranceBefore: .zero,
+            toleranceAfter: .zero,
+            completionHandler: { [weak self] _ in
+                guard let self = self,
+                let realVideoPlayer = self.realVideoPlayer else { return }
+                self.configurePeriodicTimeObserver(realVideoPlayer)
+            }
+        )
+    }
+
+    private func updateQueue(from destIndex: Int?, currentIndex: Int) {
         // если мы покидаем текущий элемент, то перезагружаем playlist элементами, начиная с
         if currentIndex != destIndex {
             self.realVideoPlayer?.removeAllItems()
@@ -1255,17 +1278,6 @@ extension PlayArchiveVideoViewController: SimpleVideoProgressSliderDelegate {
             }
             
         }
-        
-        realVideoPlayer.seek(
-            to: CMTime(seconds: setPosition, preferredTimescale: CMTimeScale(NSEC_PER_SEC)),
-            toleranceBefore: .zero,
-            toleranceAfter: .zero,
-            completionHandler: { [weak self] _ in
-                guard let self = self,
-                let realVideoPlayer = self.realVideoPlayer else { return }
-                self.configurePeriodicTimeObserver(realVideoPlayer)
-            }
-        )
     }
     
 }
@@ -1274,17 +1286,14 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
     
     func didChangeDate(
         videoRangeSlider: SimpleVideoRangeSlider,
-        isReceivingGesture: Bool,
-        startDate: Date,
-        endDate: Date,
-        isLowerBoundReached: Bool,
-        isUpperBoundReached: Bool,
-        screenshotPolicy: SimpleVideoRangeSlider.ScreenshotPolicy
+        selection: SimpleVideoRangeSlider.Selection
     ) {
+        let startDate = selection.startDate
+        let endDate = selection.endDate
         startEndSelectedTrigger.onNext((startDate, endDate))
         
-        shiftTimelineBackwardButton.isEnabled = !isLowerBoundReached
-        shiftTimelineForwardButton.isEnabled = !isUpperBoundReached
+        shiftTimelineBackwardButton.isEnabled = !selection.isLowerBoundReached
+        shiftTimelineForwardButton.isEnabled = !selection.isUpperBoundReached
         
         let dateFormatter = DateFormatter()
         
@@ -1293,11 +1302,11 @@ extension PlayArchiveVideoViewController: SimpleVideoRangeSliderDelegate {
         
         editDateLabel.text = "\(L10n.Camera.ArchivePlayer.videoDated) \(dateFormatter.string(from: startDate))"
         
-        guard !isReceivingGesture else {
+        guard !selection.isReceivingGesture else {
             return
         }
         
-        switch screenshotPolicy {
+        switch selection.screenshotPolicy {
         case .start:
             screenshotTrigger.onNext(startDate)
             

@@ -54,7 +54,6 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         return self.getVideoUrl(from: eventDate)
     }*/
     
-    
     var itsMeTrigger: Driver<APIPlog> {
         return openAccessButton.rx.tap
             .map { [weak self] in self?.event }
@@ -214,162 +213,6 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         }
         
     }
-    
-    /*fileprivate func getVideoUrl(from startDate: Date, duration: Int = 60) -> String? {
-        
-        guard let camera = self.camera else {
-            return nil
-        }
-        
-        let endDate = startDate.adding(.second, value: duration)
-        
-        return camera.archiveURL(startDate: startDate, endDate: endDate)
-    }*/
-    
-    func configure(
-        value: APIPlog,
-        using cache: NSCache<NSString, UIImage>,
-        camera: APICamMap? = nil,
-        token: String? = nil,
-        trackedEvent: APITrackedEvent? = nil,
-        isEventTrackingEnabled: Bool = false
-    ) {
-        self.event = value
-        
-        if let camera = camera {
-            self.camera = CameraObject(id: camera.id, url: camera.url, token: camera.token, serverType: camera.serverType, hlsMode: camera.hlsMode, hasSound: camera.hasSound)
-        } else {
-            self.camera = nil
-        }
-
-        questionMark.apply(style: .Others.question)
-        configureTrackingView(
-            event: value,
-            trackedEvent: trackedEvent,
-            isEventTrackingEnabled: isEventTrackingEnabled
-        )
-        callStatusView.isHidden = true
-        descriptionLabel.isHidden = false
-        descriptionLabel.text = ""
-        
-        let denyTitle = L10n.Common.deny
-        let openTitle = L10n.Common.allow
-        
-        denyAccessButton.setTitleForAllStates(denyTitle)
-        openAccessButton.setTitleForAllStates(openTitle)
-        
-        if playerLayer != nil {
-            playerLayer?.removeFromSuperlayer()
-            playerLayer = nil
-        }
-        player = nil
-    
-        scrollView.contentOffset = .zero
-        
-        let df = DateFormatter()
-        df.timeZone = Calendar.serverCalendar.timeZone
-        df.locale = Calendar.current.locale
-        
-        df.dateFormat = "EEEE, d MMMM HH:mm"
-        dateLabel.text = df.string(from: value.date)
-        
-        // настраиваем отображение поля с описанием
-        descriptionLabel.text = value.detail
-        descriptionLabel.isHidden = (descriptionLabel.text ?? "").isEmpty
-        
-        addressLabel.text = value.mechanizmaDescription
-        let faceFrameColor = configureTitle(for: value.event)
-        resetImageView()
-
-        if let previewImage = value.previewImage {
-            image.image = previewImage
-        } else if let previewURL = value.previewURL, !previewURL.isEmpty {
-            image.loadImageUsingUrlString(
-                urlString: previewURL,
-                cache: cache,
-                label: underImageLabel,
-                errorMessage: L10n.History.Event.imageMissing,
-                rect: value.detailX?.face?.asCGRect,
-                rectColor: faceFrameColor
-            )
-        } else {
-            configureMissingImage()
-        }
-        
-        if let flags = value.detailX?.flags,
-           ( flags.contains("canDislike") || flags.contains("canDisLike") || flags.contains("canLike") ) {
-            actionsContainer.isHidden = false
-            actionsDescriptionLabel.text = ""
-            denyAccessButton.isHidden = true
-            openAccessButton.isHidden = true
-
-            if flags.contains("canDislike") || flags.contains("canDisLike") {
-                denyAccessButton.isHidden = false
-                // swiftlint:disable:next line_length
-                actionsDescriptionLabel.text = L10n.History.Event.guestDeniedHint
-            } else {
-                openAccessButton.isHidden = false
-                // swiftlint:disable:next line_length
-                actionsDescriptionLabel.text = L10n.History.Event.guestAllowedHint
-
-            }
-
-        } else {
-            // нет выбора лайк-дизлайк
-            actionsContainer.isHidden = true
-        }
-    }
-
-    private func configureTitle(for eventType: APIPlog.EventType) -> UIColor {
-        switch eventType {
-        case .answered:
-            titleLabel.text = L10n.Intercom.Incoming.title
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            callStatusView.isHidden = false
-            descriptionLabel.isHidden = true
-            callStatusLabel.text = L10n.History.Event.answeredCall
-            callStatusLabel.textColor = UIColor.SmartYard.darkGreen
-            callStatusIcon.image = UIImage(named: "AnsweredCall")
-            return .red
-        case .unanswered:
-            titleLabel.text = L10n.Intercom.Incoming.title
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            callStatusView.isHidden = false
-            descriptionLabel.isHidden = true
-            callStatusLabel.text = L10n.History.Event.missedCall
-            callStatusLabel.textColor = UIColor.SmartYard.incorrectDataRed
-            callStatusIcon.image = UIImage(named: "MissedCall")
-            return .red
-        case .rfid:
-            titleLabel.text = L10n.History.Event.openingWithKey
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
-        case .app:
-            titleLabel.text = L10n.History.Event.openingFromApp
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
-        case .face:
-            titleLabel.text = L10n.History.Event.openingWithFaceID
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .green
-        case .passcode:
-            titleLabel.text = L10n.History.Event.openingWithCode
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
-        case .call:
-            titleLabel.text = L10n.History.Event.gateOpeningOnCall
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
-        case .plate:
-            titleLabel.text = L10n.History.Event.gateOpeningByNumberplate
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
-        case .reserved, .unknown:
-            titleLabel.text = L10n.History.Event.unknown
-            titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
-            return .red
-        }
-    }
 
 }
 
@@ -459,5 +302,168 @@ extension HistoryCollectionViewCell {
     @objc private func handleColorAppearanceChange() {
         descriptionContainer.addBorder(dynamicColor: UIColor.SmartYard.grayBorder)
     }
-    
+
+}
+
+extension HistoryCollectionViewCell {
+
+    /*fileprivate func getVideoUrl(from startDate: Date, duration: Int = 60) -> String? {
+
+        guard let camera = self.camera else {
+            return nil
+        }
+
+        let endDate = startDate.adding(.second, value: duration)
+
+        return camera.archiveURL(startDate: startDate, endDate: endDate)
+    }*/
+
+    func configure(
+        value: APIPlog,
+        using cache: NSCache<NSString, UIImage>,
+        camera: APICamMap? = nil,
+        token: String? = nil,
+        trackedEvent: APITrackedEvent? = nil,
+        isEventTrackingEnabled: Bool = false
+    ) {
+        self.event = value
+
+        if let camera = camera {
+            self.camera = CameraObject(id: camera.id, url: camera.url, token: camera.token, serverType: camera.serverType, hlsMode: camera.hlsMode, hasSound: camera.hasSound)
+        } else {
+            self.camera = nil
+        }
+
+        questionMark.apply(style: .Others.question)
+        configureTrackingView(
+            event: value,
+            trackedEvent: trackedEvent,
+            isEventTrackingEnabled: isEventTrackingEnabled
+        )
+        callStatusView.isHidden = true
+        descriptionLabel.isHidden = false
+        descriptionLabel.text = ""
+
+        let denyTitle = L10n.Common.deny
+        let openTitle = L10n.Common.allow
+
+        denyAccessButton.setTitleForAllStates(denyTitle)
+        openAccessButton.setTitleForAllStates(openTitle)
+
+        if playerLayer != nil {
+            playerLayer?.removeFromSuperlayer()
+            playerLayer = nil
+        }
+        player = nil
+
+        scrollView.contentOffset = .zero
+
+        let df = DateFormatter()
+        df.timeZone = Calendar.serverCalendar.timeZone
+        df.locale = Calendar.current.locale
+
+        df.dateFormat = "EEEE, d MMMM HH:mm"
+        dateLabel.text = df.string(from: value.date)
+
+        // настраиваем отображение поля с описанием
+        descriptionLabel.text = value.detail
+        descriptionLabel.isHidden = (descriptionLabel.text ?? "").isEmpty
+
+        addressLabel.text = value.mechanizmaDescription
+        let faceFrameColor = configureTitle(for: value.event)
+        resetImageView()
+
+        if let previewImage = value.previewImage {
+            image.image = previewImage
+        } else if let previewURL = value.previewURL, !previewURL.isEmpty {
+            image.loadImageUsingUrlString(
+                urlString: previewURL,
+                cache: cache,
+                label: underImageLabel,
+                errorMessage: L10n.History.Event.imageMissing,
+                rect: value.detailX?.face?.asCGRect,
+                rectColor: faceFrameColor
+            )
+        } else {
+            configureMissingImage()
+        }
+
+        configureEventActions(for: value)
+    }
+
+    private func configureEventActions(for value: APIPlog) {
+        if let flags = value.detailX?.flags,
+           flags.contains("canDislike") || flags.contains("canDisLike") || flags.contains("canLike") {
+            actionsContainer.isHidden = false
+            actionsDescriptionLabel.text = ""
+            denyAccessButton.isHidden = true
+            openAccessButton.isHidden = true
+
+            if flags.contains("canDislike") || flags.contains("canDisLike") {
+                denyAccessButton.isHidden = false
+                // swiftlint:disable:next line_length
+                actionsDescriptionLabel.text = L10n.History.Event.guestDeniedHint
+            } else {
+                openAccessButton.isHidden = false
+                // swiftlint:disable:next line_length
+                actionsDescriptionLabel.text = L10n.History.Event.guestAllowedHint
+
+            }
+
+        } else {
+            // нет выбора лайк-дизлайк
+            actionsContainer.isHidden = true
+        }
+    }
+
+    private func configureTitle(for eventType: APIPlog.EventType) -> UIColor {
+        switch eventType {
+        case .answered:
+            titleLabel.text = L10n.Intercom.Incoming.title
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            callStatusView.isHidden = false
+            descriptionLabel.isHidden = true
+            callStatusLabel.text = L10n.History.Event.answeredCall
+            callStatusLabel.textColor = UIColor.SmartYard.darkGreen
+            callStatusIcon.image = UIImage(named: "AnsweredCall")
+            return .red
+        case .unanswered:
+            titleLabel.text = L10n.Intercom.Incoming.title
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            callStatusView.isHidden = false
+            descriptionLabel.isHidden = true
+            callStatusLabel.text = L10n.History.Event.missedCall
+            callStatusLabel.textColor = UIColor.SmartYard.incorrectDataRed
+            callStatusIcon.image = UIImage(named: "MissedCall")
+            return .red
+        case .rfid:
+            titleLabel.text = L10n.History.Event.openingWithKey
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .app:
+            titleLabel.text = L10n.History.Event.openingFromApp
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .face:
+            titleLabel.text = L10n.History.Event.openingWithFaceID
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .green
+        case .passcode:
+            titleLabel.text = L10n.History.Event.openingWithCode
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .call:
+            titleLabel.text = L10n.History.Event.gateOpeningOnCall
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .plate:
+            titleLabel.text = L10n.History.Event.gateOpeningByNumberplate
+            titleLabel.textColor = UIColor.SmartYard.semiBlack
+            return .red
+        case .reserved, .unknown:
+            titleLabel.text = L10n.History.Event.unknown
+            titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
+            return .red
+        }
+    }
 }

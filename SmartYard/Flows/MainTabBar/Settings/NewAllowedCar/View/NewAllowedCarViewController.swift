@@ -7,64 +7,64 @@ import RxSwift
 import SnapKit
 
 final class NewAllowedCarViewController: BaseViewController {
-    @IBOutlet private weak var textField: SmartYardLicensePlateTextField!
+    @IBOutlet private(set) weak var textField: SmartYardLicensePlateTextField!
     @IBOutlet private weak var backgroundView: UIView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var carNumberHintLabel: UILabel!
+    @IBOutlet private(set) weak var titleLabel: UILabel!
+    @IBOutlet private(set) weak var carNumberHintLabel: UILabel!
 
     private enum PickerTarget { case startDate, startTime, endDate, endTime }
 
     private let dismissTap = UITapGestureRecognizer()
-    private let availableArea = UIView()
-    private let scrollView = UIScrollView()
-    private let content = UIStackView.vertical(spacing: 20)
-    private let outerStack = UIStackView.vertical(
+    let availableArea = UIView()
+    let scrollView = UIScrollView()
+    let content = UIStackView.vertical(spacing: 20)
+    let outerStack = UIStackView.vertical(
         paddings: .init(top: 28, leading: 24, bottom: 24, trailing: 24), spacing: 20
     )
-    private let titleGroup = UIStackView.vertical(spacing: 12)
-    private let numberGroup = UIStackView.vertical(spacing: 8)
-    private let trackingGroup = UIStackView.vertical(spacing: 4)
-    private let periodGroup = UIStackView.vertical(spacing: 12)
-    private let limitedContent = UIStackView.vertical(spacing: 12)
-    private let manualEndContent = UIStackView.vertical(spacing: 8)
-    private let endContent = UIView()
-    private var automaticEndHeight: Constraint!
-    private var manualEndHeight: Constraint!
-    private let unlimitedSwitch = UISwitch()
-    private let automaticEndSwitch = UISwitch()
-    private let trackingSwitch = UISwitch()
-    private let unlimitedTitle = UILabel()
-    private let automaticEndTitle = UILabel()
-    private let trackingTitle = UILabel()
-    private let startTitle = UILabel()
-    private let endTitle = UILabel()
-    private let expirationLabel = UILabel()
-    private let trackingHint = UILabel()
-    private let periodError = UILabel()
-    private let numberError = UILabel()
-    private let startDateField = SmartYardBorderedTextField()
-    private let startTimeField = SmartYardBorderedTextField()
-    private let endDateField = SmartYardBorderedTextField()
-    private let endTimeField = SmartYardBorderedTextField()
-    private let datePicker = UIDatePicker()
-    private let pickerToolbar = UIToolbar()
-    private let confirmButton = BlueButton(frame: .zero)
+    let titleGroup = UIStackView.vertical(spacing: 12)
+    let numberGroup = UIStackView.vertical(spacing: 8)
+    let trackingGroup = UIStackView.vertical(spacing: 4)
+    let periodGroup = UIStackView.vertical(spacing: 12)
+    let limitedContent = UIStackView.vertical(spacing: 12)
+    let manualEndContent = UIStackView.vertical(spacing: 8)
+    let endContent = UIView()
+    var automaticEndHeight: Constraint!
+    var manualEndHeight: Constraint!
+    let unlimitedSwitch = UISwitch()
+    let automaticEndSwitch = UISwitch()
+    let trackingSwitch = UISwitch()
+    let unlimitedTitle = UILabel()
+    let automaticEndTitle = UILabel()
+    let trackingTitle = UILabel()
+    let startTitle = UILabel()
+    let endTitle = UILabel()
+    let expirationLabel = UILabel()
+    let trackingHint = UILabel()
+    let periodError = UILabel()
+    let numberError = UILabel()
+    let startDateField = SmartYardBorderedTextField()
+    let startTimeField = SmartYardBorderedTextField()
+    let endDateField = SmartYardBorderedTextField()
+    let endTimeField = SmartYardBorderedTextField()
+    let datePicker = UIDatePicker()
+    let pickerToolbar = UIToolbar()
+    let confirmButton = BlueButton(frame: .zero)
     private let draftCar = BehaviorRelay<AllowedCar?>(value: nil)
     private let showsSettings = BehaviorRelay(value: false)
     private let continueTrigger = PublishRelay<Void>()
     private let saveTrigger = PublishRelay<Void>()
     private var isAdvancingToSettings = false
-    private let retryFormatsButton = UIButton(type: .system)
-    private let loadingIndicator = UIActivityIndicatorView(style: .medium)
-    private var card: UIView!
+    let retryFormatsButton = UIButton(type: .system)
+    let loadingIndicator = UIActivityIndicatorView(style: .medium)
+    var card: UIView!
     private var selectedPicker: PickerTarget?
-    private var automaticWasEnabled = true
+    var automaticWasEnabled = true
     private var startDate: Date
     private var manualEndDate: Date
-    private var hasStartBoundary = true
-    private var hasEndBoundary = true
-    private var calendar: Calendar
-    private let viewModel: NewAllowedCarViewModel
+    var hasStartBoundary = true
+    var hasEndBoundary = true
+    var calendar: Calendar
+    let viewModel: NewAllowedCarViewModel
 
     init(viewModel: NewAllowedCarViewModel) {
         self.viewModel = viewModel
@@ -82,7 +82,7 @@ final class NewAllowedCarViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private var dateFields: [SmartYardBorderedTextField] {
+    var dateFields: [SmartYardBorderedTextField] {
         [startDateField, startTimeField, endDateField, endTimeField]
     }
     private var effectiveEnd: Date {
@@ -116,258 +116,63 @@ final class NewAllowedCarViewController: BaseViewController {
 }
 
 extension NewAllowedCarViewController {
-    private func setupUI() {
-        titleLabel.text = viewModel.originalCar == nil
-            ? L10n.Settings.ShareCar.shareAccess : L10n.Settings.VehiclePass.editTitle
-        titleLabel.numberOfLines = 0
-        carNumberHintLabel.text = L10n.Settings.ShareCar.subtitle
-        carNumberHintLabel.numberOfLines = 0
-        textField.placeholder = L10n.Settings.ShareCar.platePlaceholder
-        textField.accessibilityIdentifier = "vehicle-pass.number"
-        textField.setKeyboardActionTitle(L10n.Settings.VehiclePass.continueButton)
-
-        unlimitedTitle.text = L10n.Settings.VehiclePass.unlimited
-        automaticEndTitle.text = L10n.Settings.VehiclePass.automaticEnd
-        trackingTitle.text = L10n.Settings.VehiclePass.tracking
-        [unlimitedTitle, automaticEndTitle, trackingTitle].forEach {
-            $0.font = .SourceSansPro.regular(size: 18)
-            $0.textColor = .SmartYard.semiBlack
-            $0.numberOfLines = 0
-        }
-        startTitle.text = L10n.Settings.VehiclePass.start
-        endTitle.text = L10n.Settings.VehiclePass.end
-        [startTitle, endTitle, expirationLabel, trackingHint, periodError, numberError].forEach {
-            $0.font = .SourceSansPro.regular(size: 14)
-            $0.textColor = .SmartYard.gray
-            $0.numberOfLines = 0
-        }
-        numberError.textColor = .SmartYard.incorrectDataRed
-        numberError.text = L10n.Settings.VehiclePass.unsupportedNumber
-        numberError.isHidden = true
-        periodError.textColor = .SmartYard.incorrectDataRed
-        periodError.text = L10n.Settings.VehiclePass.periodInvalid
-        trackingHint.text = L10n.Settings.VehiclePass.trackingHint
-
-        let validity = viewModel.originalCar?.validity
-        unlimitedSwitch.setOn(validity?.isUnlimited ?? true, animated: false)
-        automaticEndSwitch.setOn(validity?.lasts24Hours ?? true, animated: false)
-        automaticWasEnabled = automaticEndSwitch.isOn
-        hasStartBoundary = viewModel.originalCar == nil || validity?.validFrom != nil
-        hasEndBoundary = viewModel.originalCar == nil || validity?.validTo != nil
-        trackingSwitch.setOn(viewModel.originalCar?.watcherId != nil, animated: false)
-        trackingGroup.isHidden = !viewModel.supportsTracking
-        periodGroup.isHidden = !viewModel.supportsTimedAccess
-        [unlimitedSwitch, automaticEndSwitch, trackingSwitch].forEach {
-            $0.onTintColor = .SmartYard.darkGreen
-            $0.clipsToBounds = false
-            $0.setContentHuggingPriority(.required, for: .horizontal)
-            $0.setContentCompressionResistancePriority(.required, for: .horizontal)
-        }
-        unlimitedSwitch.accessibilityIdentifier = "vehicle-pass.unlimited"
-        automaticEndSwitch.accessibilityIdentifier = "vehicle-pass.period24h"
-        trackingSwitch.accessibilityIdentifier = "vehicle-pass.tracking"
-
-        datePicker.preferredDatePickerStyle = .wheels
-        datePicker.locale = .current
-        datePicker.calendar = calendar
-        datePicker.timeZone = calendar.timeZone
-        datePicker.sizeToFit()
-        pickerToolbar.sizeToFit()
-        let done = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(hideKeyboard))
-        done.accessibilityIdentifier = "vehicle-pass.picker.done"
-        pickerToolbar.setItems([
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil), done
-        ], animated: false)
-
-        for (index, field) in dateFields.enumerated() {
-            field.font = .SourceSansPro.regular(size: 18)
-            field.textColor = .SmartYard.blue
-            field.backgroundColor = .SmartYard.backgroundColor
-            field.layer.cornerRadius = 12
-            field.tintColor = .clear
-            field.inputView = datePicker
-            field.inputAccessoryView = pickerToolbar
-            field.delegate = self
-            field.accessibilityIdentifier = [
-                "vehicle-pass.start-date", "vehicle-pass.start-time",
-                "vehicle-pass.end-date", "vehicle-pass.end-time"
-            ][index]
-        }
-        confirmButton.setTitle(viewModel.originalCar == nil ? L10n.Common.share : L10n.Common.save, for: .normal)
-        retryFormatsButton.setTitle(L10n.Settings.VehiclePass.retryFormats, for: .normal)
-        retryFormatsButton.titleLabel?.font = .SourceSansPro.regular(size: 14)
-        retryFormatsButton.titleLabel?.numberOfLines = 0
-        retryFormatsButton.isHidden = true
-        retryFormatsButton.accessibilityIdentifier = "vehicle-pass.retry-formats"
-        loadingIndicator.hidesWhenStopped = true
-        confirmButton.titleLabel?.font = .SourceSansPro.semibold(size: 18)
-        confirmButton.accessibilityIdentifier = "vehicle-pass.confirm"
-        confirmButton.isEnabled = false
-        scrollView.contentInsetAdjustmentBehavior = .never
-        scrollView.showsVerticalScrollIndicator = true
-    }
-
-    private func setupConstraints() {
-        card = titleLabel.superview
-        let title = titleLabel!
-        let hint = carNumberHintLabel!
-        let number = textField!
-        let icon = card.subviews.compactMap { $0 as? UIImageView }.first!
-        [title, hint].forEach { label in
-            label.removeConstraints(label.constraints.filter { $0.firstAttribute == .height })
-        }
-        card.removeConstraints(card.constraints)
-        view.removeConstraints(view.constraints.filter {
-            ($0.firstItem as? UIView) === card || ($0.secondItem as? UIView) === card
-        })
-        card.subviews.forEach { $0.removeFromSuperview() }
-        card.removeFromSuperview()
-
-        view.addSubview(availableArea) { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
-        }
-        availableArea.addSubview(card) { make in
-            make.centerX.centerY.equalToSuperview()
-            make.leading.greaterThanOrEqualToSuperview().inset(16)
-            make.trailing.lessThanOrEqualToSuperview().inset(16)
-            make.width.equalToSuperview().offset(-32).priority(750)
-            make.width.lessThanOrEqualTo(view.readableContentGuide.snp.width)
-            make.top.greaterThanOrEqualToSuperview().inset(12)
-            make.bottom.lessThanOrEqualToSuperview().inset(12)
-        }
-        card.pinSubview(outerStack)
-        outerStack.add {
-            titleGroup
-            numberGroup
-            scrollView
-            retryFormatsButton
-            loadingIndicator
-            confirmButton
-        }
-        scrollView.addSubview(content) { make in
-            make.edges.equalTo(scrollView.contentLayoutGuide)
-        }
-        content.snp.makeConstraints { $0.width.equalTo(scrollView.frameLayoutGuide.snp.width) }
-        scrollView.snp.makeConstraints { $0.height.equalTo(content.snp.height).priority(249) }
-        confirmButton.snp.makeConstraints { $0.height.equalTo(52) }
-
-        titleGroup.add { title; hint }
-        icon.setContentHuggingPriority(.required, for: .horizontal)
-        let numberRow = UIStackView.horizontal(spacing: 20, alignment: .center)
-        numberRow.add { number; icon }
-        let numberLine = UIView()
-        numberLine.backgroundColor = .SmartYard.grayBorder
-        numberLine.snp.makeConstraints { $0.height.equalTo(1) }
-        numberGroup.add { numberRow; numberLine; numberError }
-
-        trackingGroup.add {
-            optionRow(label: trackingTitle, control: trackingSwitch)
-            trackingHint
-        }
-        manualEndContent.add {
-            endTitle
-            dateRow(date: endDateField, time: endTimeField)
-        }
-        let startContent = UIStackView.vertical(spacing: 8)
-        startContent.add {
-            startTitle
-            dateRow(date: startDateField, time: startTimeField)
-        }
-        endContent.clipsToBounds = true
-        endContent.addSubview(expirationLabel) { make in
-            make.top.leading.trailing.equalToSuperview()
-        }
-        endContent.addSubview(manualEndContent) { make in
-            make.top.leading.trailing.equalToSuperview()
-        }
-        endContent.snp.makeConstraints { make in
-            automaticEndHeight = make.height.equalTo(expirationLabel.snp.height).constraint
-            manualEndHeight = make.height.equalTo(manualEndContent.snp.height).constraint
-        }
-        manualEndHeight.deactivate()
-        limitedContent.add {
-            startContent
-            optionRow(label: automaticEndTitle, control: automaticEndSwitch)
-            endContent
-            periodError
-        }
-        periodGroup.add {
-            optionRow(label: unlimitedTitle, control: unlimitedSwitch)
-            limitedContent
-        }
-        content.add { trackingGroup; periodGroup }
-
-        let hide = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        hide.cancelsTouchesInView = false
-        hide.delegate = self
-        card.addGestureRecognizer(hide)
-    }
-
-    private func optionRow(label: UILabel, control: UISwitch) -> UIStackView {
-        // Use UIKit's fitting size and reserve room for the native control's visual edge.
-        control.sizeToFit()
-        let nativeSize = control.sizeThatFits(.zero)
-        control.snp.makeConstraints { $0.size.equalTo(nativeSize) }
-        let controlContainer = control.insets(UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 16))
-        let row = UIStackView.horizontal(spacing: 12, alignment: .center)
-        row.add { label; controlContainer }
-        return row
-    }
-
-    private func dateRow(date: UITextField, time: UITextField) -> UIStackView {
-        let row = UIStackView.horizontal(spacing: 12, alignment: .center)
-        row.add { date; time }
-        date.snp.makeConstraints { make in
-            make.height.equalTo(56)
-            make.width.equalTo(time.snp.width).multipliedBy(2)
-        }
-        time.snp.makeConstraints { $0.height.equalTo(56) }
-        return row
-    }
-
-}
-
-extension NewAllowedCarViewController {
     private func bind() {
+        bindEditorControls()
+
+        dismissTap.delegate = self
+        view.addGestureRecognizer(dismissTap)
+        let input = NewAllowedCarViewModel.Input(
+            closeTrigger: dismissTap.rx.event.mapToVoid().asDriver(onErrorJustReturn: ()),
+            car: draftCar.asDriver(),
+            trackingEnabled: trackingSwitch.rx.isOn.asDriver(),
+            addAccessTrigger: saveTrigger.asDriverOnErrorJustComplete(),
+            retryFormatsTrigger: retryFormatsButton.rx.tap.asDriver()
+        )
+        let output = viewModel.transform(input)
+        bindFormActions(output)
+        bindFormFeedback(output)
+    }
+
+    private func bindEditorControls() {
         textField.rx.controlEvent(.editingDidBegin)
             .subscribe(with: self) { owner, _ in owner.setSettingsVisible(false) }
             .disposed(by: disposeBag)
         textField.rx.controlEvent(.editingChanged)
             .subscribe(with: self) { owner, _ in owner.updateDraft() }
             .disposed(by: disposeBag)
-        unlimitedSwitch.rx.isOn.asDriver().drive(with: self) { owner, unlimited in
-            if !unlimited && !owner.hasStartBoundary && !owner.hasEndBoundary {
-                owner.hasStartBoundary = true
-                owner.hasEndBoundary = true
+        unlimitedSwitch.rx.isOn.asDriver()
+            .drive(with: self) { owner, unlimited in
+                if !unlimited && !owner.hasStartBoundary && !owner.hasEndBoundary {
+                    owner.hasStartBoundary = true
+                    owner.hasEndBoundary = true
+                }
+                owner.updatePeriod(animated: true)
             }
-            owner.updatePeriod(animated: true)
-        }.disposed(by: disposeBag)
-        automaticEndSwitch.rx.isOn.asDriver().drive(with: self) { owner, automatic in
-            if automatic {
-                owner.hasStartBoundary = true
-                owner.hasEndBoundary = true
-            } else if owner.automaticWasEnabled {
-                owner.manualEndDate = owner.startDate.addingTimeInterval(24 * 60 * 60)
+            .disposed(by: disposeBag)
+        automaticEndSwitch.rx.isOn.asDriver()
+            .drive(with: self) { owner, automatic in
+                if automatic {
+                    owner.hasStartBoundary = true
+                    owner.hasEndBoundary = true
+                } else if owner.automaticWasEnabled {
+                    owner.manualEndDate = owner.startDate.addingTimeInterval(24 * 60 * 60)
+                }
+                owner.automaticWasEnabled = automatic
+                owner.updatePeriod(animated: true)
             }
-            owner.automaticWasEnabled = automatic
-            owner.updatePeriod(animated: true)
-        }.disposed(by: disposeBag)
-        datePicker.rx.date.skip(1).subscribe(with: self) { owner, date in
-            owner.applyPickerDate(date)
-        }.disposed(by: disposeBag)
+            .disposed(by: disposeBag)
+        datePicker.rx.date
+            .skip(1)
+            .subscribe(with: self) { owner, date in
+                owner.applyPickerDate(date)
+            }
+            .disposed(by: disposeBag)
         NotificationCenter.default.rx.notification(UIResponder.keyboardDidChangeFrameNotification)
             .subscribe(with: self) { owner, _ in owner.revealSelectedField() }
             .disposed(by: disposeBag)
+    }
 
-        dismissTap.delegate = self
-        view.addGestureRecognizer(dismissTap)
-        let output = viewModel.transform(.init(
-            closeTrigger: dismissTap.rx.event.mapToVoid().asDriver(onErrorJustReturn: ()),
-            car: draftCar.asDriver(), trackingEnabled: trackingSwitch.rx.isOn.asDriver(),
-            addAccessTrigger: saveTrigger.asDriverOnErrorJustComplete(), retryFormatsTrigger: retryFormatsButton.rx.tap.asDriver()
-        ))
+    private func bindFormActions(_ output: NewAllowedCarViewModel.Output) {
         Driver.combineLatest(showsSettings.asDriver(), output.canContinue, output.canConfirm)
             .drive(with: self) { owner, values in
                 let (visible, canContinue, canConfirm) = values
@@ -384,11 +189,15 @@ extension NewAllowedCarViewController {
                 owner.updatePeriod()
             }
             .disposed(by: disposeBag)
-        confirmButton.rx.tap.subscribe(with: self) { owner, _ in
-            owner.showsSettings.value ? owner.saveTrigger.accept(()) : owner.continueTrigger.accept(())
-        }.disposed(by: disposeBag)
+        confirmButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                let action = owner.showsSettings.value ? owner.saveTrigger : owner.continueTrigger
+                action.accept(())
+            }
+            .disposed(by: disposeBag)
         Driver.merge(continueTrigger.asDriverOnErrorJustComplete(), textField.shareButtonTapped)
-            .withLatestFrom(output.canContinue).filter { $0 }
+            .withLatestFrom(output.canContinue)
+            .filter { $0 }
             .drive(with: self) { owner, _ in owner.continueToSettings() }
             .disposed(by: disposeBag)
         NotificationCenter.default.rx.notification(UIResponder.keyboardDidHideNotification)
@@ -396,19 +205,32 @@ extension NewAllowedCarViewController {
                 if owner.isAdvancingToSettings { owner.showSettings() }
             }
             .disposed(by: disposeBag)
-        output.isLoading.drive(with: self) { owner, loading in
-            if loading { owner.hideKeyboard() }
-            loading ? owner.loadingIndicator.startAnimating() : owner.loadingIndicator.stopAnimating()
-            owner.scrollView.isUserInteractionEnabled = !loading
-            owner.textField.isUserInteractionEnabled = !loading
-            owner.retryFormatsButton.isEnabled = !loading
-        }.disposed(by: disposeBag)
-        output.unsupportedNumber.drive(with: self) { owner, unsupported in
-            owner.numberError.isHidden = !unsupported
-        }.disposed(by: disposeBag)
-        output.formatsUnavailable.drive(with: self) { owner, unavailable in
-            owner.retryFormatsButton.isHidden = !unavailable
-        }.disposed(by: disposeBag)
+    }
+
+    private func bindFormFeedback(_ output: NewAllowedCarViewModel.Output) {
+        output.isLoading
+            .drive(with: self) { owner, loading in
+                if loading {
+                    owner.hideKeyboard()
+                    owner.loadingIndicator.startAnimating()
+                } else {
+                    owner.loadingIndicator.stopAnimating()
+                }
+                owner.scrollView.isUserInteractionEnabled = !loading
+                owner.textField.isUserInteractionEnabled = !loading
+                owner.retryFormatsButton.isEnabled = !loading
+            }
+            .disposed(by: disposeBag)
+        output.unsupportedNumber
+            .drive(with: self) { owner, unsupported in
+                owner.numberError.isHidden = !unsupported
+            }
+            .disposed(by: disposeBag)
+        output.formatsUnavailable
+            .drive(with: self) { owner, unavailable in
+                owner.retryFormatsButton.isHidden = !unavailable
+            }
+            .disposed(by: disposeBag)
     }
 
     private func continueToSettings() {
@@ -455,7 +277,7 @@ extension NewAllowedCarViewController {
         confirmButton.setTitle(title, for: .normal)
     }
 
-    private var validity: LicensePlateValidity {
+    var validity: LicensePlateValidity {
         guard viewModel.supportsTimedAccess, !unlimitedSwitch.isOn else { return .unlimited }
         return LicensePlateValidity(
             validFrom: hasStartBoundary ? startDate : nil,
@@ -475,7 +297,9 @@ extension NewAllowedCarViewController {
         draftCar.accept(AllowedCar(
             rawNumber: foreignCar?.rawNumber ?? LicencePlateFormatter.unformat(text: textField.text ?? ""),
             countryCode: foreignCar?.countryCode ?? textField.countryCode,
-            validFrom: period.validFrom, validTo: period.validTo, watcherId: original?.watcherId
+            validFrom: period.validFrom,
+            validTo: period.validTo,
+            watcherId: original?.watcherId
         ))
     }
 
@@ -568,7 +392,7 @@ extension NewAllowedCarViewController {
         scrollView.scrollRectToVisible(field.convert(field.bounds, to: scrollView).insetBy(dx: 0, dy: -8), animated: true)
     }
 
-    @objc private func hideKeyboard() { view.endEditing(true) }
+    @objc func hideKeyboard() { view.endEditing(true) }
 }
 
 extension NewAllowedCarViewController: UIGestureRecognizerDelegate {

@@ -31,7 +31,6 @@ enum MainMenuRoute: Route {
 
 class MainMenuCoordinator: NavigationCoordinator<MainMenuRoute>, HasDisposeBag {
 
-
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
     private let apiWrapper: APIWrapper

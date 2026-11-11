@@ -46,7 +46,6 @@ extension UIImageView {
     }
 }
 
-
 extension UIImageView {
     var currentToken: UUID? {
         get { objc_getAssociatedObject(self, &syTokenKey) as? UUID }

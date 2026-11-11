@@ -27,7 +27,6 @@ final class PinTextField: PMNibLinkableView, HasDisposeBag {
         return [firstNumField, secondNumField, thirdNumField, fourthNumField]
     }
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         

@@ -199,8 +199,8 @@ final class SmartYardSegmentedControl: UIView {
     func fixBackgroundSegmentControl( _ segmentControl: UISegmentedControl) {
         // just to be sure it is full loaded
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            for i in 0...(segmentControl.numberOfSegments - 1) {
-                let backgroundSegmentView = segmentControl.subviews[i]
+            for segmentIndex in 0...(segmentControl.numberOfSegments - 1) {
+                let backgroundSegmentView = segmentControl.subviews[segmentIndex]
                 // it is not enogh changing the background color. It has some kind of shadow layer
                 backgroundSegmentView.isHidden = true
             }

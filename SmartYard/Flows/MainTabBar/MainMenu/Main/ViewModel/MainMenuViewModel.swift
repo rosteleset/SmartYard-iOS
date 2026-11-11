@@ -29,14 +29,14 @@ final class MainMenuViewModel: BaseViewModel {
         self.router = router
         self.networkStateProvider = networkStateProvider
         defaultItems = (
-            accessService.showCityCams ?
-            [
-            MenuListItem.essential(
-                label: L10n.Camera.City.publicCamerasTitle,
-                iconName: "PublicCamsMenuIcon",
-                route: .cityCams,
-                order: 100
-            ) ] : []
+            accessService.showCityCams ? [
+                MenuListItem.essential(
+                    label: L10n.Camera.City.publicCamerasTitle,
+                    iconName: "PublicCamsMenuIcon",
+                    route: .cityCams,
+                    order: 100
+                )
+            ] : []
         ) + [
             MenuListItem.essential(
                 label: L10n.Settings.Main.Address.title,

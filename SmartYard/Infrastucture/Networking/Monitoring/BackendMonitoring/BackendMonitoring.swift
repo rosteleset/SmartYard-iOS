@@ -8,6 +8,8 @@
 
 import RxSwift
 
+enum BackendStatus: Equatable { case available, unavailable, unknown }
+
 protocol BackendMonitoring {
     var currentStatus: BackendStatus { get }
     var status: Observable<BackendStatus> { get }
@@ -19,5 +21,3 @@ protocol BackendMonitoring {
     func reportUnavailable(requestURL: URL?)  // то же самое, но с endpoint-ом, который упал
     func reportMaybeAvailable()               // сигнал: «похоже, оживает», триггерим /health-проверку
 }
-
-enum BackendStatus: Equatable { case available, unavailable, unknown }

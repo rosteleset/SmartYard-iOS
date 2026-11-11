@@ -116,7 +116,7 @@ final class WebRTCClient: NSObject {
         self.peerConnection.setRemoteDescription(remoteSdp, completionHandler: completion)
     }
     
-    func set(remoteCandidate: RTCIceCandidate, completion: @escaping (Error?) -> ()) {
+    func set(remoteCandidate: RTCIceCandidate, completion: @escaping (Error?) -> Void) {
         self.peerConnection.add(remoteCandidate, completionHandler: completion)
     }
     
@@ -130,14 +130,14 @@ final class WebRTCClient: NSObject {
             let frontCamera = (RTCCameraVideoCapturer.captureDevices().first { $0.position == .front }),
         
             // choose highest res
-            let format = (RTCCameraVideoCapturer.supportedFormats(for: frontCamera).sorted { f1, f2 -> Bool in
+            let format = (RTCCameraVideoCapturer.supportedFormats(for: frontCamera).reversed().max { f1, f2 -> Bool in
                 let width1 = CMVideoFormatDescriptionGetDimensions(f1.formatDescription).width
                 let width2 = CMVideoFormatDescriptionGetDimensions(f2.formatDescription).width
                 return width1 < width2
-            }).last,
+            }),
         
             // choose highest fps
-            let fps = (format.videoSupportedFrameRateRanges.sorted { return $0.maxFrameRate < $1.maxFrameRate }.last) else {
+            let fps = (format.videoSupportedFrameRateRanges.reversed().max { $0.maxFrameRate < $1.maxFrameRate }) else {
             return
         }
 

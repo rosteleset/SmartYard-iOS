@@ -49,7 +49,7 @@ final class VideoThumbnailLoader {
             let time = CMTime(seconds: timeSeconds, preferredTimescale: 600)
             let nsTime = NSValue(time: time)
 
-            generator.generateCGImagesAsynchronously(forTimes: [nsTime]) { _, cgImage, _, result, error in
+            generator.generateCGImagesAsynchronously(forTimes: [nsTime]) { _, cgImage, _, result, _ in
                 if task.isCancelled { return }
 
                 let image: UIImage?

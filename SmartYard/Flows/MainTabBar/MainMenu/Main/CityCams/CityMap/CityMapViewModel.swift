@@ -69,6 +69,15 @@ final class CityMapViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        loadCameras(errorTracker: errorTracker, activityTracker: activityTracker)
+
+        return Output(
+            cameras: cameras.asDriver(onErrorJustReturn: []),
+            isLoading: activityTracker.asDriver()
+        )
+    }
+
+    private func loadCameras(errorTracker: ErrorTracker, activityTracker: ActivityTracker) {
         apiWrapper.getOverviewCCTV()
             .trackError(errorTracker)
             .trackActivity(activityTracker)
@@ -95,11 +104,6 @@ final class CityMapViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
-        return Output(
-            cameras: cameras.asDriver(onErrorJustReturn: []),
-            isLoading: activityTracker.asDriver()
-        )
     }
     
 }

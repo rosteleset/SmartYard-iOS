@@ -139,6 +139,10 @@ final class PassConfirmationPinViewController: BaseViewController, LoaderPresent
             )
             .disposed(by: disposeBag)
         
+        bindSubmission(output)
+    }
+
+    private func bindSubmission(_ output: PassConfirmationPinViewModel.Output) {
         output.isLoading
             .debounce(.milliseconds(25))
             .drive(

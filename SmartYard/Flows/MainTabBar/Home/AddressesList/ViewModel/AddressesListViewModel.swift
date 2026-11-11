@@ -771,9 +771,11 @@ final class AddressesListViewModel: BaseViewModel {
                     approvedAddressesData: approvedAddresses,
                     unapprovedAddressesData: unapprovedAddresses,
                     camMapData: camMapData,
-                    expansionStateDict: expansionStateDict,
-                    objectAccessDict: objectAccessDict,
-                    shouldShowEntrancePreviews: self.shouldShowEntrancePreviews
+                    presentation: SectionPresentation(
+                        expansionState: expansionStateDict,
+                        objectAccess: objectAccessDict,
+                        showsEntrancePreviews: self.shouldShowEntrancePreviews
+                    )
                 )
             }
         

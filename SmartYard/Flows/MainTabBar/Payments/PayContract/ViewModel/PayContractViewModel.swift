@@ -50,21 +50,19 @@ final class PayContractViewModel: BaseViewModel {
         
         input.payContractTrigger
             .drive(
-                onNext: { [weak self] args in
-                    let (clientID, recommendedSum, contractNumber) = args
-                    
+                onNext: { [weak self] payment in
                     guard let self = self else {
                         return
                     }
 
-                    self.logPaymentStartTapped(recommendedSum: recommendedSum)
+                    self.logPaymentStartTapped(recommendedSum: payment.recommendedSum)
                     
                     self.router.trigger(
                         .paymentPopup(
                             apiWrapper: self.apiWrapper,
-                            clientId: clientID,
-                            recommendedSum: recommendedSum,
-                            constracNumber: contractNumber
+                            clientId: payment.clientId,
+                            recommendedSum: payment.recommendedSum,
+                            constracNumber: payment.contractNumber
                         )
                     )
                 }
@@ -105,10 +103,16 @@ private extension PayContractViewModel {
 }
 
 extension PayContractViewModel {
-    
+
+    struct PaymentDetails {
+        let clientId: String
+        let recommendedSum: Double?
+        let contractNumber: String?
+    }
+
     struct Input {
         let fullVersionPersonalAccountTrigger: Driver<String?>
-        let payContractTrigger: Driver<(String, Double?, String?)>
+        let payContractTrigger: Driver<PaymentDetails>
         let backTrigger: Driver<Void>
     }
     

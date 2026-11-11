@@ -54,7 +54,7 @@ final class HomeOfflineViewModel: BaseViewModel {
         super.init()
     }
 
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
         let requestTracker = ActivityTracker()
 
@@ -213,7 +213,6 @@ final class HomeOfflineViewModel: BaseViewModel {
         }
     }
 
-    // swiftlint:disable:next function_body_length
     private func createSections(
         addresses: [OfflineAddress],
         expansionStateDict: [String: Bool]

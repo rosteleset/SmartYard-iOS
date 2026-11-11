@@ -9,20 +9,6 @@
 import UIKit
 import WebKit
 
-enum SharedWebKit {
-    static let processPool = WKProcessPool()
-
-    static let warmWebView: WKWebView = {
-        let config = WKWebViewConfiguration()
-        config.processPool = processPool
-        config.websiteDataStore = .default()
-        let wv = WKWebView(frame: .zero, configuration: config)
-        wv.isHidden = true
-        wv.load(URLRequest(url: URL(string: "about:blank")!))
-        return wv
-    }()
-}
-
 // Contract for embedded pages:
 // - Read the initial theme from window.SmartYardTheme.getTheme() or
 //   document.documentElement.dataset.smartyardTheme.
@@ -110,6 +96,20 @@ enum WebViewThemeBridge {
         })();
         """
     }
+}
+
+enum SharedWebKit {
+    static let processPool = WKProcessPool()
+
+    static let warmWebView: WKWebView = {
+        let config = WKWebViewConfiguration()
+        config.processPool = processPool
+        config.websiteDataStore = .default()
+        let wv = WKWebView(frame: .zero, configuration: config)
+        wv.isHidden = true
+        wv.load(URLRequest(url: URL(string: "about:blank")!))
+        return wv
+    }()
 }
 
 extension WKWebView {

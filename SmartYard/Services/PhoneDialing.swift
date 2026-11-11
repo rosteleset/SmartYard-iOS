@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol PhoneDialing {
-    func call(_ phoneNumber: String)
-}
-
 final class SystemPhoneDialer: PhoneDialing {
     func call(_ phoneNumber: String) {
         guard let phoneCallURL = URL(string: "tel://\(phoneNumber)") else {
@@ -24,4 +20,8 @@ final class SystemPhoneDialer: PhoneDialing {
 
         application.open(phoneCallURL, options: [:], completionHandler: nil)
     }
+}
+
+protocol PhoneDialing {
+    func call(_ phoneNumber: String)
 }

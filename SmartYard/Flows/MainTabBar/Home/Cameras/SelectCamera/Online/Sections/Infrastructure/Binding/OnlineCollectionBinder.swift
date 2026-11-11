@@ -127,6 +127,10 @@ private extension OnlineCollectionBinder {
             .disposed(by: disposeBag)
 
         // 4) prefetch
+        bindPrefetching(from: collectionView)
+    }
+
+    private func bindPrefetching(from collectionView: UICollectionView) {
         collectionView.rx.prefetchItems
             .withLatestFrom(latestSection) { ($0, $1) }
             .subscribe(onNext: { [weak self] indexPaths, sections in

@@ -8,7 +8,7 @@
 
 import XCoordinator
 import SafariServices
-//import Lottie
+// import Lottie
 
 enum SettingsRoute: Route {
     
@@ -76,8 +76,15 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
         rootViewController.setNavigationBarHidden(true, animated: false)
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     override func prepareTransition(for route: SettingsRoute) -> NavigationTransition {
+        makeTransition(for: route)
+    }
+
+}
+
+private extension SettingsCoordinator {
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    func makeTransition(for route: SettingsRoute) -> NavigationTransition {
         switch route {
         case .main:
             let vm = SettingsViewModel(
@@ -367,5 +374,4 @@ final class SettingsCoordinator: NavigationCoordinator<SettingsRoute> {
 
         }
     }
-    
 }

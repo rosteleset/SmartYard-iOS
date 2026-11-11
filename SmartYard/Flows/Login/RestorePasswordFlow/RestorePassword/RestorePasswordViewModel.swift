@@ -164,7 +164,7 @@ final class RestorePasswordViewModel: BaseViewModel {
                         return
                     }
                     
-                    restoreMethods.enumerated().forEach { offset, _ in
+                    restoreMethods.indices.forEach { offset in
                         if offset == index {
                             restoreMethods[offset].toggleState()
                         } else {

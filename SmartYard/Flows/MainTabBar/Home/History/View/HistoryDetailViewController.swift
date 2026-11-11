@@ -12,6 +12,28 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+private final class MaxLengthTextFieldDelegate: NSObject, UITextFieldDelegate {
+    let maxLength: Int
+
+    init(maxLength: Int) {
+        self.maxLength = maxLength
+    }
+
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        guard let currentText = textField.text,
+              let range = Range(range, in: currentText) else {
+            return true
+        }
+
+        let updated = currentText.replacingCharacters(in: range, with: string)
+        return updated.count <= maxLength
+    }
+}
+
 final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
     var loader: JGProgressHUD?
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
@@ -61,6 +83,7 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
         return .default
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -238,6 +261,10 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
             .drive(collectionView.rx.items(dataSource: dataSource!))
             .disposed(by: disposeBag)
         
+        bindCalendarAndDetails(output)
+    }
+
+    private func bindCalendarAndDetails(_ output: HistoryViewModel.OutputDetail) {
         output.availableDays
             .drive(
                 onNext: { [weak self] arg in
@@ -288,7 +315,6 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
 
             }
             .disposed(by: disposeBag)
-        
     }
 }
 
@@ -330,28 +356,6 @@ private extension HistoryDetailViewController {
         alert.addAction(okAction)
 
         present(alert, animated: true)
-    }
-}
-
-private final class MaxLengthTextFieldDelegate: NSObject, UITextFieldDelegate {
-    let maxLength: Int
-
-    init(maxLength: Int) {
-        self.maxLength = maxLength
-    }
-
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        guard let currentText = textField.text,
-              let range = Range(range, in: currentText) else {
-            return true
-        }
-
-        let updated = currentText.replacingCharacters(in: range, with: string)
-        return updated.count <= maxLength
     }
 }
 

@@ -47,6 +47,45 @@ final class TrackedEventsViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
 
+        bindEventChanges(input, activityTracker: activityTracker, errorTracker: errorTracker)
+
+        bindEditTrigger(
+            input.editTrigger,
+            activityTracker: activityTracker,
+            errorTracker: errorTracker
+        )
+
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+
+        input.addTrigger
+            .drive(
+                onNext: { [weak self] in
+                    guard let self else { return }
+
+                    self.router.trigger(
+                        .trackedEventsHistory(
+                            flatId: self.flatId,
+                            address: self.address
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
+
+        return Output(
+            address: .just(address),
+            events: events.asDriverOnErrorJustComplete(),
+            isLoading: activityTracker.asDriver()
+        )
+    }
+
+    private func bindEventChanges(_ input: Input, activityTracker: ActivityTracker, errorTracker: ErrorTracker) {
         input.viewWillAppearTrigger
             .flatMapLatest { [weak self] _ -> Driver<[APITrackedEvent]?> in
                 guard let self else { return .empty() }
@@ -85,41 +124,6 @@ final class TrackedEventsViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-
-        bindEditTrigger(
-            input.editTrigger,
-            activityTracker: activityTracker,
-            errorTracker: errorTracker
-        )
-
-        input.backTrigger
-            .drive(
-                onNext: { [weak self] in
-                    self?.router.trigger(.back)
-                }
-            )
-            .disposed(by: disposeBag)
-
-        input.addTrigger
-            .drive(
-                onNext: { [weak self] in
-                    guard let self else { return }
-
-                    self.router.trigger(
-                        .trackedEventsHistory(
-                            flatId: self.flatId,
-                            address: self.address
-                        )
-                    )
-                }
-            )
-            .disposed(by: disposeBag)
-
-        return Output(
-            address: .just(address),
-            events: events.asDriverOnErrorJustComplete(),
-            isLoading: activityTracker.asDriver()
-        )
     }
 }
 

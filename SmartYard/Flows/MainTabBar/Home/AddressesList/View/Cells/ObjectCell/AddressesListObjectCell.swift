@@ -16,7 +16,6 @@ final class AddressesListObjectCell: CustomBorderCollectionViewCell, HasDisposeB
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var openButton: SmartYardActionModeButton!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         configure(objectType: .entrance, name: nil, isOpened: false)

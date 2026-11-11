@@ -79,47 +79,55 @@ private extension QuickActionResolverService {
                 return apiWrapper.getAllTreeCCTV(houseId: address.houseId, forceRefresh: false)
                     .timeout(timeout, scheduler: MainScheduler.instance)
                     .map { response in
-                        guard let response else {
-                            return .unavailable(
-                                message: L10n.QuickAction.FirstAddress.camerasNotFound
-                            )
-                        }
-
-                        if response.type == .map {
-                            let cameras: [CameraObject] = (response.cameras ?? [])
-                                .enumerated()
-                                .map { offset, element in
-                                    CameraObject(
-                                        id: element.id,
-                                        position: element.coordinate,
-                                        cameraNumber: offset + 1,
-                                        name: element.name,
-                                        video: element.video,
-                                        token: element.token,
-                                        serverType: element.serverType,
-                                        hlsMode: element.hlsMode,
-                                        hasSound: element.hasSound
-                                    )
-                                }
-
-                            return .target(
-                                .homeCamerasMap(
-                                    houseId: address.houseId,
-                                    address: address.address,
-                                    cameras: cameras
-                                )
-                            )
-                        }
-
-                        return .target(
-                            .homeCamerasList(
-                                houseId: address.houseId,
-                                address: address.address,
-                                tree: response
-                            )
-                        )
+                        Self.cameraDestination(response, houseId: address.houseId, address: address.address)
                     }
             }
+    }
+
+    private static func cameraDestination(
+        _ response: AllCCTVTreeResponseData?,
+        houseId: String,
+        address: String
+    ) -> QuickActionResolution {
+        guard let response else {
+            return .unavailable(
+                message: L10n.QuickAction.FirstAddress.camerasNotFound
+            )
+        }
+
+        if response.type == .map {
+            let cameras: [CameraObject] = (response.cameras ?? [])
+                .enumerated()
+                .map { offset, element in
+                    CameraObject(
+                        id: element.id,
+                        position: element.coordinate,
+                        cameraNumber: offset + 1,
+                        name: element.name,
+                        video: element.video,
+                        token: element.token,
+                        serverType: element.serverType,
+                        hlsMode: element.hlsMode,
+                        hasSound: element.hasSound
+                    )
+                }
+
+            return .target(
+                .homeCamerasMap(
+                    houseId: houseId,
+                    address: address,
+                    cameras: cameras
+                )
+            )
+        }
+
+        return .target(
+            .homeCamerasList(
+                houseId: houseId,
+                address: address,
+                tree: response
+            )
+        )
     }
 
     func resolveFirstAddressEvents() -> Single<QuickActionResolution> {

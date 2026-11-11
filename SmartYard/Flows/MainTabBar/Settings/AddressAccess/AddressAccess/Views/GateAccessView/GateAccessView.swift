@@ -23,7 +23,6 @@ final class GateAccessView: PMNibLinkableView, UICollectionViewDelegate, HasDisp
     
     // MARK: - Properties
     
-    
     private var dataSource: RxCollectionViewSectionedAnimatedDataSource<GateAccessSectionModel>?
     
     let goToGateAccessDetailRelay = PublishRelay<Void>()
@@ -111,26 +110,8 @@ extension GateAccessView {
                 
                 switch item {
                 case .car(let licencePlate):
-                    let cell = collectionView.dequeueReusableCell(
-                        withClass: GateAccessCell.self,
-                        for: indexPath
-                    )
-                    cell.configure(with: licencePlate)
+                    return self.configureCarCell(in: collectionView, at: indexPath, car: licencePlate)
 
-                    cell.editButtonTappedRelay
-                        .subscribe(with: self) { owner, _ in
-                            owner.editGateAccessCarRelay.accept(licencePlate)
-                        }
-                        .disposed(by: cell.disposeBag)
-                    
-                    cell.deleteButtonTappedRelay
-                        .bind { [weak self] in
-                            self?.deleteGateAccessCarRelay.accept(licencePlate)
-                        }
-                        .disposed(by: cell.disposeBag)
-                    
-                    return cell
-                    
                 case .person(let number):
                     let cell = collectionView.dequeueReusableCell(
                         withClass: GateAccessCell.self,
@@ -171,6 +152,32 @@ extension GateAccessView {
         self.dataSource = dataSource
     }
     
+    private func configureCarCell(
+        in collectionView: UICollectionView,
+        at indexPath: IndexPath,
+        car licencePlate: AllowedCar
+    ) -> GateAccessCell {
+        let cell = collectionView.dequeueReusableCell(
+            withClass: GateAccessCell.self,
+            for: indexPath
+        )
+        cell.configure(with: licencePlate)
+
+        cell.editButtonTappedRelay
+            .subscribe(with: self) { owner, _ in
+                owner.editGateAccessCarRelay.accept(licencePlate)
+            }
+            .disposed(by: cell.disposeBag)
+
+        cell.deleteButtonTappedRelay
+            .bind { [weak self] in
+                self?.deleteGateAccessCarRelay.accept(licencePlate)
+            }
+            .disposed(by: cell.disposeBag)
+
+        return cell
+    }
+
     private func configureFlowLayout() -> UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal

@@ -17,11 +17,6 @@ final class AddFaceCell: UICollectionViewCell, HasDisposeBag {
     private var buttonTrigger: Driver<Void> {
         return button.rx.tap.asDriver()
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
   
     override func prepareForReuse() {
         super.prepareForReuse()

@@ -186,6 +186,15 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
             deleteAccountButton
         ].forEach { $0.addBorder(dynamicColor: UIColor.SmartYard.grayBorder) }
         
+        bindSectionHeaderGestures()
+
+        if !Constants.showDeleteAccountButton {
+            deleteAccountButton.removeFromSuperview()
+            deleteAccountBottomConstraint.isActive = false
+        }
+    }
+
+    private func bindSectionHeaderGestures() {
         let notificationsTapGesture = UITapGestureRecognizer()
         notificationsHeader.addGestureRecognizer(notificationsTapGesture)
         
@@ -218,11 +227,6 @@ final class CommonSettingsViewController: BaseViewController, LoaderPresentable 
                 }
             )
             .disposed(by: disposeBag)
-                
-        if !Constants.showDeleteAccountButton {
-            deleteAccountButton.removeFromSuperview()
-            deleteAccountBottomConstraint.isActive = false
-        }
     }
     
     private func toggleSection(

@@ -8,11 +8,6 @@
 
 import UIKit
 
-enum ImageSource {
-    case remoteImage(URL)      // jpg/png/... -> Kingfisher
-    case videoThumbnail(URL)   // mp4 -> AVAssetImageGenerator (VideoThumbnailLoader)
-}
-
 enum ImageCachePolicy {
     case standard
     case refresh(after: TimeInterval)
@@ -35,4 +30,9 @@ protocol ImageProviding {
     )
 
     func cancel(on imageView: UIImageView)
+}
+
+enum ImageSource {
+    case remoteImage(URL)      // jpg/png/... -> Kingfisher
+    case videoThumbnail(URL)   // mp4 -> AVAssetImageGenerator (VideoThumbnailLoader)
 }

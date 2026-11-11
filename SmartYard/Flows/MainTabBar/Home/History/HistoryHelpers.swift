@@ -10,7 +10,11 @@ import Foundation
 import UIKit
 import PopOverDatePicker
 
-typealias DayFlatItemsData = (day: Date, items: [APIPlog], flatId: Int)
+struct DayFlatItemsData {
+    let day: Date
+    var items: [APIPlog]
+    let flatId: Int
+}
 
 typealias ApptsFilter = Int
 
@@ -79,6 +83,29 @@ class AlwaysPresentAsPopover: NSObject, UIPopoverPresentationControllerDelegate 
     
 }
 
+class UITableViewWithHandler: UITableView {
+    // чтобы была возможность скролить табличку, после того, как в неё попали новые данные,
+    // пришлось немного модифицировать штатный класс,
+    // т.к. RxDataSource штатно из коробки такой возможности не предоставлял
+    var afterUpdateHandler: (() -> Void)?
+
+    override func performBatchUpdates(_ updates: (() -> Void)?,
+                                      completion: ((Bool) -> Void)? = nil) {
+        let modifiedCompletition: ((Bool) -> Void)? = { finished in
+            completion?(finished)
+            self.afterUpdateHandler?()
+        }
+        super.performBatchUpdates(updates, completion: modifiedCompletition)
+    }
+}
+
+class SYPopOverDatePickerViewController: PopOverDatePickerViewController {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.post(.init(name: .popupDimissed, object: nil))
+    }
+}
+
 class ArrayChoiceTableViewController<Element>: UITableViewController {
     
     typealias SelectionHandler = (Element, Int) -> Void
@@ -100,6 +127,7 @@ class ArrayChoiceTableViewController<Element>: UITableViewController {
         
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -118,7 +146,7 @@ class ArrayChoiceTableViewController<Element>: UITableViewController {
         let sansFont = UIFont(descriptor: UIFontDescriptor(fontAttributes: [.family: "Source Sans Pro"]), size: 16)
         cell.textLabel?.font = sansFont
         cell.textLabel?.text = labels(values[indexPath.row])
-        cell.imageView?.image = selectedRow == indexPath.row ? UIImage(named: "PopoverCheckBoxSelected"): UIImage(named: "PopoverCheckBoxNormal")
+        cell.imageView?.image = selectedRow == indexPath.row ? UIImage(named: "PopoverCheckBoxSelected") : UIImage(named: "PopoverCheckBoxNormal")
         cell.selectionStyle = .none
         return cell
     }
@@ -131,27 +159,4 @@ class ArrayChoiceTableViewController<Element>: UITableViewController {
         onSelect?(values[indexPath.row], selectedRow)
     }
     
-}
-
-class UITableViewWithHandler: UITableView {
-    // чтобы была возможность скролить табличку, после того, как в неё попали новые данные,
-    // пришлось немного модифицировать штатный класс,
-    // т.к. RxDataSource штатно из коробки такой возможности не предоставлял
-    var afterUpdateHandler: (() -> Void)?
-        
-    override func performBatchUpdates(_ updates: (() -> Void)?,
-                                      completion: ((Bool) -> Void)? = nil) {
-        let modifiedCompletition: ((Bool) -> Void)? = { finished in
-            completion?(finished)
-            self.afterUpdateHandler?()
-        }
-        super.performBatchUpdates(updates, completion: modifiedCompletition)
-    }
-}
-
-class SYPopOverDatePickerViewController: PopOverDatePickerViewController {
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.post(.init(name: .popupDimissed, object: nil))
-    }
 }

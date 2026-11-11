@@ -12,6 +12,16 @@ enum StoryItemPresentMethod: Equatable {
     case webViewController
 }
 
+struct StoryItemCellModel: Equatable {
+    let imageUrl: String
+    let title: String
+
+    init(storyItem: StoryItem) {
+        imageUrl = storyItem.imageUrl
+        title = storyItem.title
+    }
+}
+
 struct StoryItem: Equatable {
     let imageUrl: String
     let title: String
@@ -34,15 +44,5 @@ extension StoryItem {
         case .webViewController:
             presentMethod = .webViewController
         }
-    }
-}
-
-struct StoryItemCellModel: Equatable {
-    let imageUrl: String
-    let title: String
-
-    init(storyItem: StoryItem) {
-        imageUrl = storyItem.imageUrl
-        title = storyItem.title
     }
 }

@@ -35,7 +35,6 @@ enum PaymentsRoute: Route {
 
 final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute>, HasDisposeBag {
     
-    
     let apiWrapper: APIWrapper
     private let networkStateProvider: NetworkStateProviding
     var childCoordinator: WebViewCoordinator?
@@ -74,21 +73,8 @@ final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute>, HasDispos
             return .alertTransition(title: title, message: message)
             
         case let .contractPay(index, items):
-            let vm = PayContractViewModel(
-                index: index,
-                items: items,
-                apiWrapper: apiWrapper,
-                router: weakRouter
-            )
-            
-            if items.count == 1 { //если выбор адреса из одного элемента, то пропускаем его
-                let vc = PayContractViewController(viewModel: vm, hideNavBar: true)
-                return .set([vc])
-            } else {
-                let vc = PayContractViewController(viewModel: vm, hideNavBar: false)
-                return .push(vc)
-            }
-            
+            return showContractPayment(index: index, items: items)
+
         case .back:
             return .pop(animation: .default)
             
@@ -102,43 +88,22 @@ final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute>, HasDispos
             return .none()
             
         case let .paymentPopup(apiWrapper, clientId, recommendedSum, contractNumber):
-            let vm = PaymentPopupViewModel(
+            return showPaymentPopup(
                 apiWrapper: apiWrapper,
                 clientId: clientId,
                 recommendedSum: recommendedSum,
-                contractNumber: contractNumber,
-                router: weakRouter
+                contractNumber: contractNumber
             )
-            
-            let vc = PaymentPopupController(viewModel: vm)
-            
-            vc.modalPresentationStyle = .overFullScreen
-            
-            return .present(vc)
-            
+
         case let .safariPage(url):
             let vc = SFSafariViewController(url: url)
             return .present(vc)
             
         case let .webView(url):
-            childCoordinator = WebViewCoordinator(
-                rootVC: rootViewController,
-                apiWrapper: apiWrapper,
-                networkStateProvider: networkStateProvider,
-                url: url,
-                backButtonLabel: "",
-                push: false,
-                version: 2
-            )
-            guard let childCoordinator = childCoordinator else {
-                return .none()
-            }
-            children.forEach { removeChild($0) }
-            addChild(childCoordinator)
-            return .none()
-            
+            return showWebPage(url)
+
         case let .webViewFromContent(content, baseURL):
-            childCoordinator = WebViewCoordinator(
+            let coordinator = WebViewCoordinator(
                 rootVC: rootViewController,
                 apiWrapper: apiWrapper,
                 networkStateProvider: networkStateProvider,
@@ -148,15 +113,59 @@ final class PaymentsCoordinator: NavigationCoordinator<PaymentsRoute>, HasDispos
                 push: false,
                 version: 2
             )
-            guard let childCoordinator = childCoordinator else {
-                return .none()
-            }
-            children.forEach { removeChild($0) }
-            addChild(childCoordinator)
+            replaceWebChild(with: coordinator)
             return .none()
         }
     }
     
+    private func showContractPayment(index: Int, items: [APIPaymentsListAddress]) -> NavigationTransition {
+        let viewModel = PayContractViewModel(index: index, items: items, apiWrapper: apiWrapper, router: weakRouter)
+        let isOnlyAddress = items.count == 1
+        let controller = PayContractViewController(viewModel: viewModel, hideNavBar: isOnlyAddress)
+        return isOnlyAddress ? .set([controller]) : .push(controller)
+    }
+
+    private func showPaymentPopup(
+        apiWrapper: APIWrapper,
+        clientId: String,
+        recommendedSum: Double?,
+        contractNumber: String?
+    ) -> NavigationTransition {
+        let vm = PaymentPopupViewModel(
+            apiWrapper: apiWrapper,
+            clientId: clientId,
+            recommendedSum: recommendedSum,
+            contractNumber: contractNumber,
+            router: weakRouter
+        )
+
+        let vc = PaymentPopupController(viewModel: vm)
+
+        vc.modalPresentationStyle = .overFullScreen
+
+        return .present(vc)
+    }
+
+    private func showWebPage(_ url: URL) -> NavigationTransition {
+        let coordinator = WebViewCoordinator(
+            rootVC: rootViewController,
+            apiWrapper: apiWrapper,
+            networkStateProvider: networkStateProvider,
+            url: url,
+            backButtonLabel: "",
+            push: false,
+            version: 2
+        )
+        replaceWebChild(with: coordinator)
+        return .none()
+    }
+
+    private func replaceWebChild(with coordinator: WebViewCoordinator) {
+        childCoordinator = coordinator
+        children.forEach { removeChild($0) }
+        addChild(coordinator)
+    }
+
     private func subscribeToPaymentsNotifications() {
         NotificationCenter.default.rx.notification(.paymentCompleted)
             .asDriverOnErrorJustComplete()

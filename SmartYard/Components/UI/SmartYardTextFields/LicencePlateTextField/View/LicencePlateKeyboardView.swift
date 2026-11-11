@@ -15,13 +15,11 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
     
     // MARK: - Outlets
 
-    // swiftlint:disable private_outlet
     @IBOutlet private(set) var digitButtons: [UIButton]!
     @IBOutlet private(set) var letterButtons: [UIButton]!
     @IBOutlet private(set) weak var actionButton: UIButton!
     @IBOutlet private(set) weak var deleteButton: UIButton!
     @IBOutlet private(set) weak var countryButton: UIButton!
-    // swiftlint:enable private_outlet
     
     // MARK: - Properties
     
@@ -80,7 +78,9 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
             
             UIView.animate(withDuration: 0.3) {
                 button.backgroundColor = digits ? UIColor.SYKeyboard.keyColor : UIColor.SYKeyboard.keyColor.withAlphaComponent(0.4)
-                button.setTitleColorForAllStates(digits ? UIColor.SYKeyboard.textKeyColor : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4))
+                button.setTitleColorForAllStates(
+                    digits ? UIColor.SYKeyboard.textKeyColor : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4)
+                )
             }
         }
     }
@@ -90,7 +90,9 @@ final class LicencePlateKeyboardView: PMNibLinkableView {
         
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.actionButton.backgroundColor = enabled ? .SmartYard.blue : UIColor.SYKeyboard.keyColor.withAlphaComponent(0.4)
-            self?.actionButton.setTitleColorForAllStates(enabled ? UIColor.white : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4))
+            self?.actionButton.setTitleColorForAllStates(
+                enabled ? UIColor.white : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4)
+            )
         }
     }
     
@@ -174,27 +176,28 @@ extension LicencePlateKeyboardView {
             $0.backgroundColor = $0.isEnabled
                 ? UIColor.SYKeyboard.keyColor
                 : UIColor.SYKeyboard.keyColor.withAlphaComponent(0.4)
-            $0.setTitleColorForAllStates($0.isEnabled
-                ? UIColor.SYKeyboard.textKeyColor
-                : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4))
+            $0.setTitleColorForAllStates(
+                $0.isEnabled ? UIColor.SYKeyboard.textKeyColor : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4)
+            )
         }
         
         letterButtons.forEach {
             $0.backgroundColor = $0.isEnabled
                 ? UIColor.SYKeyboard.keyColor
                 : UIColor.SYKeyboard.keyColor.withAlphaComponent(0.4)
-            $0.setTitleColorForAllStates($0.isEnabled
-                ? UIColor.SYKeyboard.textKeyColor
-                : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4)
+            $0.setTitleColorForAllStates(
+                $0.isEnabled ? UIColor.SYKeyboard.textKeyColor : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4)
             )
         }
 
         actionButton.backgroundColor = actionButton.isEnabled
             ? .SmartYard.blue
             : UIColor.SYKeyboard.keyColor.withAlphaComponent(0.4)
-        actionButton.setTitleColorForAllStates(actionButton.isEnabled
+        actionButton.setTitleColorForAllStates(
+            actionButton.isEnabled
             ? UIColor.white
-            : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4))
+            : UIColor.SYKeyboard.textKeyColor.withAlphaComponent(0.4)
+        )
         countryButton.backgroundColor = UIColor.SYKeyboard.keyColor
         countryButton.setTitleColorForAllStates(UIColor.SYKeyboard.textKeyColor)
         

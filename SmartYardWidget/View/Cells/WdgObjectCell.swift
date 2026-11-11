@@ -21,7 +21,6 @@ class WdgObjectCell: UITableViewCell, HasDisposeBag {
     static let reuseIdentifier = "WdgObjectCellId"
     static let defaultHeight: CGFloat = 72
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         resetDisposeBag()

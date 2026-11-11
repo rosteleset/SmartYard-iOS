@@ -34,7 +34,7 @@ class SafeCachedImageView: UIImageView {
         imageUrlString = urlString
         guard let url = URL(string: urlString) else { return }
                 
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+        URLSession.shared.dataTask(with: url) { [weak self] data, response, _ in
             guard let self = self else { return }
             
             // TODO: - сделать здесь скелетон -
@@ -77,7 +77,8 @@ class SafeCachedImageView: UIImageView {
                     }
                 }
             }
-        }.resume()
+        }
+        .resume()
     }
     
     func drawRectangle(rect: CGRect, rectColor: UIColor) {
@@ -110,9 +111,9 @@ class SafeCachedImageView: UIImageView {
 
 // Понимаю что не относится к классу, пока что для первой реализации оставлю так.
 // В будущем нужно вынести отдельно
-extension SafeCachedImageView {
+private extension SafeCachedImageView {
     
-    fileprivate func imageFromVideo(url: URL, at time: TimeInterval) -> UIImage? {
+    func imageFromVideo(url: URL, at time: TimeInterval) -> UIImage? {
         let asset = AVURLAsset(url: url)
         let assetIG = AVAssetImageGenerator(asset: asset)
         let cmTime = CMTime(seconds: time, preferredTimescale: 60)

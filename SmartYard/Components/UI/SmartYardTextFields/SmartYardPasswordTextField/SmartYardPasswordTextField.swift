@@ -13,7 +13,6 @@ import TouchAreaInsets
 
 final class SmartYardPasswordTextField: SmartYardBorderedTextField, HasDisposeBag {
     
-    
     private let visibilityButton: UIButton = {
         let button = UIButton(type: .custom)
         

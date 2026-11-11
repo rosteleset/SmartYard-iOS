@@ -194,6 +194,22 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
         }
     }
     
+}
+
+extension AddressSettingsViewController {
+
+    @objc private func handleColorAppearanceChange() {
+        [
+            addressContainerView,
+            notificationsContainerView,
+            deleteAddressButton
+        ].forEach { $0.addBorder(dynamicColor: UIColor.SmartYard.grayBorder) }
+    }
+
+}
+
+extension AddressSettingsViewController {
+
     // swiftlint:disable:next function_body_length
     private func bind() {
         let input = AddressSettingsViewModel.Input(
@@ -209,9 +225,9 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
             lprsTrigger: lprsTapGesture.rx.event.asDriver().mapToVoid(),
             whiteRabbitHintTrigger: whiteRabbitQuestionMark.rx.tap.asDriver()
         )
-        
+
         let output = viewModel.transform(input)
-        
+
         output.address
             .drive(
                 onNext: { [weak self] address in
@@ -219,7 +235,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.isCmsEnabled
             .drive(
                 onNext: { [weak self] state in
@@ -227,7 +243,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.areCallsEnabled
             .drive(
                 onNext: { [weak self] state in
@@ -235,7 +251,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.isWhiteRabbitEnabled
             .drive(
                 onNext: { [weak self] state in
@@ -248,7 +264,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.arePaperBillsEnabled
             .drive(
                 onNext: { [weak self] state in
@@ -257,11 +273,11 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.areLogsEnabled
             .drive(
                 onNext: { [weak self] state in
-                    
+
                     guard let state = state else {
                         self?.logsContainerView.isHidden = true
                         return
@@ -271,11 +287,11 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.areLogsVisibleOnlyForOwner
             .drive(
                 onNext: { [weak self] state in
-                    
+
                     guard let state = state else {
                         self?.hiddenContainerView.isHidden = true
                         return
@@ -285,16 +301,16 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.isFRSEnabled
             .drive(
-                onNext: { [weak self] state in
+                onNext: { [weak self] _ in
                     // MARK: - We remove the logic because the switch doesn't work on the server
                     /*
                      self?.frsContainerView.isHidden = !state
                      self?.frsSwitch.setOn(state, animated: true)
                      */
-                    
+
                     // Hiding the button at all times
                     self?.frsContainerView.isHidden = true
                 }
@@ -318,35 +334,35 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.shouldBlockInteraction
             .withLatestFrom(output.hasDomophone) { ($0, $1) }
             .drive(
                 onNext: { [weak self] args in
                     let (shouldBlockInteraction, hasDomophone) = args
-                    
+
                     let showSkeleton = {
                         self?.mainContainerView.isHidden = true
                         self?.skeletonView.isHidden = false
                         self?.skeletonView.showSkeletonAsynchronously(with: UIColor.SmartYard.backgroundColor)
                     }
-                    
+
                     let hideSkeleton = {
                         self?.mainContainerView.isHidden = false
                         self?.skeletonView.isHidden = true
                         self?.skeletonView.hideSkeleton()
                     }
-                    
+
                     // MARK: Если есть домофон, то лучше задержать скелетон на некоторое время
                     // Иначе юзер может увидеть, как тумблеры меняют свое значение согласно загруженному стейту
-                    
+
                     switch (shouldBlockInteraction, hasDomophone) {
                     case (true, _):
                         showSkeleton()
-                        
+
                     case (false, false):
                         hideSkeleton()
-                        
+
                     case (false, true):
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             hideSkeleton()
@@ -355,7 +371,7 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
                 }
             )
             .disposed(by: disposeBag)
-        
+
         output.hasDomophone
             .drive(
                 onNext: { [weak self] hasDomophone in
@@ -365,17 +381,4 @@ final class AddressSettingsViewController: BaseViewController, LoaderPresentable
             )
             .disposed(by: disposeBag)
     }
-    
-}
-
-extension AddressSettingsViewController {
-    
-    @objc private func handleColorAppearanceChange() {
-        [
-            addressContainerView,
-            notificationsContainerView,
-            deleteAddressButton
-        ].forEach { $0.addBorder(dynamicColor: UIColor.SmartYard.grayBorder) }
-    }
-    
 }

@@ -10,8 +10,10 @@ import UIKit
 
 final class PeriodPicker: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
     private static let minText = L10n.Common.Time.minutes
-    private let pickerData = ["10 " + minText, "20 " + minText, "30 " + minText,
-                              "40 " + minText, "50 " + minText, "60 " + minText]
+    private let pickerData = [
+        "10 " + minText, "20 " + minText, "30 " + minText,
+        "40 " + minText, "50 " + minText, "60 " + minText
+    ]
     private let pickerRawValue = [10, 20, 30, 40, 50, 60]
     private var callback: ((_ value: Int) -> Void)?
     

@@ -74,7 +74,8 @@ final class SafeCachedButton: UIButton {
                     cache.setObject(loadedImage, forKey: NSString(string: urlString))
                 }
             }
-        ).resume()
+        )
+        .resume()
         
     }
 

@@ -59,7 +59,6 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let activityVideoTracker = ActivityTracker()
         
-        
         input.backTrigger
             .drive(
                 onNext: { [weak self] in
@@ -95,92 +94,8 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        input.downloadTrigger
-            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil))
-            .flatMap { args -> Driver<(from: String, to: String)> in
-                guard let uArgs = args else {
-                    return .empty()
-                }
-                
-                let (start, end) = uArgs
-                
-                guard end > start else {
-                    return .empty()
-                }
-                
-                let formatter = DateFormatter()
-                
-                // MARK: А тут сервак жрет строки не в GMT, а в MSK
-                
-                formatter.timeZone = Calendar.serverCalendar.timeZone
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                
-                return .just((from: formatter.string(from: start), to: formatter.string(from: end)))
-            }
-            .flatMapLatest { [weak self] range -> Driver<Int?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.apiWrapper
-                    .recPrepare(id: self.camera.id, from: range.from, to: range.to)
-                    .trackError(errorTracker)
-                    .trackActivity(activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
-            .flatMapLatest { [weak self] fragmentId -> Driver<RecDownloadResponseData?> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.apiWrapper
-                    .recDownload(id: fragmentId)
-                    .trackError(errorTracker)
-                    .trackActivity(activityTracker)
-                    .asDriver(onErrorJustReturn: nil)
-            }
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] responseData in
-                    // Если нет урла - показываем "видео готовится"
-                    guard let stringUrl = responseData.url else {
-                        let msg = L10n.Camera.Archive.Export.processingMessage
-                        
-                        let okAction = UIAlertAction(title: L10n.Camera.Archive.Export.successTitle, style: .default, handler: nil)
-                        
-                        self?.router.trigger(
-                            .dialog(
-                                title: L10n.Camera.Archive.Export.processingTitle,
-                                message: msg,
-                                actions: [okAction]
-                            )
-                        )
-                        
-                        return
-                    }
-                    
-                    guard let encodedString = stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-                        let url = URL(string: encodedString) else {
-                            // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
-                            UIPasteboard.general.string = stringUrl
-                            
-                            self?.router.trigger(
-                                .alert(
-                                    title: L10n.Camera.Archive.Export.linkCopiedMessage,
-                                    message: nil
-                                )
-                            )
-                            
-                            return
-                    }
-                    
-                    // Если смог получить нормальный URL - показываем share
-                    self?.router.trigger(.share(items: [url]))
-                }
-            )
-            .disposed(by: disposeBag)
-        
+        bindExport(input.downloadTrigger, errorTracker: errorTracker, activityTracker: activityTracker)
+
         let videoDataFromSelectedPeriod = selectedPeriod
             .asDriver(onErrorJustReturn: nil)
             .ignoreNil()
@@ -245,7 +160,7 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
                     default:
                         return .mp4
                     }
-                } ()
+                }()
                 
                 return (
                     url: URL(string: self.camera.previewURL(date)),
@@ -256,65 +171,7 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
         let rangeBoundsSubject = BehaviorSubject<(lower: Date, upper: Date)?>(value: nil)
         let periodsSubject = BehaviorSubject<[ArchiveVideoPreviewPeriod]>(value: [])
                 
-        camera.requestRanges(for: date, ranges: ranges) { [weak self] ranges in
-            guard let self = self else { return }
-            
-            // определяем границы архива на сервере
-            let rangeBounds: (lower: Date, upper: Date)? = {
-                guard let lower = (ranges.map { $0.startDate }.min()),
-                    let upper = (ranges.map { $0.endDate }.max()) else {
-                    return nil
-                }
-                    
-                return (lower, upper)
-            }()
-            
-            // определяем периоды, для которых есть архив на сервере
-            var periods = [ArchiveVideoPreviewPeriod]()
-            
-            let startOfDay = Calendar.serverCalendar.startOfDay(for: self.date)
-            
-            for mult in 0...7 {
-                let startHours = mult * 3
-                let endHours = mult * 3 + 3
-                
-                let startDate = startOfDay.adding(.hour, value: startHours)
-                let endDate = startOfDay.adding(.hour, value: endHours)
-                
-                // отбрасываем период, если он целиком заканчивается до времени начала архива
-                guard rangeBounds != nil,
-                      endDate > rangeBounds!.lower else {
-                    continue
-                }
-                
-                // filter - отбираем границы всех доступных фрагментов архива на сервере, с которыми пересекается наш период
-                // map - подрезаем границы интервалов, выходящих за границы текущего периода
-                //      и преобразуем в кортеж (startDate: Date, endDate:end)
-                let intersections = ranges
-                    .filter({ $0.intersects(start: startDate, end: endDate) })
-                    .map({ (startDate: max($0.startDate, startDate), endDate: min($0.endDate, endDate)) })
-                
-                guard
-                      // получаем границы самого раннего доступного фрагмента на сервере, с которым пересекается наш период
-                      let currentRangeFirst = intersections.first,
-                      // получаем границы самого позднего доступного фрагмента на сервере, с которым пересекается наш период
-                      let currentRangeLast = intersections.last else {
-                    continue
-                }
-                
-                // добавляем период, при необходимости подрезая концы периода под фактически имеющийся на сервере архив.
-                periods.append(
-                    ArchiveVideoPreviewPeriod(
-                        startDate: currentRangeFirst.startDate,
-                        endDate: currentRangeLast.endDate,
-                        ranges: intersections
-                    )
-                )
-        
-                rangeBoundsSubject.onNext(rangeBounds)
-                periodsSubject.onNext(periods)
-            }
-        }
+        loadAvailablePeriods(bounds: rangeBoundsSubject, periods: periodsSubject)
 
         return Output(
             date: .just(date),
@@ -327,11 +184,11 @@ final class PlayArchiveVideoViewModel: BaseViewModel {
             hasSound: hasSound.asDriverOnErrorJustComplete()
         )
     }
-    
+
 }
 
 extension PlayArchiveVideoViewModel {
-    
+
     struct Input {
         let backTrigger: Driver<Void>
         let downloadTrigger: Driver<Void>
@@ -341,7 +198,7 @@ extension PlayArchiveVideoViewModel {
         let seekToTrigger: Driver<Date>
         let speedTrigger: Driver<ArchiveVideoPlaybackSpeed>
     }
-    
+
     struct Output {
         let date: Driver<Date?>
         let periodConfiguration: Driver<[ArchiveVideoPreviewPeriod]>
@@ -352,5 +209,168 @@ extension PlayArchiveVideoViewModel {
         let isVideoLoading: Driver<Bool>
         let hasSound: Driver<Bool>
     }
-    
+
+}
+
+extension PlayArchiveVideoViewModel {
+    private func bindExport(_ trigger: Driver<Void>, errorTracker: ErrorTracker, activityTracker: ActivityTracker) {
+        requestExport(trigger, errorTracker: errorTracker, activityTracker: activityTracker)
+            .drive(
+                onNext: { [weak self] responseData in
+                    // Если нет урла - показываем "видео готовится"
+                    guard let stringUrl = responseData.url else {
+                        let msg = L10n.Camera.Archive.Export.processingMessage
+
+                        let okAction = UIAlertAction(title: L10n.Camera.Archive.Export.successTitle, style: .default, handler: nil)
+
+                        self?.router.trigger(
+                            .dialog(
+                                title: L10n.Camera.Archive.Export.processingTitle,
+                                message: msg,
+                                actions: [okAction]
+                            )
+                        )
+
+                        return
+                    }
+
+                    guard let encodedString = stringUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                        let url = URL(string: encodedString) else {
+                            // Если есть ссылка, но она кривая - копируем урл в пастборд и показываем алерт
+                            UIPasteboard.general.string = stringUrl
+
+                            self?.router.trigger(
+                                .alert(
+                                    title: L10n.Camera.Archive.Export.linkCopiedMessage,
+                                    message: nil
+                                )
+                            )
+
+                            return
+                    }
+
+                    // Если смог получить нормальный URL - показываем share
+                    self?.router.trigger(.share(items: [url]))
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+    private func requestExport(
+        _ trigger: Driver<Void>,
+        errorTracker: ErrorTracker,
+        activityTracker: ActivityTracker
+    ) -> Driver<RecDownloadResponseData> {
+        trigger
+            .withLatestFrom(selectedStartEnd.asDriver(onErrorJustReturn: nil))
+            .flatMap { args -> Driver<(from: String, to: String)> in
+                guard let uArgs = args else {
+                    return .empty()
+                }
+
+                let (start, end) = uArgs
+
+                guard end > start else {
+                    return .empty()
+                }
+
+                let formatter = DateFormatter()
+
+                // MARK: А тут сервак жрет строки не в GMT, а в MSK
+
+                formatter.timeZone = Calendar.serverCalendar.timeZone
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
+                return .just((from: formatter.string(from: start), to: formatter.string(from: end)))
+            }
+            .flatMapLatest { [weak self] range -> Driver<Int?> in
+                guard let self = self else {
+                    return .empty()
+                }
+
+                return self.apiWrapper
+                    .recPrepare(id: self.camera.id, from: range.from, to: range.to)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+            .flatMapLatest { [weak self] fragmentId -> Driver<RecDownloadResponseData?> in
+                guard let self = self else {
+                    return .empty()
+                }
+
+                return self.apiWrapper
+                    .recDownload(id: fragmentId)
+                    .trackError(errorTracker)
+                    .trackActivity(activityTracker)
+                    .asDriver(onErrorJustReturn: nil)
+            }
+            .ignoreNil()
+    }
+
+    private func loadAvailablePeriods(
+        bounds: BehaviorSubject<(lower: Date, upper: Date)?>,
+        periods periodsOutput: BehaviorSubject<[ArchiveVideoPreviewPeriod]>
+    ) {
+        camera.requestRanges(for: date, ranges: ranges) { [weak self] ranges in
+            guard let self = self else { return }
+
+            // определяем границы архива на сервере
+            let rangeBounds: (lower: Date, upper: Date)? = {
+                guard let lower = (ranges.map { $0.startDate }.min()),
+                    let upper = (ranges.map { $0.endDate }.max()) else {
+                    return nil
+                }
+
+                return (lower, upper)
+            }()
+
+            // определяем периоды, для которых есть архив на сервере
+            var periods = [ArchiveVideoPreviewPeriod]()
+
+            let startOfDay = Calendar.serverCalendar.startOfDay(for: self.date)
+
+            for mult in 0...7 {
+                let startHours = mult * 3
+                let endHours = mult * 3 + 3
+
+                let startDate = startOfDay.adding(.hour, value: startHours)
+                let endDate = startOfDay.adding(.hour, value: endHours)
+
+                // отбрасываем период, если он целиком заканчивается до времени начала архива
+                guard rangeBounds != nil,
+                      endDate > rangeBounds!.lower else {
+                    continue
+                }
+
+                // filter - отбираем границы всех доступных фрагментов архива на сервере, с которыми пересекается наш период
+                // map - подрезаем границы интервалов, выходящих за границы текущего периода
+                //      и преобразуем в кортеж (startDate: Date, endDate:end)
+                let intersections = ranges
+                    .filter({ $0.intersects(start: startDate, end: endDate) })
+                    .map({ (startDate: max($0.startDate, startDate), endDate: min($0.endDate, endDate)) })
+
+                guard
+                      // получаем границы самого раннего доступного фрагмента на сервере, с которым пересекается наш период
+                      let currentRangeFirst = intersections.first,
+                      // получаем границы самого позднего доступного фрагмента на сервере, с которым пересекается наш период
+                      let currentRangeLast = intersections.last else {
+                    continue
+                }
+
+                // добавляем период, при необходимости подрезая концы периода под фактически имеющийся на сервере архив.
+                periods.append(
+                    ArchiveVideoPreviewPeriod(
+                        startDate: currentRangeFirst.startDate,
+                        endDate: currentRangeLast.endDate,
+                        ranges: intersections
+                    )
+                )
+
+                bounds.onNext(rangeBounds)
+                periodsOutput.onNext(periods)
+            }
+        }
+    }
 }

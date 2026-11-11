@@ -23,7 +23,7 @@ final class PayContractViewController: BaseViewController {
     
     private let itemsProxy = BehaviorSubject<[PaymentsListAccount]>(value: [])
     
-    private let payContractTrigger = PublishSubject<(String, Double?, String?)>()
+    private let payContractTrigger = PublishSubject<PayContractViewModel.PaymentDetails>()
     private let fullVersionPersonalAccountTrigger = PublishSubject<String?>()
     
     private let viewModel: PayContractViewModel
@@ -225,11 +225,14 @@ extension PayContractViewController: UICollectionViewDataSource {
         let paymentSubject = PublishSubject<Void>()
         
         paymentSubject
-            .map { (
-                data[indexPath.row].account.clientId,
-                data[indexPath.row].account.payAdvice,
-                data[indexPath.row].account.contractName
-            ) }
+            .map {
+                let account = data[indexPath.row].account
+                return PayContractViewModel.PaymentDetails(
+                    clientId: account.clientId,
+                    recommendedSum: account.payAdvice,
+                    contractNumber: account.contractName
+                )
+            }
             .bind(to: payContractTrigger)
             .disposed(by: cell.disposeBag)
         

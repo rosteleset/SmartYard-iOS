@@ -153,6 +153,10 @@ final class TrackedEventsView: UIView {
         )
         mainContainerTopConstraint?.priority = .defaultHigh
 
+        activateLayoutConstraints()
+    }
+
+    private func activateLayoutConstraints() {
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
             backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),

@@ -11,6 +11,13 @@ import linphonesw
 import UIKit
 import CallKit
 
+class LinphoneLoggingServiceManager: LoggingServiceDelegate {
+    func onLogMessageWritten(logService: LoggingService, domain: String, level: LogLevel, message: String) {
+        Logger.logDebug("Logging service log: \(message) \n")
+    }
+
+}
+
 final class LinphoneService: CoreDelegate {
     
     private(set) var core: Core?
@@ -65,41 +72,8 @@ final class LinphoneService: CoreDelegate {
             */
             
             if let core = core {
-                let stun = config.stun ?? "none:"
-                let params = stun.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false)
-                let typeString = String(params[0])
-                let serverString = String(params[1])
-            
-                let nat = try? core.natPolicy ?? core.createNatPolicy()
-                if let natPolicy = nat {
-                    natPolicy.stunServer = serverString
-                    switch typeString {
-                    case "stun":
-                        natPolicy.iceEnabled = true
-                        natPolicy.stunEnabled = true
-                        natPolicy.turnEnabled = false
-                    case "turn":
-                        natPolicy.iceEnabled = true
-                        natPolicy.stunEnabled = false
-                        natPolicy.turnEnabled = true
-                        
-                        switch config.transport {
-                        case .Udp:
-                            natPolicy.udpTurnTransportEnabled = true
-                        case .Tcp:
-                            natPolicy.tcpTurnTransportEnabled = true
-                        case .Tls:
-                            natPolicy.tlsTurnTransportEnabled = true
-                        default: break
-                        }
-                    default:
-                        natPolicy.iceEnabled = false
-                        natPolicy.stunEnabled = false
-                        natPolicy.turnEnabled = false
-                    }
-                    core.natPolicy = natPolicy
-                }
-            
+                configureNAT(for: core, config: config)
+
                 core.callkitEnabled = config.useCallKit
                 
                 try core.start()
@@ -115,6 +89,43 @@ final class LinphoneService: CoreDelegate {
             }
         } catch {
             Logger.logError("\(error)")
+        }
+    }
+
+    private func configureNAT(for core: Core, config: SipConfig) {
+        let stun = config.stun ?? "none:"
+        let params = stun.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false)
+        let typeString = String(params[0])
+        let serverString = String(params[1])
+
+        let nat = try? core.natPolicy ?? core.createNatPolicy()
+        if let natPolicy = nat {
+            natPolicy.stunServer = serverString
+            switch typeString {
+            case "stun":
+                natPolicy.iceEnabled = true
+                natPolicy.stunEnabled = true
+                natPolicy.turnEnabled = false
+            case "turn":
+                natPolicy.iceEnabled = true
+                natPolicy.stunEnabled = false
+                natPolicy.turnEnabled = true
+
+                switch config.transport {
+                case .Udp:
+                    natPolicy.udpTurnTransportEnabled = true
+                case .Tcp:
+                    natPolicy.tcpTurnTransportEnabled = true
+                case .Tls:
+                    natPolicy.tlsTurnTransportEnabled = true
+                default: break
+                }
+            default:
+                natPolicy.iceEnabled = false
+                natPolicy.stunEnabled = false
+                natPolicy.turnEnabled = false
+            }
+            core.natPolicy = natPolicy
         }
     }
     
@@ -180,13 +191,6 @@ final class LinphoneService: CoreDelegate {
     private func bridge<T: AnyObject>(obj: T) -> UnsafeRawPointer {
         let pointer = Unmanaged.passUnretained(obj).toOpaque()
         return UnsafeRawPointer(pointer)
-    }
-    
-}
-
-class LinphoneLoggingServiceManager: LoggingServiceDelegate {
-    func onLogMessageWritten(logService: LoggingService, domain: String, level: LogLevel, message: String) {
-        Logger.logDebug("Logging service log: \(message) \n")
     }
     
 }

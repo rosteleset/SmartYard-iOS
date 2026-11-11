@@ -39,57 +39,20 @@ final class HistoryTableViewCell: UITableViewCell {
             action: #selector(handleColorAppearanceChange)
         )
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     func configureCell(cellOrder: HistoryCellOrder, from value: APIPlog) {
-        dateLabel.text = ""
-        dateView.isHidden = true
+        configurePosition(cellOrder: cellOrder, date: value.date)
+        configureEvent(value)
+
+        let df = DateFormatter()
+        df.timeZone = Calendar.serverCalendar.timeZone
+        df.locale = Calendar.current.locale
+        df.dateFormat = "HH:mm"
+        timeLabel.text = df.string(from: value.date)
         
-        switch cellOrder {
-        // настраиваем отображение скруглений и вывод даты для первого элемента
-        case .first, .single:
-            
-            if cellOrder == .single {
-                containerView.layer.maskedCorners = [.topCorners, .bottomCorners]
-                separatorView.isHidden = true
-                topSpaceForFirst.isHidden = false
-                bottomSpaceForLastCell.isHidden = false
-            } else {
-                containerView.layer.maskedCorners = [.topCorners]
-                separatorView.isHidden = false
-                topSpaceForFirst.isHidden = false
-                bottomSpaceForLastCell.isHidden = true
-            }
-            
-            let df = DateFormatter()
-            df.timeZone = Calendar.serverCalendar.timeZone
-            df.locale = Calendar.current.locale
-            df.dateFormat = "EEEE, d MMMM"
-            dateLabel.text = df.string(from: value.date)
-            dateView.isHidden = false
-            
-        case .regular:
-            separatorView.isHidden = false
-            containerView.layer.maskedCorners = []
-            dateLabel.text = ""
-            dateView.isHidden = true
-            topSpaceForFirst.isHidden = true
-            bottomSpaceForLastCell.isHidden = true
-            
-        case .last:
-            separatorView.isHidden = true
-            containerView.layer.maskedCorners = [.bottomCorners]
-            dateLabel.text = ""
-            dateView.isHidden = true
-            topSpaceForFirst.isHidden = true
-            bottomSpaceForLastCell.isHidden = false
-        }
-        
+    }
+
+    private func configureEvent(_ value: APIPlog) {
         var description = value.detail
         
         // общие операции для всех ячеек, вне зависимости от их места в секции
@@ -145,13 +108,51 @@ final class HistoryTableViewCell: UITableViewCell {
         // настраиваем отображение поля с описанием
         descriptionView.isHidden = description.isEmpty
         descriptionLabel.text = description
+    }
+
+    private func configurePosition(cellOrder: HistoryCellOrder, date: Date) {
+        dateLabel.text = ""
+        dateView.isHidden = true
         
-        let df = DateFormatter()
-        df.timeZone = Calendar.serverCalendar.timeZone
-        df.locale = Calendar.current.locale
-        df.dateFormat = "HH:mm"
-        timeLabel.text = df.string(from: value.date)
-        
+        switch cellOrder {
+        // настраиваем отображение скруглений и вывод даты для первого элемента
+        case .first, .single:
+
+            if cellOrder == .single {
+                containerView.layer.maskedCorners = [.topCorners, .bottomCorners]
+                separatorView.isHidden = true
+                topSpaceForFirst.isHidden = false
+                bottomSpaceForLastCell.isHidden = false
+            } else {
+                containerView.layer.maskedCorners = [.topCorners]
+                separatorView.isHidden = false
+                topSpaceForFirst.isHidden = false
+                bottomSpaceForLastCell.isHidden = true
+            }
+
+            let df = DateFormatter()
+            df.timeZone = Calendar.serverCalendar.timeZone
+            df.locale = Calendar.current.locale
+            df.dateFormat = "EEEE, d MMMM"
+            dateLabel.text = df.string(from: date)
+            dateView.isHidden = false
+
+        case .regular:
+            separatorView.isHidden = false
+            containerView.layer.maskedCorners = []
+            dateLabel.text = ""
+            dateView.isHidden = true
+            topSpaceForFirst.isHidden = true
+            bottomSpaceForLastCell.isHidden = true
+
+        case .last:
+            separatorView.isHidden = true
+            containerView.layer.maskedCorners = [.bottomCorners]
+            dateLabel.text = ""
+            dateView.isHidden = true
+            topSpaceForFirst.isHidden = true
+            bottomSpaceForLastCell.isHidden = false
+        }
     }
     
 }

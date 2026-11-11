@@ -146,6 +146,10 @@ extension PlayerTheme {
         syColors.periodPickerBorderColor = colors.periodPickerBorderColor
         SYPlayerConfig.shared.colors = syColors
 
+        applyControlsAppearance()
+    }
+
+    private func applyControlsAppearance() {
         // Fonts
         var syFonts = SYPlayerFonts()
         syFonts.titleFont = fonts.titleFont

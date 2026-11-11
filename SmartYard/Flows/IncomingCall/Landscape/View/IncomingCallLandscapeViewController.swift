@@ -129,19 +129,22 @@ final class IncomingCallLandscapeViewController: BaseViewController {
                 }
             )
         
-        let actualVideoViews: Driver<(UIView, UIView, UIView)> = rx.viewWillAppear.asDriver()
+        let actualVideoViews: Driver<IncomingCallViewModel.VideoViews> = rx.viewWillAppear.asDriver()
             .flatMap { [weak self] _ in
                 guard let self = self else {
                     return .empty()
                 }
                 
-                return .just((self.videoPreview, self.webRTCView, UIView()))
+                return .just(.init(preview: self.videoPreview, webRTC: self.webRTCView, camera: UIView()))
             }
 
         let input = IncomingCallViewModel.Input(
             previewTrigger: previewButton.rx.tap.asDriver(),
             callTrigger: callTrigger.asDriverOnErrorJustComplete(),
-            videoViewsTrigger: .merge(actualVideoViews, .just((videoPreview, webRTCView, UIView()))),
+            videoViewsTrigger: .merge(
+                actualVideoViews,
+                .just(.init(preview: videoPreview, webRTC: webRTCView, camera: UIView()))
+            ),
             ignoreTrigger: ignoreButton.rx.tap.asDriver(),
             openTrigger: openButton.rx.tap.asDriver(),
             speakerTrigger: speakerButton.rx.tap.asDriver(),
@@ -150,6 +153,18 @@ final class IncomingCallLandscapeViewController: BaseViewController {
 
         let output = viewModel.transform(input: input)
 
+        bindPresentation(output)
+
+        exitFullscreenButton.rx.tap
+            .subscribe(
+                onNext: {
+                    NotificationCenter.default.post(name: .incomingCallForcePortrait, object: nil)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+    private func bindPresentation(_ output: IncomingCallViewModel.Output) {
         output.subtitle
             .drive(subtitleLabel.rx.text)
             .disposed(by: disposeBag)
@@ -170,14 +185,6 @@ final class IncomingCallLandscapeViewController: BaseViewController {
             .drive(
                 onNext: { [weak self] isLoading in
                     isLoading ? self?.openButton.showLoading() : self?.openButton.hideLoading()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        exitFullscreenButton.rx.tap
-            .subscribe(
-                onNext: {
-                    NotificationCenter.default.post(name: .incomingCallForcePortrait, object: nil)
                 }
             )
             .disposed(by: disposeBag)

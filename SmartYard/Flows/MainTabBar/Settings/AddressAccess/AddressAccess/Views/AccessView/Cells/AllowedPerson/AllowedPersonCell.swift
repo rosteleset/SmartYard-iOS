@@ -18,7 +18,6 @@ final class AllowedPersonCell: UITableViewCell, HasDisposeBag {
     
     @IBOutlet private var nameTrailingToSmsButtonConstraint: NSLayoutConstraint!
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         

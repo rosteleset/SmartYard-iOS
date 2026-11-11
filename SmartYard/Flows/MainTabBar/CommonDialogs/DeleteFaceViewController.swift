@@ -157,10 +157,5 @@ final class DeleteFaceViewController: BaseViewController {
             imageView.loadImageUsingUrlString(urlString: url, cache: imagesCache)
         }
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // imageView.sizeToFit()
-    }
 
 }

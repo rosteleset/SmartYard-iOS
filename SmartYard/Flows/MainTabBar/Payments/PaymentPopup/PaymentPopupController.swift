@@ -236,45 +236,6 @@ final class PaymentPopupController: BaseViewController {
         }
     }
     
-    private func configureSwipeAction() {
-        swipeDismissInteractor = SwipeInteractionController(
-            viewController: self,
-            animatedView: animatedView
-        )
-        
-        swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
-        swipeDismissInteractor?.velocityThreshold = 1500
-        
-        transitioningDelegate = self
-    }
-    
-    private func addDismissKeyboardByTapGesture() {
-        let dismissKeyobardTapGesture = UITapGestureRecognizer()
-        animatedView.addGestureRecognizer(dismissKeyobardTapGesture)
-
-        dismissKeyobardTapGesture.rx.event
-            .subscribe(
-                onNext: { [weak self] _ in
-                    self?.sumTextField.resignFirstResponder()
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    private func addDismissKeyboardBySwipeGesture() {
-        let swipeDown = UISwipeGestureRecognizer()
-        swipeDown.direction = .down
-        animatedView.addGestureRecognizer(swipeDown)
-        
-        swipeDown.rx.event
-            .subscribe(
-                onNext: { [weak self] _ in
-                    self?.sumTextField.resignFirstResponder()
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
     private func addDismissViewGesture() {
         let dismissViewTapGesture = UITapGestureRecognizer()
         backgroundView.addGestureRecognizer(dismissViewTapGesture)
@@ -453,5 +414,47 @@ private extension PaymentPopupController {
                 source: "payment_popup"
             )
         )
+    }
+}
+
+extension PaymentPopupController {
+
+    private func configureSwipeAction() {
+        swipeDismissInteractor = SwipeInteractionController(
+            viewController: self,
+            animatedView: animatedView
+        )
+
+        swipeDismissInteractor?.animatedViewBottomOffset = animatedViewBottomOffset.constant
+        swipeDismissInteractor?.velocityThreshold = 1500
+
+        transitioningDelegate = self
+    }
+
+    private func addDismissKeyboardByTapGesture() {
+        let dismissKeyobardTapGesture = UITapGestureRecognizer()
+        animatedView.addGestureRecognizer(dismissKeyobardTapGesture)
+
+        dismissKeyobardTapGesture.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.sumTextField.resignFirstResponder()
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+    private func addDismissKeyboardBySwipeGesture() {
+        let swipeDown = UISwipeGestureRecognizer()
+        swipeDown.direction = .down
+        animatedView.addGestureRecognizer(swipeDown)
+
+        swipeDown.rx.event
+            .subscribe(
+                onNext: { [weak self] _ in
+                    self?.sumTextField.resignFirstResponder()
+                }
+            )
+            .disposed(by: disposeBag)
     }
 }

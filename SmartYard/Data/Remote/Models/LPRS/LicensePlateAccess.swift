@@ -52,6 +52,17 @@ struct LicensePlateValidity: Equatable {
     }
 }
 
+struct APILicensePlateFormat: Decodable, Equatable {
+    let countryCode: String
+    let regex: String
+
+    func matches(_ number: String) -> Bool {
+        guard let expression = try? NSRegularExpression(pattern: regex) else { return false }
+        let range = NSRange(number.startIndex..., in: number)
+        return expression.firstMatch(in: number, range: range)?.range == range
+    }
+}
+
 struct APILicensePlate: Decodable {
     let plateNumber: String
     let countryCode: String
@@ -92,16 +103,5 @@ struct APILicensePlate: Decodable {
             )
         }
         return date
-    }
-}
-
-struct APILicensePlateFormat: Decodable, Equatable {
-    let countryCode: String
-    let regex: String
-
-    func matches(_ number: String) -> Bool {
-        guard let expression = try? NSRegularExpression(pattern: regex) else { return false }
-        let range = NSRange(number.startIndex..., in: number)
-        return expression.firstMatch(in: number, range: range)?.range == range
     }
 }

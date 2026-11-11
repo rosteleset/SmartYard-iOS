@@ -202,7 +202,7 @@ final class CamerasListViewModel: BaseViewModel {
                                 selectedCamera: camera
                             )
                         )
-                    case .mapView(let label, _, let cameras):
+                    case let .mapView(label, _, cameras):
                         self.logCamerasListOpened(source: "camera_group")
                         self.router.trigger(
                             .yardCamerasMap(

@@ -42,7 +42,6 @@ final class CityCameraViewModel: BaseViewModel {
             .disposed(by: disposeBag)
     }
     
-    
     func transform(_ input: Input) -> Output {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
@@ -68,6 +67,19 @@ final class CityCameraViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
+        bindVideoActions(input, errorTracker: errorTracker, activityTracker: activityTracker)
+
+        loadVideos(errorTracker: errorTracker, activityTracker: activityTracker)
+
+        return Output(
+            isLoading: activityTracker.asDriver(),
+            reloadingFinished: reloadingFinishedSubject.asDriverOnErrorJustComplete(),
+            camera: self.camera,
+            videos: youTubeVideos.asDriver(onErrorJustReturn: [])
+        )
+    }
+
+    private func bindVideoActions(_ input: Input, errorTracker: ErrorTracker, activityTracker: ActivityTracker) {
         input.videoTrigger
             .drive(
                 onNext: { [weak self] urlString in
@@ -98,15 +110,6 @@ final class CityCameraViewModel: BaseViewModel {
                 }
             )
             .disposed(by: disposeBag)
-        
-        loadVideos(errorTracker: errorTracker, activityTracker: activityTracker)
-        
-        return Output(
-            isLoading: activityTracker.asDriver(),
-            reloadingFinished: reloadingFinishedSubject.asDriverOnErrorJustComplete(),
-            camera: self.camera,
-            videos: youTubeVideos.asDriver(onErrorJustReturn: [])
-        )
     }
     
 }

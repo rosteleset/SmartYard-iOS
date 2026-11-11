@@ -25,7 +25,6 @@ enum CityCamsRoute: Route {
 
 final class CityCamsCoordinator: NavigationCoordinator<CityCamsRoute>, HasDisposeBag {
     
-    
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService

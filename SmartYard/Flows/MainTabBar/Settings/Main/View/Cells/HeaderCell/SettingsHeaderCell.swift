@@ -114,7 +114,6 @@ extension SettingsHeaderCell {
         label.font = UIFont.SourceSansPro.semibold(size: 18)
         label.text = title
         
-
         return label.sizeThatFits(
             CGSize(
                 width: width - mainContainerMargins * 2 - arrowWidth - arrowSpacing,

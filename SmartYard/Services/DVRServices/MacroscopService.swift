@@ -109,7 +109,7 @@ enum MacroscopService {
         .resume()
     }
     
-    static func generateURL(_ camera: CameraObject, startDate: Date, endDate: Date, speed: Float, _ completion: @escaping ( _ urlString: String ) -> Void ) -> Void {
+    static func generateURL(_ camera: CameraObject, startDate: Date, endDate: Date, speed: Float, _ completion: @escaping ( _ urlString: String ) -> Void ) {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.dateFormat = "dd.MM.yyyy'%20'HH:mm:ss"
@@ -119,7 +119,7 @@ enum MacroscopService {
         let speedStr = speed < 1 ? String(format: "%.2f", speed) : String(format: "%.0f", speed)
         let parameters = "&starttime=" + starttime + "&mode=archive&isForward=true&speed=\(speedStr)&sound=off"
         
-        generateURL(camera,parameters: parameters, completion)
+        generateURL(camera, parameters: parameters, completion)
     }
 }
 

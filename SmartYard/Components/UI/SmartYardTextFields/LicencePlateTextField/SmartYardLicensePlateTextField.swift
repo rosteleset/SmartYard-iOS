@@ -13,7 +13,6 @@ import PMNibLinkableView
 
 class SmartYardLicensePlateTextField: UITextField, HasDisposeBag {
     
-    
     private lazy var licencePlateKeyboard = LicencePlateKeyboardView.loadFromNib()
         
     override var inputView: UIView? {

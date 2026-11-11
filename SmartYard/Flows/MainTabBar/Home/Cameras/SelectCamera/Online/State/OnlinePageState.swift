@@ -10,18 +10,18 @@ import SmartYardVideoPlayer
 
 typealias CameraID = Int
 
-struct OnlinePageState {
-    let cameras: [CameraViewModel]
-    let selectedCameraId: CameraID
-    let selectedIndex: Int
-}
-
 struct CameraViewModel {
     let identity: String
     let id: CameraID
     let number: Int
     let resource: SYPlayerResource
     let isMuted: Bool
+}
+
+struct OnlinePageState {
+    let cameras: [CameraViewModel]
+    let selectedCameraId: CameraID
+    let selectedIndex: Int
 }
 
 extension CameraViewModel {

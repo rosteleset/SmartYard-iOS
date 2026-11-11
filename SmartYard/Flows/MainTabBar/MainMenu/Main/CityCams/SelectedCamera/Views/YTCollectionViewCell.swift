@@ -14,11 +14,6 @@ final class YTCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var topSeparator: UIView!
     @IBOutlet private weak var label: UILabel!
     @IBOutlet private weak var thumbnail: UIImageView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 
     func configureCell(label: String, thumbnailUrl: String?, isFirst: Bool) {
         if isFirst {
@@ -29,7 +24,7 @@ final class YTCollectionViewCell: UICollectionViewCell {
         
         self.label.text = label
         
-        self.setThumbnail(thumbnailUrl: thumbnailUrl);
+        self.setThumbnail(thumbnailUrl: thumbnailUrl)
     }
     
     private func setThumbnail(thumbnailUrl: String?) {

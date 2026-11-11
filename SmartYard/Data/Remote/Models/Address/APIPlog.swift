@@ -79,7 +79,7 @@ struct DetailX: Decodable, Equatable, Hashable {
         vehicle = try? container.decode(Vehicle.self, forKey: .vehicle)
      }
     
-    //пришлось добавить инициализатор для ручного создания объектов
+    // пришлось добавить инициализатор для ручного создания объектов
     init(
         key: String?,
         face: Rectangle?,
@@ -96,6 +96,85 @@ struct DetailX: Decodable, Equatable, Hashable {
         self.code = code
         self.faceId = faceId
         self.vehicle = vehicle
+    }
+}
+
+struct APITrackedEvent: Decodable, Equatable {
+    let watcherId: Int
+    let flatId: Int
+    let eventType: Int
+    let eventDetail: String?
+    let comments: String?
+
+    var normalizedEventDetail: String { eventDetail ?? "" }
+    var normalizedComments: String { comments ?? "" }
+    var key: String {
+        ParanoidEventTracking.key(
+            flatId: flatId,
+            eventType: eventType,
+            eventDetail: normalizedEventDetail
+        )
+    }
+}
+
+struct TrackEventResponseData: Decodable {
+    let watcherId: Int
+}
+
+enum ParanoidEventTracking {
+    static let supportedEventTypes: Set<Int> = [
+        APIPlog.EventType.rfid.rawValue,
+        APIPlog.EventType.app.rawValue,
+        APIPlog.EventType.passcode.rawValue,
+        APIPlog.EventType.plate.rawValue
+    ]
+
+    static func isSupported(_ event: APIPlog) -> Bool {
+        guard event.flatId != nil else { return false }
+        return supportedEventTypes.contains(event.event.rawValue)
+    }
+
+    static func eventDetail(from event: APIPlog) -> String {
+        switch event.event {
+        case .rfid:
+            return event.detailX?.key ?? ""
+        case .app:
+            return event.detailX?.phone ?? ""
+        case .passcode:
+            return ""
+        case .plate:
+            return event.detailX?.vehicle?.plateNumber ?? ""
+        case .unanswered, .answered, .face, .call, .reserved, .unknown:
+            return ""
+        }
+    }
+
+    static func key(flatId: Int, eventType: Int, eventDetail: String) -> String {
+        return "\(flatId)_\(eventType)_\(eventDetail)"
+    }
+
+    static func key(for event: APIPlog) -> String? {
+        guard let flatId = event.flatId else { return nil }
+        return key(
+            flatId: flatId,
+            eventType: event.event.rawValue,
+            eventDetail: eventDetail(from: event)
+        )
+    }
+
+    static func title(for eventType: Int) -> String {
+        switch eventType {
+        case APIPlog.EventType.rfid.rawValue:
+            return L10n.History.Event.openingWithKey
+        case APIPlog.EventType.app.rawValue:
+            return L10n.History.Event.openingFromApp
+        case APIPlog.EventType.passcode.rawValue:
+            return L10n.History.Event.openingWithCode
+        case APIPlog.EventType.plate.rawValue:
+            return L10n.History.Event.gateOpeningByNumberplate
+        default:
+            return L10n.History.Event.unknown
+        }
     }
 }
 
@@ -250,85 +329,6 @@ struct APIPlog: Decodable, Equatable, Hashable {
             previewURL: previewURL,
             previewImage: previewImage
         )
-    }
-}
-
-struct APITrackedEvent: Decodable, Equatable {
-    let watcherId: Int
-    let flatId: Int
-    let eventType: Int
-    let eventDetail: String?
-    let comments: String?
-
-    var normalizedEventDetail: String { eventDetail ?? "" }
-    var normalizedComments: String { comments ?? "" }
-    var key: String {
-        ParanoidEventTracking.key(
-            flatId: flatId,
-            eventType: eventType,
-            eventDetail: normalizedEventDetail
-        )
-    }
-}
-
-struct TrackEventResponseData: Decodable {
-    let watcherId: Int
-}
-
-enum ParanoidEventTracking {
-    static let supportedEventTypes: Set<Int> = [
-        APIPlog.EventType.rfid.rawValue,
-        APIPlog.EventType.app.rawValue,
-        APIPlog.EventType.passcode.rawValue,
-        APIPlog.EventType.plate.rawValue
-    ]
-
-    static func isSupported(_ event: APIPlog) -> Bool {
-        guard event.flatId != nil else { return false }
-        return supportedEventTypes.contains(event.event.rawValue)
-    }
-
-    static func eventDetail(from event: APIPlog) -> String {
-        switch event.event {
-        case .rfid:
-            return event.detailX?.key ?? ""
-        case .app:
-            return event.detailX?.phone ?? ""
-        case .passcode:
-            return ""
-        case .plate:
-            return event.detailX?.vehicle?.plateNumber ?? ""
-        case .unanswered, .answered, .face, .call, .reserved, .unknown:
-            return ""
-        }
-    }
-
-    static func key(flatId: Int, eventType: Int, eventDetail: String) -> String {
-        return "\(flatId)_\(eventType)_\(eventDetail)"
-    }
-
-    static func key(for event: APIPlog) -> String? {
-        guard let flatId = event.flatId else { return nil }
-        return key(
-            flatId: flatId,
-            eventType: event.event.rawValue,
-            eventDetail: eventDetail(from: event)
-        )
-    }
-
-    static func title(for eventType: Int) -> String {
-        switch eventType {
-        case APIPlog.EventType.rfid.rawValue:
-            return L10n.History.Event.openingWithKey
-        case APIPlog.EventType.app.rawValue:
-            return L10n.History.Event.openingFromApp
-        case APIPlog.EventType.passcode.rawValue:
-            return L10n.History.Event.openingWithCode
-        case APIPlog.EventType.plate.rawValue:
-            return L10n.History.Event.gateOpeningByNumberplate
-        default:
-            return L10n.History.Event.unknown
-        }
     }
 }
 

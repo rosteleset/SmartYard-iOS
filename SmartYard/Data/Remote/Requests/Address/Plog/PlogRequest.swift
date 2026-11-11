@@ -7,14 +7,6 @@
 //
 import Foundation
 
-struct PlogRequest {
-    
-    let accessToken: String
-    let forceRefresh: Bool
-    let flatId: String
-    let fromDate: Date
-}
-
 struct TrackEventRequest {
     let accessToken: String
     let flatId: Int
@@ -31,6 +23,14 @@ struct UntrackEventRequest {
 struct GetTrackedEventsRequest {
     let accessToken: String
     let flatId: Int
+}
+
+struct PlogRequest {
+
+    let accessToken: String
+    let forceRefresh: Bool
+    let flatId: String
+    let fromDate: Date
 }
 
 extension PlogRequest {

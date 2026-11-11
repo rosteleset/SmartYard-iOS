@@ -36,39 +36,12 @@ final class UserNameViewModel: BaseViewModel {
         let activityTracker = ActivityTracker()
         let errorTracker = ErrorTracker()
         
-        errorTracker.asDriver()
-            .catchAuthorizationError { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                
-                self.logoutHelper.showAuthErrorAlert(
-                    activityTracker: activityTracker,
-                    errorTracker: errorTracker,
-                    disposeBag: self.disposeBag
-                )
-            }
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(
-                        .alert(
-                            title: L10n.Common.error,
-                            message: error.localizedDescription
-                        )
-                    )
-                }
-            )
-            .disposed(by: disposeBag)
-        
+        bindErrors(errorTracker, activityTracker: activityTracker)
+
         let prepareTransitionTrigger = PublishSubject<Void>()
 
-        input.legalDocumentTrigger
-            .drive(with: self) { owner, url in
-                owner.router.trigger(.webView(url: url))
-            }
-            .disposed(by: disposeBag)
-        
+        bindLegalDocument(input.legalDocumentTrigger)
+
         input.continueTrigger
             .withLatestFrom(input.name)
             .withLatestFrom(input.middleName) { ($0, $1) }
@@ -116,6 +89,41 @@ final class UserNameViewModel: BaseViewModel {
             isLoading: activityTracker.asDriver(),
             prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
         )
+    }
+
+    private func bindLegalDocument(_ trigger: Driver<URL>) {
+        trigger
+            .drive(with: self) { owner, url in
+                owner.router.trigger(.webView(url: url))
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func bindErrors(_ errorTracker: ErrorTracker, activityTracker: ActivityTracker) {
+        errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(
+                        .alert(
+                            title: L10n.Common.error,
+                            message: error.localizedDescription
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

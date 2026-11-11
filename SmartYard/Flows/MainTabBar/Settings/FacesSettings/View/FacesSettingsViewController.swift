@@ -54,11 +54,6 @@ final class FacesSettingsViewController: BaseViewController, LoaderPresentable {
         )
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-       }
-    
     private func configureUI() {
         titleLabel.text = L10n.Settings.Faces.faceRegistration
         registeredFacesLabel.text = L10n.Settings.Faces.registeredFaces

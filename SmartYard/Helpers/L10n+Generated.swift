@@ -7,7 +7,7 @@
 
 import Foundation
 
-// swiftlint:disable file_length type_body_length nesting
+// swiftlint:disable file_length nesting
 extension L10n {
     enum Address {
         enum Confirmation {
@@ -984,4 +984,4 @@ extension L10n {
         }
     }
 }
-// swiftlint:enable file_length type_body_length nesting
+// swiftlint:enable file_length nesting

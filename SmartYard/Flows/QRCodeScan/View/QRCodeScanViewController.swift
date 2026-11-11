@@ -178,8 +178,10 @@ final class QRCodeScanViewController: BaseViewController {
     private func configureWhiteFrameLayer() {
         let frameLayer = CAShapeLayer()
         
-        frameLayer.path = UIBezierPath(roundedRect: scanningArea.frame,
-                                       cornerRadius: 20).cgPath
+        frameLayer.path = UIBezierPath(
+            roundedRect: scanningArea.frame,
+            cornerRadius: 20
+        ).cgPath
         frameLayer.lineWidth = 4
         frameLayer.strokeColor = UIColor.white.cgColor
         frameLayer.fillColor = UIColor.clear.cgColor

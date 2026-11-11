@@ -24,7 +24,6 @@ enum HistoryRoute: Route {
 
 class HistoryCoordinator: NavigationCoordinator<HistoryRoute>, HasDisposeBag {
     
-    
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService

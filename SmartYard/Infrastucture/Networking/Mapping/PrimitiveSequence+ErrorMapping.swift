@@ -156,45 +156,24 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
     }
 
     private func printDebugInfo() -> PrimitiveSequence<Trait, Element> {
-        self.do(onSuccess: { response in
-            var logLines: [String] = []
+        self.do(
+            onSuccess: { response in
+                var logLines: [String] = []
 
-            if let request = response.request {
-                logLines.append("➡️ Request:")
-                logLines.append("URL: \(request.description)")
+                if let request = response.request {
+                    logLines.append("➡️ Request:")
+                    logLines.append("URL: \(request.description)")
 
-                if let body = request.httpBody {
-                    let bodyString = String(decoding: body, as: UTF8.self)
-                    logLines.append("Body: \(bodyString)")
+                    if let body = request.httpBody {
+                        // Keep diagnostics readable even when the request contains malformed UTF-8.
+                        // swiftlint:disable:next optional_data_string_conversion
+                        let bodyString = String(decoding: body, as: UTF8.self)
+                        logLines.append("Body: \(bodyString)")
+                    }
+
+                    logLines.append("Headers: \(String(describing: request.headers))")
                 }
 
-                logLines.append("Headers: \(String(describing: request.headers))")
-            }
-
-            logLines.append("⬅️ Response (\(response.statusCode)):")
-
-            if let responseString = try? response.mapString(), !responseString.isEmpty {
-                logLines.append(responseString)
-            } else {
-                logLines.append("<empty>")
-            }
-
-            let fullLog = logLines.joined(separator: "\n")
-            Logger.logDebug(fullLog)
-        }, onError: { error in
-            var logLines = ["❌ Request failed:"]
-
-            if let requestURL = Self.extractRequestURL(from: error) {
-                logLines.append("URL: \(requestURL.absoluteString)")
-            } else {
-                logLines.append("URL: <unknown>")
-            }
-
-            let nsError = error as NSError
-            logLines.append("Error: \(nsError.domain)(\(nsError.code)) \(nsError.localizedDescription)")
-
-            if let moyaError = error as? MoyaError,
-               let response = moyaError.response {
                 logLines.append("⬅️ Response (\(response.statusCode)):")
 
                 if let responseString = try? response.mapString(), !responseString.isEmpty {
@@ -202,9 +181,35 @@ extension PrimitiveSequence where Trait == SingleTrait, Element == Response {
                 } else {
                     logLines.append("<empty>")
                 }
-            }
 
-            Logger.logDebug(logLines.joined(separator: "\n"))
-        })
+                let fullLog = logLines.joined(separator: "\n")
+                Logger.logDebug(fullLog)
+            },
+            onError: { error in
+                var logLines = ["❌ Request failed:"]
+
+                if let requestURL = Self.extractRequestURL(from: error) {
+                    logLines.append("URL: \(requestURL.absoluteString)")
+                } else {
+                    logLines.append("URL: <unknown>")
+                }
+
+                let nsError = error as NSError
+                logLines.append("Error: \(nsError.domain)(\(nsError.code)) \(nsError.localizedDescription)")
+
+                if let moyaError = error as? MoyaError,
+                   let response = moyaError.response {
+                    logLines.append("⬅️ Response (\(response.statusCode)):")
+
+                    if let responseString = try? response.mapString(), !responseString.isEmpty {
+                        logLines.append(responseString)
+                    } else {
+                        logLines.append("<empty>")
+                    }
+                }
+
+                Logger.logDebug(logLines.joined(separator: "\n"))
+            }
+        )
     }
 }

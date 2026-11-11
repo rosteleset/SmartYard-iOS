@@ -3,55 +3,6 @@
 import Foundation
 import RxSwift
 
-// SmartYardTests is hostless. Compile the real APIWrapper+LPRS endpoint against
-// this deterministic transport; no account, device subscription or backend is touched.
-final class APIWrapper {
-    final class Access {
-        var accessToken: String? = "test"
-        var lprsVersion = LicensePlateAPIVersion.timed
-        var eventsTrackingEnabled = true
-    }
-
-    let accessService = Access()
-    let backend: Void = ()
-    let internet: Void = ()
-    lazy var provider = LicensePlateTestProvider(api: self)
-    var calls: [String] = []
-    var failedCalls: Set<String> = []
-    var plates: [APILicensePlate] = []
-    var legacyPlates: [String] = []
-    var watchers: [APITrackedEvent] = []
-    var addedRequest: AddLicensePlateRequest?
-
-    func record(_ name: String) throws {
-        calls.append(name)
-        if failedCalls.contains(name) { throw NSError(domain: "Fixture", code: 503) }
-    }
-
-    func getTrackedEvents(flatId: Int) -> Single<[APITrackedEvent]?> {
-        .deferred { [self] in
-            try record("watchers")
-            return .just(watchers)
-        }
-    }
-
-    func trackEvent(flatId: Int, eventType: Int, eventDetail: String, comments: String) -> Single<TrackEventResponseData?> {
-        .deferred { [self] in
-            try record("track")
-            watchers.append(APITrackedEvent(watcherId: 100, flatId: flatId, eventType: eventType, eventDetail: eventDetail))
-            return .just(TrackEventResponseData(watcherId: 100))
-        }
-    }
-
-    func untrackEvent(watcherId: Int) -> Single<Void?> {
-        .deferred { [self] in
-            try record("untrack:\(watcherId)")
-            watchers.removeAll { $0.watcherId == watcherId }
-            return .just(())
-        }
-    }
-}
-
 struct APITrackedEvent {
     let watcherId: Int
     let flatId: Int
@@ -106,6 +57,59 @@ final class LicensePlateTestProvider {
 
 struct LicensePlateTestResponse { let value: Any }
 
+enum Logger {
+    static func logDebug(_ message: String) { }
+}
+
+// SmartYardTests is hostless. Compile the real APIWrapper+LPRS endpoint against
+// this deterministic transport; no account, device subscription or backend is touched.
+final class APIWrapper {
+    final class Access {
+        var accessToken: String? = "test"
+        var lprsVersion = LicensePlateAPIVersion.timed
+        var eventsTrackingEnabled = true
+    }
+
+    let accessService = Access()
+    let backend: Void = ()
+    let internet: Void = ()
+    lazy var provider = LicensePlateTestProvider(api: self)
+    var calls: [String] = []
+    var failedCalls: Set<String> = []
+    var plates: [APILicensePlate] = []
+    var legacyPlates: [String] = []
+    var watchers: [APITrackedEvent] = []
+    var addedRequest: AddLicensePlateRequest?
+
+    func record(_ name: String) throws {
+        calls.append(name)
+        if failedCalls.contains(name) { throw NSError(domain: "Fixture", code: 503) }
+    }
+
+    func getTrackedEvents(flatId: Int) -> Single<[APITrackedEvent]?> {
+        .deferred { [self] in
+            try record("watchers")
+            return .just(watchers)
+        }
+    }
+
+    func trackEvent(flatId: Int, eventType: Int, eventDetail: String, comments: String) -> Single<TrackEventResponseData?> {
+        .deferred { [self] in
+            try record("track")
+            watchers.append(APITrackedEvent(watcherId: 100, flatId: flatId, eventType: eventType, eventDetail: eventDetail))
+            return .just(TrackEventResponseData(watcherId: 100))
+        }
+    }
+
+    func untrackEvent(watcherId: Int) -> Single<Void?> {
+        .deferred { [self] in
+            try record("untrack:\(watcherId)")
+            watchers.removeAll { $0.watcherId == watcherId }
+            return .just(())
+        }
+    }
+}
+
 extension PrimitiveSequence where Trait == SingleTrait, Element == LicensePlateTestResponse {
     func convertNoConnectionError() -> Self { self }
     func trackBackend(_ backend: Void, _ internet: Void) -> Self { self }
@@ -129,8 +133,4 @@ extension NSError {
         static let accessTokenMissingError = NSError(domain: "Fixture", code: 401)
         static let noDataError = NSError(domain: "Fixture", code: 422)
     }
-}
-
-enum Logger {
-    static func logDebug(_ message: String) { }
 }

@@ -8,12 +8,12 @@
 
 import RxSwift
 
-protocol InternetMonitoring {
-    var currentStatus: InternetStatus { get }
-    var status: Observable<InternetStatus> { get }
-}
-
 enum InternetStatus: Equatable {
     case offline            // нет NWPath
     case online             // NWPath.satisfied (есть хоть какой-то маршрут)
+}
+
+protocol InternetMonitoring {
+    var currentStatus: InternetStatus { get }
+    var status: Observable<InternetStatus> { get }
 }

@@ -86,8 +86,10 @@ final class LicensePlateAccessTests: XCTestCase {
         let api = APIWrapper()
         api.failedCalls = ["add"]
         XCTAssertThrowsError(try value(api.saveAllowedCar(
-            AllowedCar(rawNumber: number), trackingEnabled: true,
-            replacing: AllowedCar(rawNumber: "B456CC77"), flatId: flatId
+            AllowedCar(rawNumber: number),
+            trackingEnabled: true,
+            replacing: AllowedCar(rawNumber: "B456CC77"),
+            flatId: flatId
         )))
         XCTAssertEqual(api.calls, ["add"])
     }

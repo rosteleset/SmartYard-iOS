@@ -16,7 +16,8 @@ extension UIView {
         }
     }
 
-    @discardableResult func add(insets: UIEdgeInsets) -> UIView {
+    @discardableResult
+    func add(insets: UIEdgeInsets) -> UIView {
         let view = UIView()
         view.pinSubview(self, with: insets)
         return view

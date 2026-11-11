@@ -12,6 +12,35 @@ import RxCocoa
 import AVKit
 import Parchment
 
+private final class SelectCameraPagingTitleCell: PagingTitleCell {
+    static var isArchiveEnabled = false
+
+    private var isArchiveItem = false
+
+    override func setPagingItem(_ pagingItem: PagingItem, selected: Bool, options: PagingOptions) {
+        isArchiveItem = (pagingItem as? PagingIndexItem)?.index == 1
+        super.setPagingItem(pagingItem, selected: selected, options: options)
+        updateArchiveAvailability()
+    }
+
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        updateArchiveAvailability()
+    }
+
+    private func updateArchiveAvailability() {
+        guard isArchiveItem, !Self.isArchiveEnabled else {
+            isUserInteractionEnabled = true
+            titleLabel.alpha = 1
+            return
+        }
+
+        isUserInteractionEnabled = false
+        titleLabel.textColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
+        titleLabel.alpha = 1
+    }
+}
+
 final class SelectCameraContainerViewController: BaseViewController {
 
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
@@ -182,35 +211,6 @@ extension SelectCameraContainerViewController: PagingViewControllerDelegate {
     ) {
         guard transitionSuccessful, destinationViewController === archivePage, !isArchivePageEnabled else { return }
         pagingViewController.select(index: 0, animated: true)
-    }
-}
-
-private final class SelectCameraPagingTitleCell: PagingTitleCell {
-    static var isArchiveEnabled = false
-
-    private var isArchiveItem = false
-
-    override func setPagingItem(_ pagingItem: PagingItem, selected: Bool, options: PagingOptions) {
-        isArchiveItem = (pagingItem as? PagingIndexItem)?.index == 1
-        super.setPagingItem(pagingItem, selected: selected, options: options)
-        updateArchiveAvailability()
-    }
-
-    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        updateArchiveAvailability()
-    }
-
-    private func updateArchiveAvailability() {
-        guard isArchiveItem, !Self.isArchiveEnabled else {
-            isUserInteractionEnabled = true
-            titleLabel.alpha = 1
-            return
-        }
-
-        isUserInteractionEnabled = false
-        titleLabel.textColor = UIColor.SmartYard.gray.withAlphaComponent(0.5)
-        titleLabel.alpha = 1
     }
 }
 

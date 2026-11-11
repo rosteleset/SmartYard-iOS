@@ -9,6 +9,26 @@
 import CoreLocation
 import SwifterSwift
 
+enum DVRServerType: String, Decodable, EmptyDataInitializable {
+    case flussonic
+    case nimble
+    case macroscop
+    case trassir
+    case forpost
+
+    init () {
+        self = .flussonic
+    }
+}
+
+enum DVRHLSMode: String, Decodable, EmptyDataInitializable {
+    case mpegts
+    case fmp4
+    init () {
+        self = .fmp4
+    }
+}
+
 struct APICCTV: Decodable {
     
     let houseId: Int?
@@ -63,25 +83,5 @@ struct APICCTV: Decodable {
         serverType = try? container.decode(DVRServerType.self, forKey: .serverType)
         hlsMode = (try? container.decode(DVRHLSMode.self, forKey: .hlsMode)) ?? .fmp4
         hasSound = (try? container.decode(Bool.self, forKey: .hasSound)) ?? false
-    }
-}
-
-enum DVRServerType: String, Decodable, EmptyDataInitializable {
-    case flussonic
-    case nimble
-    case macroscop
-    case trassir
-    case forpost
-    
-    init () {
-        self = .flussonic
-    }
-}
-
-enum DVRHLSMode: String, Decodable, EmptyDataInitializable {
-    case mpegts
-    case fmp4
-    init () {
-        self = .fmp4
     }
 }

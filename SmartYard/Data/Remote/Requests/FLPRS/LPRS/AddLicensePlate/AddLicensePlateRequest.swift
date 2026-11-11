@@ -16,8 +16,11 @@ struct AddLicensePlateRequest {
     let validity: LicensePlateValidity
 
     init(
-        accessToken: String, flatId: Int, number: String,
-        countryCode: String? = nil, validity: LicensePlateValidity = .unlimited
+        accessToken: String,
+        flatId: Int,
+        number: String,
+        countryCode: String? = nil,
+        validity: LicensePlateValidity = .unlimited
     ) {
         self.accessToken = accessToken
         self.flatId = flatId

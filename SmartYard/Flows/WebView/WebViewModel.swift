@@ -38,45 +38,8 @@ final class WebViewModel: BaseViewModel {
     func transform(_ input: Input) -> Output {
         let activityTracker = ActivityTracker()
         
-        input.openUrlTrigger
-            .drive(
-                onNext: { [weak self] url, transition in
-                    switch transition {
-                    case .popup:
-                        self?.router.trigger(
-                            .webViewPopup(
-                                url: url
-                            )
-                        )
-                    
-                    case .replace:
-                        self?.router.trigger(
-                            .webView(
-                                url: url,
-                                push: false
-                            ),
-                            with: TransitionOptions(animated: false)
-                        )
-                    case .push:
-                        self?.router.trigger(
-                            .webView(
-                                url: url,
-                                push: true
-                            )
-                        )
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        input.backTrigger
-            .drive(
-                onNext: { [weak self] in
-                    self?.router.trigger(.back)
-                }
-            )
-            .disposed(by: disposeBag)
-        
+        bindNavigation(input)
+
         let urlToLoadSubject = PublishSubject<URL>()
         
         /// content, baseURL
@@ -120,6 +83,47 @@ final class WebViewModel: BaseViewModel {
             isLoading: activityTracker.asDriver()
         )
     }
+
+    private func bindNavigation(_ input: Input) {
+        input.openUrlTrigger
+            .drive(
+                onNext: { [weak self] url, transition in
+                    switch transition {
+                    case .popup:
+                        self?.router.trigger(
+                            .webViewPopup(
+                                url: url
+                            )
+                        )
+
+                    case .replace:
+                        self?.router.trigger(
+                            .webView(
+                                url: url,
+                                push: false
+                            ),
+                            with: TransitionOptions(animated: false)
+                        )
+                    case .push:
+                        self?.router.trigger(
+                            .webView(
+                                url: url,
+                                push: true
+                            )
+                        )
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+
+        input.backTrigger
+            .drive(
+                onNext: { [weak self] in
+                    self?.router.trigger(.back)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
     
 }
 
@@ -139,4 +143,24 @@ extension WebViewModel {
         let isLoading: Driver<Bool>
     }
     
+}
+
+extension URL {
+    var smartYardTransition: (URL, TransitionType)? {
+        if let url = removingWebViewMarker("#smart-yard-push") {
+            return (url, .push)
+        }
+        if let url = removingWebViewMarker("#smart-yard-popup") {
+            return (url, .popup)
+        }
+        if let url = removingWebViewMarker("#smart-yard-replace") {
+            return (url, .replace)
+        }
+        return nil
+    }
+
+    func removingWebViewMarker(_ marker: String) -> URL? {
+        guard relativeString.contains(marker) else { return nil }
+        return URL(string: absoluteString.replacingOccurrences(ofPattern: marker, withTemplate: ""))
+    }
 }

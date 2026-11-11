@@ -11,7 +11,7 @@ import UIKit
 
 final class LinearGradientView: UIView {
     
-    override class var layerClass: AnyClass {
+    override static var layerClass: AnyClass {
         return CAGradientLayer.self
     }
     

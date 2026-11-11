@@ -377,153 +377,94 @@ extension WebPopupController: WKNavigationDelegate {
         webView.notifySmartYardThemeChanged()
         disableDragAndDropInteraction()
     }
-    // swiftlint:disable:next function_body_length
     func webView(
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
         if version == 1 {
-            guard [.linkActivated, .formSubmitted].contains(navigationAction.navigationType) else {
-                decisionHandler(WKNavigationActionPolicy.allow)
-                return
-            }
-            
-            if let url = navigationAction.request.url {
-                
-                if url.relativeString.contains("#smart-yard-close") {
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    self.dismiss(animated: true)
-                    return
-                }
-                
-                let trigger = self.openUrlTrigger
-                
-                self.dismiss(
-                    animated: true,
-                    completion: {
-                        if navigationAction.targetFrame != nil {
-                            // делаем замену viewcontroller в navigation stack если target == текущее окно
-                            trigger.onNext((url, .replace))
-                            decisionHandler(WKNavigationActionPolicy.cancel)
-                        } else {
-                            // если target == новое окно, то открываем модально popup шторку
-                            trigger.onNext((url, .popup))
-                            decisionHandler(WKNavigationActionPolicy.cancel)
-                        }
-                    }
-                )
-                
-            } else {
-                decisionHandler(WKNavigationActionPolicy.allow)
-            }
+            decideLegacyNavigation(navigationAction, decisionHandler: decisionHandler)
         } else {
-            // version 2
-            if [.reload].contains(navigationAction.navigationType) {
-                decisionHandler(WKNavigationActionPolicy.allow)
+            decideNavigation(navigationAction, decisionHandler: decisionHandler)
+        }
+    }
+
+    private func decideLegacyNavigation(
+        _ navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
+    ) {
+        guard [.linkActivated, .formSubmitted].contains(navigationAction.navigationType) else {
+            decisionHandler(WKNavigationActionPolicy.allow)
+            return
+        }
+
+        if let url = navigationAction.request.url {
+
+            if url.relativeString.contains("#smart-yard-close") {
+                decisionHandler(WKNavigationActionPolicy.cancel)
+                self.dismiss(animated: true)
                 return
             }
-            
-            if let url = navigationAction.request.url {
-                let trigger = self.openUrlTrigger
-                
-                Logger.logDebug("WKWebView request URL: \(url.absoluteString)")
 
-                // target = '_blank'
-                if navigationAction.targetFrame == nil {
-                    UIApplication.shared.open(url)
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
+            let trigger = self.openUrlTrigger
+
+            self.dismiss(
+                animated: true,
+                completion: {
+                    if navigationAction.targetFrame != nil {
+                        // делаем замену viewcontroller в navigation stack если target == текущее окно
+                        trigger.onNext((url, .replace))
+                        decisionHandler(WKNavigationActionPolicy.cancel)
+                    } else {
+                        // если target == новое окно, то открываем модально popup шторку
+                        trigger.onNext((url, .popup))
+                        decisionHandler(WKNavigationActionPolicy.cancel)
+                    }
                 }
-                
-                // #smart-yard-close
-                if url.relativeString.contains("#smart-yard-close") {
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    self.dismiss(animated: true)
-                    return
-                }
-                
-                // #smart-yard-push
-                if url.relativeString.contains("#smart-yard-push"),
-                   let newUrl = URL(
-                    string: url.absoluteString.replacingOccurrences(
-                        ofPattern: "#smart-yard-push", withTemplate: ""
-                    )
-                   ) {
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    self.dismiss(
-                        animated: true,
-                        completion: {
-                            trigger.onNext((newUrl, .push))
-                        }
-                    )
-                    return
-                }
-                
-                // #smart-yard-popup
-                if url.relativeString.contains("#smart-yard-popup"),
-                   let newUrl = URL(
-                    string: url.absoluteString.replacingOccurrences(
-                        ofPattern: "#smart-yard-popup", withTemplate: ""
-                    )
-                   ) {
-                    // открываем модально другую popup шторку
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    self.dismiss(
-                        animated: true,
-                        completion: {
-                            trigger.onNext((newUrl, .popup))
-                        }
-                    )
-                    return
-                }
-                
-                // #smart-yard-replace
-                if url.relativeString.contains("#smart-yard-replace"),
-                   let newUrl = URL(
-                    string: url.absoluteString.replacingOccurrences(
-                        ofPattern: "#smart-yard-replace", withTemplate: ""
-                    )
-                   ) {
-                    // заменяем текущий контроллер
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    self.dismiss(
-                        animated: true,
-                        completion: {
-                            trigger.onNext((newUrl, .replace))
-                        }
-                    )
-                    return
-                }
-                // #smart-yard-external
-                if url.relativeString.contains("#smart-yard-external"),
-                   let newUrl = URL(
-                    string: url.absoluteString.replacingOccurrences(
-                        ofPattern: "#smart-yard-external", withTemplate: ""
-                    )
-                   ) {
-                    // открываем в новом окне через системный вызов
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    self.dismiss(
-                        animated: true,
-                        completion: {
-                            UIApplication.shared.open(newUrl)
-                        }
-                    )
-                    return
-                }
-                
-                // если это sberpay:, tel: или ещё какой-то кастомный дип-линк, то обрабатывыаем переход по умолчанию
-                guard url.scheme == "https" || url.scheme == "http" else {
-                    UIApplication.shared.open(url)
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-            }
-            
+            )
+
+        } else {
             decisionHandler(WKNavigationActionPolicy.allow)
         }
-        
+    }
+
+    private func decideNavigation(
+        _ navigationAction: WKNavigationAction,
+        decisionHandler: (WKNavigationActionPolicy) -> Void
+    ) {
+        guard navigationAction.navigationType != .reload, let url = navigationAction.request.url else {
+            decisionHandler(.allow)
+            return
+        }
+        Logger.logDebug("WKWebView request URL: \(url.absoluteString)")
+
+        if navigationAction.targetFrame == nil {
+            UIApplication.shared.open(url)
+            decisionHandler(.cancel)
+            return
+        }
+        if url.relativeString.contains("#smart-yard-close") {
+            decisionHandler(.cancel)
+            dismiss(animated: true)
+            return
+        }
+        if let transition = url.smartYardTransition {
+            let trigger = openUrlTrigger
+            decisionHandler(.cancel)
+            dismiss(animated: true) { trigger.onNext(transition) }
+            return
+        }
+        if let externalURL = url.removingWebViewMarker("#smart-yard-external") {
+            decisionHandler(.cancel)
+            dismiss(animated: true) { UIApplication.shared.open(externalURL) }
+            return
+        }
+        guard url.scheme == "https" || url.scheme == "http" else {
+            UIApplication.shared.open(url)
+            decisionHandler(.cancel)
+            return
+        }
+        decisionHandler(.allow)
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {

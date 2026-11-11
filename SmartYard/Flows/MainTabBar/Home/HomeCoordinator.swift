@@ -52,7 +52,6 @@ enum HomeRoute: Route {
 
 final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
     
-    
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
     private let pushNotificationService: PushNotificationService
@@ -91,8 +90,67 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
         subscribeToNewAddressNotifications()
     }
     
-    // swiftlint:disable:next function_body_length cyclomatic_complexity
     override func prepareTransition(for route: HomeRoute) -> NavigationTransition {
+        makeTransition(for: route)
+    }
+
+    private func subscribeToNewAddressNotifications() {
+        NotificationCenter.default.rx.notification(.addressAdded)
+            .asDriverOnErrorJustComplete()
+            .mapToVoid()
+            .drive(
+                onNext: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+
+                    // MARK: Если в стеке уже есть AddressesListViewController - ничего делать не надо
+                    guard !(self.rootViewController.viewControllers.contains {
+                        $0 is AddressesListViewController
+                    }) else {
+                        return
+                    }
+
+                    // MARK: Если его нет в стеке - принудительно возвращаем юзера на главный экран
+                    self.trigger(.main)
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+
+}
+
+private extension HomeCoordinator {
+    func makeOnlineCameraViewModels(from cameras: [CameraObject]) -> [CameraViewModel] {
+        cameras.enumerated().map { index, camera in
+            let url = URL(string: camera.baseURLString)!
+            var videos: [SYPlayerResourceVideo] = []
+
+            if let whepURL = camera.whepURL {
+                videos.append(SYPlayerResourceVideo(whepEndpointURL: whepURL))
+            }
+            videos.append(SYPlayerResourceVideo(url: url))
+
+            return CameraViewModel(
+                identity: "\(index)_\(camera.id)",
+                id: index,
+                number: camera.cameraNumber,
+                resource: SYPlayerResource(
+                    videos: videos,
+                    previewImage: URL(string: camera.previewURL),
+                    name: camera.name,
+                    videoType: .online,
+                    hasSound: camera.hasSound
+                ),
+                isMuted: !camera.hasSound
+            )
+        }
+    }
+}
+
+private extension HomeCoordinator {
+    // swiftlint:disable:next function_body_length cyclomatic_complexity
+    func makeTransition(for route: HomeRoute) -> NavigationTransition {
         switch route {
         case .main:
             let vm = AddressesListViewModel(
@@ -411,59 +469,6 @@ final class HomeCoordinator: NavigationCoordinator<HomeRoute>, HasDisposeBag {
 
             addChild(coordinator)
             return .none()
-        }
-    }
-    
-    private func subscribeToNewAddressNotifications() {
-        NotificationCenter.default.rx.notification(.addressAdded)
-            .asDriverOnErrorJustComplete()
-            .mapToVoid()
-            .drive(
-                onNext: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    // MARK: Если в стеке уже есть AddressesListViewController - ничего делать не надо
-                    guard !(self.rootViewController.viewControllers.contains {
-                        $0 is AddressesListViewController
-                    }) else {
-                        return
-                    }
-                    
-                    // MARK: Если его нет в стеке - принудительно возвращаем юзера на главный экран
-                    self.trigger(.main)
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-}
-
-private extension HomeCoordinator {
-    func makeOnlineCameraViewModels(from cameras: [CameraObject]) -> [CameraViewModel] {
-        cameras.enumerated().map { index, camera in
-            let url = URL(string: camera.baseURLString)!
-            var videos: [SYPlayerResourceVideo] = []
-
-            if let whepURL = camera.whepURL {
-                videos.append(SYPlayerResourceVideo(whepEndpointURL: whepURL))
-            }
-            videos.append(SYPlayerResourceVideo(url: url))
-
-            return CameraViewModel(
-                identity: "\(index)_\(camera.id)",
-                id: index,
-                number: camera.cameraNumber,
-                resource: SYPlayerResource(
-                    videos: videos,
-                    previewImage: URL(string: camera.previewURL),
-                    name: camera.name,
-                    videoType: .online,
-                    hasSound: camera.hasSound
-                ),
-                isMuted: !camera.hasSound
-            )
         }
     }
 }

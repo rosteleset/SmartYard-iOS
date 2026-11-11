@@ -9,19 +9,23 @@ import Foundation
 
 extension AddressesListViewModel {
 
+    struct SectionPresentation {
+        let expansionState: [String: Bool]
+        let objectAccess: [AddressesListDataItemIdentity: Bool]
+        let showsEntrancePreviews: Bool
+    }
+
     // swiftlint:disable:next function_body_length
     func createSections(
         approvedAddressesData: GetAddressListResponseData,
         unapprovedAddressesData: GetListConnectResponseData,
         camMapData: CamMapCCTVResponseData,
-        expansionStateDict: [String: Bool],
-        objectAccessDict: [AddressesListDataItemIdentity: Bool],
-        shouldShowEntrancePreviews: Bool
+        presentation: SectionPresentation
     ) -> [AddressesListSectionModel] {
         // swiftlint:disable:next closure_body_length
         var sectionModels = approvedAddressesData.map { address -> AddressesListSectionModel in
             let addressId = address.houseId
-            let isSectionExpanded = expansionStateDict[addressId, default: false]
+            let isSectionExpanded = presentation.expansionState[addressId, default: false]
 
             let header: AddressesListDataItem = .header(
                 identity: .header(addressId: addressId),
@@ -41,13 +45,12 @@ extension AddressesListViewModel {
                         identity: identity,
                         type: door.type,
                         name: door.name,
-                        isOpened: objectAccessDict[identity, default: false]
+                        isOpened: presentation.objectAccess[identity, default: false]
                     )
                 }
 
                 let resolvedCameras = resolveCameras(for: address.doors, camMap: camMapData)
-                let doorPreviewItems = zip(address.doors, resolvedCameras).map {
-                    door, camera -> AddressesListDoorPreviewItem in
+                let doorPreviewItems = zip(address.doors, resolvedCameras).map { door, camera in
                     let identity = makeDoorIdentity(addressId: addressId, door: door)
 
                     return AddressesListDoorPreviewItem(
@@ -57,7 +60,7 @@ extension AddressesListViewModel {
                         iconImageName: door.type.iconImageName,
                         previewSource: makePreviewSource(from: camera),
                         hasCamera: camera != nil,
-                        isOpened: objectAccessDict[identity, default: false]
+                        isOpened: presentation.objectAccess[identity, default: false]
                     )
                 }
 
@@ -87,7 +90,7 @@ extension AddressesListViewModel {
                     return .history(identity: .history(addressId: addressId), numberOfEvents: 0)
                 }()
 
-                let entranceItems = shouldShowEntrancePreviews ? [doorPreviewPager].compactMap { $0 } : doorItems
+                let entranceItems = presentation.showsEntrancePreviews ? [doorPreviewPager].compactMap { $0 } : doorItems
                 let extensionItems = address.extensions.map { ext in
                     AddressesListDataItem.extensionItem(
                         identity: .serviceExtension(addressId: addressId, extId: ext.extId),
@@ -159,7 +162,7 @@ extension AddressesListViewModel {
         for doors: [APIDoor],
         camMap: CamMapCCTVResponseData
     ) -> [CameraObject?] {
-        var mappedCameraIndices = Array<Int?>(repeating: nil, count: doors.count)
+        var mappedCameraIndices = [Int?](repeating: nil, count: doors.count)
         var usedCameraIndices = Set<Int>()
 
         for (doorIndex, door) in doors.enumerated() {
@@ -207,19 +210,22 @@ extension AddressesListViewModel {
                 return nil
             }
 
-            let mappedCamera = camMap[cameraIndex]
-            return CameraObject(
-                id: mappedCamera.id,
-                position: Constants.defaultMapCenterCoordinates,
-                cameraNumber: 1,
-                name: door.name,
-                video: mappedCamera.url,
-                token: mappedCamera.token,
-                serverType: mappedCamera.serverType,
-                hlsMode: mappedCamera.hlsMode,
-                hasSound: mappedCamera.hasSound
-            )
+            return makeCamera(from: camMap[cameraIndex], doorName: door.name)
         }
+    }
+
+    private func makeCamera(from mappedCamera: APICamMap, doorName: String) -> CameraObject {
+        return CameraObject(
+            id: mappedCamera.id,
+            position: Constants.defaultMapCenterCoordinates,
+            cameraNumber: 1,
+            name: doorName,
+            video: mappedCamera.url,
+            token: mappedCamera.token,
+            serverType: mappedCamera.serverType,
+            hlsMode: mappedCamera.hlsMode,
+            hasSound: mappedCamera.hasSound
+        )
     }
 
     func makePreviewSource(from camera: CameraObject?) -> AddressesListDoorPreviewSource? {

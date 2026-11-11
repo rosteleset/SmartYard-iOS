@@ -20,20 +20,20 @@ final class OnlineFullscreenViewController: BaseViewController {
 
     // MARK: - Dependencies
 
-    private let cameras: [CameraViewModel]
-    private let playback: OnlinePlaybackCoordinating
+    let cameras: [CameraViewModel]
+    let playback: OnlinePlaybackCoordinating
     private let accessActions: [Int: OnlineFullscreenAccessAction]
     private let onDismiss: (Int) -> Void
 
     // MARK: - State
 
-    private var currentIndex: Int
+    var currentIndex: Int
     private var lastBoundsSize: CGSize = .zero
     private var didInitialScroll = false
     private var didNotifyDismiss = false
     private var isOpeningAccess = false
-    private var isPagingHandoffActive = false
-    private var isSwipeDismissInProgress = false
+    var isPagingHandoffActive = false
+    var isSwipeDismissInProgress = false
     private var accessOpenedStateByIndex: [Int: Bool]
     private var resetAccessButtonWorkItem: DispatchWorkItem?
 
@@ -52,7 +52,7 @@ final class OnlineFullscreenViewController: BaseViewController {
 
     // MARK: - UI
 
-    private lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
@@ -71,7 +71,7 @@ final class OnlineFullscreenViewController: BaseViewController {
         return cv
     }()
 
-    private lazy var dismissPanGesture: UIPanGestureRecognizer = {
+    lazy var dismissPanGesture: UIPanGestureRecognizer = {
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(handleDismissPan(_:)))
         gesture.delegate = self
         gesture.cancelsTouchesInView = false
@@ -172,110 +172,16 @@ final class OnlineFullscreenViewController: BaseViewController {
     }
 }
 
-// MARK: - UICollectionViewDataSource
-
-extension OnlineFullscreenViewController: UICollectionViewDataSource {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        cameras.count
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-
-        let cell = collectionView.dequeueReusableCell(
-            withClass: OnlineFullscreenCameraCell.self,
-            for: indexPath
-        )
-        let camera = cameras[indexPath.item]
-        cell.configure(cameraId: camera.id, previewURL: camera.resource.previewImage)
-        cell.onRequestExitFullscreen = { [weak self] in self?.dismiss(animated: true) }
-        cell.setPagingPanGesture(collectionView.panGestureRecognizer)
-        cell.onPagingHandoffStateChanged = { [weak self] isActive in
-            self?.setPagingHandoffActive(isActive)
-        }
-        cell.onContentTap = { [weak self] in
-            self?.playback.toggleControlsVisibility()
-        }
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-
-extension OnlineFullscreenViewController: UICollectionViewDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        guard let cell = cell as? OnlineFullscreenCameraCell else { return }
-        guard cameras.indices.contains(indexPath.item) else { return }
-        guard !isPagingHandoffActive else {
-            return
-        }
-
-        if indexPath.item != currentIndex {
-            cell.resetZoomAndCenter()
-        }
-
-        let camera = cameras[indexPath.item]
-        playback.willDisplay(cameraId: camera.id, cell: cell)
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didEndDisplaying cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        guard let cell = cell as? OnlineFullscreenCameraCell else { return }
-        guard cameras.indices.contains(indexPath.item) else { return }
-        guard !isPagingHandoffActive else {
-            return
-        }
-
-        cell.resetZoom()
-
-        let camera = cameras[indexPath.item]
-        playback.didEndDisplay(cameraId: camera.id, cell: cell)
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-
-extension OnlineFullscreenViewController: UIScrollViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard !isPagingHandoffActive else { return }
-        updateCurrentIndexIfNeeded()
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard !isPagingHandoffActive else { return }
-        if !decelerate {
-            updateCurrentIndexIfNeeded()
-        }
-    }
-
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        guard !isPagingHandoffActive else { return }
-        updateCurrentIndexIfNeeded(force: true)
-    }
-}
-
 // MARK: - Private
 
-private extension OnlineFullscreenViewController {
-    func setupUI() {
+extension OnlineFullscreenViewController {
+    private func setupUI() {
         view.backgroundColor = .black
         view.addGestureRecognizer(dismissPanGesture)
         configureAccessButton()
     }
 
-    @objc func handleDismissPan(_ gesture: UIPanGestureRecognizer) {
+    @objc private func handleDismissPan(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: view)
 
         switch gesture.state {
@@ -300,7 +206,7 @@ private extension OnlineFullscreenViewController {
         }
     }
 
-    func finishDismissPan(translationY: CGFloat, velocityY: CGFloat) {
+    private func finishDismissPan(translationY: CGFloat, velocityY: CGFloat) {
         let distanceThreshold = view.bounds.height * SwipeDismiss.distanceThresholdRatio
         let shouldDismiss = abs(translationY) >= distanceThreshold
             || abs(velocityY) >= SwipeDismiss.velocityThreshold
@@ -330,7 +236,7 @@ private extension OnlineFullscreenViewController {
         )
     }
 
-    func restoreAfterDismissPan() {
+    private func restoreAfterDismissPan() {
         UIView.animate(
             withDuration: 0.3,
             delay: 0,
@@ -344,11 +250,11 @@ private extension OnlineFullscreenViewController {
         )
     }
 
-    func setupConstraints() {
+    private func setupConstraints() {
         view.pinSubview(collectionView)
     }
 
-    func configureAccessButton() {
+    private func configureAccessButton() {
         guard let accessAction = accessAction(for: currentIndex) else {
             playback.setControlsAutoHideEnabled(true)
             playback.removeAllRightAccessoryItems()
@@ -364,7 +270,7 @@ private extension OnlineFullscreenViewController {
         ])
     }
 
-    func accessButtonItem(isOpened: Bool, isEnabled: Bool) -> SYPlayerControlAccessoryItem {
+    private func accessButtonItem(isOpened: Bool, isEnabled: Bool) -> SYPlayerControlAccessoryItem {
         SYPlayerControlAccessoryItem(
             id: AccessButton.id,
             image: accessButtonIcon(isOpened: false),
@@ -380,13 +286,13 @@ private extension OnlineFullscreenViewController {
         )
     }
 
-    func accessButtonIcon(isOpened: Bool) -> UIImage? {
+    private func accessButtonIcon(isOpened: Bool) -> UIImage? {
         let symbolName = isOpened ? "lock.open.fill" : "lock.fill"
         return UIImage(systemName: symbolName, withConfiguration: AccessButton.iconConfiguration)?
             .withRenderingMode(.alwaysTemplate)
     }
 
-    func accessButtonAppearance(isOpened: Bool) -> SYPlayerControlAccessoryAppearance {
+    private func accessButtonAppearance(isOpened: Bool) -> SYPlayerControlAccessoryAppearance {
         SYPlayerControlAccessoryAppearance(
             tintColor: .white,
             selectedTintColor: .white,
@@ -402,7 +308,7 @@ private extension OnlineFullscreenViewController {
         )
     }
 
-    func openButtonTapped() {
+    private func openButtonTapped() {
         guard !isOpeningAccess,
               let accessAction = accessAction(for: currentIndex)
         else {
@@ -429,7 +335,7 @@ private extension OnlineFullscreenViewController {
         }
     }
 
-    func updateAccessButton(index: Int, isOpened: Bool, isEnabled: Bool) {
+    private func updateAccessButton(index: Int, isOpened: Bool, isEnabled: Bool) {
         guard currentIndex == index else {
             return
         }
@@ -445,7 +351,7 @@ private extension OnlineFullscreenViewController {
         }
     }
 
-    func scheduleAccessButtonReset(index: Int) {
+    private func scheduleAccessButtonReset(index: Int) {
         resetAccessButtonWorkItem?.cancel()
 
         let workItem = DispatchWorkItem { [weak self] in
@@ -457,7 +363,7 @@ private extension OnlineFullscreenViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: workItem)
     }
 
-    func updateLayoutIfNeeded() {
+    private func updateLayoutIfNeeded() {
         let size = collectionView.bounds.size
         guard size != .zero else { return }
 
@@ -473,7 +379,7 @@ private extension OnlineFullscreenViewController {
         }
     }
 
-    func scrollToIndex(_ index: Int, animated: Bool) {
+    private func scrollToIndex(_ index: Int, animated: Bool) {
         guard cameras.indices.contains(index) else { return }
         let indexPath = IndexPath(item: index, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
@@ -486,7 +392,7 @@ private extension OnlineFullscreenViewController {
         updateSelection(index: clamped, force: force)
     }
 
-    func updateSelection(index: Int, force: Bool) {
+    private func updateSelection(index: Int, force: Bool) {
         guard cameras.indices.contains(index) else { return }
         if !force, index == currentIndex { return }
 
@@ -503,7 +409,7 @@ private extension OnlineFullscreenViewController {
         }
     }
 
-    func notifyDismiss() {
+    private func notifyDismiss() {
         guard !didNotifyDismiss else { return }
         didNotifyDismiss = true
 
@@ -524,7 +430,7 @@ private extension OnlineFullscreenViewController {
         updateCurrentIndexIfNeeded()
     }
 
-    func accessAction(for index: Int) -> OnlineFullscreenAccessAction? {
+    private func accessAction(for index: Int) -> OnlineFullscreenAccessAction? {
         guard cameras.indices.contains(index) else {
             return nil
         }
@@ -532,7 +438,7 @@ private extension OnlineFullscreenViewController {
         return accessActions[index]
     }
 
-    var currentCameraId: CameraID? {
+    private var currentCameraId: CameraID? {
         guard cameras.indices.contains(currentIndex) else {
             return nil
         }
@@ -540,7 +446,7 @@ private extension OnlineFullscreenViewController {
         return cameras[currentIndex].id
     }
 
-    func accessOpenedState(for index: Int) -> Bool {
+    private func accessOpenedState(for index: Int) -> Bool {
         guard cameras.indices.contains(index) else {
             return false
         }
@@ -548,7 +454,7 @@ private extension OnlineFullscreenViewController {
         return accessOpenedStateByIndex[index] ?? accessActions[index]?.isOpened ?? false
     }
 
-    func logCameraLandscapeEnabled() {
+    private func logCameraLandscapeEnabled() {
         AppAnalytics.log(
             AppAnalyticsEvent.cameraLandscapeEnabled(
                 source: "fullscreen",
@@ -557,7 +463,7 @@ private extension OnlineFullscreenViewController {
         )
     }
 
-    func logCameraFullscreenClosed() {
+    private func logCameraFullscreenClosed() {
         AppAnalytics.log(
             AppAnalyticsEvent.cameraFullscreenClosed(
                 source: "fullscreen",
@@ -565,33 +471,5 @@ private extension OnlineFullscreenViewController {
                 streamType: "live"
             )
         )
-    }
-}
-
-// MARK: - UIGestureRecognizerDelegate
-
-extension OnlineFullscreenViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard gestureRecognizer === dismissPanGesture,
-              !isSwipeDismissInProgress,
-              !isPagingHandoffActive,
-              let panGesture = gestureRecognizer as? UIPanGestureRecognizer,
-              let currentCell = collectionView.cellForItem(
-                  at: IndexPath(item: currentIndex, section: 0)
-              ) as? OnlineFullscreenCameraCell,
-              !currentCell.isZoomed
-        else {
-            return false
-        }
-
-        let velocity = panGesture.velocity(in: view)
-        return abs(velocity.y) > abs(velocity.x)
-    }
-
-    func gestureRecognizer(
-        _ gestureRecognizer: UIGestureRecognizer,
-        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
-    ) -> Bool {
-        gestureRecognizer === dismissPanGesture || otherGestureRecognizer === dismissPanGesture
     }
 }

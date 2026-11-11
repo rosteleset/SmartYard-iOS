@@ -15,7 +15,6 @@ final class IssueService: HasDisposeBag {
     private let apiWrapper: APIWrapper
     private let accessService: AccessService
     
-    
     init(apiWrapper: APIWrapper, accessService: AccessService) {
         self.apiWrapper = apiWrapper
         self.accessService = accessService
@@ -45,38 +44,6 @@ final class IssueService: HasDisposeBag {
                     notes: notes
                 )
             )
-            return apiWrapper.sendIssue(issueV1: issue)
-        }
-    }
-    
-    // экран 35 - Меню
-    func sendCallbackIssue() -> Single<CreateIssueResponseData?> {
-        
-        switch accessService.issuesVersion {
-        case "2":
-            let issue = IssueV2(
-                type: .requestCallback,
-                userName: accessService.clientName?.name
-            )
-            return apiWrapper.sendIssue(issueV2: issue)
-        default:
-            let issue = Issue(issueType: .orderCallback)
-            return apiWrapper.sendIssue(issueV1: issue)
-        }
-    }
-    
-    // экран 19 и 34.00
-    func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {
-        
-        switch accessService.issuesVersion {
-        case "2":
-            let issue = IssueV2(
-                type: .requestCredentials,
-                userName: accessService.clientName?.name
-            )
-            return apiWrapper.sendIssue(issueV2: issue)
-        default:
-            let issue = Issue(issueType: .dontRememberAnythingIssue(userInfo: getUserInfo(address: nil, clientId: nil)))
             return apiWrapper.sendIssue(issueV1: issue)
         }
     }
@@ -306,4 +273,39 @@ final class IssueService: HasDisposeBag {
         )
     }
     
+}
+
+extension IssueService {
+
+    // экран 35 - Меню
+    func sendCallbackIssue() -> Single<CreateIssueResponseData?> {
+
+        switch accessService.issuesVersion {
+        case "2":
+            let issue = IssueV2(
+                type: .requestCallback,
+                userName: accessService.clientName?.name
+            )
+            return apiWrapper.sendIssue(issueV2: issue)
+        default:
+            let issue = Issue(issueType: .orderCallback)
+            return apiWrapper.sendIssue(issueV1: issue)
+        }
+    }
+
+    // экран 19 и 34.00
+    func sendNothingRememberIssue() -> Single<CreateIssueResponseData?> {
+
+        switch accessService.issuesVersion {
+        case "2":
+            let issue = IssueV2(
+                type: .requestCredentials,
+                userName: accessService.clientName?.name
+            )
+            return apiWrapper.sendIssue(issueV2: issue)
+        default:
+            let issue = Issue(issueType: .dontRememberAnythingIssue(userInfo: getUserInfo(address: nil, clientId: nil)))
+            return apiWrapper.sendIssue(issueV1: issue)
+        }
+    }
 }

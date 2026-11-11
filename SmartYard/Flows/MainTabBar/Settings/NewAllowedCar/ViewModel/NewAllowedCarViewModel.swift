@@ -13,8 +13,10 @@ import XCoordinator
 
 protocol NewAllowedCarViewModelDelegate: AnyObject {
     func newAllowedCarViewModel(
-        _ viewModel: NewAllowedCarViewModel, save car: AllowedCar,
-        trackingEnabled: Bool, replacing original: AllowedCar?
+        _ viewModel: NewAllowedCarViewModel,
+        save car: AllowedCar,
+        trackingEnabled: Bool,
+        replacing original: AllowedCar?
     ) -> Single<LicensePlateSaveResult>
 }
 
@@ -33,8 +35,11 @@ final class NewAllowedCarViewModel: BaseViewModel {
     var timeZone: TimeZone { TimeZone(identifier: apiWrapper.accessService.timeZone) ?? .current }
 
     init(
-        router: WeakRouter<SettingsRoute>, delegate: NewAllowedCarViewModelDelegate,
-        apiWrapper: APIWrapper, logoutHelper: LogoutHelper, originalCar: AllowedCar? = nil
+        router: WeakRouter<SettingsRoute>,
+        delegate: NewAllowedCarViewModelDelegate,
+        apiWrapper: APIWrapper,
+        logoutHelper: LogoutHelper,
+        originalCar: AllowedCar? = nil
     ) {
         self.router = router
         self.delegate = delegate
@@ -45,19 +50,7 @@ final class NewAllowedCarViewModel: BaseViewModel {
     }
 
     func transform(_ input: Input) -> Output {
-        errorTracker.asDriver()
-            .catchAuthorizationError { [weak self] in
-                guard let self else { return }
-                self.logoutHelper.showAuthErrorAlert(
-                    activityTracker: self.activityTracker,
-                    errorTracker: self.errorTracker, disposeBag: self.disposeBag
-                )
-            }
-            .ignoreNil()
-            .drive(with: self) { owner, error in
-                owner.router.trigger(.alert(title: L10n.Common.error, message: error.localizedDescription))
-            }
-            .disposed(by: disposeBag)
+        bindErrors()
 
         let optionsUpdated = apiWrapper.accessService.optionsUpdated
             .asDriverOnErrorJustComplete().startWith(())
@@ -66,24 +59,7 @@ final class NewAllowedCarViewModel: BaseViewModel {
         let trackingSupported = optionsUpdated.map { [weak self] in self?.supportsTracking ?? false }
             .distinctUntilChanged()
         let formatsUnavailable = BehaviorRelay(value: false)
-        let formats: Driver<[APILicensePlateFormat]?> = timedAccess
-            .flatMapLatest { [weak self] timed -> Driver<[APILicensePlateFormat]?> in
-                guard let self else { return .empty() }
-                guard timed else {
-                    formatsUnavailable.accept(false)
-                    return .just([])
-                }
-                return input.retryFormatsTrigger.startWith(())
-                    .flatMapLatest { [weak self] _ -> Driver<[APILicensePlateFormat]?> in
-                        guard let self else { return .empty() }
-                        return self.apiWrapper.getLicensePlateFormats()
-                            .map { Optional($0) }
-                            .trackError(self.errorTracker)
-                            .asDriver(onErrorJustReturn: nil)
-                            .do(onNext: { formatsUnavailable.accept($0?.isEmpty ?? true) })
-                    }
-                    .startWith(nil)
-            }
+        let formats = loadFormats(timedAccess: timedAccess, retry: input.retryFormatsTrigger, unavailable: formatsUnavailable)
 
         let unsupportedNumber = Driver.combineLatest(input.car, formats, timedAccess)
             .map { car, formats, timed in
@@ -113,6 +89,62 @@ final class NewAllowedCarViewModel: BaseViewModel {
             .drive(with: self) { owner, _ in owner.router.trigger(.dismiss) }
             .disposed(by: disposeBag)
 
+        bindSave(input, canConfirm: canConfirm)
+
+        return Output(
+            canContinue: canContinue,
+            canConfirm: canConfirm,
+            isLoading: activityTracker.asDriver(),
+            supportsTimedAccess: timedAccess,
+            supportsTracking: trackingSupported,
+            formatsUnavailable: formatsUnavailable.asDriver(),
+            unsupportedNumber: unsupportedNumber
+        )
+    }
+
+    private func bindErrors() {
+        errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self else { return }
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: self.activityTracker,
+                    errorTracker: self.errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
+            .drive(with: self) { owner, error in
+                owner.router.trigger(.alert(title: L10n.Common.error, message: error.localizedDescription))
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func loadFormats(
+        timedAccess: Driver<Bool>,
+        retry: Driver<Void>,
+        unavailable: BehaviorRelay<Bool>
+    ) -> Driver<[APILicensePlateFormat]?> {
+        return timedAccess
+            .flatMapLatest { [weak self] timed -> Driver<[APILicensePlateFormat]?> in
+                guard let self else { return .empty() }
+                guard timed else {
+                    unavailable.accept(false)
+                    return .just([])
+                }
+                return retry.startWith(())
+                    .flatMapLatest { [weak self] _ -> Driver<[APILicensePlateFormat]?> in
+                        guard let self else { return .empty() }
+                        return self.apiWrapper.getLicensePlateFormats()
+                            .map { Optional($0) }
+                            .trackError(self.errorTracker)
+                            .asDriver(onErrorJustReturn: nil)
+                            .do(onNext: { unavailable.accept($0?.isEmpty ?? true) })
+                    }
+                    .startWith(nil)
+            }
+    }
+
+    private func bindSave(_ input: Input, canConfirm: Driver<Bool>) {
         let draft = Driver.combineLatest(input.car, input.trackingEnabled, canConfirm)
         input.addAccessTrigger.withLatestFrom(draft)
             .asObservable()
@@ -134,12 +166,6 @@ final class NewAllowedCarViewModel: BaseViewModel {
                 }
             }
             .disposed(by: disposeBag)
-
-        return Output(
-            canContinue: canContinue, canConfirm: canConfirm, isLoading: activityTracker.asDriver(),
-            supportsTimedAccess: timedAccess, supportsTracking: trackingSupported,
-            formatsUnavailable: formatsUnavailable.asDriver(), unsupportedNumber: unsupportedNumber
-        )
     }
 }
 

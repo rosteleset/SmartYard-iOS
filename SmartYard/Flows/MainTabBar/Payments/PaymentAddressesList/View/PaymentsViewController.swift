@@ -92,9 +92,11 @@ final class PaymentsViewController: BaseViewController, LoaderPresentable {
                     self?.collectionView.isHidden = shouldBlockInteraction
                     self?.skeletonContainer.isHidden = !shouldBlockInteraction
                     
-                    shouldBlockInteraction ?
-                        self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.secondBackgroundColor) :
+                    if shouldBlockInteraction {
+                        self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.secondBackgroundColor)
+                    } else {
                         self?.skeletonContainer.hideSkeleton()
+                    }
                 }
             )
             .disposed(by: disposeBag)

@@ -39,31 +39,8 @@ final class NotificationsViewModel: BaseViewModel {
         let errorTracker = ErrorTracker()
         let activityTracker = ActivityTracker()
         
-        errorTracker.asDriver()
-            .catchAuthorizationError { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                
-                self.logoutHelper.showAuthErrorAlert(
-                    activityTracker: activityTracker,
-                    errorTracker: errorTracker,
-                    disposeBag: self.disposeBag
-                )
-            }
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(
-                        .alert(
-                            title: L10n.Common.error,
-                            message: error.localizedDescription
-                        )
-                    )
-                }
-            )
-            .disposed(by: disposeBag)
-        
+        bindErrors(errorTracker, activityTracker: activityTracker)
+
         input.shareUrlTrigger
             .drive(
                 onNext: { [weak self] url in
@@ -117,6 +94,33 @@ final class NotificationsViewModel: BaseViewModel {
             inboxResponse: inboxResponseSubject.asDriver(onErrorJustReturn: nil),
             isLoading: activityTracker.asDriver()
         )
+    }
+
+    private func bindErrors(_ errorTracker: ErrorTracker, activityTracker: ActivityTracker) {
+        errorTracker.asDriver()
+            .catchAuthorizationError { [weak self] in
+                guard let self = self else {
+                    return
+                }
+
+                self.logoutHelper.showAuthErrorAlert(
+                    activityTracker: activityTracker,
+                    errorTracker: errorTracker,
+                    disposeBag: self.disposeBag
+                )
+            }
+            .ignoreNil()
+            .drive(
+                onNext: { [weak self] error in
+                    self?.router.trigger(
+                        .alert(
+                            title: L10n.Common.error,
+                            message: error.localizedDescription
+                        )
+                    )
+                }
+            )
+            .disposed(by: disposeBag)
     }
     
 }

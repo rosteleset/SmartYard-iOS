@@ -36,7 +36,6 @@ final class FullscreenPlayerViewController: UIViewController, HasDisposeBag {
     private let isSoundOn = BehaviorSubject<Bool>(value: false)
     private var hasSound: Bool
     
-    
     init(playedVideoType: PlayedVideoType, preferredPlaybackRate: Float, hasSound: Bool, isSoundOn: Bool) {
         self.playedVideoType = playedVideoType
         self.preferredPlaybackRate = preferredPlaybackRate
@@ -259,7 +258,6 @@ final class FullscreenPlayerViewController: UIViewController, HasDisposeBag {
             return
         }
     
-        
         player.rx
             .observe(Float.self, "rate", options: [.new])
             .observe(on: MainScheduler.asyncInstance)

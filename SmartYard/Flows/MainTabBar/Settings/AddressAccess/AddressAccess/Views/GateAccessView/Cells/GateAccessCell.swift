@@ -36,7 +36,6 @@ final class GateAccessCell: UICollectionViewCell, HasDisposeBag {
     let deleteButtonTappedRelay = PublishRelay<Void>()
     let smsButtonTappedRelay = PublishRelay<Void>()
     
-    
     // MARK: - Lifecycle
     
     override func awakeFromNib() {

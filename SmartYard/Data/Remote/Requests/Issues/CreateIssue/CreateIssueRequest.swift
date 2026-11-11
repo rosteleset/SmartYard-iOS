@@ -8,6 +8,13 @@
 
 import Foundation
 
+struct CreateIssueV2Request: Codable {
+
+    let accessToken: String
+    let issue: IssueV2
+
+}
+
 struct CreateIssueRequest: Codable {
     
     let accessToken: String
@@ -32,18 +39,6 @@ extension CreateIssueRequest {
             "customFields": customFields,
             "actions": actions
         ]
-    }
-    
-}
-
-struct CreateIssueV2Request: Codable {
-    
-    let accessToken: String
-    let issue: IssueV2
-    
-    init(accessToken: String, issue: IssueV2) {
-        self.accessToken = accessToken
-        self.issue = issue
     }
     
 }

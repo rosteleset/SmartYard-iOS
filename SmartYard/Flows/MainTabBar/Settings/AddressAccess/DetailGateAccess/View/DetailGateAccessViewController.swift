@@ -133,6 +133,10 @@ final class DetailGateAccessViewController: BaseViewController, UIScrollViewDele
             .drive(collectionView.rx.items(dataSource: dataSource!))
             .disposed(by: disposeBag)
         
+        bindCollectionSize(output)
+    }
+
+    private func bindCollectionSize(_ output: DetailGateAccessViewModel.Output) {
         output.collectionHeight
             .drive { [weak self] height in
                 self?.collectionViewHeightConstant.constant = height
@@ -188,25 +192,8 @@ extension DetailGateAccessViewController {
                 
                 switch item {
                 case .car(let licencePlate):
-                    let cell = collectionView.dequeueReusableCell(
-                        withClass: DetailGateAccessCell.self,
-                        for: indexPath
-                    )
-                    cell.configure(with: licencePlate)
-                    cell.editButtonTappedRelay
-                        .subscribe(with: self) { owner, _ in
-                            owner.editCarTappedRelay.accept(licencePlate)
-                        }
-                        .disposed(by: cell.disposeBag)
-                    
-                    cell.deleteButtonTappedRelay
-                        .bind { [weak self] in
-                            self?.deleteCarTappedRelay.accept(licencePlate)
-                        }
-                        .disposed(by: cell.disposeBag)
-                    
-                    return cell
-                    
+                    return self.configureCarCell(in: collectionView, at: indexPath, car: licencePlate)
+
                 case .person(let personViewState):
                     let cell = collectionView.dequeueReusableCell(
                         withClass: DetailGateAccessCell.self,
@@ -248,6 +235,31 @@ extension DetailGateAccessViewController {
         self.dataSource = dataSource
     }
     
+    private func configureCarCell(
+        in collectionView: UICollectionView,
+        at indexPath: IndexPath,
+        car licencePlate: AllowedCar
+    ) -> DetailGateAccessCell {
+        let cell = collectionView.dequeueReusableCell(
+            withClass: DetailGateAccessCell.self,
+            for: indexPath
+        )
+        cell.configure(with: licencePlate)
+        cell.editButtonTappedRelay
+            .subscribe(with: self) { owner, _ in
+                owner.editCarTappedRelay.accept(licencePlate)
+            }
+            .disposed(by: cell.disposeBag)
+
+        cell.deleteButtonTappedRelay
+            .bind { [weak self] in
+                self?.deleteCarTappedRelay.accept(licencePlate)
+            }
+            .disposed(by: cell.disposeBag)
+
+        return cell
+    }
+
     private func configureFlowLayout() -> UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical

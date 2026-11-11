@@ -76,6 +76,10 @@ final class CamerasListViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
         
+        bindLoading(output)
+    }
+
+    private func bindLoading(_ output: CamerasListViewModel.Output) {
         output.isLoading
             .debounce(.milliseconds(25))
             .drive(
@@ -95,9 +99,11 @@ final class CamerasListViewController: BaseViewController, LoaderPresentable {
                     self?.collectionView.isHidden = shouldBlockInteraction
                     self?.skeletonContainer.isHidden = !shouldBlockInteraction
                     
-                    shouldBlockInteraction ?
-                    self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.secondBackgroundColor) :
-                    self?.skeletonContainer.hideSkeleton()
+                    if shouldBlockInteraction {
+                        self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.secondBackgroundColor)
+                    } else {
+                        self?.skeletonContainer.hideSkeleton()
+                    }
                 }
             )
             .disposed(by: disposeBag)

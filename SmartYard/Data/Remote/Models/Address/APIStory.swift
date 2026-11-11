@@ -5,6 +5,28 @@
 //  Created by Codex on 21/05/2026.
 //
 
+enum APIStoryPresentMethod: Decodable {
+    case webPopupController
+    case webViewController
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = (try? container.decode(String.self)) ?? ""
+        let normalizedValue = rawValue
+            .lowercased()
+            .filter { $0.isLetter || $0.isNumber }
+
+        switch normalizedValue {
+        case "webpopupcontroller", "webpopup", "popup":
+            self = .webPopupController
+        case "webviewcontroller", "webview":
+            self = .webViewController
+        default:
+            self = .webPopupController
+        }
+    }
+}
+
 struct APIStory: Decodable {
 
     let imageUrl: String
@@ -33,27 +55,5 @@ struct APIStory: Decodable {
             ?? ""
         presentMethod = (try? container.decode(APIStoryPresentMethod.self, forKey: .presentMethod))
             ?? .webPopupController
-    }
-}
-
-enum APIStoryPresentMethod: Decodable {
-    case webPopupController
-    case webViewController
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = (try? container.decode(String.self)) ?? ""
-        let normalizedValue = rawValue
-            .lowercased()
-            .filter { $0.isLetter || $0.isNumber }
-
-        switch normalizedValue {
-        case "webpopupcontroller", "webpopup", "popup":
-            self = .webPopupController
-        case "webviewcontroller", "webview":
-            self = .webViewController
-        default:
-            self = .webPopupController
-        }
     }
 }

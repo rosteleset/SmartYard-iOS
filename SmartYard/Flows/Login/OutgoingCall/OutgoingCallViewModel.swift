@@ -132,39 +132,7 @@ extension OutgoingCallViewModel {
             .filter { $0 == true }
             .mapToVoid()
             .flatMapLatest { [weak self] () -> Driver<CheckPhoneResponseData?> in
-                    guard let self = self else {
-                        return .just(nil)
-                    }
-                
-                    return self.apiWrapper.checkPhone(userPhone: AccessService.shared.phonePrefix + self.phoneNumber)
-                    .catch { [weak self] error in
-                        guard let self = self else {
-                            return .just(nil)
-                        }
-                        self.logAuthCodeConfirmationFailed(error)
-                        let nsError = error as NSError
-                        
-                        if nsError.code == 403 {
-                            let okAction = UIAlertAction(
-                                title: L10n.Common.ok,
-                                style: .default,
-                                handler: { [weak self] _ in
-                                    self?.router.trigger(.phoneNumber)
-                                }
-                            )
-                            
-                            self.alertService.showDialog(
-                                title: L10n.Common.error,
-                                message: nsError.localizedDescription,
-                                preferredStyle: .alert,
-                                actions: [okAction],
-                                priority: 250
-                            )
-                        }
-                        
-                        return .just(nil)
-                    }
-                    .asDriver(onErrorJustReturn: nil)
+                self?.checkCallStatus() ?? .just(nil)
             }
             .do(
                 onNext: { [weak self] data in
@@ -228,5 +196,37 @@ private extension OutgoingCallViewModel {
     func logAuthSuccess() {
         AppAnalytics.log(AppAnalyticsEvent.authCodeConfirmed(source: "outgoing_call"))
         AppAnalytics.log(AppAnalyticsEvent.authSuccess(source: "outgoing_call"))
+    }
+
+    func checkCallStatus() -> Driver<CheckPhoneResponseData?> {
+        apiWrapper.checkPhone(userPhone: AccessService.shared.phonePrefix + phoneNumber)
+            .catch { [weak self] error in
+                guard let self = self else {
+                    return .just(nil)
+                }
+                self.logAuthCodeConfirmationFailed(error)
+                let nsError = error as NSError
+
+                if nsError.code == 403 {
+                    let okAction = UIAlertAction(
+                        title: L10n.Common.ok,
+                        style: .default,
+                        handler: { [weak self] _ in
+                            self?.router.trigger(.phoneNumber)
+                        }
+                    )
+
+                    self.alertService.showDialog(
+                        title: L10n.Common.error,
+                        message: nsError.localizedDescription,
+                        preferredStyle: .alert,
+                        actions: [okAction],
+                        priority: 250
+                    )
+                }
+
+                return .just(nil)
+            }
+            .asDriver(onErrorJustReturn: nil)
     }
 }

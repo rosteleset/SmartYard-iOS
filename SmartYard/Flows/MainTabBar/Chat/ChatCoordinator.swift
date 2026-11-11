@@ -26,7 +26,6 @@ final class ChatCoordinator: NavigationCoordinator<ChatRoute>, HasDisposeBag {
     private let networkStateProvider: NetworkStateProviding
     var childCoordinator: WebViewCoordinator?
     
-    
     init(
         apiWrapper: APIWrapper,
         accessService: AccessService,

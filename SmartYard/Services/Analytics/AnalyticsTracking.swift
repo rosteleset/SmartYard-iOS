@@ -8,10 +8,6 @@
 import FirebaseAnalytics
 import Foundation
 
-protocol AnalyticsTracking {
-    func logEvent(_ event: AnalyticsEvent)
-}
-
 struct AnalyticsEvent {
     let name: String
     let parameters: [String: Any]?
@@ -43,25 +39,6 @@ enum AppAnalytics {
         safeMessage: String?
     ) {
         tracker.logEvent(
-            AppAnalyticsEvent.appError(
-                scenario: scenario,
-                screen: screen,
-                errorCode: errorCode,
-                safeMessage: safeMessage
-            )
-        )
-    }
-}
-
-extension AnalyticsTracking {
-
-    func logError(
-        scenario: String,
-        screen: String,
-        errorCode: String?,
-        safeMessage: String?
-    ) {
-        logEvent(
             AppAnalyticsEvent.appError(
                 scenario: scenario,
                 screen: screen,
@@ -227,5 +204,28 @@ enum AnalyticsValue {
 
     static func bool(_ value: Bool) -> String {
         value ? "true" : "false"
+    }
+}
+
+protocol AnalyticsTracking {
+    func logEvent(_ event: AnalyticsEvent)
+}
+
+extension AnalyticsTracking {
+
+    func logError(
+        scenario: String,
+        screen: String,
+        errorCode: String?,
+        safeMessage: String?
+    ) {
+        logEvent(
+            AppAnalyticsEvent.appError(
+                scenario: scenario,
+                screen: screen,
+                errorCode: errorCode,
+                safeMessage: safeMessage
+            )
+        )
     }
 }

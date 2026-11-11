@@ -30,6 +30,7 @@ final class HomeOfflineViewController: BaseViewController, UIScrollViewDelegate 
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -125,9 +126,11 @@ final class HomeOfflineViewController: BaseViewController, UIScrollViewDelegate 
                 self?.collectionView.isHidden = shouldBlockInteraction
                 self?.skeletonContainer.isHidden = !shouldBlockInteraction
 
-                shouldBlockInteraction ?
-                self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.backgroundColor) :
-                self?.skeletonContainer.hideSkeleton()
+                if shouldBlockInteraction {
+                    self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.backgroundColor)
+                } else {
+                    self?.skeletonContainer.hideSkeleton()
+                }
             }
             .disposed(by: disposeBag)
 
@@ -137,6 +140,10 @@ final class HomeOfflineViewController: BaseViewController, UIScrollViewDelegate 
             }
             .disposed(by: disposeBag)
 
+        bindSectionScrollUpdates(output)
+    }
+
+    private func bindSectionScrollUpdates(_ output: HomeOfflineViewModel.Output) {
         // MARK: Скроллим таблицу при сворачивании / разворачивании секций для лучшего UX
 
         let updateKindSubject = BehaviorSubject<AddressesListSectionUpdateKind?>(value: nil)
@@ -167,9 +174,9 @@ final class HomeOfflineViewController: BaseViewController, UIScrollViewDelegate 
         // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
 
             .map { [weak self] updateKind, sectionModels -> (AddressesListSectionUpdateKind, IndexPath)? in
-                let neededSectionOffset = sectionModels.enumerated().first { _, model in
+                let neededSectionOffset = sectionModels.firstIndex { model in
                     model.items.contains { $0.identity == updateKind.associatedIdentity }
-                }?.offset
+                }
 
                 guard let section = neededSectionOffset else { return nil }
 
@@ -224,7 +231,6 @@ final class HomeOfflineViewController: BaseViewController, UIScrollViewDelegate 
         }
     }
 
-    // swiftlint:disable:next function_body_length
     private func configureCell(
         collectionView: UICollectionView,
         indexPath: IndexPath,

@@ -18,7 +18,6 @@ final class NumberFieldView: PMNibLinkableView, HasDisposeBag {
     @IBOutlet private weak var numberLabel: UILabel!
     @IBOutlet private weak var underlineView: UIView!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         bind()

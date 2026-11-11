@@ -16,7 +16,8 @@ import AVFoundation
 import CallKit
 import WebRTC
 
-// swiftlint:disable type_body_length file_length
+// swiftlint:disable file_length
+// swiftlint:disable:next type_body_length
 final class IncomingCallViewModel: BaseViewModel {
     
     private let providerProxy: CXProviderProxy
@@ -215,7 +216,7 @@ final class IncomingCallViewModel: BaseViewModel {
             .flatMap { [weak self] args -> Driver<(Call, CallParams)> in
                 let (incomingCall, isAccepted, isDoorOpeningRequested) = args
                 
-                guard let unwrappedIncomingCall = incomingCall, (isAccepted || isDoorOpeningRequested) else {
+                guard let unwrappedIncomingCall = incomingCall, isAccepted || isDoorOpeningRequested else {
                     return .empty()
                 }
                 
@@ -544,7 +545,7 @@ final class IncomingCallViewModel: BaseViewModel {
                     self.pushNotificationService.ignoreIncomingCall(withId: self.callPayload.uniqueIdentifier)
                     
                     guard let currentCall = callInfo?.0,
-                        (currentCall.state == .Connected || currentCall.state == .StreamsRunning) else {
+                        currentCall.state == .Connected || currentCall.state == .StreamsRunning else {
                         self.finishCallAndClose()
                         return
                     }
@@ -688,11 +689,9 @@ final class IncomingCallViewModel: BaseViewModel {
         input.videoViewsTrigger
             .debounce(.milliseconds(10))
             .drive(
-                onNext: { [weak self] args in
-                    let (videoView, webRTCView, cameraView) = args
-                    
-                    self?.linphoneService.setViews(videoView: videoView, cameraView: cameraView)
-                    self?.webRTCService?.containerView = webRTCView
+                onNext: { [weak self] views in
+                    self?.linphoneService.setViews(videoView: views.preview, cameraView: views.camera)
+                    self?.webRTCService?.containerView = views.webRTC
                 }
             )
             .disposed(by: disposeBag)

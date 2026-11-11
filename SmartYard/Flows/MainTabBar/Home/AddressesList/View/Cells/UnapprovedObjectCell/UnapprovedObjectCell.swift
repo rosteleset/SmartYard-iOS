@@ -15,7 +15,6 @@ final class UnapprovedObjectCell: CustomBorderCollectionViewCell, HasDisposeBag 
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var qrCodeButton: UIButton!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         

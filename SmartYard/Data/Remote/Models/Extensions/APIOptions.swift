@@ -57,28 +57,12 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case stunUrl
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        func boolFromTF(_ key: CodingKeys) -> Bool? {
-            if let value = try? container.decode(Bool.self, forKey: key) {
-                return value
-            }
-
-            guard let raw = try? container.decode(String.self, forKey: key) else { return nil }
-            switch raw {
-            case "t": return true
-            case "f": return false
-            case "true": return true
-            case "false": return false
-            default: return nil
-            }
-        }
-
-        cityCams = boolFromTF(.cityCams)
-        payments = boolFromTF(.payments)
-        chat = boolFromTF(.chat)
+        cityCams = Self.decodeFlag(.cityCams, from: container)
+        payments = Self.decodeFlag(.payments, from: container)
+        chat = Self.decodeFlag(.chat, from: container)
 
         if let guestRaw = try? container.decode(String.self, forKey: .guestAccess) {
             switch guestRaw {
@@ -90,30 +74,17 @@ struct APIOptions: Decodable, EmptyDataInitializable {
             guestAccessOnOnly = true
         }
 
-        let namePattern: String? = try? container.decode(
-            String.self,
-            forKey: .validationNamePattern
-        )
-        let patronymicPattern: String? = try? container.decode(
-            String.self,
-            forKey: .validationPatronymicPattern
-        )
-        let lastPattern: String? = try? container.decode(
-            String.self,
-            forKey: .validationLastPattern
-        )
-
         validationPattern = NameValidationPattern(
-            validationNamePattern: namePattern,
-            validationPatronymicPattern: patronymicPattern,
-            validationLastPattern: lastPattern
+            validationNamePattern: try? container.decode(String.self, forKey: .validationNamePattern),
+            validationPatronymicPattern: try? container.decode(String.self, forKey: .validationPatronymicPattern),
+            validationLastPattern: try? container.decode(String.self, forKey: .validationLastPattern)
         )
 
         deliveryTabsConfig = DeliveryTabsConfig(
             deliveryTabs: DeliveryTabs(
-                layoutVisible: boolFromTF(.addressVerificationTabLayoutVisible),
-                courierVisible: boolFromTF(.addressVerificationTab1Visible),
-                officeVisible: boolFromTF(.addressVerificationTab2Visible)
+                layoutVisible: Self.decodeFlag(.addressVerificationTabLayoutVisible, from: container),
+                courierVisible: Self.decodeFlag(.addressVerificationTab1Visible, from: container),
+                officeVisible: Self.decodeFlag(.addressVerificationTab2Visible, from: container)
             )
         )
 
@@ -131,9 +102,21 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         } else {
             lprsVersion = (try? container.decode(Int.self, forKey: .lprsVersion)).map(String.init)
         }
-        eventsTracking = boolFromTF(.eventsTracking)
-        stories = boolFromTF(.stories)
+        eventsTracking = Self.decodeFlag(.eventsTracking, from: container)
+        stories = Self.decodeFlag(.stories, from: container)
         stunUrl = try? container.decode(String.self, forKey: .stunUrl)
+    }
+
+    private static func decodeFlag(_ key: CodingKeys, from container: KeyedDecodingContainer<CodingKeys>) -> Bool? {
+        if let value = try? container.decode(Bool.self, forKey: key) {
+            return value
+        }
+        guard let raw = try? container.decode(String.self, forKey: key) else { return nil }
+        switch raw {
+        case "t", "true": return true
+        case "f", "false": return false
+        default: return nil
+        }
     }
 
     init() {

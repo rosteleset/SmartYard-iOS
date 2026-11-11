@@ -44,21 +44,6 @@ extension CircleIconStyle {
                 borderWidth: 0
             )
         }
-
-        enum Selected {
-            static let call = style(for: Icon.call.image, selected: true)
-            static let eye = style(for: Icon.eye.image, selected: true)
-            static let key = style(for: Icon.key.image, selected: true)
-            static let monitor = style(for: Icon.monitor.image, selected: true)
-            static let wifi = style(for: Icon.wifi.image, selected: true)
-        }
-        enum Unselected {
-            static let call = style(for: Icon.call.image, selected: false)
-            static let eye = style(for: Icon.eye.image, selected: false)
-            static let key = style(for: Icon.key.image, selected: false)
-            static let monitor = style(for: Icon.monitor.image, selected: false)
-            static let wifi = style(for: Icon.wifi.image, selected: false)
-        }
     }
 
     enum Close {
@@ -92,5 +77,22 @@ extension CircleIconStyle {
             borderColor: nil,
             borderWidth: 0
         )
+    }
+}
+
+extension CircleIconStyle.Settings {
+    enum Selected {
+        static let call = style(for: CircleIconStyle.Icon.call.image, selected: true)
+        static let eye = style(for: CircleIconStyle.Icon.eye.image, selected: true)
+        static let key = style(for: CircleIconStyle.Icon.key.image, selected: true)
+        static let monitor = style(for: CircleIconStyle.Icon.monitor.image, selected: true)
+        static let wifi = style(for: CircleIconStyle.Icon.wifi.image, selected: true)
+    }
+    enum Unselected {
+        static let call = style(for: CircleIconStyle.Icon.call.image, selected: false)
+        static let eye = style(for: CircleIconStyle.Icon.eye.image, selected: false)
+        static let key = style(for: CircleIconStyle.Icon.key.image, selected: false)
+        static let monitor = style(for: CircleIconStyle.Icon.monitor.image, selected: false)
+        static let wifi = style(for: CircleIconStyle.Icon.wifi.image, selected: false)
     }
 }

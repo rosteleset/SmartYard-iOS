@@ -136,11 +136,9 @@ final class SelectProviderViewModel: BaseViewModel {
                 onNext: { [weak self] args in
                     var (itemIndex, providers) = args
                     
-                    guard let self = self, let index = itemIndex else {
-                        return
-                    }
-                    
-                    providers.enumerated().forEach { offset, _ in
+                    guard let self, let index = itemIndex else { return }
+
+                    providers.indices.forEach { offset in
                         if offset == index {
                             providers[offset].toggleState()
                         } else {

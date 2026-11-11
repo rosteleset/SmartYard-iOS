@@ -8,6 +8,12 @@
 
 import Foundation
 
+struct GetListConnectV2Request {
+
+    let accessToken: String
+    let forceRefresh: Bool
+}
+
 struct GetListConnectRequest {
     
     let accessToken: String
@@ -20,12 +26,6 @@ extension GetListConnectRequest {
         return [:]
     }
     
-}
-
-struct GetListConnectV2Request {
-    
-    let accessToken: String
-    let forceRefresh: Bool
 }
 
 extension GetListConnectV2Request {

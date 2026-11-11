@@ -15,6 +15,11 @@ enum OnlineItem {
     case number(CameraNumberCellViewModel)
 }
 
+struct OnlineSectionModel {
+    let kind: OnlineSectionKind
+    var items: [OnlineItem]
+}
+
 extension OnlineItem: IdentifiableType, Equatable {
     typealias Identity = String
 
@@ -27,19 +32,14 @@ extension OnlineItem: IdentifiableType, Equatable {
 
     static func == (lhs: OnlineItem, rhs: OnlineItem) -> Bool {
         switch (lhs, rhs) {
-        case (.camera(let left), .camera(let right)):
+        case let (.camera(left), .camera(right)):
             return left == right
-        case (.number(let left), .number(let right)):
+        case let (.number(left), .number(right)):
             return left == right
         default:
             return false
         }
     }
-}
-
-struct OnlineSectionModel {
-    let kind: OnlineSectionKind
-    var items: [OnlineItem]
 }
 
 extension OnlineSectionModel: AnimatableSectionModelType {

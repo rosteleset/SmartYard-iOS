@@ -25,7 +25,6 @@ final class ContractCell: UICollectionViewCell, HasDisposeBag {
     @IBOutlet private weak var callButton: UIButton!
     @IBOutlet private weak var keyButton: UIButton!
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         

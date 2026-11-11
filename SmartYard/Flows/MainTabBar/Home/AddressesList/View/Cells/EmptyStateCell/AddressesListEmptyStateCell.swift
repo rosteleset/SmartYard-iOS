@@ -12,6 +12,7 @@ final class AddressesListEmptyStateCell: UICollectionViewCell {
 
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()

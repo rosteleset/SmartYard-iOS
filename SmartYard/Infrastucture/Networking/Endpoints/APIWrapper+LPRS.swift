@@ -31,8 +31,10 @@ extension APIWrapper {
     }
     
     func addLicensePlate(
-        withNumber number: String, forFlatId flatId: Int,
-        countryCode: String? = nil, validity: LicensePlateValidity = .unlimited
+        withNumber number: String,
+        forFlatId flatId: Int,
+        countryCode: String? = nil,
+        validity: LicensePlateValidity = .unlimited
     ) -> Single<Void?> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
@@ -41,7 +43,9 @@ extension APIWrapper {
         let request = AddLicensePlateRequest(
             accessToken: accessToken,
             flatId: flatId,
-            number: number, countryCode: countryCode, validity: validity
+            number: number,
+            countryCode: countryCode,
+            validity: validity
         )
         Logger.logDebug("Request data: \(String(describing: request))")
         
@@ -73,7 +77,6 @@ extension APIWrapper {
             .mapToOptional()
     }
     
-
     func getLicensePlateFormats() -> Single<[APILicensePlateFormat]> {
         guard let accessToken = accessService.accessToken else {
             return .error(NSError.APIWrapperError.accessTokenMissingError)
@@ -112,8 +115,10 @@ extension APIWrapper {
                         && $0.normalizedEventDetail.standardizedCarNumber == plate.plateNumber.standardizedCarNumber
                 }
                 let car = AllowedCar(
-                    rawNumber: plate.plateNumber, countryCode: plate.countryCode,
-                    validFrom: plate.validity.validFrom, validTo: plate.validity.validTo,
+                    rawNumber: plate.plateNumber,
+                    countryCode: plate.countryCode,
+                    validFrom: plate.validity.validFrom,
+                    validTo: plate.validity.validTo,
                     watcherId: watcher?.watcherId
                 )
                 return identities.insert(car.identity).inserted ? car : nil
@@ -131,7 +136,10 @@ extension APIWrapper {
     }
 
     func saveAllowedCar(
-        _ car: AllowedCar, trackingEnabled: Bool, replacing original: AllowedCar?, flatId: Int
+        _ car: AllowedCar,
+        trackingEnabled: Bool,
+        replacing original: AllowedCar?,
+        flatId: Int
     ) -> Single<LicensePlateSaveResult> {
         guard car.validity.isValid else { return .error(LicensePlateAccessError.invalidPeriod) }
         let isTimed = accessService.lprsVersion == .timed
@@ -140,7 +148,8 @@ extension APIWrapper {
                 car: car.withWatcher(original?.identity == car.identity ? original?.watcherId : nil)
             )
             return addLicensePlate(
-                withNumber: car.apiNumber, forFlatId: flatId,
+                withNumber: car.apiNumber,
+                forFlatId: flatId,
                 countryCode: isTimed ? car.countryCode : nil,
                 validity: isTimed ? car.validity : .unlimited
             )
@@ -162,12 +171,12 @@ extension APIWrapper {
                 )
                 .flatMap { watcherId -> Single<Void> in
                     result.car = car.withWatcher(watcherId)
-                    guard result.removedOriginal, let original, original.apiNumber != car.apiNumber else {
-                        return .just(())
-                    }
-                    return self.synchronizeLicensePlateTracking(
-                        number: original.apiNumber, enabled: false, flatId: flatId
-                    ).map { _ in () }
+                    return self.removeOriginalTracking(
+                        original,
+                        replacingWith: car,
+                        didRemoveOriginal: result.removedOriginal,
+                        flatId: flatId
+                    )
                 }
                 .catch { _ in
                     result.issues.append(.tracking)
@@ -175,18 +184,37 @@ extension APIWrapper {
                 }
             }
             .flatMap { _ in
-                self.getAllowedCars(forFlatId: flatId)
-                    .map { cars in
-                        result.cars = cars
-                        result.car = cars.first { $0.identity == car.identity } ?? result.car
-                        return result
-                    }
-                    .catch { _ in
-                        result.issues.append(.refresh)
-                        return .just(result)
-                    }
+                self.refreshAfterSaving(result, car: car, flatId: flatId)
             }
         }
+    }
+
+    private func refreshAfterSaving(_ saved: LicensePlateSaveResult, car: AllowedCar, flatId: Int) -> Single<LicensePlateSaveResult> {
+        getAllowedCars(forFlatId: flatId)
+            .map { cars in
+                var result = saved
+                result.cars = cars
+                result.car = cars.first { $0.identity == car.identity } ?? result.car
+                return result
+            }
+            .catch { _ in
+                var result = saved
+                result.issues.append(.refresh)
+                return .just(result)
+            }
+    }
+
+    private func removeOriginalTracking(
+        _ original: AllowedCar?,
+        replacingWith car: AllowedCar,
+        didRemoveOriginal: Bool,
+        flatId: Int
+    ) -> Single<Void> {
+        guard didRemoveOriginal, let original, original.apiNumber != car.apiNumber else {
+            return .just(())
+        }
+        return synchronizeLicensePlateTracking(number: original.apiNumber, enabled: false, flatId: flatId)
+            .map { _ in () }
     }
 
     private func synchronizeLicensePlateTracking(

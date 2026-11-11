@@ -14,6 +14,7 @@ final class AddressesListHistoryCell: CustomBorderCollectionViewCell {
     @IBOutlet private weak var historyCountLabel: UILabel!
     @IBOutlet private weak var arrowImageView: UIImageView!
     @IBOutlet private weak var eventsLabel: UILabel!
+
     private func configureUI() {
         eventsLabel.text = L10n.Home.AddressCard.Events.events
         historyCountLabel.text = L10n.Home.AddressCard.Events.countValue

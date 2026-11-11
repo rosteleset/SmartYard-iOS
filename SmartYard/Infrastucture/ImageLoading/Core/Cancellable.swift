@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol Cancellable {
-    func cancel()
-}
-
 final class CancelToken: Cancellable {
     private let lock = NSLock()
     private var _isCancelled = false
@@ -25,4 +21,8 @@ final class CancelToken: Cancellable {
         lock.lock(); defer { lock.unlock() }
         return _isCancelled
     }
+}
+
+protocol Cancellable {
+    func cancel()
 }

@@ -11,6 +11,33 @@ import RxDataSources
 import RxSwift
 import UIKit
 
+private final class MaxLengthTextFieldDelegate: NSObject, UITextFieldDelegate {
+    let maxLength: Int
+
+    init(maxLength: Int) {
+        self.maxLength = maxLength
+    }
+
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        guard let currentText = textField.text,
+              let range = Range(range, in: currentText) else {
+            return true
+        }
+
+        let updated = currentText.replacingCharacters(in: range, with: string)
+        return updated.count <= maxLength
+    }
+}
+
+struct TrackedEventsSectionModel: AnimatableSectionModelType {
+    let identity: String
+    var items: [APITrackedEvent]
+}
+
 final class TrackedEventsViewController: BaseViewController {
     private let viewModel: TrackedEventsViewModel
     private let contentView = TrackedEventsView()
@@ -187,33 +214,6 @@ extension TrackedEventsViewController: UITableViewDelegate {
 
         return configuration
     }
-}
-
-private final class MaxLengthTextFieldDelegate: NSObject, UITextFieldDelegate {
-    let maxLength: Int
-
-    init(maxLength: Int) {
-        self.maxLength = maxLength
-    }
-
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        guard let currentText = textField.text,
-              let range = Range(range, in: currentText) else {
-            return true
-        }
-
-        let updated = currentText.replacingCharacters(in: range, with: string)
-        return updated.count <= maxLength
-    }
-}
-
-struct TrackedEventsSectionModel: AnimatableSectionModelType {
-    let identity: String
-    var items: [APITrackedEvent]
 }
 
 extension TrackedEventsSectionModel: SectionModelType {

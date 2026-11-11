@@ -18,7 +18,7 @@ import SnapKit
 final class WebViewController: BaseViewController, LoaderPresentable {
     
     @IBOutlet private weak var webView: WKCookieWebView!
-    @IBOutlet private weak var skeletonView: UIView!
+    @IBOutlet private(set) weak var skeletonView: UIView!
     @IBOutlet private weak var fakeNavBar: FakeNavBar!
     @IBOutlet private weak var webViewTopToFakeNavBarConstraint: NSLayoutConstraint?
     @IBOutlet private weak var webViewTopToSafeAreaConstraint: NSLayoutConstraint?
@@ -26,26 +26,26 @@ final class WebViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var skeletonTopToSafeAreaConstraint: NSLayoutConstraint?
     
     var loader: JGProgressHUD?
-    private var refreshControl = UIRefreshControl()
+    var refreshControl = UIRefreshControl()
     
     private let viewModel: WebViewModel
-    private let backButtonLabel: String
+    let backButtonLabel: String
     private let shareUrlTrigger = PublishSubject<URL>()
     
     /// (url: URL, newWindow: Bool)
-    private let openUrlTrigger = PublishSubject<(URL, TransitionType)>()
+    let openUrlTrigger = PublishSubject<(URL, TransitionType)>()
     
     var documentTitle = ""
-    private var webContentHeight: CGFloat?
+    var webContentHeight: CGFloat?
     private let accessToken: String
     
     private var refreshDisposable: Disposable?
     private let refreshSubject = PublishSubject<Void>()
     
-    private let version: Int
+    let version: Int
     private let enableRefreshControl: Bool
     private let webViewOptions: APIExtension.WebViewOptions?
-    private var pageControlsLoadingState = false
+    var pageControlsLoadingState = false
     
     init(
         viewModel: WebViewModel,
@@ -134,7 +134,7 @@ final class WebViewController: BaseViewController, LoaderPresentable {
         webView.notifySmartYardThemeChanged()
     }
     
-    fileprivate func disableDragAndDropInteraction() {
+    func disableDragAndDropInteraction() {
         var webScrollView: UIView?
         var contentView: UIView?
         
@@ -177,26 +177,6 @@ isAppInstalled = function(url, callbackFunc ) {
             let script = WKUserScript(source: javaScript, injectionTime: .atDocumentStart, forMainFrameOnly: false)
             webView.configuration.userContentController.addUserScript(script)
         }()
-    }
-
-    private func makeLocaleBridgeScript() -> WKUserScript {
-        let locale = Bundle.main.preferredLocalizations.first
-            ?? Locale.preferredLanguages.first
-            ?? "ru"
-        let encodedLocale = (try? JSONSerialization.data(withJSONObject: [locale]))
-            .flatMap { String(data: $0, encoding: .utf8) }
-            .flatMap { value -> String? in
-                guard value.count >= 2 else { return nil }
-                return String(value.dropFirst().dropLast())
-            }
-            ?? "\"ru\""
-        let source = "window.smartYardLocale = \(encodedLocale);"
-
-        return WKUserScript(
-            source: source,
-            injectionTime: .atDocumentStart,
-            forMainFrameOnly: false
-        )
     }
 
     private func configureUI() {
@@ -249,7 +229,7 @@ isAppInstalled = function(url, callbackFunc ) {
         
     }
 
-    private func disableWebViewZoom() {
+    func disableWebViewZoom() {
         webView.scrollView.minimumZoomScale = 1
         webView.scrollView.maximumZoomScale = 1
         webView.scrollView.zoomScale = 1
@@ -258,7 +238,158 @@ isAppInstalled = function(url, callbackFunc ) {
         disableDoubleTapRecognizers(in: webView)
     }
 
-    private func makeZoomLockScript() -> WKUserScript {
+    private func disableDoubleTapRecognizers(in view: UIView) {
+        view.gestureRecognizers?
+            .compactMap { $0 as? UITapGestureRecognizer }
+            .filter { $0.numberOfTapsRequired > 1 }
+            .forEach { $0.isEnabled = false }
+
+        view.subviews.forEach(disableDoubleTapRecognizers)
+    }
+
+    private func bindThemeBridge() {
+        ThemeManager.shared.currentTheme
+            .distinctUntilChanged()
+            .skip(1)
+            .subscribe(with: self) { owner, _ in
+                owner.webView.notifySmartYardThemeChanged()
+            }
+            .disposed(by: disposeBag)
+    }
+
+}
+
+extension WebViewController: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "backHandler" {
+            navigationController?.popViewController(animated: true)
+            return
+        }
+
+        guard let dict = message.body as? [String: AnyObject] else {
+            return
+        }
+
+        if message.name == "loadingFinishedHandler" {
+            self.updateLoader(isEnabled: false, detailText: nil)
+            self.skeletonView.isHidden = true
+        }
+
+        if message.name == "loadingStartedHandler" {
+            self.pageControlsLoadingState = true
+            self.updateLoader(isEnabled: true, detailText: nil)
+            self.skeletonView.isHidden = false
+        }
+
+        if message.name == "isAppInstalledHandler" {
+            let url = dict["url"] as? String
+            let callbackName = dict["callback"] as? String
+            guard let url = URL(string: url), let callbackName = callbackName else { return }
+            let result = UIApplication.shared.canOpenURL(url)
+
+            _ = {
+                let javaScript = """
+                \(callbackName)("\(url)", \(result));
+    """
+                webView.evaluateJavaScript(javaScript)
+            }()
+        }
+    }
+}
+
+extension WebViewController {
+
+    private func bind() {
+        let input = WebViewModel.Input(
+            viewWillAppearTrigger: rx.viewWillAppear.asDriver(),
+            isViewVisible: rx.isVisible.asDriver(onErrorJustReturn: false),
+            shareUrlTrigger: shareUrlTrigger.asDriverOnErrorJustComplete(),
+            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
+            openUrlTrigger: openUrlTrigger.asDriverOnErrorJustComplete()
+        )
+
+        let output = viewModel.transform(input)
+
+        output.loadURL
+            .drive(
+                onNext: { [weak self] url in
+                    self?.webView.load(URLRequest(url: url))
+                }
+            )
+            .disposed(by: disposeBag)
+
+        output.loadContent
+            .drive(
+                onNext: { [weak self] args in
+                    let (content, baseURL) = args
+
+                    self?.webView.loadHTMLString(content, baseURL: URL(string: baseURL))
+                }
+            )
+            .disposed(by: disposeBag)
+
+        bindRefresh(output.isLoading)
+
+        fakeNavBar.rx.backButtonTap
+            .asDriver()
+            .drive(
+                onNext: { [weak self] in
+                    self?.removeUserContentController()
+                }
+            )
+            .disposed(by: disposeBag)
+
+    }
+
+    private func bindRefresh(_ isLoading: Driver<Bool>) {
+        isLoading
+            .debounce(.milliseconds(25))
+            .drive(
+                onNext: { [weak self] isLoading in
+                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
+                    if !isLoading {
+                        self?.refreshControl.endRefreshing()
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
+
+        Observable.merge(
+            refreshControl.rx.controlEvent(.valueChanged).mapToVoid(),
+            refreshSubject
+        )
+            .asDriverOnErrorJustComplete()
+            .drive(
+                onNext: { [weak self] in
+                    self?.webView.reload()
+                }
+            )
+            .disposed(by: disposeBag)
+    }
+}
+
+private extension WebViewController {
+    func makeLocaleBridgeScript() -> WKUserScript {
+        let locale = Bundle.main.preferredLocalizations.first
+            ?? Locale.preferredLanguages.first
+            ?? "ru"
+        let encodedLocale = (try? JSONSerialization.data(withJSONObject: [locale]))
+            .flatMap { String(data: $0, encoding: .utf8) }
+            .flatMap { value -> String? in
+                guard value.count >= 2 else { return nil }
+                return String(value.dropFirst().dropLast())
+            }
+            ?? "\"ru\""
+        let source = "window.smartYardLocale = \(encodedLocale);"
+
+        return WKUserScript(
+            source: source,
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: false
+        )
+    }
+
+    func makeZoomLockScript() -> WKUserScript {
         let source = """
         (function () {
             var viewportContent = "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover";
@@ -303,372 +434,5 @@ isAppInstalled = function(url, callbackFunc ) {
         """
 
         return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: false)
-    }
-
-    private func disableDoubleTapRecognizers(in view: UIView) {
-        view.gestureRecognizers?
-            .compactMap { $0 as? UITapGestureRecognizer }
-            .filter { $0.numberOfTapsRequired > 1 }
-            .forEach { $0.isEnabled = false }
-
-        view.subviews.forEach(disableDoubleTapRecognizers)
-    }
-
-    private func bindThemeBridge() {
-        ThemeManager.shared.currentTheme
-            .distinctUntilChanged()
-            .skip(1)
-            .subscribe(with: self) { owner, _ in
-                owner.webView.notifySmartYardThemeChanged()
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    private func bind() {
-        let input = WebViewModel.Input(
-            viewWillAppearTrigger: rx.viewWillAppear.asDriver(),
-            isViewVisible: rx.isVisible.asDriver(onErrorJustReturn: false),
-            shareUrlTrigger: shareUrlTrigger.asDriverOnErrorJustComplete(),
-            backTrigger: fakeNavBar.rx.backButtonTap.asDriver(),
-            openUrlTrigger: openUrlTrigger.asDriverOnErrorJustComplete()
-        )
-        
-        let output = viewModel.transform(input)
-        
-        output.loadURL
-            .drive(
-                onNext: { [weak self] url in
-                    self?.webView.load(URLRequest(url: url))
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.loadContent
-            .drive(
-                onNext: { [weak self] args in
-                    let (content, baseURL) = args
-                    
-                    self?.webView.loadHTMLString(content, baseURL: URL(string: baseURL))
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.isLoading
-            .debounce(.milliseconds(25))
-            .drive(
-                onNext: { [weak self] isLoading in
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
-                    if !isLoading {
-                        self?.refreshControl.endRefreshing()
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        Observable.merge(
-            refreshControl.rx.controlEvent(.valueChanged).mapToVoid(),
-            refreshSubject
-        )
-            .asDriverOnErrorJustComplete()
-            .drive(
-                onNext: { [weak self] in
-                    self?.webView.reload()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        fakeNavBar.rx.backButtonTap
-            .asDriver()
-            .drive(
-                onNext: { [weak self] in
-                    self?.removeUserContentController()
-                }
-            )
-            .disposed(by: disposeBag)
-
-    }
-
-}
-
-extension WebViewController: WKScriptMessageHandler {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "backHandler" {
-            navigationController?.popViewController(animated: true)
-            return
-        }
-
-        guard let dict = message.body as? [String: AnyObject] else {
-            return
-        }
-        
-        if message.name == "loadingFinishedHandler" {
-            self.updateLoader(isEnabled: false, detailText: nil)
-            self.skeletonView.isHidden = true
-        }
-        
-        if message.name == "loadingStartedHandler" {
-            self.pageControlsLoadingState = true
-            self.updateLoader(isEnabled: true, detailText: nil)
-            self.skeletonView.isHidden = false
-        }
-        
-        if message.name == "isAppInstalledHandler" {
-            let url = dict["url"] as? String
-            let callbackName = dict["callback"] as? String
-            guard let url = URL(string: url), let callbackName = callbackName else { return }
-            let result = UIApplication.shared.canOpenURL(url)
-            
-            _ = {
-                let javaScript = """
-                \(callbackName)("\(url)", \(result));
-    """
-                webView.evaluateJavaScript(javaScript)
-            }()
-        }
-    }
-}
-
-extension WebViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        // page starts loading - показать скелетон
-        self.pageControlsLoadingState = false
-        self.updateLoader(isEnabled: true, detailText: nil)
-        self.skeletonView.isHidden = false
-        
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        // page loaded - скрыть скелетон
-        self.refreshControl.endRefreshing()
-        if !self.pageControlsLoadingState {
-            self.updateLoader(isEnabled: false, detailText: nil)
-            self.skeletonView.isHidden = true
-        }
-        disableDragAndDropInteraction()
-        disableWebViewZoom()
-        
-        // self.titleString = webView.title ?? self.backButtonLabel
-        // увы webView.title возвращает пустую строку, когда страница повторно загружается,
-        // поэтому приходится костылить через JS
-        webView.evaluateJavaScript("document.title", completionHandler: { title, _ in
-            self.documentTitle = title as? String ?? self.backButtonLabel
-        })
-        
-        webView.evaluateJavaScript("document.documentElement.offsetHeight", completionHandler: { height, _ in
-            self.webContentHeight = height as? CGFloat
-        })
-        webView.notifySmartYardThemeChanged()
-    }
-    
-    func webView(
-        _ webView: WKWebView,
-        decidePolicyFor navigationAction: WKNavigationAction,
-        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
-    ) {
-        if version == 1 {
-            guard [.linkActivated, .formSubmitted, .other].contains(navigationAction.navigationType) else {
-                decisionHandler(WKNavigationActionPolicy.allow)
-                return
-            }
-            
-            if let url = navigationAction.request.url {
-                Logger.logDebug("WKWebView request URL: \(url.absoluteString)")
-                // если это sberpay:, tel: или ещё какой-то кастомный дип-линк, то обрабатывыаем переход по умолчанию
-                guard url.scheme == "https" || url.scheme == "http" else {
-                    UIApplication.shared.open(url)
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-                
-                // если это страницы, которые хостятся на внешнем хосте, то открываем в новом окне.
-                guard let host = url.host, let currentUrl = webView.url, host == currentUrl.host else {
-                    UIApplication.shared.open(url)
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-                
-                // это редиректы не на внешние сайты.
-                if navigationAction.navigationType == .other {
-                    decisionHandler(WKNavigationActionPolicy.allow)
-                    return
-                }
-                
-                if navigationAction.targetFrame != nil {
-                    // делаем push в navigation stack если target == текущее окно
-                    self.openUrlTrigger.onNext((url, .push))
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                } else {
-                    // если target == новое окно, то открываем модально popup шторку
-                    self.openUrlTrigger.onNext((url, .popup))
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-            }
-            
-            decisionHandler(WKNavigationActionPolicy.cancel)
-        } else {
-            if [.reload].contains(navigationAction.navigationType) {
-                decisionHandler(WKNavigationActionPolicy.allow)
-                return
-            }
-            
-            if let url = navigationAction.request.url {
-                Logger.logDebug("WKWebView request URL: \(url.absoluteString)")
-                // #smart-yard-push
-                if url.relativeString.contains("#smart-yard-push"),
-                   let newUrl = URL(
-                    string: url.absoluteString.replacingOccurrences(
-                        ofPattern: "#smart-yard-push", withTemplate: ""
-                    )
-                   ) {
-                    // делаем push в navigation stack если target == текущее окно
-                    self.openUrlTrigger.onNext((newUrl, .push))
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-                // #smart-yard-popup
-                if url.relativeString.contains("#smart-yard-popup"),
-                   let newUrl = URL(
-                    string: url.absoluteString.replacingOccurrences(
-                        ofPattern: "#smart-yard-popup", withTemplate: ""
-                    )
-                   ) {
-                    // открываем модально popup шторку
-                    self.openUrlTrigger.onNext((newUrl, .popup))
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-                // #smart-yard-replace
-                if url.relativeString.contains("#smart-yard-replace"),
-                   let newUrl = URL(
-                    string: url.absoluteString.replacingOccurrences(
-                        ofPattern: "#smart-yard-replace", withTemplate: ""
-                    )
-                   ) {
-                    // заменяем текущий контроллер
-                    self.openUrlTrigger.onNext((newUrl, .replace))
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-                // #smart-yard-external
-                if url.relativeString.contains("#smart-yard-external"),
-                   let newUrl = URL(
-                    string: url.absoluteString.replacingOccurrences(
-                        ofPattern: "#smart-yard-external",
-                        withTemplate: ""
-                    )
-                   ) {
-                    // открываем в новом окне через системный вызов
-                    UIApplication.shared.open(newUrl)
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-                
-                // если это sberpay:, tel: или ещё какой-то кастомный дип-линк, то обрабатывыаем переход по умолчанию
-                guard url.scheme == "https" || url.scheme == "http" else {
-                    UIApplication.shared.open(url)
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-                
-                if navigationAction.targetFrame == nil {
-                    // если target == новое окно, то открываем в окне браузера
-                    UIApplication.shared.open(url)
-                    decisionHandler(WKNavigationActionPolicy.cancel)
-                    return
-                }
-            }
-            
-            decisionHandler(WKNavigationActionPolicy.allow)
-        }
-    }
-    
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        let alert = UIAlertController(
-            title: L10n.Common.error,
-            message: error.localizedDescription,
-            preferredStyle: .alert
-        )
-        let okAction = UIAlertAction(title: "OK", style: .cancel)
-        alert.addAction(okAction)
-        self.present(alert, animated: true)
-    }
-}
-
-extension BaseViewController: WKUIDelegate {
-    func webView(
-        _ webView: WKWebView,
-        runJavaScriptAlertPanelWithMessage message: String,
-        initiatedByFrame frame: WKFrameInfo,
-        completionHandler: @escaping () -> Void
-    ) {
-        
-        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .cancel) { _ in
-            completionHandler()
-        }
-        
-        alert.addAction(okAction)
-        
-        self.present(alert, animated: true)
-    }
-    
-    func webView(
-        _ webView: WKWebView,
-        runJavaScriptConfirmPanelWithMessage message: String,
-        initiatedByFrame frame: WKFrameInfo,
-        completionHandler: @escaping (Bool) -> Void
-    ) {
-        
-        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            completionHandler(true)
-        }
-        
-        let calcelAction = UIAlertAction(title: L10n.Common.cancel, style: .cancel) { _ in
-            completionHandler(false)
-        }
-        
-        alert.addAction(okAction)
-        alert.addAction(calcelAction)
-        
-        self.present(alert, animated: true)
-    }
-    
-    func webView(
-        _ webView: WKWebView,
-        runJavaScriptTextInputPanelWithPrompt prompt: String,
-        defaultText: String?,
-        initiatedByFrame frame: WKFrameInfo,
-        completionHandler: @escaping (String?) -> Void
-    ) {
-        let alert = UIAlertController(title: "", message: prompt, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-            guard let textField = alert.textFields?.first else {
-                return
-            }
-            completionHandler(textField.text)
-        }
-        
-        let calcelAction = UIAlertAction(title: L10n.Common.cancel, style: .cancel) { _ in
-            completionHandler(nil)
-        }
-        
-        alert.addTextField {textField in
-            textField.text = defaultText
-        }
-        alert.addAction(okAction)
-        alert.addAction(calcelAction)
-        
-        self.present(alert, animated: true)
-    }
-    
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        Logger.logInfo("createWebView!")
-        return nil
     }
 }

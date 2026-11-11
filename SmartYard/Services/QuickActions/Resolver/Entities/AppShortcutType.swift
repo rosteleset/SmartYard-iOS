@@ -15,7 +15,6 @@ enum AppShortcutType: String {
     case payments = "smartyard.shortcut.payments"
     case settings = "smartyard.shortcut.settings"
 
-
     var shortcutItem: UIApplicationShortcutItem {
         UIApplicationShortcutItem(
             type: rawValue,

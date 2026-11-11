@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-/// Сервис-обёртка для формирования правильных запросов к API Trassir
+// Сервис-обёртка для формирования правильных запросов к API Trassir
 // swiftlint:disable:next type_body_length
 enum TrassirService {
     
@@ -28,7 +28,7 @@ enum TrassirService {
     }
     
     /// обновляет sid для камеры, если его ещё не было получено
-    static func updateSid(_ camera: CameraObject, _ task: @escaping () -> Void ) -> Void {
+    static func updateSid(_ camera: CameraObject, _ task: @escaping () -> Void ) {
         if  sids.has(key: camera.baseURLString) {
             task()
             return

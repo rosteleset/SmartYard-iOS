@@ -14,7 +14,6 @@ enum LicensePlateFormat {
     case bulgaria     // CA1234AB
 }
 
-
 extension LicensePlateFormat {
     var countryCode: String {
         switch self {

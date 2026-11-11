@@ -7,10 +7,6 @@
 
 import RxSwift
 
-protocol RequestSupportCallbackUseCase {
-    func execute() -> Single<Void>
-}
-
 final class DefaultRequestSupportCallbackUseCase: RequestSupportCallbackUseCase {
     private let issueService: IssueService
 
@@ -23,4 +19,8 @@ final class DefaultRequestSupportCallbackUseCase: RequestSupportCallbackUseCase 
             .sendCallbackIssue()
             .map { _ in () }
     }
+}
+
+protocol RequestSupportCallbackUseCase {
+    func execute() -> Single<Void>
 }

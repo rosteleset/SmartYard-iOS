@@ -12,6 +12,11 @@ enum OnlineSelectionSource {
     case numberTap
 }
 
+struct OnlineSelectionUpdate: Equatable {
+    let id: CameraID
+    let source: OnlineSelectionSource
+}
+
 extension OnlineSelectionSource {
     var logValue: String {
         switch self {
@@ -20,9 +25,4 @@ extension OnlineSelectionSource {
         case .numberTap: return "numberTap"
         }
     }
-}
-
-struct OnlineSelectionUpdate: Equatable {
-    let id: CameraID
-    let source: OnlineSelectionSource
 }

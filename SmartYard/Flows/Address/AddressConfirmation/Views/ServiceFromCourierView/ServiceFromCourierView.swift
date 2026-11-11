@@ -20,6 +20,7 @@ final class ServiceFromCourierView: PMNibLinkableView {
     @IBOutlet private weak var qrCodeHintLabel: UILabel!
     @IBOutlet private weak var useLabel: UILabel!
     @IBOutlet private weak var activationHintLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()

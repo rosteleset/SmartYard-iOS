@@ -28,7 +28,7 @@ final class SmartYardHighlightSegmentedControlView: UIView {
        label.textColor = .SmartYard.semiBlack
        label.textAlignment = .center
        return label
-   }()
+    }()
     
     private var buttons: [UIButton] = []
     private var selectedIndex: Int = 0

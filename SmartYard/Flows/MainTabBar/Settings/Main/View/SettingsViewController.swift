@@ -145,9 +145,9 @@ final class SettingsViewController: BaseViewController, LoaderPresentable {
             // MARK: Ищем секцию, которая содержит Header с указанным идентификатором, и скроллим к нему
             
             .map { [weak self] updateKind, sectionModels -> (SettingsSectionUpdateKind, IndexPath)? in
-                let neededSectionOffset = sectionModels.enumerated().first { _, model in
+                let neededSectionOffset = sectionModels.firstIndex { model in
                     model.items.contains { $0.identity == updateKind.associatedIdentity }
-                }?.offset
+                }
                 
                 guard let section = neededSectionOffset else {
                     return nil
@@ -174,9 +174,11 @@ final class SettingsViewController: BaseViewController, LoaderPresentable {
                     self?.collectionView.isHidden = shouldBlockInteraction
                     self?.skeletonContainer.isHidden = !shouldBlockInteraction
                     
-                    shouldBlockInteraction ?
-                    self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.backgroundColor) :
+                    if shouldBlockInteraction {
+                        self?.skeletonContainer.showSkeletonAsynchronously(with: UIColor.SmartYard.backgroundColor)
+                    } else {
                         self?.skeletonContainer.hideSkeleton()
+                    }
                 }
             )
             .disposed(by: disposeBag)

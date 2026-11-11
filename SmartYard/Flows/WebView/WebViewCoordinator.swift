@@ -118,22 +118,8 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
                 networkStateProvider: networkStateProvider
             )
             
-            let nc = rootViewController
-            if !push {
-                nc.popViewController(animated: false)
-            }
-            let topVc = nc.visibleViewController as? WebViewController
-        
-            let vc = WebViewController(
-                viewModel: vm,
-                backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
-                accessToken: apiWrapper.accessService.accessToken ?? "",
-                version: version,
-                refreshControl: refreshControl,
-                webViewOptions: webViewOptions
-            )
-            
-            return .push(vc)
+            return pushWebView(vm, keepingCurrent: push, refreshControl: refreshControl)
+
         case let .webViewFromContent(content, baseURL, push, refreshControl):
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
@@ -143,22 +129,8 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
                 networkStateProvider: networkStateProvider
             )
             
-            let nc = rootViewController
-            if !push {
-                nc.popViewController(animated: false)
-            }
-            let topVc = nc.visibleViewController as? WebViewController
-        
-            let vc = WebViewController(
-                viewModel: vm,
-                backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
-                accessToken: apiWrapper.accessService.accessToken ?? "",
-                version: version,
-                refreshControl: refreshControl,
-                webViewOptions: webViewOptions
-            )
-            return .push(vc)
-            
+            return pushWebView(vm, keepingCurrent: push, refreshControl: refreshControl)
+
         case let .webViewPopup(url):
             let vm = WebViewModel(
                 apiWrapper: apiWrapper,
@@ -176,5 +148,24 @@ final class WebViewCoordinator: NavigationCoordinator<WebViewRoute>, HasDisposeB
             
             return .present(vc)
         }
+    }
+
+    private func pushWebView(_ vm: WebViewModel, keepingCurrent: Bool, refreshControl: Bool) -> NavigationTransition {
+        let nc = rootViewController
+        if !keepingCurrent {
+            nc.popViewController(animated: false)
+        }
+        let topVc = nc.visibleViewController as? WebViewController
+
+        let vc = WebViewController(
+            viewModel: vm,
+            backButtonLabel: topVc?.documentTitle ?? backButtonLabel,
+            accessToken: apiWrapper.accessService.accessToken ?? "",
+            version: version,
+            refreshControl: refreshControl,
+            webViewOptions: webViewOptions
+        )
+
+        return .push(vc)
     }
 }

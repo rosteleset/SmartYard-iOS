@@ -7,31 +7,6 @@
 
 import Foundation
 
-protocol AppDependencies {
-    var linphoneService: LinphoneService { get }
-    var providerProxy: CXProviderProxy { get }
-
-    var accessService: AccessService { get }
-    var permissionService: PermissionService { get }
-
-    var apiWrapper: APIWrapper { get }
-    var issueService: IssueService { get }
-    var pushNotificationService: PushNotificationService { get }
-    var alertService: AlertService { get }
-    var telemetryService: AppTelemetryServicing { get }
-    var analyticsTracker: AnalyticsTracking { get }
-    var logoutHelper: LogoutHelper { get }
-
-    var debugNetwork: DebugNetworkController { get }
-    var networkEnv: NetworkEnvironment { get }
-    var networkStateProvider: NetworkStateProviding { get }
-    var offlineAddressListDataSource: OfflineAddressListDataSource { get }
-    var optionsService: OptionsServicing { get }
-    var supportCallActionsPresenter: SupportCallActionsPresenting { get }
-    var requestSupportCallbackUseCase: RequestSupportCallbackUseCase { get }
-    var phoneDialer: PhoneDialing { get }
-}
-
 final class DefaultAppDependencies: AppDependencies {
     let linphoneService: LinphoneService
     let providerProxy: CXProviderProxy
@@ -111,4 +86,29 @@ final class DefaultAppDependencies: AppDependencies {
         self.supportCallActionsPresenter = SupportCallActionsPresenter()
         self.phoneDialer = SystemPhoneDialer()
     }
+}
+
+protocol AppDependencies {
+    var linphoneService: LinphoneService { get }
+    var providerProxy: CXProviderProxy { get }
+
+    var accessService: AccessService { get }
+    var permissionService: PermissionService { get }
+
+    var apiWrapper: APIWrapper { get }
+    var issueService: IssueService { get }
+    var pushNotificationService: PushNotificationService { get }
+    var alertService: AlertService { get }
+    var telemetryService: AppTelemetryServicing { get }
+    var analyticsTracker: AnalyticsTracking { get }
+    var logoutHelper: LogoutHelper { get }
+
+    var debugNetwork: DebugNetworkController { get }
+    var networkEnv: NetworkEnvironment { get }
+    var networkStateProvider: NetworkStateProviding { get }
+    var offlineAddressListDataSource: OfflineAddressListDataSource { get }
+    var optionsService: OptionsServicing { get }
+    var supportCallActionsPresenter: SupportCallActionsPresenting { get }
+    var requestSupportCallbackUseCase: RequestSupportCallbackUseCase { get }
+    var phoneDialer: PhoneDialing { get }
 }

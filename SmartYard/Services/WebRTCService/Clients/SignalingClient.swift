@@ -48,6 +48,8 @@ final class SignalingClient {
         let task = URLSession.shared.dataTask(with: request) { data, _, _ in
             guard let data = data else { return }
             
+            // Preserve replacement decoding before handing the answer to WebRTC.
+            // swiftlint:disable:next optional_data_string_conversion
             let sdpAnswer = String(decoding: data, as: UTF8.self)
             let sessionDescription = RTCSessionDescription(type: .answer, sdp: sdpAnswer)
             completion(sessionDescription)

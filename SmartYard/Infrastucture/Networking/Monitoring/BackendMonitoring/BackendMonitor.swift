@@ -17,11 +17,11 @@ final class BackendMonitor: BackendMonitoring {
     struct Config {
         /// Сколько подряд сетевых фейлов нужно, чтобы объявить backend unavailable,
         /// если мы ещё ни разу не видели успешных ответов в этой сессии.
-        var failuresToDeclareUnavailableBeforeEverAvailable: Int = 2
+        var failuresBeforeFirstSuccess: Int = 2
 
         /// Сколько подряд сетевых фейлов нужно, чтобы объявить backend unavailable,
         /// если backend уже был available в этой сессии.
-        var failuresToDeclareUnavailableAfterEverAvailable: Int = 2
+        var failuresAfterFirstSuccess: Int = 2
 
         /// Сколько подряд успешных ответов нужно, чтобы вернуть available из unavailable.
         /// Обычно достаточно 1.
@@ -29,7 +29,7 @@ final class BackendMonitor: BackendMonitoring {
 
         /// После того как backend уже был доступен, не объявляем весь backend недоступным
         /// только из-за одного проблемного endpoint-а.
-        var distinctFailurePathsToProbeAfterEverAvailable: Int = 2
+        var distinctFailurePathsAfterFirstSuccess: Int = 2
     }
 
     // MARK: - Public
@@ -129,13 +129,13 @@ final class BackendMonitor: BackendMonitoring {
             self.consecutiveFailurePaths.insert(self.failurePath(for: requestURL))
 
             let threshold = self.hasEverBeenAvailableInSession
-            ? self.config.failuresToDeclareUnavailableAfterEverAvailable
-            : self.config.failuresToDeclareUnavailableBeforeEverAvailable
+            ? self.config.failuresAfterFirstSuccess
+            : self.config.failuresBeforeFirstSuccess
 
             guard self.consecutiveFailures >= threshold else { return }
 
             if self.hasEverBeenAvailableInSession,
-               self.consecutiveFailurePaths.count < self.config.distinctFailurePathsToProbeAfterEverAvailable {
+               self.consecutiveFailurePaths.count < self.config.distinctFailurePathsAfterFirstSuccess {
                 Logger.logDebug(
                     "BackendMonitor: keep available, failures=\(self.consecutiveFailures) paths=\(self.consecutiveFailurePaths.count)"
                 )
@@ -230,6 +230,7 @@ final class BackendMonitor: BackendMonitoring {
                 Logger.logDebug("BackendMonitor: health probe failed \(errorDescription)")
                 self.setStatus(.unavailable, reason: reason)
             }
-        }.resume()
+        }
+        .resume()
     }
 }

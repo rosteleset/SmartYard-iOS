@@ -25,7 +25,6 @@ class WidgetViewController: UIViewController, NCWidgetProviding, HasDisposeBag {
     private let areObjectsGrantAccessed = BehaviorSubject<[Int: Bool]>(value: [:])
     private let doorOpened = PublishSubject<Int?>()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,8 +75,11 @@ class WidgetViewController: UIViewController, NCWidgetProviding, HasDisposeBag {
                     let range = (1...abs(cellCountDifference))
                     let indexPaths = range.map { IndexPath(row: $0, section: 0) }
                     
-                    cellCountDifference > 0 ? self.tableView.insertRows(at: indexPaths, with: .fade)
-                        : self.tableView.deleteRows(at: indexPaths, with: .fade)
+                    if cellCountDifference > 0 {
+                        self.tableView.insertRows(at: indexPaths, with: .fade)
+                    } else {
+                        self.tableView.deleteRows(at: indexPaths, with: .fade)
+                    }
                 }
                 
                 self.tableView.performBatchUpdates(updateBlock, completion: nil)
@@ -157,7 +159,7 @@ class WidgetViewController: UIViewController, NCWidgetProviding, HasDisposeBag {
                 onNext: { [weak self] objects in
                     var accessStateDict = [Int: Bool]()
                     
-                    objects?.sharedObjects.enumerated().forEach { offset, _ in
+                    objects?.sharedObjects.indices.forEach { offset in
                         accessStateDict[offset] = false
                     }
                     
@@ -176,6 +178,10 @@ class WidgetViewController: UIViewController, NCWidgetProviding, HasDisposeBag {
             )
             .disposed(by: disposeBag)
         
+        bindDoorOpeningFeedback()
+    }
+
+    private func bindDoorOpeningFeedback() {
         doorOpened.asDriver(onErrorJustReturn: nil)
             .withLatestFrom(areObjectsGrantAccessed.asDriver(onErrorJustReturn: [:])) { ($0, $1) }
             .drive(

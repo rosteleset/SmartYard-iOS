@@ -80,13 +80,13 @@ struct CallPayload {
         let hash = data["hash"] as? String ?? ""
         
         guard let username = data["extension"] as? String,
-              let password = data["pass"] as? String != nil ? data["pass"] as? String : hash,
+              let password = data["pass"] is String ? data["pass"] as? String : hash,
             let server = data["server"] as? String,
             let port = data["port"] as? String,
             let rawTransport = data["transport"] as? String,
             let transport = TransportType(rawString: rawTransport),
-            let liveImage = data["live"] as? String != nil ? data["live"] as? String : "\(accessService.backendURL)/call/live/\(hash)",
-            let image = data["image"] as? String != nil ? data["image"] as? String : "\(accessService.backendURL)/call/camshot/\(hash)",
+            let liveImage = data["live"] is String ? data["live"] as? String : "\(accessService.backendURL)/call/live/\(hash)",
+            let image = data["image"] is String ? data["image"] as? String : "\(accessService.backendURL)/call/camshot/\(hash)",
             let dtmf = data["dtmf"] as? String,
             let callerId = data["callerId"] as? String else {
             return nil

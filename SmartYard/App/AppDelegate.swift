@@ -284,26 +284,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             pushNotificationPayload: userInfo,
             useCallKit: false
         ) {
-            switch response.actionIdentifier {
-            case UNNotificationDefaultActionIdentifier: // обычное нажатие на push
-                appCoordinator.processIncomingCallRequest(
-                    callPayload: callPayload,
-                    useCallKit: false,
-                    actionIdentifier: response.actionIdentifier,
-                    completionHandler: nil
-                )
-                completionHandler()
-                
-            case UNNotificationDismissActionIdentifier: // смахивание push
-                break
-            default: // выбор действия из списка по длинному нажатию
-                appCoordinator.processIncomingCallRequest(
-                    callPayload: callPayload,
-                    useCallKit: false,
-                    actionIdentifier: response.actionIdentifier,
-                    completionHandler: completionHandler
-                )
-            }
+            handleCallNotification(
+                callPayload,
+                actionIdentifier: response.actionIdentifier,
+                completionHandler: completionHandler
+            )
             return
         }
         
@@ -328,6 +313,24 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         performMessagePushEffects(decision.effects)
         
         completionHandler()
+    }
+
+    private func handleCallNotification(
+        _ callPayload: CallPayload,
+        actionIdentifier: String,
+        completionHandler: @escaping () -> Void
+    ) {
+        guard actionIdentifier != UNNotificationDismissActionIdentifier else { return }
+        let isDefaultAction = actionIdentifier == UNNotificationDefaultActionIdentifier
+        appCoordinator.processIncomingCallRequest(
+            callPayload: callPayload,
+            useCallKit: false,
+            actionIdentifier: actionIdentifier,
+            completionHandler: isDefaultAction ? nil : completionHandler
+        )
+        if isDefaultAction {
+            completionHandler()
+        }
     }
 
     private func openMessagePushDestination(_ destination: MessagePushDestination) {

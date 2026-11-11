@@ -7,12 +7,7 @@ protocol SimpleVideoRangeSliderDelegate: AnyObject {
     
     func didChangeDate(
         videoRangeSlider: SimpleVideoRangeSlider,
-        isReceivingGesture: Bool,
-        startDate: Date,
-        endDate: Date,
-        isLowerBoundReached: Bool,
-        isUpperBoundReached: Bool,
-        screenshotPolicy: SimpleVideoRangeSlider.ScreenshotPolicy
+        selection: SimpleVideoRangeSlider.Selection
     )
     
 }
@@ -24,6 +19,15 @@ final class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         case end
         case middle
         case none
+    }
+
+    struct Selection {
+        let isReceivingGesture: Bool
+        let startDate: Date
+        let endDate: Date
+        let isLowerBoundReached: Bool
+        let isUpperBoundReached: Bool
+        let screenshotPolicy: ScreenshotPolicy
     }
 
     private enum DragHandleChoice {
@@ -205,12 +209,14 @@ final class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
-            isReceivingGesture: isReceivingGesture,
-            startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
-            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
-            isLowerBoundReached: isLowerBoundReached,
-            isUpperBoundReached: isUpperBoundReached,
-            screenshotPolicy: latestScreenshotPolicy
+            selection: Selection(
+                isReceivingGesture: isReceivingGesture,
+                startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
+                endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
+                isLowerBoundReached: isLowerBoundReached,
+                isUpperBoundReached: isUpperBoundReached,
+                screenshotPolicy: latestScreenshotPolicy
+            )
         )
         
         layoutSubviews()
@@ -251,12 +257,14 @@ final class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
-            isReceivingGesture: isReceivingGesture,
-            startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
-            endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
-            isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
-            isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
-            screenshotPolicy: latestScreenshotPolicy
+            selection: Selection(
+                isReceivingGesture: isReceivingGesture,
+                startDate: visibleTimelineStartDate.addingTimeInterval(resultingStartIndicatorTime),
+                endDate: visibleTimelineStartDate.addingTimeInterval(resultingEndIndicatorTime),
+                isLowerBoundReached: visibleTimelineStartDate == absoluteTimelineLowerBound,
+                isUpperBoundReached: visibleTimelineEndDate == absoluteTimelineUpperBound,
+                screenshotPolicy: latestScreenshotPolicy
+            )
         )
         
         layoutSubviews()
@@ -304,12 +312,14 @@ final class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
-            isReceivingGesture: isReceivingGesture,
-            startDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
-            endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage)),
-            isLowerBoundReached: isLowerBoundReached,
-            isUpperBoundReached: isUpperBoundReached,
-            screenshotPolicy: latestScreenshotPolicy
+            selection: Selection(
+                isReceivingGesture: isReceivingGesture,
+                startDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: startPercentage)),
+                endDate: visibleTimelineStartDate.addingTimeInterval(secondsFromValue(value: endPercentage)),
+                isLowerBoundReached: isLowerBoundReached,
+                isUpperBoundReached: isUpperBoundReached,
+                screenshotPolicy: latestScreenshotPolicy
+            )
         )
         
         layoutSubviews()
@@ -400,12 +410,14 @@ final class SimpleVideoRangeSlider: UIView, UIGestureRecognizerDelegate {
         
         delegate?.didChangeDate(
             videoRangeSlider: self,
-            isReceivingGesture: isReceivingGesture,
-            startDate: visibleTimelineStartDate.addingTimeInterval(startSeconds),
-            endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds),
-            isLowerBoundReached: isLowerBoundReached,
-            isUpperBoundReached: isUpperBoundReached,
-            screenshotPolicy: latestScreenshotPolicy
+            selection: Selection(
+                isReceivingGesture: isReceivingGesture,
+                startDate: visibleTimelineStartDate.addingTimeInterval(startSeconds),
+                endDate: visibleTimelineStartDate.addingTimeInterval(endSeconds),
+                isLowerBoundReached: isLowerBoundReached,
+                isUpperBoundReached: isUpperBoundReached,
+                screenshotPolicy: latestScreenshotPolicy
+            )
         )
         
         layoutSubviews()

@@ -130,17 +130,8 @@ final class OptionsService: OptionsServicing, HasDisposeBag {
     }
 
     private func apply(_ response: GetOptionsResponseData) {
-        if let payments = response.payments { accessService.showPayments = payments; accessService.paymentsUrl = "" }
-        if let paymentsUrl = response.paymentsUrl { accessService.paymentsUrl = paymentsUrl }
-        if let supportPhone = response.supportPhone { accessService.supportPhone = supportPhone }
-        if response.chat != nil || response.chatOptions != nil { accessService.chatUrl = "" }
-        if let chat = response.chat { accessService.showChat = chat }
-        if let chatUrl = response.chatUrl { accessService.chatUrl = chatUrl }
-        if let chatOptions = response.chatOptions {
-            accessService.chatId = chatOptions.id
-            accessService.chatDomain = chatOptions.domain
-            accessService.chatToken = chatOptions.token
-        }
+        applyPaymentAndChatOptions(response)
+
         if let cityCams = response.cityCams { accessService.showCityCams = cityCams }
         if let eventsTracking = response.eventsTracking { accessService.eventsTrackingEnabled = eventsTracking }
         if let stories = response.stories { accessService.showStories = stories }
@@ -167,5 +158,19 @@ final class OptionsService: OptionsServicing, HasDisposeBag {
         accessService.activeTab = response.activeTab.rawValue
 
         accessService.optionsUpdated.accept(())
+    }
+
+    private func applyPaymentAndChatOptions(_ response: GetOptionsResponseData) {
+        if let payments = response.payments { accessService.showPayments = payments; accessService.paymentsUrl = "" }
+        if let paymentsUrl = response.paymentsUrl { accessService.paymentsUrl = paymentsUrl }
+        if let supportPhone = response.supportPhone { accessService.supportPhone = supportPhone }
+        if response.chat != nil || response.chatOptions != nil { accessService.chatUrl = "" }
+        if let chat = response.chat { accessService.showChat = chat }
+        if let chatUrl = response.chatUrl { accessService.chatUrl = chatUrl }
+        if let chatOptions = response.chatOptions {
+            accessService.chatId = chatOptions.id
+            accessService.chatDomain = chatOptions.domain
+            accessService.chatToken = chatOptions.token
+        }
     }
 }

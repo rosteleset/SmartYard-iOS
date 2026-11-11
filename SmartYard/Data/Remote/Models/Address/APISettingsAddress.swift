@@ -64,37 +64,11 @@ struct APISettingsAddress: Decodable {
         clientName = try? container.decode(String.self, forKey: .clientName)
         contractName = try? container.decode(String.self, forKey: .contractName)
         
-        let flatOwnerRawValue = try? container.decode(String.self, forKey: .flatOwner)
-        
-        switch flatOwnerRawValue {
-        case "t": flatOwner = true
-        case "f": flatOwner = false
-        default: flatOwner = nil
-        }
-        
-        let contractOwnerRawValue = try? container.decode(String.self, forKey: .contractOwner)
-        
-        switch contractOwnerRawValue {
-        case "t": contractOwner = true
-        case "f": contractOwner = false
-        default: contractOwner = nil
-        }
-        
-        let hasGatesRawValue = try? container.decode(String.self, forKey: .hasGates)
-        
-        switch hasGatesRawValue {
-        case "t": hasGates = true
-        case "f": hasGates = false
-        default: hasGates = nil
-        }
-        
-        let hasPlogRawValue = try? container.decode(String.self, forKey: .hasPlog)
-        
-        switch hasPlogRawValue {
-        case "t": hasPlog = true
-        default: hasPlog = false
-        }
-        
+        flatOwner = Self.decodeFlag(.flatOwner, from: container)
+        contractOwner = Self.decodeFlag(.contractOwner, from: container)
+        hasGates = Self.decodeFlag(.hasGates, from: container)
+        hasPlog = (try? container.decode(String.self, forKey: .hasPlog)) == "t"
+
         houseId = try? container.decode(String.self, forKey: .houseId)
         flatId = try? container.decode(String.self, forKey: .flatId)
         flatNumber = try? container.decode(String.self, forKey: .flatNumber)
@@ -104,6 +78,14 @@ struct APISettingsAddress: Decodable {
         lcab = try? container.decode(String.self, forKey: .lcab)
         doorCode = (try? container.decode(String.self, forKey: .doorCode)) ?? nil
         roommates = (try? container.decode([APIRoommate].self, forKey: .roommates)) ?? []
+    }
+
+    private static func decodeFlag(_ key: CodingKeys, from container: KeyedDecodingContainer<CodingKeys>) -> Bool? {
+        switch try? container.decode(String.self, forKey: key) {
+        case "t": return true
+        case "f": return false
+        default: return nil
+        }
     }
     
 }

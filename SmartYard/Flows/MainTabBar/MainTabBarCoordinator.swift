@@ -21,7 +21,6 @@ enum MainTabBarRoute: Route {
     case menu
 }
 
-// swiftlint: disable type_body_length
 final class MainTabBarCoordinator: TabBarCoordinator<MainTabBarRoute>, HasDisposeBag {
 
     private let accessService: AccessService

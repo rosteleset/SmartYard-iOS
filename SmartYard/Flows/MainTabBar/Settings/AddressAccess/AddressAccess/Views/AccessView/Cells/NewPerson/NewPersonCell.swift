@@ -11,6 +11,7 @@ import UIKit
 final class NewPersonCell: UITableViewCell {
 
     @IBOutlet private weak var titleLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureUI()

@@ -1,5 +1,10 @@
 import UIKit
 
+@resultBuilder
+public enum AddViewBuilder {
+    public static func buildBlock(_ views: UIView...) -> [UIView] { views }
+}
+
 extension UIStackView {
     convenience init(
         axis: NSLayoutConstraint.Axis,
@@ -74,22 +79,21 @@ extension UIStackView {
     }
 }
 
-@resultBuilder public struct AddViewBuilder {
-    public static func buildBlock(_ views: UIView...) -> [UIView] { views }
-}
-
 extension UIStackView {
-    @discardableResult func add(_ views: [UIView]) -> UIView {
+    @discardableResult
+    func add(_ views: [UIView]) -> UIView {
         views.forEach { self.addArrangedSubview($0) }
         return self
     }
 
-    @discardableResult func add(@AddViewBuilder _ block: () -> ([UIView])) -> UIView {
+    @discardableResult
+    func add(@AddViewBuilder _ block: () -> ([UIView])) -> UIView {
         block().forEach { self.addArrangedSubview($0) }
         return self
     }
 
-    @discardableResult func insert(at index: Int, block: () -> (UIView)) -> UIView {
+    @discardableResult
+    func insert(at index: Int, block: () -> (UIView)) -> UIView {
         insertArrangedSubview(block(), at: index)
         return self
     }

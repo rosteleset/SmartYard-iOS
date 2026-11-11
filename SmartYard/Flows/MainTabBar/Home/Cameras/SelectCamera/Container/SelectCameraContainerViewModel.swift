@@ -76,7 +76,24 @@ final class SelectCameraContainerViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
 
-        input.selectedDateTrigger
+        bindDateSelection(input.selectedDateTrigger)
+
+        let isArchiveAvailable = rangesForCamera
+            .map { !($0?.isEmpty ?? true) }
+            .asDriver(onErrorJustReturn: false)
+            .distinctUntilChanged()
+
+        return Output(
+            address: .just(address),
+            cameraConfiguration: .just((cameras: cameras, preselectedCameraId: preselectedCameraId)),
+            rangesForCurrentCamera: rangesForCamera.asDriver(onErrorJustReturn: nil),
+            isArchiveAvailable: isArchiveAvailable,
+            areRangesBeingLoaded: rangesLoadingTracker.asDriver()
+        )
+    }
+
+    private func bindDateSelection(_ selection: Driver<Date>) {
+        selection
             .withLatestFrom(selectedCameraId.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .withLatestFrom(rangesForCamera.asDriver(onErrorJustReturn: nil)) { ($0, $1) }
             .drive(onNext: { [weak self] args in
@@ -101,19 +118,6 @@ final class SelectCameraContainerViewModel: BaseViewModel {
                 )
             })
             .disposed(by: disposeBag)
-
-        let isArchiveAvailable = rangesForCamera
-            .map { !($0?.isEmpty ?? true) }
-            .asDriver(onErrorJustReturn: false)
-            .distinctUntilChanged()
-
-        return Output(
-            address: .just(address),
-            cameraConfiguration: .just((cameras: cameras, preselectedCameraId: preselectedCameraId)),
-            rangesForCurrentCamera: rangesForCamera.asDriver(onErrorJustReturn: nil),
-            isArchiveAvailable: isArchiveAvailable,
-            areRangesBeingLoaded: rangesLoadingTracker.asDriver()
-        )
     }
 
     private func updateAvailableDates(camera: CameraObject) {

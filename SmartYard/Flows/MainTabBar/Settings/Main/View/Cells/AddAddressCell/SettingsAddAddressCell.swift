@@ -13,6 +13,7 @@ import RxCocoa
 final class SettingsAddAddressCell: UICollectionViewCell, HasDisposeBag {
     
     @IBOutlet private weak var addAddressButton: UIButton!
+
     private func configureUI() {
         addAddressButton.setTitle(L10n.Settings.Main.addAddressButton, for: .normal)
     }
