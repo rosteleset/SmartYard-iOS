@@ -36,6 +36,11 @@ final class FacesSettingsViewModel: BaseViewModel {
         self.address = address
         self.canAddFace = canAddFace
     }
+
+    func showRegistrationHelp() {
+        guard canAddFace else { return }
+        router.trigger(.showModal(withContent: .aboutFaceRegistration))
+    }
     
     func transform(_ input: Input) -> Output {
         // MARK: Переход назад

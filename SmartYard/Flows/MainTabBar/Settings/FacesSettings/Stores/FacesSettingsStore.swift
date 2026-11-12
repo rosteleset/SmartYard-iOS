@@ -105,6 +105,7 @@ final class FacesSettingsStore {
 
     func goBack() { back.accept(()) }
     func addFace() { add.accept(()) }
+    func showRegistrationHelp() { viewModel.showRegistrationHelp() }
     func selectFace(_ face: APIFace) { select.accept((face.faceId, images[face.faceId])) }
     func deleteFace(_ face: APIFace) { delete.accept((face.faceId, images[face.faceId])) }
 

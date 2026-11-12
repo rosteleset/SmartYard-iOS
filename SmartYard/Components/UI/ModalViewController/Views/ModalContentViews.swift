@@ -34,27 +34,44 @@ final class AddressOrderModalViewContent: UIView {
     }
 }
 
-final class CallKitModalViewContent: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureUI()
+final class TextModalViewContent: UIView {
+    private let titleLabel = UILabel.make(.modalTitle)
+    private let messageLabel = UILabel.make(.modalBody)
+    private let scrollView = UIScrollView()
+
+    init(title: String, message: String) {
+        super.init(frame: .zero)
+        setupUI(title: title, message: message)
+        setupConstraints()
     }
 
     @available(*, unavailable)
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
-    private func configureUI() {
+    private func setupUI(title: String, message: String) {
         backgroundColor = .SmartYard.grayBorder
+        titleLabel.text = title
+        titleLabel.accessibilityTraits = .header
+        messageLabel.text = message
+        messageLabel.textAlignment = .natural
+        scrollView.contentInsetAdjustmentBehavior = .never
+    }
 
-        let titleLabel = UILabel.make(.modalTitle, text: L10n.Settings.Common.CallKitInfo.title)
-        let descriptionLabel = UILabel.make(.modalBody, text: L10n.Settings.Common.CallKitInfo.description)
-
-        let stackView = UIStackView.vertical(spacing: 10).add {
+    private func setupConstraints() {
+        let stackView = UIStackView.vertical(
+            paddings: .init(top: 24, leading: 24, bottom: 24, trailing: 24),
+            spacing: 10
+        )
+        stackView.add {
             titleLabel
-            descriptionLabel
+            messageLabel
         }
-
-        pinSubview(stackView, with: .init(inset: 24))
+        pinSubview(scrollView)
+        scrollView.addSubview(stackView) { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide.snp.width)
+        }
+        scrollView.snp.makeConstraints { $0.height.equalTo(stackView.snp.height).priority(249) }
     }
 }
 

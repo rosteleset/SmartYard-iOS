@@ -17,6 +17,7 @@ enum ModalContent {
     case aboutWaitingGuests
     case aboutVideoEvent
     case aboutCallKit
+    case aboutFaceRegistration
     case aboutAddressOrder
     case paranoid(ParanoidPushPayload)
     case whatsNew(WhatsNewRelease)
@@ -32,7 +33,7 @@ enum ModalContent {
 
     var usesReadableWidth: Bool {
         switch self {
-        case .whatsNew:
+        case .aboutFaceRegistration, .whatsNew:
             return true
         default:
             return false
@@ -48,7 +49,15 @@ enum ModalContent {
         case .aboutVideoEvent:
             return VideoEventModalViewContent()
         case .aboutCallKit:
-            return CallKitModalViewContent()
+            return TextModalViewContent(
+                title: L10n.Settings.Common.CallKitInfo.title,
+                message: L10n.Settings.Common.CallKitInfo.description
+            )
+        case .aboutFaceRegistration:
+            return TextModalViewContent(
+                title: L10n.Settings.Faces.Groups.helpTitle,
+                message: L10n.Settings.Faces.registrationHint.trimmingCharacters(in: .whitespacesAndNewlines)
+            )
         case .aboutAddressOrder:
             return AddressOrderModalViewContent()
         case let .paranoid(payload):

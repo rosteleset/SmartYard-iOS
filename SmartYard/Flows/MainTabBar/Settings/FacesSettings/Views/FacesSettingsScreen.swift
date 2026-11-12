@@ -82,7 +82,7 @@ struct FacesSettingsScreen: View {
                     Group {
                         if store.groupsEnabled {
                             FacesSettingsCard {
-                                FaceGroupsContent(store: store, openGroupEditor: openGroupEditor).padding(24)
+                                FaceGroupsContent(store: store, openGroupEditor: openGroupEditor)
                             }
                         } else {
                             contentCard
