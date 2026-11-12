@@ -194,6 +194,7 @@ struct FaceGroupsContent: View {
                 .contentMargins(.horizontal, 24, for: .scrollContent)
                 .contentMargins(.vertical, 12, for: .scrollContent)
                 .scrollBounceBehavior(.basedOnSize)
+                .scrollIndicators(.hidden)
                 .accessibilityIdentifier("faces.grid")
             if store.clusteringEnabled && store.state.filter == .ungrouped {
                 Button { openGroupEditor(.cluster) } label: {
