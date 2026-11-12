@@ -599,7 +599,7 @@
 "settings.faces.faceRegistration" = "Yuzni ro'yxatdan o'tkazish";
 "settings.faces.registeredFaces" = "Ro'yxatdan o'tgan yuzlar";
 "settings.faces.emptyStateMessage" = "Hali ro'yxatdan o'tgan yuzlar yo'q";
-"settings.faces.registrationHint" = "Mehmonlaringizning suratlari Voqealar tarixi bo'limida saqlanadi. \n\nShaxsni tanlash va ro'yxatdan o'tkazish uchun ushbu bo'limga o'ting, Plus tugmasini bosib. \nVoqealar tarixida kerakli voqea yonida ma'lumot belgisini bosib, ochilgan ekranda zarur suratni tanlang.\n\n";
+"settings.faces.registrationHint" = "Mehmonlaringizning suratlari Voqealar tarixi bo'limida saqlanadi.\n\nShaxsni tanlash va ro'yxatdan o'tkazish uchun ushbu bo'limga o'ting, Plus tugmasini bosib.\n\nVoqealar tarixida kerakli voqea yonida ma'lumot belgisini bosib, ochilgan ekranda zarur suratni tanlang.\n\n";
 
 // Face groups
 "settings.faces.groups.all" = "Barcha yuzlar";
@@ -617,7 +617,7 @@
 "settings.faces.groups.detach" = "Guruhdan chiqarish";
 "settings.faces.groups.retry" = "Qayta urinish";
 "settings.faces.groups.title" = "Guruhlar";
-"settings.faces.groups.helpTitle" = "Yuzni qanday qo‘shish mumkin";
+"settings.faces.groups.helpTitle" = "Yuz qo‘shish";
 "settings.faces.groups.faceActions" = "Yuz amallari";
 "settings.faces.groups.clusterHint" = "Guruhsiz o‘xshash yuzlar birlashtiriladi. Yangi guruhlar nomlarining boshlanishini kiriting.";
 "settings.faces.groups.screenTitle" = "Yuzlar va guruhlar";

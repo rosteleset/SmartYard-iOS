@@ -603,7 +603,7 @@
 "settings.faces.faceRegistration" = "Адамның тіркеуі";
 "settings.faces.registeredFaces" = "Тіркелген адамдар";
 "settings.faces.emptyStateMessage" = "Әзірге тіркелген беттер жоқ";
-"settings.faces.registrationHint" = "Сіздің азаматтарыңыздың суреттері Құрылыс істориясы бөлімінде сақталады. \n\nАдамның таңдауы және тіркеуі үшін көрсетілген бөлімге өту үшін Плюс түймесін басыңыз. \nІстория жазбалары бөлімінде, қажетті оқиғаға қарсы ақпарат белгісін басып, ашылған көрсеткінің ерекшеліктерін таңдаңыз және қажетті суретті таңдаңыз.\n\n";
+"settings.faces.registrationHint" = "Сіздің азаматтарыңыздың суреттері Құрылыс істориясы бөлімінде сақталады.\n\nАдамның таңдауы және тіркеуі үшін көрсетілген бөлімге өту үшін Плюс түймесін басыңыз.\n\nІстория жазбалары бөлімінде, қажетті оқиғаға қарсы ақпарат белгісін басып, ашылған көрсеткінің ерекшеліктерін таңдаңыз және қажетті суретті таңдаңыз.\n\n";
 
 // Face groups
 "settings.faces.groups.all" = "Барлық беттер";
@@ -621,7 +621,7 @@
 "settings.faces.groups.detach" = "Топтан шығару";
 "settings.faces.groups.retry" = "Қайталау";
 "settings.faces.groups.title" = "Топтар";
-"settings.faces.groups.helpTitle" = "Бетті қалай қосуға болады";
+"settings.faces.groups.helpTitle" = "Бет қосу";
 "settings.faces.groups.faceActions" = "Бет әрекеттері";
 "settings.faces.groups.clusterHint" = "Топсыз ұқсас беттер біріктіріледі. Жаңа топ атауларының басын енгізіңіз.";
 "settings.faces.groups.screenTitle" = "Беттер мен топтар";

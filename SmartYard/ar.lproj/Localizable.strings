@@ -599,7 +599,7 @@
 "settings.faces.faceRegistration" = "تسجيل الوجه";
 "settings.faces.registeredFaces" = "الوجوه المسجلة";
 "settings.faces.emptyStateMessage" = "لا توجد وجوه مسجلة بعد";
-"settings.faces.registrationHint" = "تُحفظ صور ضيوفك في قسم سجل الأحداث.\n\nلاختيار وجه وتسجيله، انتقل إلى هذا القسم بالضغط على علامة плюс.\nفي سجل الأحداث، اضغط على أيقونة المعلومات بجانب الحدث المطلوب، ثم اختر الصورة اللازمة في الشاشة التي ستفتح.\n\n";
+"settings.faces.registrationHint" = "تُحفظ صور ضيوفك في قسم سجل الأحداث.\n\nلاختيار وجه وتسجيله، انتقل إلى هذا القسم بالضغط على علامة плюс.\n\nفي سجل الأحداث، اضغط على أيقونة المعلومات بجانب الحدث المطلوب، ثم اختر الصورة اللازمة في الشاشة التي ستفتح.\n\n";
 
 // Face groups
 "settings.faces.groups.all" = "كل الوجوه";
@@ -617,7 +617,7 @@
 "settings.faces.groups.detach" = "إزالة من المجموعة";
 "settings.faces.groups.retry" = "إعادة المحاولة";
 "settings.faces.groups.title" = "المجموعات";
-"settings.faces.groups.helpTitle" = "كيفية إضافة وجه";
+"settings.faces.groups.helpTitle" = "إضافة وجه";
 "settings.faces.groups.faceActions" = "إجراءات الوجه";
 "settings.faces.groups.clusterHint" = "سيتم تجميع الوجوه المتشابهة التي لا تنتمي إلى مجموعة. أدخل بداية أسماء المجموعات الجديدة.";
 "settings.faces.groups.screenTitle" = "الوجوه والمجموعات";

@@ -599,7 +599,7 @@
 "settings.faces.faceRegistration" = "Регистрация лица";
 "settings.faces.registeredFaces" = "Зарегистрированные лица";
 "settings.faces.emptyStateMessage" = "Зарегистрированных лиц пока нет";
-"settings.faces.registrationHint" = "Фотографии ваших гостей хранятся в разделе История событий. \n\nДля выбора и регистрации лица перейдите в указанный раздел, кликнув на Плюс. \nВ Истории событий кликните на значок информации напротив нужного события и на открывшемся экране выберите необходимое фото.\n\n";
+"settings.faces.registrationHint" = "Фотографии ваших гостей хранятся в разделе История событий.\n\nДля выбора и регистрации лица перейдите в указанный раздел, кликнув на Плюс.\n\nВ Истории событий кликните на значок информации напротив нужного события и на открывшемся экране выберите необходимое фото.\n\n";
 
 // Face groups
 "settings.faces.groups.all" = "Все лица";
@@ -617,7 +617,7 @@
 "settings.faces.groups.detach" = "Убрать из группы";
 "settings.faces.groups.retry" = "Повторить";
 "settings.faces.groups.title" = "Группы";
-"settings.faces.groups.helpTitle" = "Как добавить лицо";
+"settings.faces.groups.helpTitle" = "Добавление Лица";
 "settings.faces.groups.faceActions" = "Действия с лицом";
 "settings.faces.groups.clusterHint" = "Похожие лица без группы будут объединены. Укажите начало названий новых групп.";
 "settings.faces.groups.screenTitle" = "Лица и группы";
