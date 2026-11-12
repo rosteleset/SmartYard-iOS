@@ -56,6 +56,7 @@ private struct FacesSettingsCard<Content: View>: View {
 
 struct FacesSettingsScreen: View {
     let store: FacesSettingsStore
+    var openGroupEditor: (FaceGroupEditor.Kind) -> Void = { _ in }
     @State private var showsLoadError = false
     @State private var retriesAfterDismissal = false
 
@@ -81,7 +82,7 @@ struct FacesSettingsScreen: View {
                     Group {
                         if store.groupsEnabled {
                             FacesSettingsCard {
-                                FaceGroupsContent(store: store).padding(24)
+                                FaceGroupsContent(store: store, openGroupEditor: openGroupEditor).padding(24)
                             }
                         } else {
                             contentCard

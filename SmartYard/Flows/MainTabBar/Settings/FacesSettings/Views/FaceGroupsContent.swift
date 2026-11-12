@@ -7,7 +7,7 @@ import SwiftUI
 
 struct FaceGroupsContent: View {
     let store: FacesSettingsStore
-    @State private var editor: FaceGroupEditor.Kind?
+    let openGroupEditor: (FaceGroupEditor.Kind) -> Void
     @State private var deletingGroup: APIFaceGroup?
 
     var body: some View {
@@ -21,7 +21,6 @@ struct FaceGroupsContent: View {
         }
         .font(SYFont.regular(size: 16))
         .tint(SYColor.blue)
-        .sheet(item: $editor) { kind in FaceGroupEditor(kind: kind, store: store) }
         .alert(
             L10n.Settings.Faces.Groups.delete,
             isPresented: Binding(get: { deletingGroup != nil }, set: { if !$0 { deletingGroup = nil } })
@@ -91,7 +90,7 @@ struct FaceGroupsContent: View {
     }
 
     private var addGroup: some View {
-        Button { editor = .create } label: {
+        Button { openGroupEditor(.create) } label: {
             Image(systemName: "person.2.badge.plus")
                 .font(.system(size: 20))
                 .frame(width: 44, height: 44)
@@ -135,7 +134,7 @@ struct FaceGroupsContent: View {
 
     private func groupActions(_ group: APIFaceGroup) -> some View {
         Menu {
-            Button(L10n.Settings.Faces.Groups.edit, systemImage: "pencil") { editor = .edit(group) }
+            Button(L10n.Settings.Faces.Groups.edit, systemImage: "pencil") { openGroupEditor(.edit(group)) }
                 .accessibilityIdentifier("faces.groups.edit")
             Button(L10n.Settings.Faces.Groups.delete, systemImage: "trash", role: .destructive) {
                 deletingGroup = group
@@ -170,7 +169,7 @@ struct FaceGroupsContent: View {
                     .scrollIndicators(.hidden)
             }
             if store.clusteringEnabled && store.state.filter == .ungrouped {
-                Button { editor = .cluster } label: {
+                Button { openGroupEditor(.cluster) } label: {
                     Text(verbatim: L10n.Settings.Faces.Groups.cluster)
                         .multilineTextAlignment(.center)
                 }

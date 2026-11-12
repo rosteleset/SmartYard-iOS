@@ -218,8 +218,6 @@ private extension SettingsCoordinator {
             )
             
             let vc = NewAllowedCarViewController(viewModel: vm)
-            vc.modalPresentationStyle = .overFullScreen
-            vc.modalTransitionStyle = .crossDissolve
             
             return .present(vc)
             

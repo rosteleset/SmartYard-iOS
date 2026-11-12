@@ -10,6 +10,7 @@ extension NewAllowedCarViewController {
     func setupUI() {
         titleLabel.text = viewModel.originalCar == nil
             ? L10n.Settings.ShareCar.shareAccess : L10n.Settings.VehiclePass.editTitle
+        titleLabel.font = .SourceSansPro.bold(size: SYFormModal.titleSize)
         titleLabel.numberOfLines = 0
         carNumberHintLabel.text = L10n.Settings.ShareCar.subtitle
         carNumberHintLabel.numberOfLines = 0
@@ -121,20 +122,7 @@ extension NewAllowedCarViewController {
         card.subviews.forEach { $0.removeFromSuperview() }
         card.removeFromSuperview()
 
-        view.addSubview(availableArea) { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
-        }
-        availableArea.addSubview(card) { make in
-            make.centerX.centerY.equalToSuperview()
-            make.leading.greaterThanOrEqualToSuperview().inset(16)
-            make.trailing.lessThanOrEqualToSuperview().inset(16)
-            make.width.equalToSuperview().offset(-32).priority(750)
-            make.width.lessThanOrEqualTo(view.readableContentGuide.snp.width)
-            make.top.greaterThanOrEqualToSuperview().inset(12)
-            make.bottom.lessThanOrEqualToSuperview().inset(12)
-        }
+        SYFormModal.place(card, in: view)
         card.pinSubview(outerStack)
         outerStack.add {
             titleGroup
@@ -149,7 +137,7 @@ extension NewAllowedCarViewController {
         }
         content.snp.makeConstraints { $0.width.equalTo(scrollView.frameLayoutGuide.snp.width) }
         scrollView.snp.makeConstraints { $0.height.equalTo(content.snp.height).priority(249) }
-        confirmButton.snp.makeConstraints { $0.height.equalTo(52) }
+        confirmButton.snp.makeConstraints { $0.height.equalTo(SYFormModal.buttonHeight) }
 
         titleGroup.add { title; hint }
         setupNumberLayout(number: number, icon: icon)

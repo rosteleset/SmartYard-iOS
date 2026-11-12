@@ -29,7 +29,13 @@ final class FacesSettingsViewController: UIHostingController<FacesSettingsScreen
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .SmartYard.backgroundColor
+        rootView.openGroupEditor = { [weak self] kind in self?.openGroupEditor(kind) }
         store.start()
+    }
+
+    func openGroupEditor(_ kind: FaceGroupEditor.Kind) {
+        guard presentedViewController == nil else { return }
+        present(FaceGroupEditorViewController(kind: kind, store: store), animated: true)
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -4,20 +4,70 @@
 //
 
 import SwiftUI
+import SnapKit
+
+final class FaceGroupEditorViewController: UIViewController {
+    private let kind: FaceGroupEditor.Kind
+    private let store: FacesSettingsStore
+    private let card = FullRoundedView()
+    private let scrollView = UIScrollView()
+
+    init(kind: FaceGroupEditor.Kind, store: FacesSettingsStore) {
+        self.kind = kind
+        self.store = store
+        super.init(nibName: nil, bundle: nil)
+        SYFormModal.configurePresentation(of: self)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) { fatalError("init(coder:) is unavailable") }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        setupConstraints()
+    }
+
+    private func setupUI() {
+        card.backgroundColor = .SmartYard.secondBackgroundColor
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.keyboardDismissMode = .interactive
+        view.accessibilityViewIsModal = true
+        let dismissTap = UITapGestureRecognizer(target: self, action: #selector(dismissIfOutsideCard))
+        dismissTap.cancelsTouchesInView = false
+        view.addGestureRecognizer(dismissTap)
+    }
+
+    private func setupConstraints() {
+        let form = UIHostingController(rootView: FaceGroupEditor(kind: kind, store: store) { [weak self] in
+            self?.dismiss(animated: true)
+        })
+        form.safeAreaRegions = []
+        form.sizingOptions = .intrinsicContentSize
+        form.view.backgroundColor = .clear
+
+        addChild(form)
+        SYFormModal.place(card, in: view)
+        card.pinSubview(scrollView)
+        scrollView.addSubview(form.view) { make in
+            make.edges.equalTo(scrollView.contentLayoutGuide)
+            make.width.equalTo(scrollView.frameLayoutGuide.snp.width)
+        }
+        scrollView.snp.makeConstraints { $0.height.equalTo(form.view.snp.height).priority(249) }
+        form.didMove(toParent: self)
+    }
+
+    @objc private func dismissIfOutsideCard(_ tap: UITapGestureRecognizer) {
+        guard !card.bounds.contains(tap.location(in: card)) else { return }
+        dismiss(animated: true)
+    }
+}
 
 struct FaceGroupEditor: View {
-    enum Kind: Identifiable {
+    enum Kind {
         case create
         case edit(APIFaceGroup)
         case cluster
-
-        var id: String {
-            switch self {
-            case .create: return "create"
-            case .edit(let group): return "edit.\(group.groupId)"
-            case .cluster: return "cluster"
-            }
-        }
 
         var title: String {
             switch self {
@@ -35,14 +85,14 @@ struct FaceGroupEditor: View {
 
     let kind: Kind
     let store: FacesSettingsStore
+    let close: () -> Void
     @State private var name: String
     @State private var isTracked: Bool
-    @Environment(\.dismiss)
-    private var dismiss
 
-    init(kind: Kind, store: FacesSettingsStore) {
+    init(kind: Kind, store: FacesSettingsStore, close: @escaping () -> Void) {
         self.kind = kind
         self.store = store
+        self.close = close
         if case .edit(let group) = kind {
             _name = State(initialValue: group.groupName)
             _isTracked = State(initialValue: group.watcherId != nil)
@@ -53,68 +103,67 @@ struct FaceGroupEditor: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    Text(verbatim: kind.title)
-                        .font(SYFont.semibold(size: 24))
-                        .accessibilityAddTraits(.isHeader)
-                    if kind.isClustering {
-                        Text(verbatim: L10n.Settings.Faces.Groups.clusterHint)
-                            .font(SYFont.regular(size: 14))
-                            .foregroundStyle(SYColor.gray)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(verbatim: kind.isClustering ? L10n.Settings.Faces.Groups.prefix : L10n.Settings.Faces.Groups.name)
-                            .font(SYFont.regular(size: 14))
-                            .foregroundStyle(SYColor.gray)
-                        TextField("", text: $name)
-                            .font(SYFont.semibold(size: 18))
-                            .textFieldStyle(.plain)
-                            .frame(minHeight: 44)
-                            .submitLabel(.done)
-                            .onSubmit(save)
-                            .accessibilityLabel(kind.isClustering ? L10n.Settings.Faces.Groups.prefix : L10n.Settings.Faces.Groups.name)
-                            .accessibilityIdentifier("faces.group.name")
-                        Color(uiColor: .SmartYard.grayBorder).frame(height: 1)
-                    }
-                    if store.trackingEnabled && !kind.isClustering {
-                        Toggle(L10n.Settings.Faces.Groups.track, isOn: $isTracked)
-                            .accessibilityIdentifier("faces.group.tracking")
-                    }
-                }
-                .padding(24)
-                .frame(maxWidth: 560)
-                .frame(maxWidth: .infinity)
+        let insets = SYFormModal.contentInsets
+        VStack(alignment: .leading, spacing: SYFormModal.sectionSpacing) {
+            Text(verbatim: kind.title)
+                .font(SYFont.bold(size: SYFormModal.titleSize))
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
+            if kind.isClustering {
+                Text(verbatim: L10n.Settings.Faces.Groups.clusterHint)
+                    .font(SYFont.regular(size: 14))
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .scrollBounceBehavior(.basedOnSize)
-        }
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 12) {
-                Button(action: save) {
-                    Text(verbatim: kind.isClustering ? L10n.Settings.Faces.Groups.cluster : L10n.Common.save)
-                        .frame(maxWidth: .infinity, minHeight: 44)
-                }
-                .buttonStyle(SYPrimaryButtonStyle(height: 44))
-                .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || store.isLoading)
-                .accessibilityIdentifier("faces.group.save")
-                Button(L10n.Common.cancel, role: .cancel) { dismiss() }
-                    .foregroundStyle(SYColor.blue)
-                    .frame(minHeight: 44)
-                    .accessibilityIdentifier("faces.group.cancel")
+            nameField
+            if store.trackingEnabled && !kind.isClustering {
+                trackingOption
             }
-            .padding(24)
-            .frame(maxWidth: 560)
-            .frame(maxWidth: .infinity)
-            .background(SYColor.secondBackground)
+            Button(action: save) {
+                Text(verbatim: kind.isClustering ? L10n.Settings.Faces.Groups.cluster : L10n.Common.save)
+                    .multilineTextAlignment(.center)
+            }
+            .buttonStyle(SYPrimaryButtonStyle(height: SYFormModal.buttonHeight))
+            .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || store.isLoading)
+            .accessibilityIdentifier("faces.group.save")
         }
-        .font(SYFont.regular(size: 16))
+        .padding(.init(top: insets.top, leading: insets.leading, bottom: insets.bottom, trailing: insets.trailing))
         .foregroundStyle(SYColor.semiBlack)
         .tint(SYColor.blue)
-        .background(SYColor.secondBackground)
-        .presentationDetents([.medium, .large])
-        .presentationDragIndicator(.visible)
+        .accessibilityAction(.escape, close)
+    }
+
+    private var nameField: some View {
+        let label = kind.isClustering ? L10n.Settings.Faces.Groups.prefix : L10n.Settings.Faces.Groups.name
+        return VStack(alignment: .leading, spacing: 8) {
+            TextField(label, text: $name, prompt: Text(verbatim: label).foregroundStyle(SYColor.gray))
+                .font(SYFont.semibold(size: 18))
+                .textFieldStyle(.plain)
+                .frame(minHeight: 44)
+                .submitLabel(.done)
+                .onSubmit(save)
+                .accessibilityIdentifier("faces.group.name")
+            Color(uiColor: .SmartYard.grayBorder)
+                .frame(height: 1)
+                .accessibilityHidden(true)
+        }
+    }
+
+    private var trackingOption: some View {
+        let title = L10n.Settings.Faces.Groups.track
+        return HStack(spacing: 12) {
+            Text(verbatim: title)
+                .font(SYFont.regular(size: 18))
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityHidden(true)
+            Toggle(title, isOn: $isTracked)
+                .labelsHidden()
+                .toggleStyle(.switch)
+                .fixedSize()
+                .tint(Color(uiColor: .SmartYard.darkGreen))
+                .accessibilityIdentifier("faces.group.tracking")
+        }
+        .padding(.vertical, 4)
     }
 
     private func save() {
@@ -124,6 +173,6 @@ struct FaceGroupEditor: View {
         case .edit(let group): store.editGroup(group, name: name, isTracked: isTracked)
         case .cluster: store.cluster(prefix: name)
         }
-        dismiss()
+        close()
     }
 }

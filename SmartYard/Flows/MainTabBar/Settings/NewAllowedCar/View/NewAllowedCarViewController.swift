@@ -15,11 +15,10 @@ final class NewAllowedCarViewController: BaseViewController {
     private enum PickerTarget { case startDate, startTime, endDate, endTime }
 
     private let dismissTap = UITapGestureRecognizer()
-    let availableArea = UIView()
     let scrollView = UIScrollView()
     let content = UIStackView.vertical(spacing: 20)
     let outerStack = UIStackView.vertical(
-        paddings: .init(top: 28, leading: 24, bottom: 24, trailing: 24), spacing: 20
+        paddings: SYFormModal.contentInsets, spacing: SYFormModal.sectionSpacing
     )
     let titleGroup = UIStackView.vertical(spacing: 12)
     let numberGroup = UIStackView.vertical(spacing: 8)
@@ -75,6 +74,7 @@ final class NewAllowedCarViewController: BaseViewController {
         self.startDate = viewModel.originalCar?.validFrom ?? now
         self.manualEndDate = viewModel.originalCar?.validTo ?? now.addingTimeInterval(24 * 60 * 60)
         super.init(nibName: nil, bundle: nil)
+        SYFormModal.configurePresentation(of: self)
     }
 
     @available(*, unavailable)
