@@ -601,6 +601,27 @@
 "settings.faces.emptyStateMessage" = "Գրանցված դեմքեր դեռ չկան";
 "settings.faces.registrationHint" = "Ձեր հյուրերի լուսանկարները պահվում են Իրադարձությունների պատմություն բաժնում։ \n\nՄարդ ընտրելու և գրանցելու համար անցեք նշված բաժին՝ սեղմելով Plus կոճակը։ \nԻրադարձությունների պատմությունում սեղմեք ցանկալի իրադարձության դիմացի տեղեկատվական պատկերակը և բացվող էկրանին ընտրեք անհրաժեշտ լուսանկարը։\n\n";
 
+// Face groups
+"settings.faces.groups.all" = "Բոլոր դեմքերը";
+"settings.faces.groups.ungrouped" = "Առանց խմբի";
+"settings.faces.groups.add" = "Ավելացնել խումբ";
+"settings.faces.groups.edit" = "Խմբագրել խումբը";
+"settings.faces.groups.delete" = "Ջնջել խումբը";
+"settings.faces.groups.deleteConfirmation" = "Ջնջե՞լ «%@» խումբը և դրա բոլոր դեմքերը։";
+"settings.faces.groups.actions" = "Խմբի գործողություններ";
+"settings.faces.groups.cluster" = "Ինքնաշխատ խմբավորում";
+"settings.faces.groups.prefix" = "Խմբերի անունների նախածանցը";
+"settings.faces.groups.name" = "Խմբի անունը";
+"settings.faces.groups.track" = "Հետևել խմբի իրադարձություններին";
+"settings.faces.groups.move" = "Տեղափոխել խումբ";
+"settings.faces.groups.detach" = "Հեռացնել խմբից";
+"settings.faces.groups.retry" = "Կրկին փորձել";
+"settings.faces.groups.title" = "Խմբեր";
+"settings.faces.groups.helpTitle" = "Ինչպես ավելացնել դեմք";
+"settings.faces.groups.faceActions" = "Դեմքի գործողություններ";
+"settings.faces.groups.clusterHint" = "Խմբի մեջ չմտնող նման դեմքերը կխմբավորվեն։ Մուտքագրեք նոր խմբերի անունների սկիզբը։";
+"settings.faces.groups.screenTitle" = "Դեմքեր և խմբեր";
+
 "settings.main.addAddressButton" = "Ավելացնել հասցե";
 "settings.main.contractNumberTitle" = "Պայմանագրի համարը";
 "settings.main.openPersonalAccountWebButton" = "Բացել անձնական հաշվի վեբ տարբերակը";

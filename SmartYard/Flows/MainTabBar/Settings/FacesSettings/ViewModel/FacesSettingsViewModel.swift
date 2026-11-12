@@ -1,5 +1,5 @@
 //
-//  AdvancedSettingsViewModel.swift
+//  FacesSettingsViewModel.swift
 //  SmartYard
 //
 //  Created by admin on 14/02/2020.
@@ -8,83 +8,40 @@
 
 import RxCocoa
 import RxSwift
+import UIKit
 import XCoordinator
-import SmartYardSharedDataFramework
 
 final class FacesSettingsViewModel: BaseViewModel {
     
-    private let apiWrapper: APIWrapper
-    private let accessService: AccessService
-    private let alertService: AlertService
+    let faceGroups: FaceGroupsStore
     private let router: WeakRouter<SettingsRoute>
     private let flatId: Int
     private let address: String
     private let canAddFace: Bool
     
-    private let registeredFaces = PublishSubject<[APIFace]>()
-    
     init(
         apiWrapper: APIWrapper,
         accessService: AccessService,
-        alertService: AlertService,
         router: WeakRouter<SettingsRoute>,
         flatId: Int,
         address: String,
-        canAddFace: Bool
+        canAddFace: Bool,
+        repository: FacesRepository? = nil
     ) {
-        self.apiWrapper = apiWrapper
-        self.accessService = accessService
-        self.alertService = alertService
+        faceGroups = FaceGroupsStore(
+            repository: repository ?? ServerFacesRepository(api: apiWrapper, access: accessService, flatId: flatId)
+        )
         self.router = router
         self.flatId = flatId
         self.address = address
         self.canAddFace = canAddFace
     }
     
-    // swiftlint:disable:next function_body_length
     func transform(_ input: Input) -> Output {
-        let activityTracker = ActivityTracker()
-        let errorTracker = ErrorTracker()
-        
-        errorTracker.asDriver()
-            .drive(
-                onNext: { [weak self] error in
-                    self?.router.trigger(
-                        .alert(
-                            title: L10n.Common.error,
-                            message: error.localizedDescription
-                        )
-                    )
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        // MARK: ActivityTracker для изначальной загрузки с показом скелетонов
-        
-        let initialLoadingTracker = ActivityTracker()
-        
-        // MARK: Загрузка лиц
-        
-        apiWrapper.getPersonFaces(flatId: flatId)
-            .trackError(errorTracker)
-            .trackActivity(initialLoadingTracker)
-            .asDriver(onErrorJustReturn: nil)
-            .ignoreNil()
-            .drive(
-                onNext: { [weak self] faces in
-                    self?.registeredFaces.onNext(faces)
-                }
-            )
-            .disposed(by: disposeBag)
-            
         // MARK: Переход назад
         
         input.backTrigger
-            .drive(
-                onNext: { [weak self] in
-                    self?.router.trigger(.back)
-                }
-            )
+            .drive(with: self) { owner, _ in owner.router.trigger(.back) }
             .disposed(by: disposeBag)
         
         input.addFaceTrigger
@@ -103,59 +60,16 @@ final class FacesSettingsViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         input.deleteFaceTrigger
-            .drive(
-                onNext: { [weak self] faceId, image in
-                    guard let self = self else {
-                        return
-                    }
-                    self.router.trigger(
-                        .deleteFace(
-                            image: image,
-                            flatId: self.flatId,
-                            faceId: faceId
-                        )
-                    )
-                }
-            )
+            .drive(with: self) { owner, value in
+                owner.router.trigger(.deleteFace(image: value.1, flatId: owner.flatId, faceId: value.0))
+            }
             .disposed(by: disposeBag)
         
         input.selectFaceTrigger
-            .drive(
-                onNext: { [weak self] _, image in
-                    self?.router.trigger(.showFace(image: image))
-                }
-            )
+            .drive(with: self) { owner, value in owner.router.trigger(.showFace(image: value.1)) }
             .disposed(by: disposeBag)
         
-        // это событие прилетает, когда пользователь удалил лицо и надо обновить список лиц
-        NotificationCenter.default.rx.notification(.updateFaces)
-            .asDriverOnErrorJustComplete()
-            .mapToVoid()
-            .delay(.milliseconds(500))
-            .flatMapLatest { [weak self] _ -> Driver<GetPersonFacesResponseData> in
-                guard let self = self else {
-                    return .empty()
-                }
-                
-                return self.apiWrapper.getPersonFaces(flatId: self.flatId, forceRefresh: true)
-                    .trackError(errorTracker)
-                    .trackActivity(initialLoadingTracker)
-                    .asDriver(onErrorJustReturn: nil)
-                    .ignoreNil()
-            }
-            .drive(
-                onNext: { [weak self] faces in
-                    self?.registeredFaces.onNext(faces)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        return Output(
-            isLoading: activityTracker.asDriver(),
-            shouldShowInitialLoading: initialLoadingTracker.asDriver(),
-            registeredFaces: self.registeredFaces.asDriver(onErrorJustReturn: []),
-            canAddFace: .just(canAddFace)
-        )
+        return Output(canAddFace: .just(canAddFace))
     }
     
 }
@@ -171,9 +85,6 @@ extension FacesSettingsViewModel {
     }
     
     struct Output {
-        let isLoading: Driver<Bool>
-        let shouldShowInitialLoading: Driver<Bool>
-        let registeredFaces: Driver<[APIFace]>
         let canAddFace: Driver<Bool>
     }
     

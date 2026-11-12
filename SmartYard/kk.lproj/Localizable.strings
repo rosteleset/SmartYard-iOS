@@ -605,6 +605,27 @@
 "settings.faces.emptyStateMessage" = "Әзірге тіркелген беттер жоқ";
 "settings.faces.registrationHint" = "Сіздің азаматтарыңыздың суреттері Құрылыс істориясы бөлімінде сақталады. \n\nАдамның таңдауы және тіркеуі үшін көрсетілген бөлімге өту үшін Плюс түймесін басыңыз. \nІстория жазбалары бөлімінде, қажетті оқиғаға қарсы ақпарат белгісін басып, ашылған көрсеткінің ерекшеліктерін таңдаңыз және қажетті суретті таңдаңыз.\n\n";
 
+// Face groups
+"settings.faces.groups.all" = "Барлық беттер";
+"settings.faces.groups.ungrouped" = "Топсыз";
+"settings.faces.groups.add" = "Топ қосу";
+"settings.faces.groups.edit" = "Топты өзгерту";
+"settings.faces.groups.delete" = "Топты жою";
+"settings.faces.groups.deleteConfirmation" = "«%@» тобын және ондағы барлық беттерді жою керек пе?";
+"settings.faces.groups.actions" = "Топ әрекеттері";
+"settings.faces.groups.cluster" = "Автоматты топтастыру";
+"settings.faces.groups.prefix" = "Топ атауларының префиксі";
+"settings.faces.groups.name" = "Топ атауы";
+"settings.faces.groups.track" = "Топ оқиғаларын бақылау";
+"settings.faces.groups.move" = "Топқа ауыстыру";
+"settings.faces.groups.detach" = "Топтан шығару";
+"settings.faces.groups.retry" = "Қайталау";
+"settings.faces.groups.title" = "Топтар";
+"settings.faces.groups.helpTitle" = "Бетті қалай қосуға болады";
+"settings.faces.groups.faceActions" = "Бет әрекеттері";
+"settings.faces.groups.clusterHint" = "Топсыз ұқсас беттер біріктіріледі. Жаңа топ атауларының басын енгізіңіз.";
+"settings.faces.groups.screenTitle" = "Беттер мен топтар";
+
 "settings.main.addAddressButton" = "Мекен-жай қосу";
 "settings.main.contractNumberTitle" = "Договор нөмері";
 "settings.main.openPersonalAccountWebButton" = "Жеке тіркеудің веб нұсқасын ашу";

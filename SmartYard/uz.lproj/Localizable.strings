@@ -601,6 +601,27 @@
 "settings.faces.emptyStateMessage" = "Hali ro'yxatdan o'tgan yuzlar yo'q";
 "settings.faces.registrationHint" = "Mehmonlaringizning suratlari Voqealar tarixi bo'limida saqlanadi. \n\nShaxsni tanlash va ro'yxatdan o'tkazish uchun ushbu bo'limga o'ting, Plus tugmasini bosib. \nVoqealar tarixida kerakli voqea yonida ma'lumot belgisini bosib, ochilgan ekranda zarur suratni tanlang.\n\n";
 
+// Face groups
+"settings.faces.groups.all" = "Barcha yuzlar";
+"settings.faces.groups.ungrouped" = "Guruhsiz";
+"settings.faces.groups.add" = "Guruh qo‘shish";
+"settings.faces.groups.edit" = "Guruhni tahrirlash";
+"settings.faces.groups.delete" = "Guruhni o‘chirish";
+"settings.faces.groups.deleteConfirmation" = "“%@” guruhi va undagi barcha yuzlar o‘chirilsinmi?";
+"settings.faces.groups.actions" = "Guruh amallari";
+"settings.faces.groups.cluster" = "Avtomatik guruhlash";
+"settings.faces.groups.prefix" = "Guruh nomlari prefiksi";
+"settings.faces.groups.name" = "Guruh nomi";
+"settings.faces.groups.track" = "Guruh hodisalarini kuzatish";
+"settings.faces.groups.move" = "Guruhga ko‘chirish";
+"settings.faces.groups.detach" = "Guruhdan chiqarish";
+"settings.faces.groups.retry" = "Qayta urinish";
+"settings.faces.groups.title" = "Guruhlar";
+"settings.faces.groups.helpTitle" = "Yuzni qanday qo‘shish mumkin";
+"settings.faces.groups.faceActions" = "Yuz amallari";
+"settings.faces.groups.clusterHint" = "Guruhsiz o‘xshash yuzlar birlashtiriladi. Yangi guruhlar nomlarining boshlanishini kiriting.";
+"settings.faces.groups.screenTitle" = "Yuzlar va guruhlar";
+
 "settings.main.addAddressButton" = "Manzil qo'shish";
 "settings.main.contractNumberTitle" = "Shartnoma raqami";
 "settings.main.openPersonalAccountWebButton" = "Shaxsiy hisobning veb-versiyasini oching";

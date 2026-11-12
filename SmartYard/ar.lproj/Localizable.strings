@@ -601,6 +601,27 @@
 "settings.faces.emptyStateMessage" = "لا توجد وجوه مسجلة بعد";
 "settings.faces.registrationHint" = "تُحفظ صور ضيوفك في قسم سجل الأحداث.\n\nلاختيار وجه وتسجيله، انتقل إلى هذا القسم بالضغط على علامة плюс.\nفي سجل الأحداث، اضغط على أيقونة المعلومات بجانب الحدث المطلوب، ثم اختر الصورة اللازمة في الشاشة التي ستفتح.\n\n";
 
+// Face groups
+"settings.faces.groups.all" = "كل الوجوه";
+"settings.faces.groups.ungrouped" = "بدون مجموعة";
+"settings.faces.groups.add" = "إضافة مجموعة";
+"settings.faces.groups.edit" = "تعديل المجموعة";
+"settings.faces.groups.delete" = "حذف المجموعة";
+"settings.faces.groups.deleteConfirmation" = "هل تريد حذف المجموعة «%@» وكل الوجوه الموجودة فيها؟";
+"settings.faces.groups.actions" = "إجراءات المجموعة";
+"settings.faces.groups.cluster" = "تجميع تلقائي";
+"settings.faces.groups.prefix" = "بادئة أسماء المجموعات";
+"settings.faces.groups.name" = "اسم المجموعة";
+"settings.faces.groups.track" = "تتبّع أحداث المجموعة";
+"settings.faces.groups.move" = "نقل إلى مجموعة";
+"settings.faces.groups.detach" = "إزالة من المجموعة";
+"settings.faces.groups.retry" = "إعادة المحاولة";
+"settings.faces.groups.title" = "المجموعات";
+"settings.faces.groups.helpTitle" = "كيفية إضافة وجه";
+"settings.faces.groups.faceActions" = "إجراءات الوجه";
+"settings.faces.groups.clusterHint" = "سيتم تجميع الوجوه المتشابهة التي لا تنتمي إلى مجموعة. أدخل بداية أسماء المجموعات الجديدة.";
+"settings.faces.groups.screenTitle" = "الوجوه والمجموعات";
+
 "settings.main.addAddressButton" = "إضافة عنوان";
 "settings.main.contractNumberTitle" = "رقم العقد";
 "settings.main.openPersonalAccountWebButton" = "فتح النسخة الإلكترونية من الحساب الشخصي";

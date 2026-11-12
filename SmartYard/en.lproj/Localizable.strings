@@ -601,6 +601,27 @@
 "settings.faces.emptyStateMessage" = "No registered faces yet";
 "settings.faces.registrationHint" = "Photos of your guests are stored in the Event History section. \n\nTo select and register a person, go to the specified section by clicking on Plus. \nIn the Event History, click on the information icon opposite the desired event and select the required photo on the screen that opens.\n\n";
 
+// Face groups
+"settings.faces.groups.all" = "All faces";
+"settings.faces.groups.ungrouped" = "Ungrouped";
+"settings.faces.groups.add" = "Add group";
+"settings.faces.groups.edit" = "Edit group";
+"settings.faces.groups.delete" = "Delete group";
+"settings.faces.groups.deleteConfirmation" = "Delete “%@” and all faces in this group?";
+"settings.faces.groups.actions" = "Group actions";
+"settings.faces.groups.cluster" = "Group automatically";
+"settings.faces.groups.prefix" = "Group name prefix";
+"settings.faces.groups.name" = "Group name";
+"settings.faces.groups.track" = "Track group events";
+"settings.faces.groups.move" = "Move to group";
+"settings.faces.groups.detach" = "Remove from group";
+"settings.faces.groups.retry" = "Retry";
+"settings.faces.groups.title" = "Groups";
+"settings.faces.groups.helpTitle" = "How to add a face";
+"settings.faces.groups.faceActions" = "Face actions";
+"settings.faces.groups.clusterHint" = "Similar ungrouped faces will be grouped together. Enter the beginning of the new group names.";
+"settings.faces.groups.screenTitle" = "Faces and groups";
+
 "settings.main.addAddressButton" = "Add address";
 "settings.main.contractNumberTitle" = "Number of contract";
 "settings.main.openPersonalAccountWebButton" = "Open web version of personal account";

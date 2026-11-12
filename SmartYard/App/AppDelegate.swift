@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         supportedInterfaceOrientationsFor window: UIWindow?
     ) -> UIInterfaceOrientationMask {
-        guard let topVc = window?.rootViewController?.topViewController else {
+        guard let root = window?.rootViewController, let topVc = root.topViewController else {
             return .portrait
         }
         
@@ -81,11 +81,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else if topVc is IncomingCallLandscapeViewController,
             !topVc.isBeingDismissed {
             return .landscape
-        } else {
-            return .portrait
         }
+
+        let showsFacesSettings = root.topViewController(includingPresented: false) is FacesSettingsViewController
+        return UIDevice.current.userInterfaceIdiom == .pad && showsFacesSettings ? .all : .portrait
     }
-    
+
     func applicationWillTerminate(_ application: UIApplication) {
         UserDefaults.standard.synchronize()
     }

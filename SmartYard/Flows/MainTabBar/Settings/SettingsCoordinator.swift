@@ -280,7 +280,6 @@ private extension SettingsCoordinator {
             let vm = FacesSettingsViewModel(
                 apiWrapper: apiWrapper,
                 accessService: accessService,
-                alertService: alertService,
                 router: weakRouter,
                 flatId: flatId,
                 address: address,

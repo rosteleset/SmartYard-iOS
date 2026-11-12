@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B9B60FAE7454551AD437631 /* FaceGroupCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4303F935134FFCA77B5939 /* FaceGroupCard.swift */; };
+		2D68B67B0D344DF385D8402C /* FaceGroupEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD99EDE5A73E432CA18CE6E3 /* FaceGroupEditor.swift */; };
+		4E82558EA865493D8C354360 /* FaceGroupsContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A384633AE6848BE9965DC39 /* FaceGroupsContent.swift */; };
+		150AE5C240EC4BDFA409EF47 /* FacesSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D76A19617D4226BCE50C5B /* FacesSettingsScreen.swift */; };
+		B5C8A3DE744A44BC91DF391D /* FacesSettingsThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BAA86DAB09496187C1586C /* FacesSettingsThumbnail.swift */; };
+		79489418AB3846D5ACB0C0AC /* FacesSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702DCE019A274EF3BE27C424 /* FacesSettingsStore.swift */; };
+		4727D3F4F3024A3F82634721 /* L10n+FaceGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E66F1A29B4D6697B01043 /* L10n+FaceGroups.swift */; };
 		7C38E4F876D34E6C8651256F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150AF1E658C3438CA91DF55C /* SceneDelegate.swift */; };
 		3A003CE625E0466D002F193B /* RequestRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003CE525E0466C002F193B /* RequestRecordViewModel.swift */; };
 		3A003CF225E04EE3002F193B /* RequestRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A003CF025E04EE3002F193B /* RequestRecordViewController.swift */; };
@@ -109,7 +116,6 @@
 		3A8FC71B2B079ED400F90D73 /* AddressDeletionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC71D2B079ED400F90D73 /* AddressDeletionViewController.xib */; };
 		3A8FC7202B079F2200F90D73 /* CommonSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7222B079F2200F90D73 /* CommonSettingsViewController.xib */; };
 		3A8FC7252B079FA100F90D73 /* EditNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7272B079FA100F90D73 /* EditNameViewController.xib */; };
-		3A8FC72A2B09E49B00F90D73 /* FacesSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC72C2B09E49B00F90D73 /* FacesSettingsViewController.xib */; };
 		3A8FC72F2B09E51200F90D73 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7312B09E51200F90D73 /* SettingsViewController.xib */; };
 		3A8FC7342B09E53B00F90D73 /* NewAllowedPersonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7362B09E53B00F90D73 /* NewAllowedPersonViewController.xib */; };
 		3A8FC7392B09E62A00F90D73 /* ServiceIsActivatedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC73B2B09E62A00F90D73 /* ServiceIsActivatedViewController.xib */; };
@@ -156,10 +162,6 @@
 		3AE65A48264DA4A00093284C /* ScaledHeightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE65A47264DA4A00093284C /* ScaledHeightImageView.swift */; };
 		3AEFB45B264C12E9000F37D0 /* FacesSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB443264C095F000F37D0 /* FacesSettingsViewController.swift */; };
 		3AEFB45F264C12F0000F37D0 /* FacesSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB444264C0964000F37D0 /* FacesSettingsViewModel.swift */; };
-		3AEFB46A264C2C81000F37D0 /* AddFaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB468264C2C81000F37D0 /* AddFaceCell.swift */; };
-		3AEFB46B264C2C81000F37D0 /* AddFaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AEFB469264C2C81000F37D0 /* AddFaceCell.xib */; };
-		3AEFB474264C2C95000F37D0 /* FaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB472264C2C95000F37D0 /* FaceCell.swift */; };
-		3AEFB47C264C346A000F37D0 /* FaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AEFB473264C2C95000F37D0 /* FaceCell.xib */; };
 		3AEFB483264D1ADE000F37D0 /* FaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */; };
 		3AFBA733263752B300C7DEB6 /* SafeCachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA732263752B300C7DEB6 /* SafeCachedImageView.swift */; };
 		3AFBA73826375B8600C7DEB6 /* BetterSnappingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */; };
@@ -953,6 +955,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB4303F935134FFCA77B5939 /* FaceGroupCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceGroupCard.swift"; sourceTree = "<group>"; };
+		BD99EDE5A73E432CA18CE6E3 /* FaceGroupEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceGroupEditor.swift"; sourceTree = "<group>"; };
+		9A384633AE6848BE9965DC39 /* FaceGroupsContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceGroupsContent.swift"; sourceTree = "<group>"; };
+		64D76A19617D4226BCE50C5B /* FacesSettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacesSettingsScreen.swift"; sourceTree = "<group>"; };
+		59BAA86DAB09496187C1586C /* FacesSettingsThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacesSettingsThumbnail.swift"; sourceTree = "<group>"; };
+		702DCE019A274EF3BE27C424 /* FacesSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacesSettingsStore.swift"; sourceTree = "<group>"; };
+		994E66F1A29B4D6697B01043 /* L10n+FaceGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "L10n+FaceGroups.swift"; sourceTree = "<group>"; };
 		150AF1E658C3438CA91DF55C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		297C4C1274F6636BA2F4B75B /* Pods_SmartYardIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmartYardIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A7BA6D3CA5EBA045CB5F988 /* Pods-SmartYardWidget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartYardWidget.debug.xcconfig"; path = "Target Support Files/Pods-SmartYardWidget/Pods-SmartYardWidget.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1061,7 +1070,6 @@
 		3A8FC71C2B079ED400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressDeletionViewController.xib; sourceTree = "<group>"; };
 		3A8FC7212B079F2200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/CommonSettingsViewController.xib; sourceTree = "<group>"; };
 		3A8FC7262B079FA100F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EditNameViewController.xib; sourceTree = "<group>"; };
-		3A8FC72B2B09E49B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FacesSettingsViewController.xib; sourceTree = "<group>"; };
 		3A8FC7302B09E51200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SettingsViewController.xib; sourceTree = "<group>"; };
 		3A8FC7352B09E53B00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NewAllowedPersonViewController.xib; sourceTree = "<group>"; };
 		3A8FC73A2B09E62A00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceIsActivatedViewController.xib; sourceTree = "<group>"; };
@@ -1131,10 +1139,6 @@
 		3AEB887527E1FD7F00B19925 /* MenuListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuListItem.swift; sourceTree = "<group>"; };
 		3AEFB443264C095F000F37D0 /* FacesSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesSettingsViewController.swift; sourceTree = "<group>"; };
 		3AEFB444264C0964000F37D0 /* FacesSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesSettingsViewModel.swift; sourceTree = "<group>"; };
-		3AEFB468264C2C81000F37D0 /* AddFaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFaceCell.swift; sourceTree = "<group>"; };
-		3AEFB469264C2C81000F37D0 /* AddFaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFaceCell.xib; sourceTree = "<group>"; };
-		3AEFB472264C2C95000F37D0 /* FaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceCell.swift; sourceTree = "<group>"; };
-		3AEFB473264C2C95000F37D0 /* FaceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FaceCell.xib; sourceTree = "<group>"; };
 		3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceViewController.swift; sourceTree = "<group>"; };
 		3AFBA732263752B300C7DEB6 /* SafeCachedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeCachedImageView.swift; sourceTree = "<group>"; };
 		3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSnappingFlowLayout.swift; sourceTree = "<group>"; };
@@ -2235,20 +2239,33 @@
 				C0D3F5000000000000000001 /* FaceGroupsStore.swift */,
 				C0D3F4000000000000000003 /* ServerFacesRepository.swift */,
 				C0D3F4000000000000000005 /* MockFacesRepository.swift */,
-				3AEFB467264C2C4D000F37D0 /* Cells */,
-				3AEFB43D264C086D000F37D0 /* View */,
+				3AEFB43D264C086D000F37D0 /* Views */,
+				4B2AD64A54AE40089F0B24FB /* Stores */,
+				994E66F1A29B4D6697B01043 /* L10n+FaceGroups.swift */,
 				3AEFB43E264C0884000F37D0 /* ViewModel */,
 			);
 			path = FacesSettings;
 			sourceTree = "<group>";
 		};
-		3AEFB43D264C086D000F37D0 /* View */ = {
+		3AEFB43D264C086D000F37D0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				3AEFB443264C095F000F37D0 /* FacesSettingsViewController.swift */,
-				3A8FC72C2B09E49B00F90D73 /* FacesSettingsViewController.xib */,
+				AB4303F935134FFCA77B5939 /* FaceGroupCard.swift */,
+				BD99EDE5A73E432CA18CE6E3 /* FaceGroupEditor.swift */,
+				9A384633AE6848BE9965DC39 /* FaceGroupsContent.swift */,
+				64D76A19617D4226BCE50C5B /* FacesSettingsScreen.swift */,
+				59BAA86DAB09496187C1586C /* FacesSettingsThumbnail.swift */,
 			);
-			path = View;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4B2AD64A54AE40089F0B24FB /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				702DCE019A274EF3BE27C424 /* FacesSettingsStore.swift */,
+			);
+			path = Stores;
 			sourceTree = "<group>";
 		};
 		3AEFB43E264C0884000F37D0 /* ViewModel */ = {
@@ -2257,17 +2274,6 @@
 				3AEFB444264C0964000F37D0 /* FacesSettingsViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		3AEFB467264C2C4D000F37D0 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				3AEFB468264C2C81000F37D0 /* AddFaceCell.swift */,
-				3AEFB469264C2C81000F37D0 /* AddFaceCell.xib */,
-				3AEFB472264C2C95000F37D0 /* FaceCell.swift */,
-				3AEFB473264C2C95000F37D0 /* FaceCell.xib */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		3AEFB480264D1A73000F37D0 /* CommonDialogs */ = {
@@ -6194,7 +6200,6 @@
 				3A8FC7612B09F21F00F90D73 /* ServicesActivationRequestViewController.xib in Resources */,
 				3A8FC6B22B065F8700F90D73 /* PinCodeViewController.xib in Resources */,
 				3A8FC77A2B09FC8C00F90D73 /* UserNameViewController.xib in Resources */,
-				3AEFB46B264C2C81000F37D0 /* AddFaceCell.xib in Resources */,
 				3A8FC6D02B0660BA00F90D73 /* FaceViewController.xib in Resources */,
 				846DC6C924B33DC600A11914 /* ContractCell.xib in Resources */,
 				3A8FC69C2B065E2C00F90D73 /* OutgoingCallViewController.xib in Resources */,
@@ -6259,7 +6264,6 @@
 				E99EA6C723EACD3900BECEE6 /* PhoneTextField.xib in Resources */,
 				3A8FC74D2B09F0F400F90D73 /* CityMapViewController.xib in Resources */,
 				E940581223F682EA00623746 /* AllowedPersonCell.xib in Resources */,
-				3AEFB47C264C346A000F37D0 /* FaceCell.xib in Resources */,
 				844AC3FE23EC09020066006D /* SourceSansPro-SemiBold.ttf in Resources */,
 				3A8FC6DA2B06612200F90D73 /* AddressesListCameraCell.xib in Resources */,
 				3A40A4C72768CBE0004E53A7 /* NotificationsViewController.xib in Resources */,
@@ -6267,7 +6271,6 @@
 				84F6493B247402DC000C0028 /* CustomDayCell.xib in Resources */,
 				8B075A332DF1E7F300114B5E /* GateAccessView.xib in Resources */,
 				3A5030612B0A7F5F00699A3B /* SettingsAddAddressCell.xib in Resources */,
-				3A8FC72A2B09E49B00F90D73 /* FacesSettingsViewController.xib in Resources */,
 				3A8FC7202B079F2200F90D73 /* CommonSettingsViewController.xib in Resources */,
 				84A67062241FB6E100BBA12B /* AddressAccessSkeletonView.xib in Resources */,
 				3A8FC6712B065B5600F90D73 /* AddressesListViewController.xib in Resources */,
@@ -6681,7 +6684,6 @@
 				E9E4271B23F41C6600F5D593 /* AvailableServiceCell.swift in Sources */,
 				3AEFB483264D1ADE000F37D0 /* FaceViewController.swift in Sources */,
 				E96CC0D72423FAEA008DF44B /* RestoreMethodCellModel.swift in Sources */,
-				3AEFB474264C2C95000F37D0 /* FaceCell.swift in Sources */,
 				84854B4C23FADD94001B44F2 /* CustomRxKeyboard.swift in Sources */,
 				E9A4D4A123ED6FC20070A591 /* SmartYardBorderedTextField.swift in Sources */,
 				8B8E41202EA57C24008734EE /* HomeOfflineViewModel.swift in Sources */,
@@ -6721,7 +6723,6 @@
 				9A0F5A2F2F75350000C0D001 /* SupportCallActionsPresenter.swift in Sources */,
 				9A0F5A412F7608F300C0D001 /* AppMetadata.swift in Sources */,
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
-				3AEFB46A264C2C81000F37D0 /* AddFaceCell.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				3A25BA9928967A6800D2401E /* OutgoingCallViewController.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
@@ -7090,6 +7091,13 @@
 				848D1B8923F29D6100D6E368 /* AddressSettingsViewController.swift in Sources */,
 				3A200B0927297B250022A0EC /* SimpleButton.swift in Sources */,
 				3AEFB45B264C12E9000F37D0 /* FacesSettingsViewController.swift in Sources */,
+				6B9B60FAE7454551AD437631 /* FaceGroupCard.swift in Sources */,
+				2D68B67B0D344DF385D8402C /* FaceGroupEditor.swift in Sources */,
+				4E82558EA865493D8C354360 /* FaceGroupsContent.swift in Sources */,
+				150AE5C240EC4BDFA409EF47 /* FacesSettingsScreen.swift in Sources */,
+				B5C8A3DE744A44BC91DF391D /* FacesSettingsThumbnail.swift in Sources */,
+				79489418AB3846D5ACB0C0AC /* FacesSettingsStore.swift in Sources */,
+				4727D3F4F3024A3F82634721 /* L10n+FaceGroups.swift in Sources */,
 				844AC3F823EBFF9B0066006D /* SettingsViewModel.swift in Sources */,
 				8E8C7BC5428F3BDBB697BFBD /* SettingsViewModel+Bindings.swift in Sources */,
 				8BDAC6F12DFB52CA00469D59 /* GateAccessViewModel.swift in Sources */,
@@ -7715,14 +7723,6 @@
 				3A8FC7262B079FA100F90D73 /* Base */,
 			);
 			name = EditNameViewController.xib;
-			sourceTree = "<group>";
-		};
-		3A8FC72C2B09E49B00F90D73 /* FacesSettingsViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A8FC72B2B09E49B00F90D73 /* Base */,
-			);
-			name = FacesSettingsViewController.xib;
 			sourceTree = "<group>";
 		};
 		3A8FC7312B09E51200F90D73 /* SettingsViewController.xib */ = {
