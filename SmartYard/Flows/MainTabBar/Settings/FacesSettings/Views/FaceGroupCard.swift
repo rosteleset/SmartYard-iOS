@@ -5,9 +5,32 @@
 
 import SwiftUI
 
+struct SYFaceTrackingToggle: View {
+    let person: APIFaceGroup
+    let store: FacesSettingsStore
+    let accessibilityID: String
+
+    var body: some View {
+        if store.trackingEnabled {
+            Toggle(isOn: Binding(
+                get: { person.watcherId != nil },
+                set: { store.setTracking($0, for: person.groupId) }
+            )) {
+                Label(L10n.Settings.Faces.Groups.track, systemImage: "bell")
+            }
+            .disabled(store.isLoading)
+            .accessibilityIdentifier(accessibilityID)
+        }
+    }
+}
+
 struct FaceGroupCard: View {
     let face: APIFace
     let store: FacesSettingsStore
+
+    private var person: APIFaceGroup? {
+        store.state.groups.first { $0.groupId == face.groupId }
+    }
 
     var body: some View {
         VStack(spacing: 8) {
@@ -37,7 +60,7 @@ struct FaceGroupCard: View {
             }
             .padding(8)
             if store.state.filter == .all {
-                Text(verbatim: store.state.groups.first { $0.groupId == face.groupId }?.groupName ?? L10n.Settings.Faces.Groups.ungrouped)
+                Text(verbatim: person?.groupName ?? L10n.Settings.Faces.Groups.ungrouped)
                     .font(SYFont.regular(size: 13))
                     .foregroundStyle(SYColor.gray)
                     .lineLimit(2)
@@ -55,6 +78,9 @@ struct FaceGroupCard: View {
                     Button(group.groupName) { store.moveFace(face, to: group) }
                         .accessibilityIdentifier("faces.move.\(face.faceId).\(group.groupId)")
                 }
+            }
+            if let person {
+                SYFaceTrackingToggle(person: person, store: store, accessibilityID: "faces.tracking.\(face.faceId)")
             }
             if face.groupId != nil {
                 Button(L10n.Settings.Faces.Groups.detach, systemImage: "link") { store.detachFace(face) }

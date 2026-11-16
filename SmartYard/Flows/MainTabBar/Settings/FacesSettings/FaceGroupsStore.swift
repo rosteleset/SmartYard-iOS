@@ -139,8 +139,10 @@ final class FaceGroupsStore {
         mutate { self.repository.cluster(prefix: prefix) }
     }
 
-    func toggleTracking(_ group: APIFaceGroup) {
-        guard trackingEnabled else { return }
+    func setTracking(_ isTracked: Bool, for groupId: Int) {
+        guard trackingEnabled,
+              let group = currentState.groups.first(where: { $0.groupId == groupId }),
+              (group.watcherId != nil) != isTracked else { return }
         mutate { self.repository.toggleTracking(group) }
     }
 

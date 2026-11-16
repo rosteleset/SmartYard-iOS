@@ -155,13 +155,34 @@ final class FaceGroupsStoreTests: XCTestCase {
         model.deleteGroup(group)
         model.moveFace(face, to: .init(groupId: 2, groupName: "Other"))
         model.detachFace(face)
-        model.toggleTracking(group)
+        model.setTracking(true, for: group.groupId)
         model.select(.ungrouped)
         model.cluster(prefix: "Auto")
         XCTAssertEqual(repository.calls, ["faces"])
         XCTAssertEqual(model.currentState.filter, .all)
         model.deleteFace(face)
         XCTAssertEqual(model.currentState.faces.count, 7)
+    }
+
+    func testSettingTrackingOnlyChangesTheRequestedPersonAndIgnoresRepeatedValues() throws {
+        let repository = FaceGroupsRepositoryStub()
+        let model = store(repository)
+        model.refresh()
+        let person = try XCTUnwrap(model.currentState.groups.first)
+        let otherPerson = try XCTUnwrap(model.currentState.groups.last)
+        let groupId = person.groupId
+
+        model.setTracking(true, for: groupId)
+        XCTAssertNotNil(model.currentState.groups.first?.watcherId)
+
+        model.setTracking(true, for: groupId)
+        model.setTracking(true, for: 999)
+        XCTAssertEqual(repository.calls.filter { $0 == "tracking" }.count, 1)
+
+        model.setTracking(false, for: groupId)
+        XCTAssertNil(model.currentState.groups.first?.watcherId)
+        XCTAssertEqual(model.currentState.groups.last?.watcherId, otherPerson.watcherId)
+        XCTAssertEqual(repository.calls.filter { $0 == "tracking" }.count, 2)
     }
 
     func testDisabledTrackingDoesNotChangeWatchersDuringRename() throws {
@@ -171,6 +192,7 @@ final class FaceGroupsStoreTests: XCTestCase {
         model.refresh()
         let group = try XCTUnwrap(model.currentState.groups.last)
         model.editGroup(group, name: "Renamed", isTracked: false)
+        model.setTracking(false, for: group.groupId)
         XCTAssertEqual(model.currentState.groups.last?.watcherId, group.watcherId)
         model.createGroup(name: "New", isTracked: true)
         XCTAssertNil(model.currentState.selectedGroup?.watcherId)

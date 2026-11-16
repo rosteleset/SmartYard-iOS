@@ -98,6 +98,9 @@ final class FacesSettingsStore {
     func editGroup(_ group: APIFaceGroup, name: String, isTracked: Bool) {
         viewModel.faceGroups.editGroup(group, name: name, isTracked: isTracked)
     }
+    func setTracking(_ isTracked: Bool, for groupId: Int) {
+        viewModel.faceGroups.setTracking(isTracked, for: groupId)
+    }
     func deleteGroup(_ group: APIFaceGroup) { viewModel.faceGroups.deleteGroup(group) }
     func moveFace(_ face: APIFace, to group: APIFaceGroup) { viewModel.faceGroups.moveFace(face, to: group) }
     func detachFace(_ face: APIFace) { viewModel.faceGroups.detachFace(face) }

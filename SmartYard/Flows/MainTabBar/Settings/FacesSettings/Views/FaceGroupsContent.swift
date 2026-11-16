@@ -167,6 +167,7 @@ struct FaceGroupsContent: View {
         Menu {
             Button(L10n.Settings.Faces.Groups.edit, systemImage: "pencil") { openGroupEditor(.edit(group)) }
                 .accessibilityIdentifier("faces.groups.edit")
+            SYFaceTrackingToggle(person: group, store: store, accessibilityID: "faces.groups.tracking")
             Button(L10n.Settings.Faces.Groups.delete, systemImage: "trash", role: .destructive) {
                 deletingGroup = group
             }
