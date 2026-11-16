@@ -98,7 +98,6 @@
 		3A8FC6B72B065FC200F90D73 /* RestoreMethodCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6B92B065FC200F90D73 /* RestoreMethodCell.xib */; };
 		3A8FC6BC2B065FD400F90D73 /* RestorePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6BE2B065FD400F90D73 /* RestorePasswordViewController.xib */; };
 		3A8FC6C12B06603C00F90D73 /* PassConfirmationPinViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6C32B06603C00F90D73 /* PassConfirmationPinViewController.xib */; };
-		3A8FC6C62B06608600F90D73 /* AddFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6C82B06608600F90D73 /* AddFaceViewController.xib */; };
 		3A8FC6CB2B0660A000F90D73 /* DeleteFaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6CD2B0660A000F90D73 /* DeleteFaceViewController.xib */; };
 		3A8FC6D02B0660BA00F90D73 /* FaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6D22B0660BA00F90D73 /* FaceViewController.xib */; };
 		3A8FC6DA2B06612200F90D73 /* AddressesListCameraCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6DC2B06612200F90D73 /* AddressesListCameraCell.xib */; };
@@ -1053,7 +1052,6 @@
 		3A8FC6B82B065FC200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RestoreMethodCell.xib; sourceTree = "<group>"; };
 		3A8FC6BD2B065FD400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/RestorePasswordViewController.xib; sourceTree = "<group>"; };
 		3A8FC6C22B06603C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PassConfirmationPinViewController.xib; sourceTree = "<group>"; };
-		3A8FC6C72B06608600F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddFaceViewController.xib; sourceTree = "<group>"; };
 		3A8FC6CC2B0660A000F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DeleteFaceViewController.xib; sourceTree = "<group>"; };
 		3A8FC6D12B0660BA00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FaceViewController.xib; sourceTree = "<group>"; };
 		3A8FC6DB2B06612200F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AddressesListCameraCell.xib; sourceTree = "<group>"; };
@@ -2284,7 +2282,6 @@
 			children = (
 				3A2881B02665093100F42097 /* AddFaceViewController.swift */,
 				C0D3F3000000000000000015 /* FaceRegistrationWorkflow.swift */,
-				3A8FC6C82B06608600F90D73 /* AddFaceViewController.xib */,
 				3AE65A3A264DA3EB0093284C /* DeleteFaceViewController.swift */,
 				3A8FC6CD2B0660A000F90D73 /* DeleteFaceViewController.xib */,
 				3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */,
@@ -6293,7 +6290,6 @@
 				3A8FC7912B0A09C900F90D73 /* NewPersonCell.xib in Resources */,
 				3A8FC6CB2B0660A000F90D73 /* DeleteFaceViewController.xib in Resources */,
 				3A8FC6922B065DDC00F90D73 /* IncomingCallPortraitViewController.xib in Resources */,
-				3A8FC6C62B06608600F90D73 /* AddFaceViewController.xib in Resources */,
 				3A8FC7392B09E62A00F90D73 /* ServiceIsActivatedViewController.xib in Resources */,
 				3A3B5DDE29ACEAFF00053124 /* AddressSettingsViewController.xib in Resources */,
 				3A8FC7702B09F97C00F90D73 /* QRCodeScanViewController.xib in Resources */,
@@ -7575,14 +7571,6 @@
 				3A8FC6C22B06603C00F90D73 /* Base */,
 			);
 			name = PassConfirmationPinViewController.xib;
-			sourceTree = "<group>";
-		};
-		3A8FC6C82B06608600F90D73 /* AddFaceViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A8FC6C72B06608600F90D73 /* Base */,
-			);
-			name = AddFaceViewController.xib;
 			sourceTree = "<group>";
 		};
 		3A8FC6CD2B0660A000F90D73 /* DeleteFaceViewController.xib */ = {

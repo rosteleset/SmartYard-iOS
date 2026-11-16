@@ -602,25 +602,29 @@
 "settings.faces.registrationHint" = "تُحفظ صور ضيوفك في قسم سجل الأحداث.\n\nلاختيار وجه وتسجيله، انتقل إلى هذا القسم بالضغط على علامة плюс.\n\nفي سجل الأحداث، اضغط على أيقونة المعلومات بجانب الحدث المطلوب، ثم اختر الصورة اللازمة في الشاشة التي ستفتح.\n\n";
 
 // Face groups
-"settings.faces.groups.all" = "كل الوجوه";
-"settings.faces.groups.ungrouped" = "بدون مجموعة";
-"settings.faces.groups.add" = "إضافة مجموعة";
-"settings.faces.groups.edit" = "تعديل المجموعة";
-"settings.faces.groups.delete" = "حذف المجموعة";
-"settings.faces.groups.deleteConfirmation" = "هل تريد حذف المجموعة «%@» وكل الوجوه الموجودة فيها؟";
-"settings.faces.groups.actions" = "إجراءات المجموعة";
-"settings.faces.groups.cluster" = "تجميع تلقائي";
-"settings.faces.groups.prefix" = "بادئة أسماء المجموعات";
-"settings.faces.groups.name" = "اسم المجموعة";
-"settings.faces.groups.track" = "تتبّع أحداث المجموعة";
-"settings.faces.groups.move" = "نقل إلى مجموعة";
-"settings.faces.groups.detach" = "إزالة من المجموعة";
+"settings.faces.groups.all" = "كل الصور";
+"settings.faces.groups.ungrouped" = "بلا اسم";
+"settings.faces.groups.add" = "إضافة شخص";
+"settings.faces.groups.edit" = "تعديل الاسم";
+"settings.faces.groups.delete" = "إزالة شخص";
+"settings.faces.groups.deleteConfirmation" = "هل تريد إزالة «%@» وكل صوره من قائمة الدخول بالتعرّف على الوجه؟";
+"settings.faces.groups.actions" = "إجراءات الشخص";
+"settings.faces.groups.cluster" = "تجميع الصور حسب الأشخاص";
+"settings.faces.groups.prefix" = "بداية الاسم";
+"settings.faces.groups.name" = "اسم الشخص";
+"settings.faces.groups.track" = "إشعاري عند الدخول";
+"settings.faces.groups.move" = "اختيار شخص";
+"settings.faces.groups.detach" = "إزالة الاسم";
 "settings.faces.groups.retry" = "إعادة المحاولة";
-"settings.faces.groups.title" = "المجموعات";
+"settings.faces.groups.title" = "الأشخاص";
 "settings.faces.groups.helpTitle" = "إضافة وجه";
 "settings.faces.groups.faceActions" = "إجراءات الوجه";
-"settings.faces.groups.clusterHint" = "سيتم تجميع الوجوه المتشابهة التي لا تنتمي إلى مجموعة. أدخل بداية أسماء المجموعات الجديدة.";
-"settings.faces.groups.screenTitle" = "الوجوه والمجموعات";
+"settings.faces.groups.clusterHint" = "سيقارن التطبيق الصور التي بلا اسم ويجمع الوجوه المتشابهة. أدخل الكلمة التي ستبدأ بها الأسماء الجديدة.";
+"settings.faces.groups.screenTitle" = "الدخول بالتعرّف على الوجه";
+"settings.faces.groups.person" = "الشخص";
+"settings.faces.groups.personHint" = "أدخل اسم شخص واحد وأضف صوره فقط.";
+"settings.faces.groups.assignmentError" = "أضيفت الصورة، لكن تعذّر تعيين اسم لها. حاول مجددًا أو احفظ الصورة بلا اسم.";
+"settings.faces.groups.helpText" = "يمكنك إضافة صور للدخول بالتعرّف على الوجه من سجل الأحداث.\n\nاضغط على «+»، وافتح الحدث واختر صورة. احفظها بلا اسم، أو اختر شخصًا موجودًا، أو أضف شخصًا جديدًا.\n\nاحفظ صور الشخص نفسه من زوايا مختلفة باسم واحد. إذا فعّلت إشعارات الدخول، سيظهر هذا الاسم فيها.";
 
 "settings.main.addAddressButton" = "إضافة عنوان";
 "settings.main.contractNumberTitle" = "رقم العقد";

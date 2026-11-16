@@ -54,7 +54,7 @@ final class FaceRegistrationWorkflow {
 
     func createdGroup(named name: String) -> APIFaceGroup? { createdGroups[name] }
 
-    func save(selection: Selection, onRegistered: @escaping () -> Void) -> Single<APIFaceGroup?> {
+    func save(selection: Selection, onRegistered: @escaping () -> Void = {}) -> Single<APIFaceGroup?> {
         Single.deferred { [self] in
             guard activeOperation == nil else { return .error(Failure.operationInProgress) }
             guard selection == .ungrouped || groupsEnabled() else { return .error(Failure.groupsUnavailable) }

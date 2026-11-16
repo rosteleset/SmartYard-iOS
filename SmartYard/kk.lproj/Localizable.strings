@@ -606,25 +606,29 @@
 "settings.faces.registrationHint" = "Сіздің азаматтарыңыздың суреттері Құрылыс істориясы бөлімінде сақталады.\n\nАдамның таңдауы және тіркеуі үшін көрсетілген бөлімге өту үшін Плюс түймесін басыңыз.\n\nІстория жазбалары бөлімінде, қажетті оқиғаға қарсы ақпарат белгісін басып, ашылған көрсеткінің ерекшеліктерін таңдаңыз және қажетті суретті таңдаңыз.\n\n";
 
 // Face groups
-"settings.faces.groups.all" = "Барлық беттер";
-"settings.faces.groups.ungrouped" = "Топсыз";
-"settings.faces.groups.add" = "Топ қосу";
-"settings.faces.groups.edit" = "Топты өзгерту";
-"settings.faces.groups.delete" = "Топты жою";
-"settings.faces.groups.deleteConfirmation" = "«%@» тобын және ондағы барлық беттерді жою керек пе?";
-"settings.faces.groups.actions" = "Топ әрекеттері";
-"settings.faces.groups.cluster" = "Автоматты топтастыру";
-"settings.faces.groups.prefix" = "Топ атауларының префиксі";
-"settings.faces.groups.name" = "Топ атауы";
-"settings.faces.groups.track" = "Топ оқиғаларын бақылау";
-"settings.faces.groups.move" = "Топқа ауыстыру";
-"settings.faces.groups.detach" = "Топтан шығару";
+"settings.faces.groups.all" = "Барлық фотосурет";
+"settings.faces.groups.ungrouped" = "Аты көрсетілмеген";
+"settings.faces.groups.add" = "Адам қосу";
+"settings.faces.groups.edit" = "Атын өзгерту";
+"settings.faces.groups.delete" = "Адамды өшіру";
+"settings.faces.groups.deleteConfirmation" = "«%@» және оның барлық фотосуретін бет-әлпет арқылы кіру тізімінен өшіресіз бе?";
+"settings.faces.groups.actions" = "Адамға қатысты әрекеттер";
+"settings.faces.groups.cluster" = "Фотоларды адамдар бойынша топтау";
+"settings.faces.groups.prefix" = "Аттың басы";
+"settings.faces.groups.name" = "Адамның аты";
+"settings.faces.groups.track" = "Кірулер туралы хабарлау";
+"settings.faces.groups.move" = "Адамды таңдау";
+"settings.faces.groups.detach" = "Атын алып тастау";
 "settings.faces.groups.retry" = "Қайталау";
-"settings.faces.groups.title" = "Топтар";
+"settings.faces.groups.title" = "Адамдар";
 "settings.faces.groups.helpTitle" = "Бет қосу";
 "settings.faces.groups.faceActions" = "Бет әрекеттері";
-"settings.faces.groups.clusterHint" = "Топсыз ұқсас беттер біріктіріледі. Жаңа топ атауларының басын енгізіңіз.";
-"settings.faces.groups.screenTitle" = "Беттер мен топтар";
+"settings.faces.groups.clusterHint" = "Қолданба аты көрсетілмеген фотоларды салыстырып, ұқсас бет-әлпеттерді топтайды. Жаңа аттар қай сөзден басталатынын енгізіңіз.";
+"settings.faces.groups.screenTitle" = "Бет-әлпет арқылы кіру";
+"settings.faces.groups.person" = "Адам";
+"settings.faces.groups.personHint" = "Бір адамның атын енгізіп, тек сол адамның фотоларын қосыңыз.";
+"settings.faces.groups.assignmentError" = "Фото қосылды, бірақ атын белгілеу мүмкін болмады. Қайта көріңіз немесе фотоны атын көрсетпей сақтаңыз.";
+"settings.faces.groups.helpText" = "Бет-әлпет арқылы кіруге арналған фотоларды «Оқиғалар тарихынан» қосуға болады.\n\n«+» түймесін басып, оқиғаны ашыңыз да, фотоны таңдаңыз. Фотоны атын көрсетпей сақтаңыз, адамды таңдаңыз немесе жаңасын қосыңыз.\n\nБір адамның әр қырынан түсірілген фотоларын бір атпен сақтаңыз. Кірулер туралы хабарландыруларды қоссаңыз, оларда сол ат көрсетіледі.";
 
 "settings.main.addAddressButton" = "Мекен-жай қосу";
 "settings.main.contractNumberTitle" = "Договор нөмері";

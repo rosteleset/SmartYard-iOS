@@ -331,6 +331,7 @@ extension HistoryViewModel {
                         return
                     }
 
+                    self.applyFaceRegistration(updatedEvent)
                     self.dataCache = self.dataCache.map { entry in
                         let newItems = entry.items.map { item -> APIPlog in
                             item.uuid == updatedEvent.uuid ? updatedEvent : item

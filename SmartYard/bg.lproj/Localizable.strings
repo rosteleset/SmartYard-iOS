@@ -602,25 +602,29 @@
 "settings.faces.registrationHint" = "Снимките на вашите гости се съхраняват в раздела История на събитията.\n\nЗа да изберете и регистрирате лице, преминете към посочения раздел, като кликнете върху Плюс.\n\nВ Историята на събитията кликнете върху иконата за информация срещу съответното събитие и на откриващия се екран изберете необходимата снимка.\n\n";
 
 // Face groups
-"settings.faces.groups.all" = "Всички лица";
-"settings.faces.groups.ungrouped" = "Без група";
-"settings.faces.groups.add" = "Добавяне на група";
-"settings.faces.groups.edit" = "Редактиране на група";
-"settings.faces.groups.delete" = "Изтриване на група";
-"settings.faces.groups.deleteConfirmation" = "Да се изтрие ли групата „%@“ и всички лица в нея?";
-"settings.faces.groups.actions" = "Действия с групата";
-"settings.faces.groups.cluster" = "Автоматично групиране";
-"settings.faces.groups.prefix" = "Префикс за имената на групите";
-"settings.faces.groups.name" = "Име на групата";
-"settings.faces.groups.track" = "Проследяване на събитията на групата";
-"settings.faces.groups.move" = "Преместване в група";
-"settings.faces.groups.detach" = "Премахване от групата";
+"settings.faces.groups.all" = "Всички снимки";
+"settings.faces.groups.ungrouped" = "Без име";
+"settings.faces.groups.add" = "Добавяне на човек";
+"settings.faces.groups.edit" = "Редактиране на името";
+"settings.faces.groups.delete" = "Премахване на човек";
+"settings.faces.groups.deleteConfirmation" = "Да премахнем ли „%@“ и всички негови снимки от списъка за достъп с лице?";
+"settings.faces.groups.actions" = "Действия за човека";
+"settings.faces.groups.cluster" = "Групиране на снимките по хора";
+"settings.faces.groups.prefix" = "Начало на името";
+"settings.faces.groups.name" = "Име на човека";
+"settings.faces.groups.track" = "Известия за влизане";
+"settings.faces.groups.move" = "Избор на човек";
+"settings.faces.groups.detach" = "Премахване на името";
 "settings.faces.groups.retry" = "Повторен опит";
-"settings.faces.groups.title" = "Групи";
+"settings.faces.groups.title" = "Хора";
 "settings.faces.groups.helpTitle" = "Добавяне на лице";
 "settings.faces.groups.faceActions" = "Действия с лицето";
-"settings.faces.groups.clusterHint" = "Подобните лица без група ще бъдат групирани. Въведете началото на имената на новите групи.";
-"settings.faces.groups.screenTitle" = "Лица и групи";
+"settings.faces.groups.clusterHint" = "Приложението ще сравни снимките без име и ще групира сходните лица. Въведете първата дума за новите имена.";
+"settings.faces.groups.screenTitle" = "Достъп с лице";
+"settings.faces.groups.person" = "Човек";
+"settings.faces.groups.personHint" = "Въведете името на един човек и добавяйте само негови снимки.";
+"settings.faces.groups.assignmentError" = "Снимката е добавена. Името не можа да се зададе. Опитайте отново или запазете снимката без име.";
+"settings.faces.groups.helpText" = "Можете да добавяте снимки за достъп с лице от „История на събитията“.\n\nНатиснете „+“, отворете събитието и изберете снимка. Запазете я без име, изберете човек или добавете нов.\n\nЗапазете снимките на един и същ човек от различни ъгли под едно име. Ако включите известията за влизане, в тях ще се показва това име.";
 
 "settings.main.addAddressButton" = "Добави адрес";
 "settings.main.contractNumberTitle" = "Номер на договор";

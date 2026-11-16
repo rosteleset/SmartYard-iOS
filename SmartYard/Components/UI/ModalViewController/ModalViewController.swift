@@ -56,7 +56,7 @@ enum ModalContent {
         case .aboutFaceRegistration:
             return TextModalViewContent(
                 title: L10n.Settings.Faces.Groups.helpTitle,
-                message: L10n.Settings.Faces.registrationHint.trimmingCharacters(in: .whitespacesAndNewlines)
+                message: L10n.Settings.Faces.Groups.helpText
             )
         case .aboutAddressOrder:
             return AddressOrderModalViewContent()

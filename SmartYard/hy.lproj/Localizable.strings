@@ -602,25 +602,29 @@
 "settings.faces.registrationHint" = "Ձեր հյուրերի լուսանկարները պահվում են Իրադարձությունների պատմություն բաժնում։\n\nՄարդ ընտրելու և գրանցելու համար անցեք նշված բաժին՝ սեղմելով Plus կոճակը։\n\nԻրադարձությունների պատմությունում սեղմեք ցանկալի իրադարձության դիմացի տեղեկատվական պատկերակը և բացվող էկրանին ընտրեք անհրաժեշտ լուսանկարը։\n\n";
 
 // Face groups
-"settings.faces.groups.all" = "Բոլոր դեմքերը";
-"settings.faces.groups.ungrouped" = "Առանց խմբի";
-"settings.faces.groups.add" = "Ավելացնել խումբ";
-"settings.faces.groups.edit" = "Խմբագրել խումբը";
-"settings.faces.groups.delete" = "Ջնջել խումբը";
-"settings.faces.groups.deleteConfirmation" = "Ջնջե՞լ «%@» խումբը և դրա բոլոր դեմքերը։";
-"settings.faces.groups.actions" = "Խմբի գործողություններ";
-"settings.faces.groups.cluster" = "Ինքնաշխատ խմբավորում";
-"settings.faces.groups.prefix" = "Խմբերի անունների նախածանցը";
-"settings.faces.groups.name" = "Խմբի անունը";
-"settings.faces.groups.track" = "Հետևել խմբի իրադարձություններին";
-"settings.faces.groups.move" = "Տեղափոխել խումբ";
-"settings.faces.groups.detach" = "Հեռացնել խմբից";
+"settings.faces.groups.all" = "Բոլոր լուսանկարները";
+"settings.faces.groups.ungrouped" = "Առանց անվան";
+"settings.faces.groups.add" = "Ավելացնել մարդ";
+"settings.faces.groups.edit" = "Փոխել անունը";
+"settings.faces.groups.delete" = "Հեռացնել մարդուն";
+"settings.faces.groups.deleteConfirmation" = "Հեռացնե՞լ «%@»-ին և նրա բոլոր լուսանկարները դեմքով մուտքի ցանկից։";
+"settings.faces.groups.actions" = "Մարդու գործողություններ";
+"settings.faces.groups.cluster" = "Խմբավորել լուսանկարներն ըստ մարդկանց";
+"settings.faces.groups.prefix" = "Անվան սկիզբը";
+"settings.faces.groups.name" = "Մարդու անունը";
+"settings.faces.groups.track" = "Տեղեկացնել մուտքերի մասին";
+"settings.faces.groups.move" = "Ընտրել մարդուն";
+"settings.faces.groups.detach" = "Հեռացնել անունը";
 "settings.faces.groups.retry" = "Կրկին փորձել";
-"settings.faces.groups.title" = "Խմբեր";
+"settings.faces.groups.title" = "Մարդիկ";
 "settings.faces.groups.helpTitle" = "Դեմքի ավելացում";
 "settings.faces.groups.faceActions" = "Դեմքի գործողություններ";
-"settings.faces.groups.clusterHint" = "Խմբի մեջ չմտնող նման դեմքերը կխմբավորվեն։ Մուտքագրեք նոր խմբերի անունների սկիզբը։";
-"settings.faces.groups.screenTitle" = "Դեմքեր և խմբեր";
+"settings.faces.groups.clusterHint" = "Հավելվածը կհամեմատի առանց անվան լուսանկարները և կխմբավորի նման դեմքերը։ Նշեք, թե որ բառով պետք է սկսվեն նոր անունները։";
+"settings.faces.groups.screenTitle" = "Մուտք դեմքով";
+"settings.faces.groups.person" = "Մարդ";
+"settings.faces.groups.personHint" = "Մուտքագրեք մեկ մարդու անունը և ավելացրեք միայն նրա լուսանկարները։";
+"settings.faces.groups.assignmentError" = "Լուսանկարն ավելացվել է, բայց անունը նշանակել չհաջողվեց։ Կրկին փորձեք կամ պահպանեք առանց անվան։";
+"settings.faces.groups.helpText" = "Դեմքով մուտքի համար լուսանկարներ կարող եք ավելացնել «Իրադարձությունների պատմություն» բաժնից։\n\nՍեղմեք «+», բացեք իրադարձությունը և ընտրեք լուսանկարը։ Պահպանեք առանց անվան, ընտրեք մարդուն կամ ավելացրեք նորին։\n\nՄիևնույն մարդու տարբեր անկյուններից լուսանկարները պահպանեք մեկ անվան տակ։ Եթե միացնեք մուտքերի ծանուցումները, դրանցում կերևա այդ անունը։";
 
 "settings.main.addAddressButton" = "Ավելացնել հասցե";
 "settings.main.contractNumberTitle" = "Պայմանագրի համարը";

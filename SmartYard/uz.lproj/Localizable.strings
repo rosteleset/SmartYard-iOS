@@ -602,25 +602,29 @@
 "settings.faces.registrationHint" = "Mehmonlaringizning suratlari Voqealar tarixi bo'limida saqlanadi.\n\nShaxsni tanlash va ro'yxatdan o'tkazish uchun ushbu bo'limga o'ting, Plus tugmasini bosib.\n\nVoqealar tarixida kerakli voqea yonida ma'lumot belgisini bosib, ochilgan ekranda zarur suratni tanlang.\n\n";
 
 // Face groups
-"settings.faces.groups.all" = "Barcha yuzlar";
-"settings.faces.groups.ungrouped" = "Guruhsiz";
-"settings.faces.groups.add" = "Guruh qo‘shish";
-"settings.faces.groups.edit" = "Guruhni tahrirlash";
-"settings.faces.groups.delete" = "Guruhni o‘chirish";
-"settings.faces.groups.deleteConfirmation" = "“%@” guruhi va undagi barcha yuzlar o‘chirilsinmi?";
-"settings.faces.groups.actions" = "Guruh amallari";
-"settings.faces.groups.cluster" = "Avtomatik guruhlash";
-"settings.faces.groups.prefix" = "Guruh nomlari prefiksi";
-"settings.faces.groups.name" = "Guruh nomi";
-"settings.faces.groups.track" = "Guruh hodisalarini kuzatish";
-"settings.faces.groups.move" = "Guruhga ko‘chirish";
-"settings.faces.groups.detach" = "Guruhdan chiqarish";
+"settings.faces.groups.all" = "Barcha suratlar";
+"settings.faces.groups.ungrouped" = "Ismsiz";
+"settings.faces.groups.add" = "Odam qo‘shish";
+"settings.faces.groups.edit" = "Ismni o‘zgartirish";
+"settings.faces.groups.delete" = "Odamni olib tashlash";
+"settings.faces.groups.deleteConfirmation" = "«%@» va uning barcha suratlari yuz orqali kirish ro‘yxatidan olib tashlansinmi?";
+"settings.faces.groups.actions" = "Odam uchun amallar";
+"settings.faces.groups.cluster" = "Suratlarni odamlar bo‘yicha guruhlash";
+"settings.faces.groups.prefix" = "Ismning boshi";
+"settings.faces.groups.name" = "Odamning ismi";
+"settings.faces.groups.track" = "Kirishlar haqida xabar berish";
+"settings.faces.groups.move" = "Odamni tanlash";
+"settings.faces.groups.detach" = "Ismni olib tashlash";
 "settings.faces.groups.retry" = "Qayta urinish";
-"settings.faces.groups.title" = "Guruhlar";
+"settings.faces.groups.title" = "Odamlar";
 "settings.faces.groups.helpTitle" = "Yuz qo‘shish";
 "settings.faces.groups.faceActions" = "Yuz amallari";
-"settings.faces.groups.clusterHint" = "Guruhsiz o‘xshash yuzlar birlashtiriladi. Yangi guruhlar nomlarining boshlanishini kiriting.";
-"settings.faces.groups.screenTitle" = "Yuzlar va guruhlar";
+"settings.faces.groups.clusterHint" = "Ilova ismsiz suratlarni solishtirib, o‘xshash yuzlarni guruhlaydi. Yangi ismlar qaysi so‘zdan boshlanishini kiriting.";
+"settings.faces.groups.screenTitle" = "Yuz orqali kirish";
+"settings.faces.groups.person" = "Odam";
+"settings.faces.groups.personHint" = "Bitta odamning ismini kiriting va faqat shu odamning suratlarini qo‘shing.";
+"settings.faces.groups.assignmentError" = "Surat qo‘shildi, lekin ismni biriktirib bo‘lmadi. Qayta urinib ko‘ring yoki suratni ismsiz saqlang.";
+"settings.faces.groups.helpText" = "Yuz orqali kirish uchun suratlarni «Voqealar tarixi»dan qo‘shishingiz mumkin.\n\n«+» tugmasini bosing, voqeani oching va suratni tanlang. Suratni ismsiz saqlang, odamni tanlang yoki yangi odam qo‘shing.\n\nBir odamning turli burchaklardan olingan suratlarini bitta ism bilan saqlang. Kirishlar haqida bildirishnomalarni yoqsangiz, ularda shu ism ko‘rsatiladi.";
 
 "settings.main.addAddressButton" = "Manzil qo'shish";
 "settings.main.contractNumberTitle" = "Shartnoma raqami";

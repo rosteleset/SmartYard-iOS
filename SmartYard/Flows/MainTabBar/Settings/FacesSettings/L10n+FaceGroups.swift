@@ -9,6 +9,7 @@ extension L10n.Settings.Faces {
     enum Groups {
         static let title = L10n.tr("settings.faces.groups.title")
         static let helpTitle = L10n.tr("settings.faces.groups.helpTitle")
+        static let helpText = L10n.tr("settings.faces.groups.helpText")
         static let faceActions = L10n.tr("settings.faces.groups.faceActions")
         static let clusterHint = L10n.tr("settings.faces.groups.clusterHint")
         static let screenTitle = L10n.tr("settings.faces.groups.screenTitle")
@@ -26,7 +27,10 @@ extension L10n.Settings.Faces {
         static let actions = L10n.tr("settings.faces.groups.actions")
         static let cluster = L10n.tr("settings.faces.groups.cluster")
         static let prefix = L10n.tr("settings.faces.groups.prefix")
+        static let person = L10n.tr("settings.faces.groups.person")
         static let name = L10n.tr("settings.faces.groups.name")
+        static let personHint = L10n.tr("settings.faces.groups.personHint")
+        static let assignmentError = L10n.tr("settings.faces.groups.assignmentError")
         static let track = L10n.tr("settings.faces.groups.track")
         static let move = L10n.tr("settings.faces.groups.move")
         static let detach = L10n.tr("settings.faces.groups.detach")

@@ -38,7 +38,7 @@ final class DeleteFaceViewController: BaseViewController {
         faceId: Int? = nil,
         event: APIPlog? = nil
     ) {
-        self.image = image
+        self.image = image ?? imageURL.flatMap(UIImage.init(base64URLString:))
         self.imageURL = imageURL
         self.faceId = faceId
         self.flatId = flatId
@@ -90,45 +90,17 @@ final class DeleteFaceViewController: BaseViewController {
                 onNext: { [weak self] in
                     self?.apiWrapper.forceUpdateFaces = true
                     
-                    // создаю копию события, в котором меняю доступные для пользователя действия
-                    if let event = self?.event,
-                       let newDetailX = event.detailX,
-                          var newFlags = newDetailX.flags {
-                        newFlags.removeAll(where: { $0 == "canDisLike" || $0 == "canDislike" || $0 == "canLike" })
-                        newFlags.append("canLike")
-                        
-                        let newDetailX = DetailX(
-                            key: newDetailX.key,
-                            face: newDetailX.face,
-                            flags: newFlags, // заменяем только вот это поле
-                            phone: newDetailX.phone,
-                            code: newDetailX.code,
-                            faceId: newDetailX.faceId
+                    if let event = self?.event, let detail = event.detailX {
+                        var flags = (detail.flags ?? []).filter {
+                            !["canLike", "canDislike", "canDisLike"].contains($0)
+                        }
+                        flags.append("canLike")
+                        let updatedDetail = detail.updatingFace(
+                            faceId: nil, groupId: nil, groupName: nil, flags: flags
                         )
-                        
-                        let updatedEvent = APIPlog(
-                            date: event.date,
-                            uuid: event.uuid,
-                            imageUuid: event.imageUuid,
-                            flatId: event.flatId,
-                            objectId: event.objectId,
-                            objectType: event.objectType,
-                            objectMechanizma: event.objectMechanizma,
-                            mechanizmaDescription: event.mechanizmaDescription,
-                            houseId: event.houseId,
-                            entranceId: event.entranceId,
-                            cameraId: event.cameraId,
-                            event: event.event,
-                            detail: event.detail,
-                            detailX: newDetailX, // заменяем только вот это поле
-                            previewURL: event.previewURL,
-                            previewImage: event.previewImage
-                        )
-                        
-                        // передаю обновлённое состояние карточки через NotificationCenter для обработки контроллером
-                        NotificationCenter.default.post(.init(name: .updateEvent, object: updatedEvent))
+                        NotificationCenter.default.post(name: .updateEvent, object: event.withDetailX(updatedDetail))
                     }
-                    
+
                     // уведомляю контроллеры, зависимые от списка лиц (Список лиц в настройках доступа), что он требует обновление
                     NotificationCenter.default.post(.init(name: .updateFaces, object: nil))
                     self?.dismiss(animated: true, completion: nil)

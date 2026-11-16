@@ -309,7 +309,7 @@ final class HistoryViewModel: BaseViewModel {
                 // а пользователю надо показать лицо, какое мы будем удалять,
                 // поэтому берём картинку из события за неимением ничего лучшего.
 
-                let imageURL = face != nil ? face?.image : event.previewURL
+                let imageURL = face.flatMap { $0.image.isEmpty ? nil : $0.image } ?? event.previewURL
 
                 self.router.trigger(
                     .deleteFaceFromEvent(
@@ -459,6 +459,23 @@ extension HistoryViewModel {
         return event.withDetailX(detail.updatingFace(
             faceId: detail.faceId, groupId: metadata.groupId, groupName: metadata.groupName
         ))
+    }
+
+    func applyFaceRegistration(_ event: APIPlog) {
+        guard let flatId = event.flatId, let detail = event.detailX,
+              detail.flags?.contains("canDislike") == true,
+              let faceId = detail.faceId.flatMap(Int.init) else { return }
+
+        // Keep the saved selection visible while the server's face list reloads.
+        if let faces = listFaces[flatId] {
+            let image = faces.first { $0.faceId == faceId }?.image ?? event.previewURL ?? ""
+            listFaces[flatId] = faces.filter { $0.faceId != faceId }
+                + [APIFace(faceId: faceId, image: image, groupId: detail.groupId)]
+        }
+        if let groupId = detail.groupId, let name = detail.groupName,
+           faceGroups[flatId]?.contains(where: { $0.groupId == groupId }) == false {
+            faceGroups[flatId]?.append(APIFaceGroup(groupId: groupId, groupName: name))
+        }
     }
 
     func loadTrackedEvents(for flatIds: [Int]) {

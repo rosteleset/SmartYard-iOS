@@ -178,12 +178,14 @@ final class HistoryDetailViewController: BaseViewController, LoaderPresentable {
                     camera = self.camMap.first { $0.id == item.value.objectId }
                 }
 
+                let access = viewModel.apiWrapper.accessService
                 cell.configure(
                     value: item.value,
                     using: imagesCache,
                     camera: camera,
                     trackedEvent: ParanoidEventTracking.key(for: item.value).flatMap { self.trackedEvents[$0] },
-                    isEventTrackingEnabled: AccessService.shared.eventsTrackingEnabled
+                    isEventTrackingEnabled: access.eventsTrackingEnabled,
+                    faceGroupsEnabled: access.faceGroupsEnabled
                 )
 
                 cell.itsMeTrigger
@@ -338,10 +340,12 @@ private extension HistoryDetailViewController {
     }
 
     func handleTrackingToggle(event: APIPlog, isOn: Bool) {
-        if isOn {
-            showTrackingCommentDialog(for: event)
-        } else {
+        if !isOn {
             untrackEventTrigger.onNext(event)
+        } else if event.event == .face {
+            trackEventTrigger.onNext((event, ""))
+        } else {
+            showTrackingCommentDialog(for: event)
         }
     }
 

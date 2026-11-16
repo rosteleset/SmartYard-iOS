@@ -145,6 +145,12 @@ struct FaceGroupEditor: View {
             Color(uiColor: .SmartYard.grayBorder)
                 .frame(height: 1)
                 .accessibilityHidden(true)
+            if !kind.isClustering {
+                Text(verbatim: L10n.Settings.Faces.Groups.personHint)
+                    .font(SYFont.regular(size: 14))
+                    .foregroundStyle(SYColor.gray)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 

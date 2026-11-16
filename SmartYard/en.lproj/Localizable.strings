@@ -602,25 +602,29 @@
 "settings.faces.registrationHint" = "Photos of your guests are stored in the Event History section.\n\nTo select and register a person, go to the specified section by clicking on Plus.\n\nIn the Event History, click on the information icon opposite the desired event and select the required photo on the screen that opens.\n\n";
 
 // Face groups
-"settings.faces.groups.all" = "All faces";
-"settings.faces.groups.ungrouped" = "Ungrouped";
-"settings.faces.groups.add" = "Add group";
-"settings.faces.groups.edit" = "Edit group";
-"settings.faces.groups.delete" = "Delete group";
-"settings.faces.groups.deleteConfirmation" = "Delete “%@” and all faces in this group?";
-"settings.faces.groups.actions" = "Group actions";
-"settings.faces.groups.cluster" = "Group automatically";
-"settings.faces.groups.prefix" = "Group name prefix";
-"settings.faces.groups.name" = "Group name";
-"settings.faces.groups.track" = "Track group events";
-"settings.faces.groups.move" = "Move to group";
-"settings.faces.groups.detach" = "Remove from group";
+"settings.faces.groups.all" = "All photos";
+"settings.faces.groups.ungrouped" = "Unnamed";
+"settings.faces.groups.add" = "Add person";
+"settings.faces.groups.edit" = "Edit name";
+"settings.faces.groups.delete" = "Remove person";
+"settings.faces.groups.deleteConfirmation" = "Remove “%@” and all their photos from face access?";
+"settings.faces.groups.actions" = "Person actions";
+"settings.faces.groups.cluster" = "Group photos by person";
+"settings.faces.groups.prefix" = "Start of name";
+"settings.faces.groups.name" = "Person’s name";
+"settings.faces.groups.track" = "Notify me about entries";
+"settings.faces.groups.move" = "Choose person";
+"settings.faces.groups.detach" = "Remove name";
 "settings.faces.groups.retry" = "Retry";
-"settings.faces.groups.title" = "Groups";
+"settings.faces.groups.title" = "People";
 "settings.faces.groups.helpTitle" = "Adding a face";
 "settings.faces.groups.faceActions" = "Face actions";
-"settings.faces.groups.clusterHint" = "Similar ungrouped faces will be grouped together. Enter the beginning of the new group names.";
-"settings.faces.groups.screenTitle" = "Faces and groups";
+"settings.faces.groups.clusterHint" = "The app will compare unnamed photos and group similar faces. Enter the first word to use for the new names.";
+"settings.faces.groups.screenTitle" = "Face access";
+"settings.faces.groups.person" = "Person";
+"settings.faces.groups.personHint" = "Enter one person’s name and add only photos of that person.";
+"settings.faces.groups.assignmentError" = "The photo was added, but its name could not be assigned. Try again or save it without a name.";
+"settings.faces.groups.helpText" = "You can add photos for face access from Event History.\n\nTap “+”, open the event and choose a photo. Save it without a name, choose an existing person or add someone new.\n\nSave photos of the same person from different angles under one name. If you turn on entry notifications, they will include that name.";
 
 "settings.main.addAddressButton" = "Add address";
 "settings.main.contractNumberTitle" = "Number of contract";

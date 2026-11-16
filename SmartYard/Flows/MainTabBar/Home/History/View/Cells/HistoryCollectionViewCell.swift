@@ -82,7 +82,11 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
         return trackingSwitch.rx.controlEvent(.valueChanged)
             .map { [weak self] _ -> (APIPlog, Bool)? in
                 guard let self = self, let event = self.event else { return nil }
-                return (event, self.trackingSwitch.isOn)
+                let isOn = trackingSwitch.isOn
+                if event.event == .face {
+                    trackingSwitch.setOn(!isOn, animated: false)
+                }
+                return (event, isOn)
             }
             .ignoreNil()
             .asDriverOnErrorJustComplete()
@@ -277,6 +281,7 @@ private extension HistoryCollectionViewCell {
         trackingTitleLabel.text = L10n.History.EventTracking.toggleTitle
 
         trackingSwitch.onTintColor = .SmartYard.darkGreen
+        trackingSwitch.accessibilityIdentifier = "history.event.tracking"
 
         trackingCommentsLabel.font = .SourceSansPro.regular(size: 12)
         trackingCommentsLabel.textColor = .SmartYard.gray
@@ -310,15 +315,20 @@ private extension HistoryCollectionViewCell {
     func configureTrackingView(
         event: APIPlog,
         trackedEvent: APITrackedEvent?,
-        isEventTrackingEnabled: Bool
+        isEventTrackingEnabled: Bool,
+        faceGroupsEnabled: Bool
     ) {
-        let canTrack = isEventTrackingEnabled && ParanoidEventTracking.isSupported(event)
+        let canTrack = isEventTrackingEnabled && ParanoidEventTracking.isSupported(event, faceGroupsEnabled: faceGroupsEnabled)
         trackingContainerView.isHidden = !canTrack
 
         guard canTrack else { return }
 
+        let isFaceEvent = event.event == .face
+        let title = isFaceEvent ? L10n.Settings.Faces.Groups.track : L10n.History.EventTracking.toggleTitle
+        trackingTitleLabel.text = title
+        trackingSwitch.accessibilityLabel = title
         trackingSwitch.setOn(trackedEvent != nil, animated: false)
-        let comments = trackedEvent?.normalizedComments ?? ""
+        let comments = isFaceEvent ? "" : trackedEvent?.normalizedComments ?? ""
         trackingCommentsLabel.text = comments
         trackingCommentsLabel.isHidden = comments.isEmpty
     }
@@ -351,7 +361,8 @@ extension HistoryCollectionViewCell {
         camera: APICamMap? = nil,
         token: String? = nil,
         trackedEvent: APITrackedEvent? = nil,
-        isEventTrackingEnabled: Bool = false
+        isEventTrackingEnabled: Bool = false,
+        faceGroupsEnabled: Bool = false
     ) {
         stopVideo()
         self.event = value
@@ -366,7 +377,8 @@ extension HistoryCollectionViewCell {
         configureTrackingView(
             event: value,
             trackedEvent: trackedEvent,
-            isEventTrackingEnabled: isEventTrackingEnabled
+            isEventTrackingEnabled: isEventTrackingEnabled,
+            faceGroupsEnabled: faceGroupsEnabled
         )
         callStatusView.isHidden = true
         descriptionLabel.isHidden = false
@@ -388,7 +400,8 @@ extension HistoryCollectionViewCell {
         dateLabel.text = df.string(from: value.date)
 
         // настраиваем отображение поля с описанием
-        descriptionLabel.text = value.detail
+        let faceName = faceGroupsEnabled && value.event == .face ? value.detailX?.groupName : nil
+        descriptionLabel.text = faceName ?? value.detail
         descriptionLabel.isHidden = (descriptionLabel.text ?? "").isEmpty
 
         addressLabel.text = value.mechanizmaDescription

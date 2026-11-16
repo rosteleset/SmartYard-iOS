@@ -602,25 +602,29 @@
 "settings.faces.registrationHint" = "Фотографии ваших гостей хранятся в разделе История событий.\n\nДля выбора и регистрации лица перейдите в указанный раздел, кликнув на Плюс.\n\nВ Истории событий кликните на значок информации напротив нужного события и на открывшемся экране выберите необходимое фото.\n\n";
 
 // Face groups
-"settings.faces.groups.all" = "Все лица";
-"settings.faces.groups.ungrouped" = "Без группы";
-"settings.faces.groups.add" = "Добавить группу";
-"settings.faces.groups.edit" = "Изменить группу";
-"settings.faces.groups.delete" = "Удалить группу";
-"settings.faces.groups.deleteConfirmation" = "Удалить группу «%@» и все входящие в неё лица?";
-"settings.faces.groups.actions" = "Действия с группой";
-"settings.faces.groups.cluster" = "Группировать автоматически";
-"settings.faces.groups.prefix" = "Префикс названий групп";
-"settings.faces.groups.name" = "Название группы";
-"settings.faces.groups.track" = "Отслеживать события группы";
-"settings.faces.groups.move" = "Переместить в группу";
-"settings.faces.groups.detach" = "Убрать из группы";
+"settings.faces.groups.all" = "Все фото";
+"settings.faces.groups.ungrouped" = "Без имени";
+"settings.faces.groups.add" = "Добавить человека";
+"settings.faces.groups.edit" = "Изменить имя";
+"settings.faces.groups.delete" = "Удалить человека";
+"settings.faces.groups.deleteConfirmation" = "Удалить «%@» и все его фото из списка доступа по лицу?";
+"settings.faces.groups.actions" = "Действия с человеком";
+"settings.faces.groups.cluster" = "Собрать фото по людям";
+"settings.faces.groups.prefix" = "Начало имени";
+"settings.faces.groups.name" = "Имя человека";
+"settings.faces.groups.track" = "Уведомлять о проходах";
+"settings.faces.groups.move" = "Выбрать человека";
+"settings.faces.groups.detach" = "Убрать имя";
 "settings.faces.groups.retry" = "Повторить";
-"settings.faces.groups.title" = "Группы";
+"settings.faces.groups.title" = "Люди";
 "settings.faces.groups.helpTitle" = "Добавление Лица";
 "settings.faces.groups.faceActions" = "Действия с лицом";
-"settings.faces.groups.clusterHint" = "Похожие лица без группы будут объединены. Укажите начало названий новых групп.";
-"settings.faces.groups.screenTitle" = "Лица и группы";
+"settings.faces.groups.clusterHint" = "Приложение сравнит фото без имени и соберёт похожие снимки вместе. Укажите, с какого слова начинать новые имена.";
+"settings.faces.groups.screenTitle" = "Доступ по лицу";
+"settings.faces.groups.person" = "Человек";
+"settings.faces.groups.personHint" = "Укажите имя одного человека и добавляйте к нему только его фотографии.";
+"settings.faces.groups.assignmentError" = "Фото добавлено. Не удалось назначить имя. Повторите попытку или сохраните фото без имени.";
+"settings.faces.groups.helpText" = "Фото для доступа по лицу можно добавить из «Истории событий».\n\nНажмите «+», откройте нужное событие и выберите снимок. Сохраните фото без имени, выберите человека или добавьте нового.\n\nСнимки одного человека с разных ракурсов сохраните под одним именем. Если включить уведомления о проходах, в них будет указано это имя.";
 
 "settings.main.addAddressButton" = "Добавить адрес";
 "settings.main.contractNumberTitle" = "Номер договора";
