@@ -26,14 +26,14 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
     @IBOutlet private weak var titleLabel: UILabel!
     private let viewModel: UserNameViewModel
     private let preloadedName: APIClientName?
-    private let agreementAcceptedRelay = BehaviorRelay<Bool>(value: true)
+    private let agreementAcceptedRelay = BehaviorRelay<Bool>(value: false)
     private let legalDocumentTrigger = PublishSubject<URL>()
     private lazy var continueButtonCompactTopConstraint = continueButton.topAnchor.constraint(
         equalTo: middleNameTextField.bottomAnchor,
         constant: 24
     )
     private let agreementLinkColor = UIColor.SmartYard.blue
-    private var isAgreementAccepted = true {
+    private var isAgreementAccepted = false {
         didSet {
             agreementAcceptedRelay.accept(isAgreementAccepted)
             updateAgreementCheckBoxAppearance()
@@ -224,7 +224,6 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
             "auth.userName.agreement.accessibilityLabel",
             comment: ""
         )
-        agreementCheckBoxView.accessibilityTraits = [.button, .selected]
 
         updateAgreementCheckBoxAppearance()
     }
