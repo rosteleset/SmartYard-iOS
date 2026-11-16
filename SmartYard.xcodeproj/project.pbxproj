@@ -164,6 +164,7 @@
 		3AEFB45F264C12F0000F37D0 /* FacesSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB444264C0964000F37D0 /* FacesSettingsViewModel.swift */; };
 		3AEFB483264D1ADE000F37D0 /* FaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */; };
 		3AFBA733263752B300C7DEB6 /* SafeCachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA732263752B300C7DEB6 /* SafeCachedImageView.swift */; };
+		D3C100142B140003004BAC22 /* SYFaceSnapshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C100142B140003004BAC21 /* SYFaceSnapshotView.swift */; };
 		3AFBA73826375B8600C7DEB6 /* BetterSnappingFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */; };
 		3AFBA7B9263984E000C7DEB6 /* AVPlayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFBA7B8263984E000C7DEB6 /* AVPlayer+Extensions.swift */; };
 		3BE4B35EE8C96FD592F29A6C /* GetStoriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9C3BE1BDB9EDBCEBCEFA5 /* GetStoriesRequest.swift */; };
@@ -1141,6 +1142,7 @@
 		3AEFB444264C0964000F37D0 /* FacesSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesSettingsViewModel.swift; sourceTree = "<group>"; };
 		3AEFB481264D1ADE000F37D0 /* FaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceViewController.swift; sourceTree = "<group>"; };
 		3AFBA732263752B300C7DEB6 /* SafeCachedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeCachedImageView.swift; sourceTree = "<group>"; };
+		D3C100142B140003004BAC21 /* SYFaceSnapshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYFaceSnapshotView.swift; sourceTree = "<group>"; };
 		3AFBA73726375B8600C7DEB6 /* BetterSnappingFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSnappingFlowLayout.swift; sourceTree = "<group>"; };
 		3AFBA74726383B4200C7DEB6 /* APICamMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICamMap.swift; sourceTree = "<group>"; };
 		3AFBA7B8263984E000C7DEB6 /* AVPlayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Extensions.swift"; sourceTree = "<group>"; };
@@ -2296,6 +2298,7 @@
 				FA9E30ED2BBBF01E0087E689 /* AutoRefreshingCachedImageView.swift */,
 				3A288198265D42AA00F42097 /* SafeCachedButton.swift */,
 				3AFBA732263752B300C7DEB6 /* SafeCachedImageView.swift */,
+				D3C100142B140003004BAC21 /* SYFaceSnapshotView.swift */,
 			);
 			path = SafeCachedImage;
 			sourceTree = "<group>";
@@ -7190,6 +7193,7 @@
 				84898A8123F144FA00E6B78E /* SettingsHeaderCell.swift in Sources */,
 				846DC6BF24B33DC600A11914 /* PaymentPopupController.swift in Sources */,
 				3AFBA733263752B300C7DEB6 /* SafeCachedImageView.swift in Sources */,
+				D3C100142B140003004BAC22 /* SYFaceSnapshotView.swift in Sources */,
 				844AC3D823EBFE060066006D /* ChatCoordinator.swift in Sources */,
 				84D6445F23F6ACE600AD87EF /* AddressDeletionViewController.swift in Sources */,
 				8BF6BAB82E7991EF00965949 /* HeaderView.swift in Sources */,

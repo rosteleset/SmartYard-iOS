@@ -254,17 +254,11 @@ extension NewAllowedCarViewController {
 
     private func setSettingsVisible(_ visible: Bool) {
         guard showsSettings.value != visible else { return }
-        view.layoutIfNeeded()
         if visible { scrollView.alpha = 0 }
-        UIView.animate(
-            withDuration: UIAccessibility.isReduceMotionEnabled ? 0 : 0.28,
-            delay: 0,
-            options: [.curveEaseInOut, .beginFromCurrentState]
-        ) {
+        SYFormModal.animateLayout(in: view) {
             self.showsSettings.accept(visible)
             self.applySettingsVisibility()
             self.scrollView.alpha = visible ? 1 : 0
-            self.view.layoutIfNeeded()
         }
     }
 
@@ -324,17 +318,10 @@ extension NewAllowedCarViewController {
             self.expirationLabel.alpha = automatic ? 1 : 0
             self.expirationLabel.accessibilityElementsHidden = !automatic
         }
-        view.layoutIfNeeded()
         if animated, view.window != nil {
-            UIView.animate(
-                withDuration: UIAccessibility.isReduceMotionEnabled ? 0 : 0.28,
-                delay: 0,
-                options: [.curveEaseInOut, .beginFromCurrentState]
-            ) {
-                updateVisibility()
-                self.view.layoutIfNeeded()
-            }
+            SYFormModal.animateLayout(in: view, changes: updateVisibility)
         } else {
+            view.layoutIfNeeded()
             updateVisibility()
         }
         startDateField.text = hasStartBoundary

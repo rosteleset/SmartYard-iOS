@@ -155,7 +155,7 @@
                                                         <color key="textColor" name="semiBlack"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="0z6-lI-UZP" customClass="SafeCachedImageView" customModule="SmartYard" customModuleProvider="target">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="0z6-lI-UZP" customClass="SYFaceSnapshotView" customModule="SmartYard" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="315" height="177"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </imageView>

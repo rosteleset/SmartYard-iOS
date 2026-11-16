@@ -22,9 +22,7 @@ class SafeCachedImageView: UIImageView {
     func loadImageUsingUrlString(urlString: String,
                                  cache: NSCache<NSString, UIImage>,
                                  label: UILabel? = nil,
-                                 errorMessage: String = "",
-                                 rect: CGRect? = nil,
-                                 rectColor: UIColor = .clear) {
+                                 errorMessage: String = "") {
         self.image = nil
         
         loadingImageIndicator.center = self.view.center
@@ -39,6 +37,7 @@ class SafeCachedImageView: UIImageView {
             
             // TODO: - сделать здесь скелетон -
             DispatchQueue.main.async {
+                guard self.imageUrlString == urlString else { return }
                 self.loadingImageIndicator.stopAnimating()
                 self.backgroundColor = .black
             }
@@ -58,9 +57,6 @@ class SafeCachedImageView: UIImageView {
                     if self.imageUrlString == urlString {
                         self.image = loadedImage
                         label?.text = ""
-                        if let rect = rect {
-                            self.drawRectangle(rect: rect, rectColor: rectColor)
-                        }
                     }
                     cache.setObject(loadedImage, forKey: NSString(string: urlString))
                 }
@@ -68,9 +64,8 @@ class SafeCachedImageView: UIImageView {
                 DispatchQueue.global(qos: .userInteractive).async {
                     if let loadedImage = self.imageFromVideo(url: url, at: 1) {
                         DispatchQueue.main.async {
-                            self.image = loadedImage
-                            if let rect = rect {
-                                self.drawRectangle(rect: rect, rectColor: rectColor)
+                            if self.imageUrlString == urlString {
+                                self.image = loadedImage
                             }
                             cache.setObject(loadedImage, forKey: NSString(string: urlString))
                         }
@@ -81,31 +76,10 @@ class SafeCachedImageView: UIImageView {
         .resume()
     }
     
-    func drawRectangle(rect: CGRect, rectColor: UIColor) {
-        guard let image = self.image else { return }
-        
-        let imageSize = image.size
-        let scale: CGFloat = self.contentScaleFactor
-        let context = UIGraphicsGetCurrentContext()
-        let transform = CGAffineTransform(
-            scaleX: 1 / scale,
-            y: 1 / scale
-        )
-        
-        UIGraphicsBeginImageContextWithOptions(imageSize, false, scale)
-        
-        context?.setLineWidth(3.0)
-        
-        defer { UIGraphicsEndImageContext() }
-        
-        image.draw(at: .zero)
-        
-        rectColor.setStroke()
-        UIRectFrame(rect.applying(transform))
-        
-        if let newImage = UIGraphicsGetImageFromCurrentImageContext() {
-            self.image = newImage
-        }
+    func resetImage() {
+        if imageUrlString != nil { loadingImageIndicator.stopAnimating() }
+        imageUrlString = nil
+        image = nil
     }
 }
 

@@ -30,7 +30,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
     @IBOutlet private weak var addressLabel: UILabel!
     @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var image: SafeCachedImageView!
+    @IBOutlet private weak var image: SYFaceSnapshotView!
     @IBOutlet private weak var underImageLabel: UILabel!
     @IBOutlet private weak var openAccessButton: UIButton!
     @IBOutlet private weak var denyAccessButton: UIButton!
@@ -249,7 +249,7 @@ final class HistoryCollectionViewCell: UICollectionViewCell, HasDisposeBag {
 
 private extension HistoryCollectionViewCell {
     func resetImageView() {
-        image.image = nil
+        image.resetImage()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.backgroundColor = .SmartYard.grayBorder
@@ -405,8 +405,11 @@ extension HistoryCollectionViewCell {
         descriptionLabel.isHidden = (descriptionLabel.text ?? "").isEmpty
 
         addressLabel.text = value.mechanizmaDescription
-        let faceFrameColor = configureTitle(for: value.event)
+        configureTitle(for: value.event)
         resetImageView()
+        let faceFlags = value.detailX?.flags ?? []
+        let isRegistered = faceFlags.contains("canDislike") || faceFlags.contains("canDisLike") || faceFlags.contains("liked")
+        image.showFace(value.detailX?.face?.asCGRect, isRegistered: isRegistered)
 
         if let previewImage = value.previewImage {
             image.image = previewImage
@@ -415,9 +418,7 @@ extension HistoryCollectionViewCell {
                 urlString: previewURL,
                 cache: cache,
                 label: underImageLabel,
-                errorMessage: L10n.History.Event.imageMissing,
-                rect: value.detailX?.face?.asCGRect,
-                rectColor: faceFrameColor
+                errorMessage: L10n.History.Event.imageMissing
             )
         } else {
             configureMissingImage()
@@ -451,54 +452,38 @@ extension HistoryCollectionViewCell {
         }
     }
 
-    private func configureTitle(for eventType: APIPlog.EventType) -> UIColor {
+    private func configureTitle(for eventType: APIPlog.EventType) {
+        titleLabel.textColor = .SmartYard.semiBlack
         switch eventType {
         case .answered:
             titleLabel.text = L10n.Intercom.Incoming.title
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
             callStatusLabel.text = L10n.History.Event.answeredCall
             callStatusLabel.textColor = UIColor.SmartYard.darkGreen
             callStatusIcon.image = UIImage(named: "AnsweredCall")
-            return .red
         case .unanswered:
             titleLabel.text = L10n.Intercom.Incoming.title
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
             callStatusView.isHidden = false
             descriptionLabel.isHidden = true
             callStatusLabel.text = L10n.History.Event.missedCall
             callStatusLabel.textColor = UIColor.SmartYard.incorrectDataRed
             callStatusIcon.image = UIImage(named: "MissedCall")
-            return .red
         case .rfid:
             titleLabel.text = L10n.History.Event.openingWithKey
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
         case .app:
             titleLabel.text = L10n.History.Event.openingFromApp
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
         case .face:
             titleLabel.text = L10n.History.Event.openingWithFaceID
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .green
         case .passcode:
             titleLabel.text = L10n.History.Event.openingWithCode
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
         case .call:
             titleLabel.text = L10n.History.Event.gateOpeningOnCall
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
         case .plate:
             titleLabel.text = L10n.History.Event.gateOpeningByNumberplate
-            titleLabel.textColor = UIColor.SmartYard.semiBlack
-            return .red
         case .reserved, .unknown:
             titleLabel.text = L10n.History.Event.unknown
             titleLabel.textColor = UIColor.SmartYard.incorrectDataRed
-            return .red
         }
     }
 }

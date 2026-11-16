@@ -18,6 +18,24 @@ enum SYFormModal {
         controller.modalTransitionStyle = .crossDissolve
     }
 
+    static func animateLayout(
+        in view: UIView,
+        changes: @escaping () -> Void,
+        completion: ((Bool) -> Void)? = nil
+    ) {
+        view.layoutIfNeeded()
+        UIView.animate(
+            withDuration: UIAccessibility.isReduceMotionEnabled ? 0 : 0.28,
+            delay: 0,
+            options: [.curveEaseInOut, .beginFromCurrentState],
+            animations: {
+                changes()
+                view.layoutIfNeeded()
+            },
+            completion: completion
+        )
+    }
+
     static func place(_ card: UIView, in view: UIView) {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         let availableArea = UIView()

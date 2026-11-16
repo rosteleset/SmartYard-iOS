@@ -16,16 +16,12 @@ final class AutoRefreshingCachedImageView: SafeCachedImageView {
     override func loadImageUsingUrlString(urlString: String,
                                           cache: NSCache<NSString, UIImage>,
                                           label: UILabel?,
-                                          errorMessage: String = "",
-                                          rect: CGRect? = nil,
-                                          rectColor: UIColor = .clear) {
+                                          errorMessage: String = "") {
         super.loadImageUsingUrlString(
             urlString: urlString,
             cache: cache,
             label: label,
-            errorMessage: errorMessage,
-            rect: rect,
-            rectColor: rectColor
+            errorMessage: errorMessage
         )
         
         if timer == nil {
@@ -36,9 +32,7 @@ final class AutoRefreshingCachedImageView: SafeCachedImageView {
                     urlString: urlString,
                     cache: cache,
                     label: label,
-                    errorMessage: errorMessage, 
-                    rect: rect,
-                    rectColor: rectColor
+                    errorMessage: errorMessage
                 )
             }
         }

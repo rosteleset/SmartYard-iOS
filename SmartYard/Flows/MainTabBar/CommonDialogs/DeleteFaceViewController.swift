@@ -92,7 +92,7 @@ final class DeleteFaceViewController: BaseViewController {
                     
                     if let event = self?.event, let detail = event.detailX {
                         var flags = (detail.flags ?? []).filter {
-                            !["canLike", "canDislike", "canDisLike"].contains($0)
+                            !["canLike", "canDislike", "canDisLike", "liked"].contains($0)
                         }
                         flags.append("canLike")
                         let updatedDetail = detail.updatingFace(

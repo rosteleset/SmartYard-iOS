@@ -21,16 +21,26 @@ final class AddFaceViewController: BaseViewController, LoaderPresentable {
     private let card = FullRoundedView()
     private let scrollView = UIScrollView()
     private let titleLabel = UILabel()
-    private let preview = SafeCachedImageView()
+    private let preview = SYFaceSnapshotView()
     private let personLabel = UILabel()
     private let personButton = UIButton(type: .system)
+    private let nameEditor = UIView()
+    private let nameForm = UIStackView.vertical(
+        paddings: .init(top: 12, leading: 0, bottom: 0, trailing: 0), spacing: 8
+    )
     private let nameField = UITextField()
     private let nameDivider = UIView()
     private let nameHint = UILabel()
     private let addButton = BlueButton(frame: .zero)
     private let cancelButton = UIButton(type: .system)
 
+    private var collapsedNameHeight: Constraint!
+    private var expandedNameHeight: Constraint!
     private var selection: FaceRegistrationWorkflow.Selection = .ungrouped
+    private var isCreatingPerson: Bool {
+        if case .new = selection { return true }
+        return false
+    }
     private var people: [APIFaceGroup] = []
     private var peopleLoadFailed = false
     private var isSaving = false
@@ -94,22 +104,7 @@ private extension AddFaceViewController {
         personButton.accessibilityLabel = L10n.Settings.Faces.Groups.person
         personButton.accessibilityIdentifier = "faces.registration.person"
 
-        nameField.attributedPlaceholder = NSAttributedString(
-            string: L10n.Settings.Faces.Groups.name,
-            attributes: [.foregroundColor: UIColor.SmartYard.gray]
-        )
-        nameField.font = .SourceSansPro.semibold(size: 18)
-        nameField.textColor = .SmartYard.semiBlack
-        nameField.autocapitalizationType = .words
-        nameField.returnKeyType = .done
-        nameField.accessibilityIdentifier = "faces.registration.name"
-        nameField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
-        nameField.addTarget(self, action: #selector(save), for: .editingDidEndOnExit)
-
-        nameHint.text = L10n.Settings.Faces.Groups.personHint
-        nameHint.font = .SourceSansPro.regular(size: 14)
-        nameHint.textColor = .SmartYard.gray
-        nameHint.numberOfLines = 0
+        setupNameEditor()
 
         addButton.titleLabel?.font = .SourceSansPro.semibold(size: 18)
         addButton.accessibilityIdentifier = "faces.registration.add"
@@ -125,20 +120,61 @@ private extension AddFaceViewController {
         view.addGestureRecognizer(tap)
     }
 
+    func setupNameEditor() {
+        nameEditor.clipsToBounds = true
+        nameEditor.accessibilityElementsHidden = true
+        nameEditor.isUserInteractionEnabled = false
+        nameForm.alpha = 0
+        nameField.attributedPlaceholder = NSAttributedString(
+            string: L10n.Settings.Faces.Groups.name,
+            attributes: [.foregroundColor: UIColor.SmartYard.gray]
+        )
+        nameField.font = .SourceSansPro.semibold(size: 18)
+        nameField.borderStyle = .none
+        nameField.textAlignment = .natural
+        nameField.textColor = .SmartYard.semiBlack
+        nameField.autocapitalizationType = .words
+        nameField.returnKeyType = .done
+        nameField.accessibilityIdentifier = "faces.registration.name"
+        nameField.addTarget(self, action: #selector(nameDidChange), for: .editingChanged)
+        nameField.addTarget(self, action: #selector(save), for: .editingDidEndOnExit)
+
+        nameHint.text = L10n.Settings.Faces.Groups.personHint
+        nameHint.font = .SourceSansPro.regular(size: 14)
+        nameHint.textColor = .SmartYard.gray
+        nameHint.numberOfLines = 0
+    }
+
     func setupConstraints() {
         let form = UIStackView.vertical(paddings: SYFormModal.contentInsets, spacing: SYFormModal.sectionSpacing)
         nameDivider.backgroundColor = .SmartYard.grayBorder
-        let personField = UIStackView.vertical(spacing: 8)
-        personField.add {
-            personLabel
-            personButton
+        nameForm.add {
             nameField
             nameDivider
             nameHint
         }
+        nameEditor.addSubview(nameForm) { make in
+            make.top.leading.trailing.equalToSuperview()
+        }
+        nameEditor.snp.makeConstraints { make in
+            collapsedNameHeight = make.height.equalTo(0).constraint
+            expandedNameHeight = make.height.equalTo(nameForm.snp.height).constraint
+        }
+        expandedNameHeight.deactivate()
+
+        let personChoice = UIStackView.vertical(spacing: 8)
+        personChoice.add {
+            personLabel
+            personButton
+        }
+        let personField = UIStackView.vertical()
+        personField.add {
+            personChoice
+            nameEditor
+        }
         personField.isHidden = workflow == nil
 
-        let actions = UIStackView.vertical(spacing: 4)
+        let actions = UIStackView.vertical(spacing: 8)
         actions.add {
             addButton
             cancelButton
@@ -175,12 +211,11 @@ private extension AddFaceViewController {
     }
 
     func loadPreview() {
-        let rect = event.detailX?.face?.asCGRect
+        preview.showFace(event.detailX?.face?.asCGRect, isRegistered: event.event == .face)
         if let image = event.previewImage {
             preview.image = image
-            if let rect { preview.drawRectangle(rect: rect, rectColor: .red) }
         } else if let url = event.previewURL, !url.isEmpty {
-            preview.loadImageUsingUrlString(urlString: url, cache: imagesCache, rect: rect, rectColor: .red)
+            preview.loadImageUsingUrlString(urlString: url, cache: imagesCache)
         } else {
             preview.isHidden = true
         }
@@ -210,24 +245,20 @@ private extension AddFaceViewController {
 
     func updatePersonControls() {
         let title: String
-        let isNewPerson: Bool
         switch selection {
         case .ungrouped:
             title = L10n.Settings.Faces.Groups.ungrouped
-            isNewPerson = false
         case .existing(let person):
             title = person.groupName
-            isNewPerson = false
         case .new:
             title = L10n.Settings.Faces.Groups.add
-            isNewPerson = true
         }
         var configuration = UIButton.Configuration.plain()
         configuration.attributedTitle = AttributedString(title, attributes: AttributeContainer([
             .font: UIFont.SourceSansPro.regular(size: 18)
         ]))
         configuration.image = UIImage(
-            systemName: "chevron.down", withConfiguration: UIImage.SymbolConfiguration(pointSize: 14, weight: .semibold)
+            systemName: "chevron.down", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12, weight: .semibold)
         )
         configuration.imagePlacement = .trailing
         configuration.imagePadding = 12
@@ -241,9 +272,6 @@ private extension AddFaceViewController {
         personButton.configuration = configuration
         personButton.accessibilityValue = title
         updatePersonMenu()
-        nameField.isHidden = !isNewPerson
-        nameDivider.isHidden = !isNewPerson
-        nameHint.isHidden = !isNewPerson
         nameDidChange()
     }
 
@@ -267,19 +295,38 @@ private extension AddFaceViewController {
     ) -> UIAction {
         UIAction(title: title, image: image, state: self.selection == selection ? .on : .off) { [weak self] _ in
             guard let self, !isSaving else { return }
+            let wasCreatingPerson = isCreatingPerson
             self.selection = selection
             updatePersonControls()
-            if case .new = selection {
-                nameField.becomeFirstResponder()
-            } else {
-                nameField.resignFirstResponder()
+            if wasCreatingPerson != isCreatingPerson {
+                setNameEditorVisible(isCreatingPerson)
             }
+        }
+    }
+
+    func setNameEditorVisible(_ visible: Bool) {
+        if !visible { nameField.resignFirstResponder() }
+        nameEditor.accessibilityElementsHidden = !visible
+        nameEditor.isUserInteractionEnabled = visible
+
+        SYFormModal.animateLayout(in: view) {
+            if visible {
+                self.collapsedNameHeight.deactivate()
+                self.expandedNameHeight.activate()
+            } else {
+                self.expandedNameHeight.deactivate()
+                self.collapsedNameHeight.activate()
+            }
+            self.nameForm.alpha = visible ? 1 : 0
+        } completion: { [weak self] _ in
+            guard let self, visible, isCreatingPerson, !isSaving, view.window != nil, !isBeingDismissed else { return }
+            nameField.becomeFirstResponder()
         }
     }
 
     @objc func nameDidChange() {
         let name = (nameField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        addButton.isEnabled = !isSaving && (nameField.isHidden || !name.isEmpty)
+        addButton.isEnabled = !isSaving && (!isCreatingPerson || !name.isEmpty)
         let title = workflow?.isRegistered == true ? L10n.Common.save : L10n.Common.add
         addButton.setTitle(title, for: .normal)
     }
@@ -289,7 +336,7 @@ private extension AddFaceViewController {
         setSaving(true)
         let registration: Single<(faceId: Int?, person: APIFaceGroup?)>
         if let workflow {
-            let target = nameField.isHidden ? selection : .new(nameField.text ?? "")
+            let target = isCreatingPerson ? .new(nameField.text ?? "") : selection
             registration = workflow.save(selection: target)
                 .map { (workflow.faceId, $0) }
         } else {

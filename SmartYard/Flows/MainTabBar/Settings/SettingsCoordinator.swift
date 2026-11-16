@@ -312,7 +312,7 @@ private extension SettingsCoordinator {
                 alertService: alertService,
                 logoutHelper: logoutHelper,
                 flatId: flatId,
-                eventsFilter: EventsFilter.keys,
+                eventsFilter: accessService.faceGroupsEnabled ? .all : .keys,
                 address: address
             )
             
