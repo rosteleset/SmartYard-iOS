@@ -95,7 +95,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
             patronymic: ValidatorFactory.makePatronymic(from: serverPattern)
         )
 
-        configureAgreementView()
+        setAgreementLayoutVisible(false)
 
         gesture.rx.event.asDriver()
             .drive(
@@ -188,13 +188,19 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
             )
             .disposed(by: disposeBag)
 
+        output.agreementHTML
+            .drive(with: self) { owner, html in
+                owner.configureAgreementView(serverHTML: html)
+            }
+            .disposed(by: disposeBag)
+
         output.isContinueEnabled
             .drive(continueButton.rx.isEnabled)
             .disposed(by: disposeBag)
     }
 
-    private func configureAgreementView() {
-        guard let links = makeAgreementLinks() else {
+    private func configureAgreementView(serverHTML: String?) {
+        guard let caption = makeAgreementCaption(serverHTML: serverHTML) else {
             setAgreementLayoutVisible(false)
             isAgreementAccepted = true
             return
@@ -210,7 +216,7 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         agreementTextView.tintColor = agreementLinkColor
         agreementTextView.textContainerInset = .zero
         agreementTextView.textContainer.lineFragmentPadding = 0
-        agreementTextView.attributedText = makeAgreementText(links: links)
+        agreementTextView.attributedText = caption
         agreementTextView.linkTextAttributes = [
             .foregroundColor: agreementLinkColor,
             .underlineStyle: NSUnderlineStyle.single.rawValue,
@@ -232,6 +238,64 @@ final class UserNameViewController: BaseViewController, LoaderPresentable {
         agreementContainerView.isHidden = !isVisible
         continueButtonAgreementTopConstraint.isActive = isVisible
         continueButtonCompactTopConstraint.isActive = !isVisible
+    }
+}
+
+extension UserNameViewController {
+
+    private func makeAgreementCaption(serverHTML: String?) -> NSAttributedString? {
+        let bundledHTML = NSLocalizedString(
+            "auth.userName.agreement.html",
+            comment: "Optional HTML for the agreement caption"
+        ).trimmed
+        if let html = serverHTML ?? (bundledHTML.isEmpty ? nil : bundledHTML) {
+            return makeAgreementText(html: html)
+        }
+
+        return makeAgreementLinks().map { makeAgreementText(links: $0) }
+    }
+
+    private func makeAgreementText(html: String) -> NSAttributedString? {
+        guard !html.trimmed.isEmpty else { return nil }
+
+        let font = UIFont.SourceSansPro.regular(size: 14)
+        let document = """
+        <head>
+          <meta charset="utf-8">
+          <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+        </head>
+        <body style="font-family: '\(font.familyName)'; font-size: \(font.pointSize)px">
+        \(html)
+        </body>
+        """
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        guard let parsed = try? NSAttributedString(
+            data: Data(document.utf8),
+            options: options,
+            documentAttributes: nil
+        ) else { return nil }
+
+        let visibleText = parsed.string.trimmed
+        guard !visibleText.isEmpty, let range = parsed.string.range(of: visibleText) else { return nil }
+
+        let caption = NSMutableAttributedString(
+            attributedString: parsed.attributedSubstring(from: NSRange(range, in: parsed.string))
+        )
+        let fullRange = NSRange(location: 0, length: caption.length)
+        caption.addAttribute(.foregroundColor, value: UIColor.SmartYard.semiBlack, range: fullRange)
+        caption.enumerateAttribute(.link, in: fullRange) { value, range, _ in
+            guard let value else { return }
+            let url = value as? URL
+            if ["http", "https"].contains(url?.scheme?.lowercased() ?? ""), url?.host?.isEmpty == false {
+                return
+            }
+            caption.removeAttribute(.link, range: range)
+            caption.removeAttribute(.underlineStyle, range: range)
+        }
+        return caption
     }
 
     private func makeAgreementLinks() -> [(substring: String, url: URL)]? {

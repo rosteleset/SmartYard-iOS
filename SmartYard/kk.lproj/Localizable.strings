@@ -123,6 +123,7 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "Сізге қалай шағым беруге болады?";
+"auth.userName.agreement.html" = "";
 "auth.userName.agreement.text" = "Мен %@ шарттарымен келісемін";
 "auth.userName.agreement.personalDataLinkText" = "жеке деректерді өңдеудің";
 "auth.userName.agreement.privacyPolicyLinkText" = "құпиялылық саясатының";

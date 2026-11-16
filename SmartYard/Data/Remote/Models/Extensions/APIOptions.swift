@@ -30,6 +30,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
     let eventsTracking: Bool?
     let stories: Bool?
     let stunUrl: String?
+    let privacyPolicy: String?
 
     private enum CodingKeys: String, CodingKey {
         case paymentsUrl
@@ -55,6 +56,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         case eventsTracking
         case stories
         case stunUrl
+        case privacyPolicy
     }
 
     init(from decoder: Decoder) throws {
@@ -105,6 +107,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         eventsTracking = Self.decodeFlag(.eventsTracking, from: container)
         stories = Self.decodeFlag(.stories, from: container)
         stunUrl = try? container.decode(String.self, forKey: .stunUrl)
+        privacyPolicy = try? container.decode(String.self, forKey: .privacyPolicy)
     }
 
     private static func decodeFlag(_ key: CodingKeys, from container: KeyedDecodingContainer<CodingKeys>) -> Bool? {
@@ -139,6 +142,7 @@ struct APIOptions: Decodable, EmptyDataInitializable {
         eventsTracking = nil
         stories = nil
         stunUrl = nil
+        privacyPolicy = nil
     }
 
     struct ChatOptions: Decodable {

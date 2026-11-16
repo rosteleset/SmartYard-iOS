@@ -123,6 +123,7 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "Sizga qanday murojaat qilishim kerak?";
+"auth.userName.agreement.html" = "";
 "auth.userName.agreement.text" = "Men %@ shartlariga roziman";
 "auth.userName.agreement.personalDataLinkText" = "shaxsiy ma'lumotlarni qayta ishlash";
 "auth.userName.agreement.privacyPolicyLinkText" = "maxfiylik siyosati";

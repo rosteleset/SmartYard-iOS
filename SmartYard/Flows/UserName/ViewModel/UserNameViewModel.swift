@@ -42,15 +42,18 @@ final class UserNameViewModel: BaseViewModel {
 
         bindLegalDocument(input.legalDocumentTrigger)
 
+        let isContinueEnabled = Driver
+            .combineLatest(input.isNameValid, input.isMiddleNameValid, input.isAgreementAccepted)
+            .map { $0 && $1 && $2 }
+
         input.continueTrigger
+            .withLatestFrom(isContinueEnabled)
+            .filter { $0 }
             .withLatestFrom(input.name)
             .withLatestFrom(input.middleName) { ($0, $1) }
-            .flatMap { name, middleName -> Driver<(String, String?)> in
-                guard let unwrappedName = name else {
-                    return .empty()
-                }
-                
-                return .just((unwrappedName.trimmed, middleName?.trimmed))
+            .compactMap { name, middleName -> (String, String?)? in
+                guard let name else { return nil }
+                return (name.trimmed, middleName?.trimmed)
             }
             .flatMapLatest { [weak self] args -> Driver<APIClientName?> in
                 guard let self = self else {
@@ -83,12 +86,19 @@ final class UserNameViewModel: BaseViewModel {
             .disposed(by: disposeBag)
         
         return Output(
-            isContinueEnabled: Driver
-                .combineLatest(input.isNameValid, input.isMiddleNameValid, input.isAgreementAccepted)
-                .map { $0 && $1 && $2 },
+            isContinueEnabled: isContinueEnabled,
+            agreementHTML: loadAgreementHTML(activityTracker: activityTracker),
             isLoading: activityTracker.asDriver(),
             prepareTransitionTrigger: prepareTransitionTrigger.asDriverOnErrorJustComplete()
         )
+    }
+
+    private func loadAgreementHTML(activityTracker: ActivityTracker) -> Driver<String?> {
+        apiWrapper.getOptions()
+            .timeout(.seconds(5), scheduler: MainScheduler.instance)
+            .trackActivity(activityTracker)
+            .map { $0?.privacyPolicy }
+            .asDriver(onErrorJustReturn: nil)
     }
 
     private func bindLegalDocument(_ trigger: Driver<URL>) {
@@ -142,6 +152,7 @@ extension UserNameViewModel {
     
     struct Output {
         let isContinueEnabled: Driver<Bool>
+        let agreementHTML: Driver<String?>
         let isLoading: Driver<Bool>
         let prepareTransitionTrigger: Driver<Void>
     }

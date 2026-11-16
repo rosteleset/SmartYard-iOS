@@ -123,6 +123,7 @@
 "auth.smsCode.timerValue" = "01:00";
 
 "auth.userName.howCanICallYou" = "Как да се обърнем към вас?";
+"auth.userName.agreement.html" = "";
 "auth.userName.agreement.text" = "Приемам условията на %@";
 "auth.userName.agreement.personalDataLinkText" = "обработката на лични данни";
 "auth.userName.agreement.privacyPolicyLinkText" = "политиката за поверителност";
