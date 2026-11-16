@@ -73,10 +73,12 @@ struct FaceGroupCard: View {
 
     private var actions: some View {
         Menu {
-            Section(L10n.Settings.Faces.Groups.move) {
-                ForEach(store.state.groups.filter { $0.groupId != face.groupId }, id: \.groupId) { group in
-                    Button(group.groupName) { store.moveFace(face, to: group) }
-                        .accessibilityIdentifier("faces.move.\(face.faceId).\(group.groupId)")
+            if face.groupId == nil, !store.state.groups.isEmpty {
+                Section(L10n.Settings.Faces.Groups.move) {
+                    ForEach(store.state.groups, id: \.groupId) { group in
+                        Button(group.groupName) { store.moveFace(face, to: group) }
+                            .accessibilityIdentifier("faces.move.\(face.faceId).\(group.groupId)")
+                    }
                 }
             }
             if let person {
