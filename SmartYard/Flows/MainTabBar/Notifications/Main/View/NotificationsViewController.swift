@@ -37,15 +37,6 @@ final class NotificationsViewController: BaseViewController, LoaderPresentable {
         
         configureUI()
         bind()
-
-        registerForTraitChanges(
-            UITraitCollection.systemTraitsAffectingColorAppearance,
-            action: #selector(handleColorAppearanceChange)
-        )
-    }
-
-    @objc private func handleColorAppearanceChange() {
-        webView.notifySmartYardThemeChanged()
     }
     
     private func configureUI() {
@@ -55,6 +46,11 @@ final class NotificationsViewController: BaseViewController, LoaderPresentable {
         webView.scrollView.isScrollEnabled = true
         webView.scrollView.contentInsetAdjustmentBehavior = .automatic
         webView.addSmartYardThemeBridgeScript()
+        // The controller's appearance can change before it reaches the web view.
+        webView.registerForTraitChanges([UITraitUserInterfaceStyle.self]) {
+            (webView: WKWebView, _: UITraitCollection) in
+            webView.notifySmartYardThemeChanged()
+        }
     }
     
     private func bind() {
