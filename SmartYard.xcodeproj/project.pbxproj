@@ -25,7 +25,6 @@
 		3A114809295B0D8E00AAD2D6 /* PhoneField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A114808295B0D8E00AAD2D6 /* PhoneField.xib */; };
 		3A11480B295B0DA900AAD2D6 /* PhoneField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A11480A295B0DA900AAD2D6 /* PhoneField.swift */; };
 		3A114812296EC3A300AAD2D6 /* InputAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A114814296EC3A300AAD2D6 /* InputAddressViewController.xib */; };
-		3A114819296EC46C00AAD2D6 /* SelectProviderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A11481B296EC46C00AAD2D6 /* SelectProviderViewController.xib */; };
 		3A114823296EC93D00AAD2D6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A114828296EC93D00AAD2D6 /* Localizable.strings */; };
 		3A114824296EC93D00AAD2D6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A114828296EC93D00AAD2D6 /* Localizable.strings */; };
 		3A114825296EC93D00AAD2D6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A114828296EC93D00AAD2D6 /* Localizable.strings */; };
@@ -78,7 +77,6 @@
 		3A7CD5482857790B003CDDC7 /* SelectProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD5472857688E003CDDC7 /* SelectProviderViewController.swift */; };
 		3A7CD54A28577927003CDDC7 /* SelectProviderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD5462857688E003CDDC7 /* SelectProviderViewModel.swift */; };
 		3A7CD54C28577955003CDDC7 /* ProviderCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD54B28577955003CDDC7 /* ProviderCellModel.swift */; };
-		3A7CD5552857B75A003CDDC7 /* ProviderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */; };
 		3A8B94FA25D92E6F007CDD3C /* CityMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */; };
 		3A8B951625D9312D007CDD3C /* CityCameraObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B951525D9312D007CDD3C /* CityCameraObject.swift */; };
 		3A8B952A25D9336D007CDD3C /* CityCamsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8B952925D9336D007CDD3C /* CityCamsCoordinator.swift */; };
@@ -91,7 +89,6 @@
 		3A8FC6922B065DDC00F90D73 /* IncomingCallPortraitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6942B065DDC00F90D73 /* IncomingCallPortraitViewController.xib */; };
 		3A8FC6972B065E1400F90D73 /* IncomingCallLandscapeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6992B065E1400F90D73 /* IncomingCallLandscapeViewController.xib */; };
 		3A8FC69C2B065E2C00F90D73 /* OutgoingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC69E2B065E2C00F90D73 /* OutgoingCallViewController.xib */; };
-		3A8FC6A12B065E8100F90D73 /* ProviderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6A32B065E8100F90D73 /* ProviderCell.xib */; };
 		3A8FC6A82B065EDA00F90D73 /* AuthByContractNumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6AA2B065EDA00F90D73 /* AuthByContractNumViewController.xib */; };
 		3A8FC6AD2B065F4800F90D73 /* InputPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6AF2B065F4800F90D73 /* InputPhoneNumberViewController.xib */; };
 		3A8FC6B22B065F8700F90D73 /* PinCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6B42B065F8700F90D73 /* PinCodeViewController.xib */; };
@@ -874,6 +871,9 @@
 		BAEBF34CA111B8D5916B4042 /* APIWrapper+LPRS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714DA02EFACCAD0099703B /* APIWrapper+LPRS.swift */; };
 		D5D14787815DFD0FD0594AF6 /* AddLicensePlateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B714D2C2EFACCAD0099703B /* AddLicensePlateRequest.swift */; };
 		D74A9B0CEF0A14A2B86F5735 /* String+LicensePlate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F934237CD01E105184766C9 /* String+LicensePlate.swift */; };
+		8A2153A0D1404F68A72AB211 /* SelectProviderScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2153A0D1404F68A72AB201 /* SelectProviderScreen.swift */; };
+		8A2153A0D1404F68A72AB212 /* SelectProviderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2153A0D1404F68A72AB202 /* SelectProviderRow.swift */; };
+		8A2153A0D1404F68A72AB213 /* SelectProviderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A2153A0D1404F68A72AB203 /* SelectProviderStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -979,7 +979,6 @@
 		3A11480F296EC23100AAD2D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Intents.strings; sourceTree = "<group>"; };
 		3A114811296EC23300AAD2D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		3A114813296EC3A300AAD2D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InputAddressViewController.xib; sourceTree = "<group>"; };
-		3A11481A296EC46C00AAD2D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SelectProviderViewController.xib; sourceTree = "<group>"; };
 		3A114827296EC93D00AAD2D6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A114829296EC94200AAD2D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3A18346D25D9AD8600139385 /* CityCameraViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraViewModel.swift; sourceTree = "<group>"; };
@@ -1033,7 +1032,6 @@
 		3A7CD5462857688E003CDDC7 /* SelectProviderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProviderViewModel.swift; sourceTree = "<group>"; };
 		3A7CD5472857688E003CDDC7 /* SelectProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProviderViewController.swift; sourceTree = "<group>"; };
 		3A7CD54B28577955003CDDC7 /* ProviderCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderCellModel.swift; sourceTree = "<group>"; };
-		3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderCell.swift; sourceTree = "<group>"; };
 		3A8B94F625D92E6F007CDD3C /* CityMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityMapViewController.swift; sourceTree = "<group>"; };
 		3A8B951525D9312D007CDD3C /* CityCameraObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCameraObject.swift; sourceTree = "<group>"; };
 		3A8B952925D9336D007CDD3C /* CityCamsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCamsCoordinator.swift; sourceTree = "<group>"; };
@@ -1046,7 +1044,6 @@
 		3A8FC6932B065DDC00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IncomingCallPortraitViewController.xib; sourceTree = "<group>"; };
 		3A8FC6982B065E1400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IncomingCallLandscapeViewController.xib; sourceTree = "<group>"; };
 		3A8FC69D2B065E2C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OutgoingCallViewController.xib; sourceTree = "<group>"; };
-		3A8FC6A72B065EB500F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ProviderCell.xib; sourceTree = "<group>"; };
 		3A8FC6A92B065EDA00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AuthByContractNumViewController.xib; sourceTree = "<group>"; };
 		3A8FC6AE2B065F4800F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InputPhoneNumberViewController.xib; sourceTree = "<group>"; };
 		3A8FC6B32B065F8700F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PinCodeViewController.xib; sourceTree = "<group>"; };
@@ -1859,6 +1856,9 @@
 		84B72E12DBA26E45F551EA9D /* LicensePlateAPITestSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LicensePlateAPITestSupport.swift; sourceTree = "<group>"; };
 		8F934237CD01E105184766C9 /* String+LicensePlate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "String+LicensePlate.swift"; sourceTree = "<group>"; };
 		C9121DD7E1EEA67220F38CA5 /* LicensePlateSaveResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LicensePlateSaveResult.swift; sourceTree = "<group>"; };
+		8A2153A0D1404F68A72AB201 /* SelectProviderScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProviderScreen.swift; sourceTree = "<group>"; };
+		8A2153A0D1404F68A72AB202 /* SelectProviderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProviderRow.swift; sourceTree = "<group>"; };
+		8A2153A0D1404F68A72AB203 /* SelectProviderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProviderStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2095,11 +2095,11 @@
 		3A7CD5442857685B003CDDC7 /* SelectProvider */ = {
 			isa = PBXGroup;
 			children = (
-				3A7CD5522857B75A003CDDC7 /* Cells */,
 				3A7CD54D28577960003CDDC7 /* Entity */,
 				3A7CD5472857688E003CDDC7 /* SelectProviderViewController.swift */,
-				3A11481B296EC46C00AAD2D6 /* SelectProviderViewController.xib */,
 				3A7CD5462857688E003CDDC7 /* SelectProviderViewModel.swift */,
+				8A2153A0D1404F68A72AB221 /* Views */,
+				8A2153A0D1404F68A72AB222 /* Stores */,
 			);
 			path = SelectProvider;
 			sourceTree = "<group>";
@@ -2110,15 +2110,6 @@
 				3A7CD54B28577955003CDDC7 /* ProviderCellModel.swift */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		3A7CD5522857B75A003CDDC7 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				3A7CD5542857B75A003CDDC7 /* ProviderCell.swift */,
-				3A8FC6A32B065E8100F90D73 /* ProviderCell.xib */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		3A8B951A25D93132007CDD3C /* Entries */ = {
@@ -5957,6 +5948,23 @@
 			path = LPRS;
 			sourceTree = "<group>";
 		};
+		8A2153A0D1404F68A72AB221 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A2153A0D1404F68A72AB201 /* SelectProviderScreen.swift */,
+				8A2153A0D1404F68A72AB202 /* SelectProviderRow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8A2153A0D1404F68A72AB222 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				8A2153A0D1404F68A72AB203 /* SelectProviderStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -6218,7 +6226,6 @@
 				3A8FC67E2B065C7400F90D73 /* ServiceFromCourierView.xib in Resources */,
 				3AC5C625260A3249008D74DE /* HistoryTableViewCell.xib in Resources */,
 				3A8FC6B72B065FC200F90D73 /* RestoreMethodCell.xib in Resources */,
-				3A8FC6A12B065E8100F90D73 /* ProviderCell.xib in Resources */,
 				84B9EC9723E0884400979C39 /* linphonerc_default in Resources */,
 				847CF7D824068B5100070007 /* AddressesListSkeletonView.xib in Resources */,
 				844AC3DC23EBFE140066006D /* ChatViewController.xib in Resources */,
@@ -6299,7 +6306,6 @@
 				3A8FC6A82B065EDA00F90D73 /* AuthByContractNumViewController.xib in Resources */,
 				84CC15D223EC409500A1CB95 /* AddressesListObjectCell.xib in Resources */,
 				84F840DD23E07DA5008DBE50 /* Assets.xcassets in Resources */,
-				3A114819296EC46C00AAD2D6 /* SelectProviderViewController.xib in Resources */,
 				3A8FC6FD2B0661FB00F90D73 /* YardMapViewController.xib in Resources */,
 				3AC5C71126131D3D008D74DE /* HistoryLoadingTableViewCell.xib in Resources */,
 				84898A8F23F1540C00E6B78E /* SettingsActionCell.xib in Resources */,
@@ -6621,7 +6627,6 @@
 				3A9C5E2D261B7989004FB962 /* HistoryDataItem.swift in Sources */,
 				E9E4273423F55C4400F5D593 /* ServiceUnavailableViewController.swift in Sources */,
 				84963973248680C10086B6E9 /* VideoPeriodPickerCell.swift in Sources */,
-				3A7CD5552857B75A003CDDC7 /* ProviderCell.swift in Sources */,
 				E9E4273523F55C4400F5D593 /* ServiceUnavailableViewModel.swift in Sources */,
 				E9E4273223F55B9700F5D593 /* ServicesActivationRequestViewController.swift in Sources */,
 				E9E4273323F55B9700F5D593 /* ServicesActivationRequestViewModel.swift in Sources */,
@@ -6675,6 +6680,9 @@
 				9B7E10052F8B000000C0D001 /* TrackedEventsViewController.swift in Sources */,
 				E9B9EAC72421FCB8000A92B3 /* RestorePasswordViewController.swift in Sources */,
 				3A7CD5482857790B003CDDC7 /* SelectProviderViewController.swift in Sources */,
+				8A2153A0D1404F68A72AB211 /* SelectProviderScreen.swift in Sources */,
+				8A2153A0D1404F68A72AB212 /* SelectProviderRow.swift in Sources */,
+				8A2153A0D1404F68A72AB213 /* SelectProviderStore.swift in Sources */,
 				84CD304724D305F500CC079E /* IncomingCallScreenType.swift in Sources */,
 				3A3B8B9525A5CD2500BFB72E /* MainMenuCoordinator.swift in Sources */,
 				E9004C6023FABF2200B59976 /* IntercomTemporaryAccessView.swift in Sources */,
@@ -7396,14 +7404,6 @@
 			name = InputAddressViewController.xib;
 			sourceTree = "<group>";
 		};
-		3A11481B296EC46C00AAD2D6 /* SelectProviderViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A11481A296EC46C00AAD2D6 /* Base */,
-			);
-			name = SelectProviderViewController.xib;
-			sourceTree = "<group>";
-		};
 		3A114828296EC93D00AAD2D6 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -7519,14 +7519,6 @@
 				3A8FC69D2B065E2C00F90D73 /* Base */,
 			);
 			name = OutgoingCallViewController.xib;
-			sourceTree = "<group>";
-		};
-		3A8FC6A32B065E8100F90D73 /* ProviderCell.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A8FC6A72B065EB500F90D73 /* Base */,
-			);
-			name = ProviderCell.xib;
 			sourceTree = "<group>";
 		};
 		3A8FC6AA2B065EDA00F90D73 /* AuthByContractNumViewController.xib */ = {

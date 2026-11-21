@@ -83,8 +83,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return .landscape
         }
 
-        let showsFacesSettings = root.topViewController(includingPresented: false) is FacesSettingsViewController
-        return UIDevice.current.userInterfaceIdiom == .pad && showsFacesSettings ? .all : .portrait
+        let topScreen = root.topViewController(includingPresented: false)
+        let supportsPadRotation = topScreen is FacesSettingsViewController || topScreen is SelectProviderViewController
+        return UIDevice.current.userInterfaceIdiom == .pad && supportsPadRotation ? .all : .portrait
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
