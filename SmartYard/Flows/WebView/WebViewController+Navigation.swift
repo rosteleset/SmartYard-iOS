@@ -21,6 +21,10 @@ extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // page loaded - скрыть скелетон
         self.refreshControl.endRefreshing()
+        if #available(iOS 26.0, *), webView.scrollView.backgroundColor == nil {
+            // Reset WebKit's automatic background to use the current page color.
+            webView.scrollView.backgroundColor = nil
+        }
         if !self.pageControlsLoadingState {
             self.updateLoader(isEnabled: false, detailText: nil)
             self.skeletonView.isHidden = true
