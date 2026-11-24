@@ -127,6 +127,9 @@ final class IncomingCallViewModel: BaseViewModel {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
     private func createCommonBindings() {
         let currentState = currentStateSubject.asDriverOnErrorJustComplete()
+        let callFinishedEvent = currentStateSubject
+            .filter { $0.callState == .callFinished }
+            .take(1)
         
         // MARK: Обработка ошибок
         
@@ -284,43 +287,28 @@ final class IncomingCallViewModel: BaseViewModel {
             )
             .disposed(by: disposeBag)
         
-        // MARK: Если после того, как мы установили соединение, за 3 секунды не придет звонок - закрываем окно
-        
-        registrationFinished
-            .asDriver(onErrorJustReturn: false)
-            .isTrue()
-            .delay(.milliseconds(5000))
-            .withLatestFrom(incomingCall.asDriver(onErrorJustReturn: nil))
-            .filter { $0 == nil }
-            .withLatestFrom(currentState)
-            .do(
-                onNext: { [weak self] currentState in
-                    guard let self = self,
-                          currentState.callState != .callFinished,
-                          currentState.doorState == .notDetermined else {
-                        return
-                    }
-                    
-                    self.updateState(
-                        callState: .callFinished,
-                        previewState: .staticImage,
-                        soundOutputState: .disabled
-                    )
-                    
-                    self.linphoneService.stop()
-                    self.linphoneService.hasEnqueuedCalls = false
-                }
-            )
-            .delay(.milliseconds(2000))
-            .drive(
-                onNext: { [weak self] _ in
-                    guard let self = self else {
-                        return
-                    }
-                    
-                    self.finishCallAndClose()
-                }
-            )
+        // MARK: Таймаут ожидания SIP-вызова
+
+        // Asterisk waits up to 35 seconds for a mobile SIP contact.
+        let incomingCallTimeout = Observable<Int>
+            .timer(.seconds(35), scheduler: MainScheduler.instance)
+            .mapToVoid()
+        let timeoutAfterRegistration = registrationFinished
+            .filter { $0 }
+            .take(1)
+            .delay(.seconds(5), scheduler: MainScheduler.instance)
+            .mapToVoid()
+
+        Observable.merge(incomingCallTimeout, timeoutAfterRegistration)
+            .take(until: incomingCall.ignoreNil())
+            .take(1)
+            .withLatestFrom(currentStateSubject)
+            .filter { $0.callState != .callFinished }
+            .subscribe(with: self, onNext: { owner, _ in
+                Logger.logWarning("Timed out waiting for the incoming SIP call.")
+                owner.finishCallAndClose()
+                owner.linphoneService.stop()
+            })
             .disposed(by: disposeBag)
         
         // MARK: Обработка нажатия на кнопку "Video" в CallKit
@@ -352,32 +340,21 @@ final class IncomingCallViewModel: BaseViewModel {
         let liveImageSubject = BehaviorSubject<UIImage?>(value: nil)
         let liveImage = liveImageSubject.asDriver(onErrorJustReturn: nil)
         
-        let loadNextImageTrigger = PublishSubject<Void>()
-        let loadNextImage = Driver.merge(loadNextImageTrigger.asDriver(onErrorJustReturn: ()), .just(()))
-        
         if let liveUrl = URL(string: callPayload.liveImage) {
-            Driver
-                .combineLatest(loadNextImage, currentState)
-                .filter { args in
-                    let (_, currentState) = args
-                    
-                    return (currentState.callState == .callReceived || currentState.callState == .callActive) && currentState.previewState == .video
+            let liveImages = Self.pollLiveImages(from: liveUrl)
+            currentState
+                .asObservable()
+                .map { state in
+                    let isRingingOrActive = state.callState == .callReceived || state.callState == .callActive
+                    return isRingingOrActive && state.previewState == .video
                 }
-                .mapToVoid()
-                .drive(
-                    onNext: {
-                        KingfisherManager.shared.retrieveImage(
-                            with: liveUrl,
-                            options: [.forceRefresh]
-                        ) { result in
-                            if let image = try? result.get().image {
-                                liveImageSubject.onNext(image)
-                            }
-                            
-                            loadNextImageTrigger.onNext(())
-                        }
-                    }
-                )
+                .distinctUntilChanged()
+                .flatMapLatest { shouldPoll in
+                    shouldPoll ? liveImages : .empty()
+                }
+                .take(until: callFinishedEvent)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { liveImageSubject.onNext($0) })
                 .disposed(by: disposeBag)
         }
         
@@ -449,14 +426,6 @@ final class IncomingCallViewModel: BaseViewModel {
         let callStartedEvent = currentStateSubject
             .filter { currentState in
                 currentState.callState == .callActive
-            }
-            .take(1)
-        
-        // MARK: Cобытие завершения звонка
-        
-        let callFinishedEvent = currentStateSubject
-            .filter { currentState in
-                currentState.callState == .callFinished
             }
             .take(1)
         
@@ -778,6 +747,33 @@ final class IncomingCallViewModel: BaseViewModel {
         )
     }
     
+    private static func pollLiveImages(from url: URL) -> Observable<UIImage> {
+        let loadImage = Single<UIImage>.create { observer in
+            let task = KingfisherManager.shared.retrieveImage(
+                with: url,
+                options: [.forceRefresh, .callbackQueue(.mainAsync)]
+            ) { result in
+                observer(result.map(\.image).mapError { $0 as Error })
+            }
+
+            return Disposables.create { task?.cancel() }
+        }.asObservable()
+
+        return Observable<Int>
+            .timer(.milliseconds(0), period: .seconds(1), scheduler: MainScheduler.instance)
+            .flatMapFirst { _ in
+                loadImage.catch { error in
+                    // A 404 ends polling for this call's snapshot URL.
+                    if (error as? KingfisherError)?.isInvalidResponseStatusCode(404) == true {
+                        return .error(error)
+                    }
+
+                    return Observable<UIImage>.empty()
+                        .delaySubscription(.seconds(2), scheduler: MainScheduler.instance)
+                }
+            }
+    }
+
     private func setSpeakerEnabled(_ enabled: Bool) {
         do {
             try AVAudioSession.sharedInstance().overrideOutputAudioPort(enabled ? .speaker : .none)
