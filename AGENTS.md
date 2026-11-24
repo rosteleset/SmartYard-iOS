@@ -38,6 +38,11 @@
 - Treat localization as required whenever user-facing text changes: update the corresponding key in every supported `.lproj`, keep meaning, placeholders, formatting, and paragraph breaks consistent across translations, and never update only one locale unless the user explicitly limits the scope.
 - Follow the project programmatic-layout rules below.
 
+## Device families
+
+- Keep `TARGETED_DEVICE_FAMILY = 1` in committed Debug and Release settings and in distribution builds until iPad layouts are ready across the app.
+- Use `TARGETED_DEVICE_FAMILY = 1,2` in local Debug builds for iPad development and verification. Pass `TARGETED_DEVICE_FAMILY=1,2` to `xcodebuild` to apply it to one build.
+
 ## Programmatic layout rules
 
 - Build ordinary rows and columns with `UIStackView.vertical(...)` and `UIStackView.horizontal(...)`. Use their `spacing`, `alignment`, `paddings`, and `arrangedSubviews` parameters instead of recreating equivalent constraints.
@@ -69,5 +74,5 @@
 ## Incremental SwiftUI migration
 
 - Use the SY prefix for new shared components. Place screen views in Flows/<Feature>/Views and observable screen state in Stores; connect existing Rx ViewModels through a Store.
-- Follow Docs/SwiftUIBestPractices.md: use intrinsic sizing and native adaptive containers, shared iPhone/iPad composition, and safe-area footers. Dynamic Type is excluded by user decision (2026-10-28); use fixed design typography without scaling controls or illustrations with the system text setting.
-- Adapt each migrated screen for iPad alongside iPhone using the available window size. Verify portrait, landscape, and narrow/short windows while preserving state and the iPhone baseline. Only onboarding has been adapted so far; universal device family does not verify the remaining UIKit screens.
+- Follow [SwiftUI layout practices](Docs/SwiftUIBestPractices.md). Use intrinsic sizing, native adaptive containers, shared adaptive iPhone and iPad layouts, and safe-area footers. Dynamic Type is excluded by user decision (2026-10-28). Use fixed design typography without scaling controls or illustrations with the system text setting.
+- For screens being adapted to iPad, verify supported orientations and constrained windows in a local Debug build. Preserve screen state and the iPhone layout.
