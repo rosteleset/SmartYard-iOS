@@ -84,7 +84,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         let topScreen = root.topViewController(includingPresented: false)
-        let supportsPadRotation = topScreen is FacesSettingsViewController || topScreen is SelectProviderViewController
+        let supportsPadRotation = topScreen is FacesSettingsViewController
+            || topScreen is SelectProviderViewController
+            || topScreen is InputPhoneNumberViewController
+            || topScreen is PinCodeViewController
         return UIDevice.current.userInterfaceIdiom == .pad && supportsPadRotation ? .all : .portrait
     }
 

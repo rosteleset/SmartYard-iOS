@@ -11,6 +11,8 @@ import SwiftUI
 struct SelectProviderScreen: View {
     @Bindable var store: SelectProviderStore
 
+    @Environment(\.horizontalSizeClass)
+    private var horizontalSizeClass
     @Environment(\.verticalSizeClass)
     private var verticalSizeClass
     @FocusState private var isSearchFocused: Bool
@@ -19,8 +21,7 @@ struct SelectProviderScreen: View {
 
     private let twoColumnMinimumWidth: CGFloat = 680
     private let footerMaxWidth: CGFloat = 560
-    private let listVerticalSpacing: CGFloat = 8
-
+    private var listVerticalSpacing: CGFloat { horizontalSizeClass == .regular ? 8 : 0 }
     private var usesCompactSpacing: Bool { verticalSizeClass == .compact }
     private var blocksInteraction: Bool { showsLoadingIndicator || isAnimatingLoadingIndicator }
 
@@ -83,7 +84,6 @@ struct SelectProviderScreen: View {
             }
         }
         .onChange(of: store.isLoading, initial: true) { updateLoadingIndicator() }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
         .dynamicTypeSize(.large)
         .background {
             GeometryReader { geometry in

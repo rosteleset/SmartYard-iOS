@@ -6,192 +6,65 @@
 //  Copyright © 2021 Sesameware. All rights reserved.
 //
 
-import UIKit
-import RxCocoa
-import RxSwift
-import RxViewController
-import JGProgressHUD
+import SwiftUI
 
-final class PinCodeViewController: BaseViewController, LoaderPresentable {
-    
-    @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var hintInputPhoneLabel: UILabel!
-    @IBOutlet private weak var fixPhoneNumberButton: UIButton!
-    @IBOutlet private weak var sendCodeAgainGroupView: UIView!
-    
-    @IBOutlet private weak var pinInputFieldView: PinTextField!
-    @IBOutlet private weak var containerView: TopRoundedView!
-    
-    @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
-    
-    // swiftlint:disable all
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var sendCodeAgainLabelView: UIView!
-    @IBOutlet weak var sendCodeAgainButton: BlueButton!
-    @IBOutlet private weak var resendHintLabel: UILabel!
-    // swiftlint:enable all
+final class PinCodeViewController: UIHostingController<PinCodeScreen> {
+    private let store: PinCodeStore
 
-    private let viewModel: PinCodeViewModel
-    private let isInitial: Bool
-    private let useFlashCall: Bool
-    
-    var timer: Timer?
-    var timeEnd: Date?
-    var loader: JGProgressHUD?
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        traitCollection.userInterfaceIdiom == .pad ? .all : .portrait
+    }
+
     init(viewModel: PinCodeViewModel, isInitial: Bool, useFlashCall: Bool) {
-        self.viewModel = viewModel
-        self.isInitial = isInitial
-        self.useFlashCall = useFlashCall
-        super.init(nibName: nil, bundle: nil)
+        let store = PinCodeStore(
+            viewModel: viewModel,
+            isInitial: isInitial,
+            useFlashCall: useFlashCall,
+            phonePrefix: AccessService.shared.phonePrefix
+        )
+        self.store = store
+        super.init(rootView: PinCodeScreen(store: store, useFlashCall: useFlashCall))
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+    required init?(coder: NSCoder) { fatalError("init(coder:) is unavailable") }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        configureRxKeyboard()
-        bind()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        pinInputFieldView.becomeFirstResponder()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        view.isUserInteractionEnabled = true
-    }
-    
-    private func configureUI() {
-        hintInputPhoneLabel.text = L10n.Auth.SMSCode.sentToPhoneTitle
-        resendHintLabel.text = useFlashCall ? L10n.Auth.FlashCall.resendHint : L10n.Auth.SMSCode.resendHint
-        if useFlashCall {
-            let originalTitle = sendCodeAgainButton.attributedTitle(for: .normal) ?? NSAttributedString(string: "")
-            let title = NSMutableAttributedString(attributedString: originalTitle)
-            title.mutableString.setString(L10n.Auth.FlashCall.resendButton)
-            sendCodeAgainButton.setAttributedTitle(title, for: .normal)
-        }
-        timerLabel.text = L10n.Auth.SMSCode.timerValue
-        pinInputFieldView.reset()
-        sendCodeAgainLabelView.isHidden = true
-        sendCodeAgainButton.isHidden = false
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tap)
-        
-        if isInitial {
-            sendCodeAgainButton.isHidden.toggle()
-            sendCodeAgainLabelView.isHidden.toggle()
-            runCodeTimer()
-        }
-    }
-    
-    @objc private func dismissKeyboard() {
-        pinInputFieldView.hideKeyboard()
-    }
-    
-    private func configureRxKeyboard() {
-        RxKeyboard.instance.visibleHeight
-            .drive(
-                onNext: { [weak self] keyboardVisibleHeight in
-                    self?.sendCodeAgainGroupButtonConstraint.constant = keyboardVisibleHeight == 0 ?
-                        28 :
-                        keyboardVisibleHeight + 28
-                    
-                    UIView.animate(withDuration: 0) {
-                        self?.view.layoutIfNeeded()
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-    }
-    
-    private func bind() {
-        sendCodeAgainButton.rx.tap
-            .subscribe(
-                onNext: { [weak self] _ in
-                    self?.sendCodeAgainButton.isHidden.toggle()
-                    self?.sendCodeAgainLabelView.isHidden.toggle()
-                    self?.runCodeTimer()
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        let text = pinInputFieldView.rx.textControlProperty
-            .orEmpty
-            .observe(on: MainScheduler.asyncInstance)
-            .asDriver(onErrorJustReturn: "")
-        
-        let input = PinCodeViewModel.Input(
-            inputPinText: text,
-            fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(), 
-            backButtonTapped: fakeNavBar.rx.backButtonTap.asDriver(),
-            sendCodeAgainButtonTapped: sendCodeAgainButton.rx.tap.asDriverOnErrorJustComplete()
-        )
-        
-        let output = viewModel.transform(input: input)
-        
-        output.phoneNumber
-            .drive(
-                onNext: { [weak self] phoneNumber in
-                    guard let self = self else { return }
-                    if self.useFlashCall {
-                        let text = String.localizedStringWithFormat(
-                            L10n.Auth.FlashCall.enterLastDigitsTitleFormat,
-                            "\(AccessService.shared.phonePrefix)\(phoneNumber)"
-                        )
-                        self.hintInputPhoneLabel.text = text
-                    } else {
-                        let text = String.localizedStringWithFormat(
-                            L10n.Auth.SMSCode.sentToPhoneTitleFormat, "\(AccessService.shared.phonePrefix)\(phoneNumber)"
-                        )
-                        self.hintInputPhoneLabel.text = text
-                    }
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.isPinCorrect
-            .drive(
-                onNext: { [weak self] isCorrect in
-                    self?.pinInputFieldView.markPass(isCorrect: isCorrect)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        bindSubmission(output)
+        view.backgroundColor = .SmartYard.secondBackgroundColor
+        store.start()
     }
 
-    private func bindSubmission(_ output: PinCodeViewModel.Output) {
-        output.isLoading
-            .debounce(.milliseconds(25))
-            .drive(
-                onNext: { [weak self] isLoading in
-                    if isLoading {
-                        self?.view.endEditing(true)
-                    }
-                    
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.prepareTransitionTrigger
-            .drive(
-                onNext: { [weak self] in
-                    self?.view.endEditing(true)
-                    self?.view.isUserInteractionEnabled = false
-                }
-            )
-            .disposed(by: disposeBag)
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        // Lay out the hosted content using the destination window geometry before it becomes visible.
+        view.layoutIfNeeded()
     }
-    
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackAnalyticsScreenOpened()
+        setNeedsUpdateOfSupportedInterfaceOrientations()
+        navigationController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+        store.didAppear()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        store.willDisappear()
+        guard traitCollection.userInterfaceIdiom == .pad, isMovingFromParent else { return }
+
+        let scene = view.window?.windowScene
+        if let transitionCoordinator {
+            transitionCoordinator.animate(alongsideTransition: nil) { context in
+                guard !context.isCancelled, !(context.viewController(forKey: .to) is InputPhoneNumberViewController)
+                else { return }
+                scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
+            }
+        } else if !(navigationController?.viewControllers.last is InputPhoneNumberViewController) {
+            scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
+        }
+    }
 }

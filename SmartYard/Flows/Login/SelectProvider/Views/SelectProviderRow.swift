@@ -30,7 +30,7 @@ struct SelectProviderRow: View {
             .frame(maxWidth: .infinity)
             .contentShape(SwiftUI.Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(RowButtonStyle())
         .overlay(alignment: .bottom) {
             if showsSeparator {
                 Color(uiColor: .SmartYard.grayBorder)
@@ -61,5 +61,11 @@ struct SelectProviderRow: View {
         }
         .frame(width: 28, height: 28)
         .accessibilityHidden(true)
+    }
+
+    private struct RowButtonStyle: ButtonStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+        }
     }
 }

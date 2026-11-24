@@ -6,106 +6,65 @@
 //  Copyright © 2021 Sesameware. All rights reserved.
 //
 
-import UIKit
-import RxCocoa
-import RxSwift
-import JGProgressHUD
+import SwiftUI
 
-final class InputPhoneNumberViewController: BaseViewController, LoaderPresentable {
-    
-    @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var containerView: UIView!
-    @IBOutlet private weak var phoneTextView: PhoneTextField!
-    @IBOutlet private weak var backButton: UIButton!
-    @IBOutlet private weak var selectedProviderNameLabel: UILabel!
-    @IBOutlet private weak var titleLabel: UILabel!
-    private var viewModel: InputPhoneNumberViewModel
-    
-    var loader: JGProgressHUD?
-    
+/// Hosts the phone entry view in the existing authentication coordinator.
+final class InputPhoneNumberViewController: UIHostingController<InputPhoneNumberScreen> {
+    private let store: InputPhoneNumberStore
+
+    override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        traitCollection.userInterfaceIdiom == .pad ? .all : .portrait
+    }
+
     init(viewModel: InputPhoneNumberViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        let store = InputPhoneNumberStore(viewModel: viewModel)
+        self.store = store
+        super.init(rootView: InputPhoneNumberScreen(store: store))
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configureUI() {
-        titleLabel.text = L10n.Auth.PhoneEntry.title
-        backButton.setTitle(L10n.Auth.PhoneEntry.changeProviderButton, for: .normal)
-        selectedProviderNameLabel.text = L10n.Auth.PhoneEntry.providerName
-    }
+    required init?(coder: NSCoder) { fatalError("init(coder:) is unavailable") }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        
-        view.hideKeyboardWhenTapped = true
-        if !Constants.defaultBackendURL.isNilOrEmpty {
-            fakeNavBar.isHidden = true
-            backButton.isHidden = true
-            selectedProviderNameLabel.isHidden = true
-        }
-        bind()
+        view.backgroundColor = .SmartYard.secondBackgroundColor
+        store.start()
     }
-    
+
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        // Lay out the hosted content using the destination window geometry before it becomes visible.
+        view.layoutIfNeeded()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        phoneTextView.becomeFirstResponder()
+        trackAnalyticsScreenOpened()
+        setNeedsUpdateOfSupportedInterfaceOrientations()
+        navigationController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+        store.didAppear()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        view.isUserInteractionEnabled = true
+        store.willDisappear()
+        guard traitCollection.userInterfaceIdiom == .pad, isMovingFromParent else { return }
+
+        let scene = view.window?.windowScene
+        if let transitionCoordinator {
+            transitionCoordinator.animate(alongsideTransition: nil) { context in
+                let destination = context.viewController(forKey: .to)
+                guard !context.isCancelled, !Self.supportsPadRotation(destination) else { return }
+                scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
+            }
+        } else if !Self.supportsPadRotation(navigationController?.viewControllers.last) {
+            scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
+        }
     }
-    
-    private func bind() {
-        let text = phoneTextView.rx.textControlProperty
-            .orEmpty
-            .observe(on: MainScheduler.asyncInstance)
-            .asDriver(onErrorJustReturn: "")
-        
-        let input = InputPhoneNumberViewModel.Input(
-            inputPhoneText: text,
-            backButtonTapped: fakeNavBar.rx.backButtonTap.asDriver(), 
-            fixProviderButtonTapped: backButton.rx.tap.asDriverOnErrorJustComplete()
-        )
-        let output = viewModel.transform(input: input)
-        
-        output.isLoading
-            .debounce(.milliseconds(25))
-            .drive(
-                onNext: { [weak self] isLoading in
-                    if isLoading {
-                        self?.view.endEditing(true)
-                    }
-                    
-                    self?.updateLoader(isEnabled: isLoading, detailText: nil)
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.prepareTransitionTrigger
-            .drive(
-                onNext: { [weak self] in
-                    self?.view.endEditing(true)
-                    self?.view.isUserInteractionEnabled = false
-                }
-            )
-            .disposed(by: disposeBag)
-        
-        output.selectedProviderName
-            .drive(
-                onNext: { [weak self] providerName in
-                    self?.selectedProviderNameLabel.text = providerName
-                }
-            )
-            .disposed(by: disposeBag)
+
+    private static func supportsPadRotation(_ destination: UIViewController?) -> Bool {
+        destination is SelectProviderViewController || destination is PinCodeViewController
     }
-    
 }

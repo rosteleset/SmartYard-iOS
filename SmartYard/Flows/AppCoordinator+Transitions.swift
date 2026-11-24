@@ -73,7 +73,7 @@ extension AppCoordinator {
             )
 
             let vc = InputPhoneNumberViewController(viewModel: vm)
-            return .set([vc], animation: .fade)
+            return .set([vc], animation: .authenticationFade)
 
         case let .pinCode(phoneNumber, isInitial, useFlashCall):
             let vm = PinCodeViewModel(
@@ -85,7 +85,7 @@ extension AppCoordinator {
             )
 
             let vc = PinCodeViewController(viewModel: vm, isInitial: isInitial, useFlashCall: useFlashCall)
-            return .set([vc], animation: .fade)
+            return .set([vc], animation: .authenticationFade)
 
         case let .authByOutgoingCall(phoneNumber: phoneNumber, confirmPhoneNumber: confirmPhone):
             let vm = OutgoingCallViewModel(
@@ -258,7 +258,7 @@ extension AppCoordinator {
                 router: weakRouter
             )
             let vc = SelectProviderViewController(viewModel: vm)
-            return .set([vc], animation: .fade)
+            return .set([vc], animation: .authenticationFade)
 
         case .offline:
             let vm = HomeOfflineViewModel(

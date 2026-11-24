@@ -22,6 +22,8 @@ final class SelectProviderViewController: UIHostingController<SelectProviderScre
         let store = SelectProviderStore(viewModel: viewModel)
         self.store = store
         super.init(rootView: SelectProviderScreen(store: store))
+        // The search keyboard overlays the panel without moving the footer.
+        safeAreaRegions = .container
     }
 
     @available(*, unavailable)
@@ -29,8 +31,13 @@ final class SelectProviderViewController: UIHostingController<SelectProviderScre
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
+        view.backgroundColor = .SmartYard.secondBackgroundColor
         store.start()
+    }
+
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        view.layoutIfNeeded()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -47,10 +54,12 @@ final class SelectProviderViewController: UIHostingController<SelectProviderScre
 
         if let transitionCoordinator {
             transitionCoordinator.animate(alongsideTransition: nil) { context in
-                guard !context.isCancelled else { return }
+                guard !context.isCancelled, !(context.viewController(forKey: .to) is InputPhoneNumberViewController) else {
+                    return
+                }
                 scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
             }
-        } else {
+        } else if !(navigationController?.viewControllers.last is InputPhoneNumberViewController) {
             scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
         }
     }
