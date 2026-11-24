@@ -268,20 +268,18 @@ isAppInstalled = function(url, callbackFunc ) {
     
     fileprivate func updateViewHeight(_ webView: WKWebView) {
         webView.evaluateJavaScript("document.documentElement.offsetHeight", completionHandler: { height, _ in
-            guard let height = height as? CGFloat else {
+            guard let height = height as? CGFloat, height.isFinite else {
                 return
             }
-            self.webContentHeight = height
             let maxHeight = self.backgroundView.frame.height - 100
-            if height > maxHeight {
-                self.viewHeightConstraint.constant = maxHeight + 50
-                self.webView.scrollView.bounces = false
-            } else {
-                self.viewHeightConstraint.constant = height + 50
-                self.webView.scrollView.bounces = false
-            }
-            
-            self.animatedView.layoutIfNeeded()
+            guard maxHeight > 0 else { return }
+
+            // Если страница ещё не отрисовалась, даём ей видимую область.
+            let contentHeight = height > 0 ? height : maxHeight
+            self.webContentHeight = contentHeight
+            self.viewHeightConstraint.constant = min(contentHeight, maxHeight) + 50
+            self.webView.scrollView.bounces = false
+            self.view.layoutIfNeeded()
         })
     }
 }
