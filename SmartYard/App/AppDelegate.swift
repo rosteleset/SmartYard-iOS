@@ -88,6 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             || topScreen is SelectProviderViewController
             || topScreen is InputPhoneNumberViewController
             || topScreen is PinCodeViewController
+            || topScreen is OutgoingCallViewController
+            || topScreen is UserNameViewController
         return UIDevice.current.userInterfaceIdiom == .pad && supportsPadRotation ? .all : .portrait
     }
 

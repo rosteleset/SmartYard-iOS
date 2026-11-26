@@ -88,7 +88,6 @@
 		3A8FC68D2B065DB600F90D73 /* AvailableServicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC68F2B065DB600F90D73 /* AvailableServicesViewController.xib */; };
 		3A8FC6922B065DDC00F90D73 /* IncomingCallPortraitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6942B065DDC00F90D73 /* IncomingCallPortraitViewController.xib */; };
 		3A8FC6972B065E1400F90D73 /* IncomingCallLandscapeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6992B065E1400F90D73 /* IncomingCallLandscapeViewController.xib */; };
-		3A8FC69C2B065E2C00F90D73 /* OutgoingCallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC69E2B065E2C00F90D73 /* OutgoingCallViewController.xib */; };
 		3A8FC6A82B065EDA00F90D73 /* AuthByContractNumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC6AA2B065EDA00F90D73 /* AuthByContractNumViewController.xib */; };
 		BF06318F2EF84CE294E6AC01 /* InputPhoneNumberScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06318F2EF84CE294E6AB01 /* InputPhoneNumberScreen.swift */; };
 		BF06318F2EF84CE294E6AC02 /* InputPhoneNumberDigits.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06318F2EF84CE294E6AB02 /* InputPhoneNumberDigits.swift */; };
@@ -126,7 +125,6 @@
 		3A8FC7612B09F21F00F90D73 /* ServicesActivationRequestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7632B09F21F00F90D73 /* ServicesActivationRequestViewController.xib */; };
 		3A8FC7702B09F97C00F90D73 /* QRCodeScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7722B09F97C00F90D73 /* QRCodeScanViewController.xib */; };
 		3A8FC7752B09F9A400F90D73 /* ServiceSoonAvailableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7772B09F9A400F90D73 /* ServiceSoonAvailableViewController.xib */; };
-		3A8FC77A2B09FC8C00F90D73 /* UserNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC77C2B09FC8C00F90D73 /* UserNameViewController.xib */; };
 		3A8FC78F2B0A06CC00F90D73 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC78D2B0A06CC00F90D73 /* InfoPlist.strings */; };
 		3A8FC7912B0A09C900F90D73 /* NewPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7932B0A09C900F90D73 /* NewPersonCell.xib */; };
 		3A8FC7962B0A09E400F90D73 /* AccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8FC7982B0A09E400F90D73 /* AccessView.xib */; };
@@ -877,6 +875,11 @@
 		BF07EA6FD33A4E0985076C01 /* PinCodeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF07EA6FD33A4E0985076B01 /* PinCodeScreen.swift */; };
 		BF07EA6FD33A4E0985076C02 /* PinCodeDigits.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF07EA6FD33A4E0985076B02 /* PinCodeDigits.swift */; };
 		BF07EA6FD33A4E0985076C03 /* PinCodeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF07EA6FD33A4E0985076B03 /* PinCodeStore.swift */; };
+		89D1452B518F4C4381D05347 /* OutgoingCallScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B69021A1BA14E03A48F79F0 /* OutgoingCallScreen.swift */; };
+		D769AEA357BD435E883AD4B5 /* OutgoingCallStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F856C42DD514A93A8F06D6E /* OutgoingCallStore.swift */; };
+		5748AFF1EBA2486FB9A68902 /* UserNameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4863411FE2C04649A6A6966D /* UserNameScreen.swift */; };
+		663D630A2FC0000000A70102 /* UserNameAgreement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663D630A2FC0000000A70101 /* UserNameAgreement.swift */; };
+		C4A6EF26B83746E19A922227 /* UserNameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967D57E6CBB4D0AB862FA48 /* UserNameStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1046,7 +1049,6 @@
 		3A8FC68E2B065DB600F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AvailableServicesViewController.xib; sourceTree = "<group>"; };
 		3A8FC6932B065DDC00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IncomingCallPortraitViewController.xib; sourceTree = "<group>"; };
 		3A8FC6982B065E1400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/IncomingCallLandscapeViewController.xib; sourceTree = "<group>"; };
-		3A8FC69D2B065E2C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OutgoingCallViewController.xib; sourceTree = "<group>"; };
 		3A8FC6A92B065EDA00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/AuthByContractNumViewController.xib; sourceTree = "<group>"; };
 		BF06318F2EF84CE294E6AB01 /* InputPhoneNumberScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberScreen.swift; sourceTree = "<group>"; };
 		BF06318F2EF84CE294E6AB02 /* InputPhoneNumberDigits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputPhoneNumberDigits.swift; sourceTree = "<group>"; };
@@ -1084,7 +1086,6 @@
 		3A8FC7622B09F21F00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServicesActivationRequestViewController.xib; sourceTree = "<group>"; };
 		3A8FC7712B09F97C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/QRCodeScanViewController.xib; sourceTree = "<group>"; };
 		3A8FC7762B09F9A400F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ServiceSoonAvailableViewController.xib; sourceTree = "<group>"; };
-		3A8FC77B2B09FC8C00F90D73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UserNameViewController.xib; sourceTree = "<group>"; };
 		3A8FC7892B0A025E00F90D73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A8FC78B2B0A052200F90D73 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A8FC78E2B0A06CC00F90D73 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = SmartYard/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
@@ -1865,6 +1866,11 @@
 		BF07EA6FD33A4E0985076B01 /* PinCodeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeScreen.swift; sourceTree = "<group>"; };
 		BF07EA6FD33A4E0985076B02 /* PinCodeDigits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeDigits.swift; sourceTree = "<group>"; };
 		BF07EA6FD33A4E0985076B03 /* PinCodeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeStore.swift; sourceTree = "<group>"; };
+		0B69021A1BA14E03A48F79F0 /* OutgoingCallScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingCallScreen.swift; sourceTree = "<group>"; };
+		8F856C42DD514A93A8F06D6E /* OutgoingCallStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingCallStore.swift; sourceTree = "<group>"; };
+		4863411FE2C04649A6A6966D /* UserNameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameScreen.swift; sourceTree = "<group>"; };
+		663D630A2FC0000000A70101 /* UserNameAgreement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameAgreement.swift; sourceTree = "<group>"; };
+		1967D57E6CBB4D0AB862FA48 /* UserNameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1983,7 +1989,8 @@
 		3A25BA9328967A6800D2401E /* OutgoingCall */ = {
 			isa = PBXGroup;
 			children = (
-				3A8FC69E2B065E2C00F90D73 /* OutgoingCallViewController.xib */,
+				6AA4D3B7E9BA4FB5BDA3B6D3 /* Stores */,
+				96E35DDCE9444D58B6BB44AA /* Views */,
 				3A25BA9528967A6800D2401E /* OutgoingCallViewController.swift */,
 				3A25BA9628967A6800D2401E /* OutgoingCallViewModel.swift */,
 			);
@@ -2394,6 +2401,8 @@
 		844AC3B423EB0FD80066006D /* UserName */ = {
 			isa = PBXGroup;
 			children = (
+				E18DED0B478E453C8C5F8EDE /* Stores */,
+				9A1E854B95534DA5800D9C5E /* Views */,
 				844AC40123EC22030066006D /* View */,
 				844AC40023EC21FC0066006D /* ViewModel */,
 			);
@@ -2598,7 +2607,6 @@
 			isa = PBXGroup;
 			children = (
 				844AC3B523EB104E0066006D /* UserNameViewController.swift */,
-				3A8FC77C2B09FC8C00F90D73 /* UserNameViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6006,6 +6014,39 @@
 			path = Stores;
 			sourceTree = "<group>";
 		};
+		96E35DDCE9444D58B6BB44AA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0B69021A1BA14E03A48F79F0 /* OutgoingCallScreen.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6AA4D3B7E9BA4FB5BDA3B6D3 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				8F856C42DD514A93A8F06D6E /* OutgoingCallStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		9A1E854B95534DA5800D9C5E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4863411FE2C04649A6A6966D /* UserNameScreen.swift */,
+				663D630A2FC0000000A70101 /* UserNameAgreement.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E18DED0B478E453C8C5F8EDE /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				1967D57E6CBB4D0AB862FA48 /* UserNameStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -6250,10 +6291,8 @@
 				3A8FC6E42B06617500F90D73 /* CamerasListViewController.xib in Resources */,
 				3A8FC7432B09EA8700F90D73 /* ServiceUnavailableViewController.xib in Resources */,
 				3A8FC7612B09F21F00F90D73 /* ServicesActivationRequestViewController.xib in Resources */,
-				3A8FC77A2B09FC8C00F90D73 /* UserNameViewController.xib in Resources */,
 				3A8FC6D02B0660BA00F90D73 /* FaceViewController.xib in Resources */,
 				846DC6C924B33DC600A11914 /* ContractCell.xib in Resources */,
-				3A8FC69C2B065E2C00F90D73 /* OutgoingCallViewController.xib in Resources */,
 				8B7148A22EFACA150099703B /* AddressesListEmptyStateCell.xib in Resources */,
 				3A8FC70C2B06626800F90D73 /* PaymentsViewController.xib in Resources */,
 				3A8FC7A72B0A0F6500F90D73 /* LaunchScreen_en.storyboard in Resources */,
@@ -6776,6 +6815,8 @@
 				E98C383123F181610010BBC1 /* AuthByContractNumViewModel.swift in Sources */,
 				E940581723F6831A00623746 /* NewPersonCell.swift in Sources */,
 				3A25BA9928967A6800D2401E /* OutgoingCallViewController.swift in Sources */,
+				D769AEA357BD435E883AD4B5 /* OutgoingCallStore.swift in Sources */,
+				89D1452B518F4C4381D05347 /* OutgoingCallScreen.swift in Sources */,
 				84CC15C923EC345800A1CB95 /* AddressesListDataItem.swift in Sources */,
 				9A0F5A442F7B000000C0D001 /* StoryItem.swift in Sources */,
 				9A0F5A462F7B000000C0D001 /* StoryItemCell.swift in Sources */,
@@ -7205,6 +7246,9 @@
 				3A1BDF39263444BD0075410B /* HistoryDetailViewController.swift in Sources */,
 				844AC3A023E987400066006D /* IncomingCallViewModel.swift in Sources */,
 				844AC3B723EB104E0066006D /* UserNameViewController.swift in Sources */,
+				C4A6EF26B83746E19A922227 /* UserNameStore.swift in Sources */,
+				5748AFF1EBA2486FB9A68902 /* UserNameScreen.swift in Sources */,
+				663D630A2FC0000000A70102 /* UserNameAgreement.swift in Sources */,
 				E92EFB4824287F72003AF7FE /* PassConfirmationPinViewModel.swift in Sources */,
 				84898A8A23F1510600E6B78E /* UIButton+Extensions.swift in Sources */,
 				84854B6723FD809E001B44F2 /* AllowedPersonSectionModel.swift in Sources */,
@@ -7557,14 +7601,6 @@
 			name = IncomingCallLandscapeViewController.xib;
 			sourceTree = "<group>";
 		};
-		3A8FC69E2B065E2C00F90D73 /* OutgoingCallViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A8FC69D2B065E2C00F90D73 /* Base */,
-			);
-			name = OutgoingCallViewController.xib;
-			sourceTree = "<group>";
-		};
 		3A8FC6AA2B065EDA00F90D73 /* AuthByContractNumViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -7835,14 +7871,6 @@
 				3A8FC7762B09F9A400F90D73 /* Base */,
 			);
 			name = ServiceSoonAvailableViewController.xib;
-			sourceTree = "<group>";
-		};
-		3A8FC77C2B09FC8C00F90D73 /* UserNameViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A8FC77B2B09FC8C00F90D73 /* Base */,
-			);
-			name = UserNameViewController.xib;
 			sourceTree = "<group>";
 		};
 		3A8FC78D2B0A06CC00F90D73 /* InfoPlist.strings */ = {

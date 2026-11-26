@@ -65,6 +65,8 @@ final class InputPhoneNumberViewController: UIHostingController<InputPhoneNumber
     }
 
     private static func supportsPadRotation(_ destination: UIViewController?) -> Bool {
-        destination is SelectProviderViewController || destination is PinCodeViewController
+        destination is SelectProviderViewController
+            || destination is PinCodeViewController
+            || destination is OutgoingCallViewController
     }
 }

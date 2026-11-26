@@ -63,7 +63,7 @@ extension AppCoordinator {
             )
 
             let vc = UserNameViewController(viewModel: vm, preloadedName: preloadedName)
-            return .set([vc], animation: .fade)
+            return .set([vc], animation: .authenticationFade)
 
         case .phoneNumber:
             let vm = InputPhoneNumberViewModel(
@@ -98,7 +98,7 @@ extension AppCoordinator {
             )
 
             let vc = OutgoingCallViewController(viewModel: vm)
-            return .set([vc], animation: .fade)
+            return .set([vc], animation: .authenticationFade)
 
         case let .alert(title, message):
             return .alertTransition(title: title, message: message)

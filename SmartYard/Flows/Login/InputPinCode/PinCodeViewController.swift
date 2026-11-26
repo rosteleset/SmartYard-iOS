@@ -59,12 +59,15 @@ final class PinCodeViewController: UIHostingController<PinCodeScreen> {
         let scene = view.window?.windowScene
         if let transitionCoordinator {
             transitionCoordinator.animate(alongsideTransition: nil) { context in
-                guard !context.isCancelled, !(context.viewController(forKey: .to) is InputPhoneNumberViewController)
-                else { return }
+                guard !context.isCancelled, !Self.supportsPadRotation(context.viewController(forKey: .to)) else { return }
                 scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
             }
-        } else if !(navigationController?.viewControllers.last is InputPhoneNumberViewController) {
+        } else if !Self.supportsPadRotation(navigationController?.viewControllers.last) {
             scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
         }
+    }
+
+    private static func supportsPadRotation(_ destination: UIViewController?) -> Bool {
+        destination is InputPhoneNumberViewController || destination is UserNameViewController
     }
 }

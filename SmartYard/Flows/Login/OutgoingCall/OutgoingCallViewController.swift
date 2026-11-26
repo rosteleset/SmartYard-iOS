@@ -6,111 +6,62 @@
 //  Copyright © 2021 Sesameware. All rights reserved.
 //
 
-import UIKit
-import RxCocoa
-import RxSwift
-import RxViewController
-import JGProgressHUD
+import SwiftUI
 
-final class OutgoingCallViewController: BaseViewController, LoaderPresentable {
-    
-    @IBOutlet private weak var fakeNavBar: FakeNavBar!
-    @IBOutlet private weak var hintInputPhoneLabel: UILabel!
-    @IBOutlet private weak var fixPhoneNumberButton: UIButton!
-    @IBOutlet private weak var sendCodeAgainGroupView: UIView!
-    @IBOutlet private weak var numberPhoneLabel: UILabel!
-    @IBOutlet private weak var containerView: TopRoundedView!
-    
-    @IBOutlet private var sendCodeAgainGroupButtonConstraint: NSLayoutConstraint!
-    
-    // swiftlint:disable all
-    @IBOutlet weak var makeCallButton: BlueButton!
-    @IBOutlet private weak var callPrefixLabel: UILabel!
-    @IBOutlet private weak var callSuffixLabel: UILabel!
-    // swiftlint:enable all
+final class OutgoingCallViewController: UIHostingController<OutgoingCallScreen> {
+    private let store: OutgoingCallStore
 
-    private let copyPhoneNumberTapGesture = UITapGestureRecognizer()
+    override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
 
-    private let viewModel: OutgoingCallViewModel
-    
-    var loader: JGProgressHUD?
-    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        traitCollection.userInterfaceIdiom == .pad ? .all : .portrait
+    }
+
     init(viewModel: OutgoingCallViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        let store = OutgoingCallStore(viewModel: viewModel)
+        self.store = store
+        super.init(rootView: OutgoingCallScreen(store: store))
     }
-    
+
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+    required init?(coder: NSCoder) { fatalError("init(coder:) is unavailable") }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
-        bind()
+        view.backgroundColor = .SmartYard.secondBackgroundColor
+        store.start()
     }
-    
-    private func configureUI() {
-        hintInputPhoneLabel.text = L10n.Auth.CallVerification.confirmPhoneTitle
-        fixPhoneNumberButton.setTitle(L10n.Auth.CallVerification.editPhoneButton, for: .normal)
-        makeCallButton.setTitle(L10n.Auth.CallVerification.callButton, for: .normal)
-        callPrefixLabel.text = L10n.Auth.CallVerification.callInstructionPrefix
-        callSuffixLabel.text = L10n.Auth.CallVerification.callInstructionSuffix
-        makeCallButton.isHidden = false
-        numberPhoneLabel.isUserInteractionEnabled = true
 
-        numberPhoneLabel.addGestureRecognizer(copyPhoneNumberTapGesture)
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        view.layoutIfNeeded()
     }
-    
-    private func bind() {
-        let input = OutgoingCallViewModel.Input(
-            fixPhoneNumberButtonTapped: fixPhoneNumberButton.rx.tap.asDriverOnErrorJustComplete(),
-            backButtonTapped: fakeNavBar.rx.backButtonTap.asDriver(),
-            makeCallButtonTapped: makeCallButton.rx.tap.asDriverOnErrorJustComplete()
-        )
-        
-        let output = viewModel.transform(input: input)
-        
-        output.phoneNumber
-            .drive(with: self) { owner, phoneNumber in
-                let text = String.localizedStringWithFormat(
-                    L10n.Auth.CallVerification.confirmPhoneTitleFormat,
-                    "\(AccessService.shared.phonePrefix)\(phoneNumber)"
-                )
-                owner.hintInputPhoneLabel.text = text
-            }
-            .disposed(by: disposeBag)
-        
-        output.confirmPhoneNumber
-            .drive(with: self) { owner, confirmPhoneNumber in
-                owner.numberPhoneLabel.text = confirmPhoneNumber
-            }
-            .disposed(by: disposeBag)
-        
-        output.isLoading
-            .debounce(.milliseconds(25))
-            .drive(with: self) { owner, isLoading in
-                owner.updateLoader(isEnabled: isLoading, detailText: nil)
-            }
-            .disposed(by: disposeBag)
 
-        copyPhoneNumberTapGesture.rx.event
-            .bind(with: self, onNext: { owner, _ in
-                owner.copyConfirmPhoneNumberToClipboard()
-            })
-            .disposed(by: disposeBag)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        trackAnalyticsScreenOpened()
+        setNeedsUpdateOfSupportedInterfaceOrientations()
+        navigationController?.setNeedsUpdateOfSupportedInterfaceOrientations()
     }
-    
-    private func copyConfirmPhoneNumberToClipboard() {
-        guard
-            let confirmPhoneNumber = numberPhoneLabel.text,
-            !confirmPhoneNumber.isEmpty
-        else {
-            return
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        guard traitCollection.userInterfaceIdiom == .pad, isMovingFromParent else { return }
+
+        let scene = view.window?.windowScene
+        if let transitionCoordinator {
+            transitionCoordinator.animate(alongsideTransition: nil) { context in
+                guard !context.isCancelled, !Self.supportsPadRotation(context.viewController(forKey: .to)) else {
+                    return
+                }
+                scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
+            }
+        } else if !Self.supportsPadRotation(navigationController?.viewControllers.last) {
+            scene?.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
         }
+    }
 
-        UIPasteboard.general.string = confirmPhoneNumber
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
+    private static func supportsPadRotation(_ destination: UIViewController?) -> Bool {
+        destination is InputPhoneNumberViewController || destination is UserNameViewController
     }
 }
